@@ -2,6 +2,8 @@
 #define BROWSERWINDOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+#include "toolbar.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BrowserWindow; }
@@ -13,6 +15,8 @@ class BrowserWindow : public QMainWindow
 
 public:
     BrowserWindow(QWidget *parent = nullptr);
+    int curHeight,curWidth;
+    ToolBar* tb;
     ~BrowserWindow();
 
 private:

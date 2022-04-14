@@ -21,6 +21,11 @@ set(PROJECT_SOURCES
         browserwindow.cpp
         browserwindow.h
         browserwindow.ui
+        toolbar.cpp
+        toolbar.h
+        toolbar.ui
+        browser.cpp
+        browser.h
         ${TS_FILES}
 )
 

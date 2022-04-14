@@ -41,8 +41,10 @@ endif()
 # _directory_contents at D:/Qt/6.2.4/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:83 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/*.cpp")
 set(OLD_GLOB
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browser.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/main.cpp"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
@@ -61,7 +63,9 @@ endif()
 # _directory_contents at D:/Qt/6.2.4/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:83 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/*.h")
 set(OLD_GLOB
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browser.h"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.h"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
@@ -162,6 +166,7 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/*.ui")
 set(OLD_GLOB
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.ui"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.ui"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
