@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include "toolbar.h"
+#include <cassert>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BrowserWindow; }
@@ -20,6 +21,7 @@ public:
     ~BrowserWindow();
 
     int get_windowid();
+    bool set_windowid(const int & window_id);
 
 private:
     Ui::BrowserWindow *ui;
