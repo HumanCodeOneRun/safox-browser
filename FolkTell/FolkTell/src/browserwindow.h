@@ -14,12 +14,17 @@ class BrowserWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    BrowserWindow(QWidget *parent = nullptr);
+    BrowserWindow(QWidget *parent = nullptr, const int & window_id=0);
     int curHeight,curWidth;
     ToolBar* tb;
     ~BrowserWindow();
 
+    int get_windowid();
+
 private:
     Ui::BrowserWindow *ui;
+    
+    // for multi-window purpose
+    int id;
 };
 #endif // BROWSERWINDOW_H

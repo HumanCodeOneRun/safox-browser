@@ -71,3 +71,8 @@ Thumbs.db
 *.dll
 *.exe
 
+CMakeFiles
+CmakeCache.txt
+*.cmake
+FolkTell_autogen
+.lupdate
