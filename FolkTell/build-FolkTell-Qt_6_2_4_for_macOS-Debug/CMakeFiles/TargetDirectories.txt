@@ -1,0 +1,5 @@
+/Users/cuddly/Desktop/temp_work/软设跑跑跑/提交的版本/v1/FolkTell/FolkTell/build-FolkTell-Qt_6_2_4_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
+/Users/cuddly/Desktop/temp_work/软设跑跑跑/提交的版本/v1/FolkTell/FolkTell/build-FolkTell-Qt_6_2_4_for_macOS-Debug/CMakeFiles/edit_cache.dir
+/Users/cuddly/Desktop/temp_work/软设跑跑跑/提交的版本/v1/FolkTell/FolkTell/build-FolkTell-Qt_6_2_4_for_macOS-Debug/CMakeFiles/FolkTell.dir
+/Users/cuddly/Desktop/temp_work/软设跑跑跑/提交的版本/v1/FolkTell/FolkTell/build-FolkTell-Qt_6_2_4_for_macOS-Debug/CMakeFiles/FolkTell_autogen_timestamp_deps.dir
+/Users/cuddly/Desktop/temp_work/软设跑跑跑/提交的版本/v1/FolkTell/FolkTell/build-FolkTell-Qt_6_2_4_for_macOS-Debug/CMakeFiles/FolkTell_autogen.dir
