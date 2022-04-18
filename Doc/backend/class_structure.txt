@@ -5,7 +5,9 @@ MainApplication:QsingleApplication:
 
     //浏览器相关类
     History
+    HistoryManager
     Bookmarks
+    BookmarksManager
     DownloadManager
     SearchEngineManager
     ClosedWindowsManager
