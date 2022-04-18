@@ -4,8 +4,8 @@ MainApplication:QsingleApplication:
     CommandLineOption //该类用于处理启动程序时的一些参数传递
 
     //浏览器相关类
-    History
-    Bookmarks
+    HistoryManager
+    BookmarksManager
     DownloadManager
     SearchEngineManager
     ClosedWindowsManager
@@ -24,9 +24,10 @@ MainApplication:QsingleApplication:
 
 
 BrowserWindow:
+    Toolbar*
     TabWidget*
     Navigation*
-    BookMarksToolBar*
+    BookmarksView*
 
 TabWidget: QTabWidget
     WebTab*
@@ -35,6 +36,14 @@ WebTab: Qwidget
     TabbedWebView*
 
 TabbedWebView: WebView
+
+HistoryView
+    HistoryManager*
+
+BookmarksView
+    BookmarksManager*
+
+Toolbar
 
 
 
