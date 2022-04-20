@@ -11,8 +11,8 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QToolButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,9 +21,7 @@ class Ui_BrowserWindow
 {
 public:
     QWidget *centralwidget;
-    QToolButton *closeBtn;
-    QToolButton *minBtn;
-    QToolButton *switchBtn;
+    QGridLayout *gridLayout;
 
     void setupUi(QMainWindow *BrowserWindow)
     {
@@ -34,30 +32,9 @@ public:
 "background-color: rgba(46, 50, 53, 100);"));
         centralwidget = new QWidget(BrowserWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        closeBtn = new QToolButton(centralwidget);
-        closeBtn->setObjectName(QString::fromUtf8("closeBtn"));
-        closeBtn->setGeometry(QRect(20, 10, 24, 22));
-        closeBtn->setStyleSheet(QString::fromUtf8("background-color: rgba(235, 106, 99, 100);\n"
-"width:20px;\n"
-"height:20px;\n"
-"border-radius:10px;"));
-        closeBtn->setIconSize(QSize(20, 20));
-        minBtn = new QToolButton(centralwidget);
-        minBtn->setObjectName(QString::fromUtf8("minBtn"));
-        minBtn->setGeometry(QRect(60, 10, 24, 22));
-        minBtn->setStyleSheet(QString::fromUtf8("background-color: rgba(241, 195, 78, 100);\n"
-"width:20px;\n"
-"height:20px;\n"
-"border-radius:10px;"));
-        minBtn->setIconSize(QSize(20, 20));
-        switchBtn = new QToolButton(centralwidget);
-        switchBtn->setObjectName(QString::fromUtf8("switchBtn"));
-        switchBtn->setGeometry(QRect(100, 10, 24, 22));
-        switchBtn->setStyleSheet(QString::fromUtf8("background-color: rgba(57, 194, 77, 100);\n"
-"width:20px;\n"
-"height:20px;\n"
-"border-radius:10px;"));
-        switchBtn->setIconSize(QSize(20, 20));
+        centralwidget->setEnabled(true);
+        gridLayout = new QGridLayout(centralwidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         BrowserWindow->setCentralWidget(centralwidget);
 
         retranslateUi(BrowserWindow);
@@ -68,9 +45,6 @@ public:
     void retranslateUi(QMainWindow *BrowserWindow)
     {
         BrowserWindow->setWindowTitle(QCoreApplication::translate("BrowserWindow", "BrowserWindow", nullptr));
-        closeBtn->setText(QString());
-        minBtn->setText(QString());
-        switchBtn->setText(QString());
     } // retranslateUi
 
 };

@@ -1,5 +1,7 @@
 #include "browserwindow.h"
 #include "./ui_browserwindow.h"
+#include <QPushButton>
+#include <QToolButton>
 
 BrowserWindow::BrowserWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,11 +22,26 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     tb->width = this->curWidth;
     tb->resize(tb->width,tb->height);
 
-
+    QToolButton* closeBtn = new QToolButton(this);
+    closeBtn->setGeometry(100,100,20,20);
+    connect(closeBtn,&QToolButton::clicked,this,&BrowserWindow::on_closeBtn_clicked);
 }
 
 BrowserWindow::~BrowserWindow()
 {
     delete ui;
+}
+
+
+void BrowserWindow::on_closeBtn_clicked()
+{
+    qDebug("bbbbbbb");
+    this->close();
+}
+
+
+void BrowserWindow::on_minBtn_clicked()
+{
+
 }
 

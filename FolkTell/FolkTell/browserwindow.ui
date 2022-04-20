@@ -18,101 +18,10 @@
 background-color: rgba(46, 50, 53, 100);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QToolButton" name="minBtn">
-    <property name="geometry">
-     <rect>
-      <x>58</x>
-      <y>24</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(241, 195, 78, 100);
-width:20px;
-height:20px;
-border-radius:10px;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>20</width>
-      <height>20</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="switchBtn">
-    <property name="geometry">
-     <rect>
-      <x>87</x>
-      <y>24</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(57, 194, 77, 100);
-width:20px;
-height:20px;
-border-radius:10px;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>20</width>
-      <height>20</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="closeBtn">
-    <property name="geometry">
-     <rect>
-      <x>29</x>
-      <y>24</y>
-      <width>23</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(235, 106, 99, 100);
-width:20px;
-height:20px;
-border-radius:10px;</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>20</width>
-      <height>20</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>20</y>
-      <width>127</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-    </widget>
-   </widget>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <layout class="QGridLayout" name="gridLayout"/>
   </widget>
  </widget>
  <resources/>

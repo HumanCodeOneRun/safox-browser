@@ -93,10 +93,13 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs_win.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/QToolButton \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QWidget \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qmainwindow.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qsizepolicy.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtoolbutton.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtwidgets-config.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qwidget.h \
