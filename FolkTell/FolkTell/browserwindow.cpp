@@ -23,6 +23,7 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     tb->resize(tb->width,tb->height);
 
     QToolButton* closeBtn = new QToolButton(this);
+    closeBtn->setStyleSheet("");
     closeBtn->setGeometry(100,100,20,20);
     connect(closeBtn,&QToolButton::clicked,this,&BrowserWindow::on_closeBtn_clicked);
 }
