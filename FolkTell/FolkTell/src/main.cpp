@@ -3,11 +3,14 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-
+#include <QtWebEngineCore/QtWebEngineCore>
+#include <QtWebEngineWidgets/QWebEngineView>
+#include <QDebug>
+#include <QtSql/QSqlDatabase>
+#include "dao/BaseDao.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -18,6 +21,10 @@ int main(int argc, char *argv[])
         }
     }
     BrowserWindow w;
+
+
+    
+    
     w.show();
     return a.exec();
 }

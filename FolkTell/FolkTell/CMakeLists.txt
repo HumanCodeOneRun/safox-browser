@@ -13,8 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools )
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql) 
 
 set(TS_FILES FolkTell_zh_CN.ts)
 
@@ -28,6 +28,10 @@ set(PROJECT_SOURCES
         src/toolbar.ui
         src/browser.cpp
         src/browser.h
+        src/dao/BaseDao.h
+        src/dao/BaseDao.cpp
+        src/dao/BookmarkDao.h
+        src/dao/BookmarkDao.cpp
         ${TS_FILES}
 )
 
@@ -58,7 +62,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::Sql)
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

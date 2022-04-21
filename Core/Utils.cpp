@@ -43,7 +43,7 @@
 
 
 QUrl normalizeUrl(QUrl url)
-{
+{   
     url = url.adjusted(QUrl::RemoveFragment | QUrl::NormalizePathSegments | QUrl::StripTrailingSlash);
 
     if (url.path() == QLatin1String("/"))

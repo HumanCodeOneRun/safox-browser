@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "qtwebview": "cpp",
+        "qtranslator": "cpp"
+    }
+}
