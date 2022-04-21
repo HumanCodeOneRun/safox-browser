@@ -41,3 +41,13 @@
 325	2116	6719711722569884	CMakeFiles/FolkTell.dir/toolbar.cpp.obj	921d897cb4d920d5
 334	2255	6719711723953986	CMakeFiles/FolkTell.dir/browserwindow.cpp.obj	8e2b2eca28cdf25d
 2256	2530	6719711726657909	FolkTell.exe	b8540756fb0bfe63
+2	69	0	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	87691ac11f6e0e24
+38	418	6722284429033097	FolkTell_autogen/timestamp	6faa2f492234cb5b
+38	418	6722284429033097	FolkTell_autogen/mocs_compilation.cpp	6faa2f492234cb5b
+38	418	6722284429033097	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/timestamp	6faa2f492234cb5b
+38	418	6722284429033097	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/mocs_compilation.cpp	6faa2f492234cb5b
+421	2675	6722284451582777	CMakeFiles/FolkTell.dir/FolkTell_autogen/mocs_compilation.cpp.obj	c0f39c5d18fef1cd
+439	2684	6722284451592748	CMakeFiles/FolkTell.dir/toolbar.cpp.obj	921d897cb4d920d5
+449	2685	6722284451682182	CMakeFiles/FolkTell.dir/main.cpp.obj	3ad207fce2ccd9b2
+430	2686	6722284451682182	CMakeFiles/FolkTell.dir/browserwindow.cpp.obj	8e2b2eca28cdf25d
+2687	3343	6722284458243528	FolkTell.exe	b8540756fb0bfe63
