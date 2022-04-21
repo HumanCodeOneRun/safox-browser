@@ -1,23 +1,18 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
+#include<QToolButton>
 
-#include <QWidget>
 
-namespace Ui {
-class ToolBar;
-}
-
-class ToolBar : public QWidget
+class Toolbar
 {
-    Q_OBJECT
-
 public:
-    explicit ToolBar(QWidget *parent = nullptr);
-    int height,width;
-    ~ToolBar();
-
+    Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0);
+    QToolButton* bookmarker;
 private:
-    Ui::ToolBar *ui;
+    int init_x;
+    int init_y;
+    int width;
+    int height;
 };
 
 #endif // TOOLBAR_H

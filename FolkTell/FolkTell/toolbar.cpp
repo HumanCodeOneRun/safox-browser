@@ -1,15 +1,17 @@
 #include "toolbar.h"
-#include "ui_toolbar.h"
 
-ToolBar::ToolBar(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ToolBar)
+Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height)
 {
-    ui->setupUi(this);
+    init_x = x;
+    init_y = y;
+    width = width;
+    height = height;
 
-}
+    /* 书签按钮 */
+    bookmarker = new QToolButton(parent);
+    bookmarker->setGeometry(x+150,y+10,45,30);
 
-ToolBar::~ToolBar()
-{
-    delete ui;
+    /* 首页按钮 */
+
+    /* 历史按钮 */
 }

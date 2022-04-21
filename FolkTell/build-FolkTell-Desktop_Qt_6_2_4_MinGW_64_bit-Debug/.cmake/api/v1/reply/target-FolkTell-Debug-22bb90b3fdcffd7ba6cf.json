@@ -32,7 +32,7 @@
 			{
 				"command" : 3,
 				"file" : 1,
-				"line" : 28,
+				"line" : 32,
 				"parent" : 0
 			},
 			{
@@ -56,7 +56,7 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 54,
+				"line" : 58,
 				"parent" : 0
 			},
 			{
@@ -178,7 +178,9 @@
 			[
 				0,
 				1,
-				2
+				2,
+				5,
+				7
 			]
 		}
 	],
@@ -273,7 +275,9 @@
 			[
 				0,
 				1,
-				2
+				2,
+				5,
+				7
 			]
 		},
 		{
@@ -281,7 +285,9 @@
 			"sourceIndexes" : 
 			[
 				3,
-				6
+				6,
+				8,
+				10
 			]
 		},
 		{
@@ -289,15 +295,15 @@
 			"sourceIndexes" : 
 			[
 				4,
-				5,
-				7
+				9,
+				11
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				8
+				12
 			]
 		}
 	],
@@ -331,6 +337,28 @@
 			"backtrace" : 4,
 			"path" : "browserwindow.ui",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "toolbar.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "toolbar.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "browser.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "browser.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 4,

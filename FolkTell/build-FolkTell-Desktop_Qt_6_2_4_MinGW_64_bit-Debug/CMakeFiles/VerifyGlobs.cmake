@@ -166,7 +166,6 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/*.ui")
 set(OLD_GLOB
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.ui"
-  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.ui"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
