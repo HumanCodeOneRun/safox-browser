@@ -83,3 +83,4 @@ build
 .qtc_clangd
 .vscode
 Testing
+*.db
