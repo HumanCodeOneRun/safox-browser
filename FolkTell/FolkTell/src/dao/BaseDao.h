@@ -21,23 +21,16 @@ public:
     bool isTableExist();
     virtual bool createTable();
 
-    // you need to parse the query result yourself
-    QSqlQuery RunQuery(const QString& cmd);
-    bool RunInsert(const QString& cmd);
-    bool RunDelete(const QString& cmd);
-    bool RunUpdate(const QString& cmd);
 
     QString getTableName();
     QString getDbPath();
 
     // for debug purpose
-    void printInfo();
+    virtual void printInfo();
     ~BaseDao();
 
 protected:
     bool checkdbpath(const QString& _db_path);
-
-private:
     QString db_path;
     QString table_name;
     QSqlDatabase db;

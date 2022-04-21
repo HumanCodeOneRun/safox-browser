@@ -6,8 +6,6 @@
 #include <QtWebEngineCore/QtWebEngineCore>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
-#include <QtSql/QSqlDatabase>
-#include "dao/BaseDao.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,10 +20,9 @@ int main(int argc, char *argv[])
         }
     }
     BrowserWindow w;
-    BaseDao dao = BaseDao::getDao();
-    bool ok = dao.RunInsert("insert into dummy_table (ID, NAME) VALUES (0, test)");
-    
-    
+
+
+
     w.show();
     return a.exec();
 }

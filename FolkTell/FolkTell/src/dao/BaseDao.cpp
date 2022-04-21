@@ -29,10 +29,12 @@ BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_d
         qDebug() << "[error]fail to open db! " << db.lastError().text();
     }
 
+    /*
     if(!isTableExist()){
         if(!createTable())
             return;
     }
+    */
     
 }
 
@@ -67,39 +69,6 @@ bool BaseDao::createTable(){
     return true;
 }
 
-QSqlQuery BaseDao::RunQuery(const QString& cmd){
-    QSqlQuery query(cmd);
-    query.exec();
-    return query;
-}
-
-bool BaseDao::RunInsert(const QString& cmd){
-    QSqlQuery query(cmd);
-    if(!query.exec()){
-        qDebug() << "[error] "<< query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-bool BaseDao::RunDelete(const QString& cmd){
-    QSqlQuery query(cmd);
-    if(!query.exec()){
-        qDebug() << "[error] "<< query.lastError().text();
-        return false;
-    }
-    return true;
-}
-
-bool BaseDao::RunUpdate(const QString& cmd){
-    QSqlQuery query(cmd);
-    if(!query.exec()){
-        qDebug() << "[error] "<< query.lastError().text();
-        return false;
-    }
-    
-    return true;
-}
 
 QString BaseDao::getTableName(){
     return this->table_name;
