@@ -19,7 +19,7 @@ bool BaseDao::checkdbpath(const QString& _db_path){
     return true;
 }
 
-BaseDao::BaseDao(const QString& _db_path):db_path(_db_path), table_name("dummy_table"){
+BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_db_path), table_name(_table_name){
     if(!this->checkdbpath(_db_path))
         return;
     
@@ -60,7 +60,7 @@ bool BaseDao::createTable(){
     QSqlQuery query(cmd);
 
     if(!query.exec()){
-        qDebug() << "[error]fail to create dummy table " << query.lastError().text();
+        qDebug() << "[error] fail to create dummy table " << query.lastError().text();
         return false;
     }
 
@@ -71,6 +71,42 @@ QSqlQuery BaseDao::RunQuery(const QString& cmd){
     QSqlQuery query(cmd);
     query.exec();
     return query;
+}
+
+bool BaseDao::RunInsert(const QString& cmd){
+    QSqlQuery query(cmd);
+    if(!query.exec()){
+        qDebug() << "[error] "<< query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool BaseDao::RunDelete(const QString& cmd){
+    QSqlQuery query(cmd);
+    if(!query.exec()){
+        qDebug() << "[error] "<< query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool BaseDao::RunUpdate(const QString& cmd){
+    QSqlQuery query(cmd);
+    if(!query.exec()){
+        qDebug() << "[error] "<< query.lastError().text();
+        return false;
+    }
+    
+    return true;
+}
+
+QString BaseDao::getTableName(){
+    return this->table_name;
+}
+
+QString BaseDao::getDbPath(){
+    return this->db_path;
 }
 
 void BaseDao::printInfo(){

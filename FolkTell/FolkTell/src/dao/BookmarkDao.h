@@ -6,12 +6,11 @@
 
 class BookmarkDao : public BaseDao{
 public:
-    explicit BookmarkDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& table_name = BOOKMARKDAO_TABLE_NAME);
+    explicit BookmarkDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);
     
-    
+    bool createTable() override;
 
-private:
-
+    ~BookmarkDao();
 };
 
 
