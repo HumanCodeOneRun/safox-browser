@@ -61,7 +61,7 @@ QVector<QVariant> BookmarkGroupDao::QueryByName(const QString& name){
 
 QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(){
     QString cmd = "SELECT * FROM " + this->getTableName();
-    QSqlQuery query;
+    QSqlQuery query(this->db);
     
     QVector<QVector<QVariant>> ret;
     if(!query.prepare(cmd)){
@@ -84,7 +84,7 @@ QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(){
 
 bool BookmarkGroupDao::setName(const int& id, const QString& name){
     QString cmd = "UPDATE " + this->getTableName() + " SET NAME=:name WHERE GID=:id";
-    QSqlQuery query;
+    QSqlQuery query(this->db);
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -102,7 +102,7 @@ bool BookmarkGroupDao::setName(const int& id, const QString& name){
 
 bool BookmarkGroupDao::setIcon(const int& id, const QString& icon){
     QString cmd = "UPDATE " + this->getTableName() + " SET ICON=:icon WHERE GID=:id";
-    QSqlQuery query;
+    QSqlQuery query(this->db);
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -116,4 +116,8 @@ bool BookmarkGroupDao::setIcon(const int& id, const QString& icon){
     }
 
     return true;
+}
+
+BookmarkGroupDao::~BookmarkGroupDao(){
+    (this->db).close();
 }

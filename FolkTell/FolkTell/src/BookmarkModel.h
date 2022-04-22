@@ -1,16 +1,19 @@
 #ifndef BOOKMARKMODEL_H
 #define BOOKMARKMODEL_H
-#include <QtGui/QStandardItemModel>
 #include <QtWebEngineCore>
+#include <QObject>
 #include "dao/BookmarkDao.h"
 #include "dao/BookmarkGroupDao.h"
+#include "BookmarkModel.moc"
+// TODO: 1. auto-increment for count in bookmark group
+//       2. consider return BookmarkItem/BookmarkItem for convinience
 
-class BookmarkModel{
+class BookmarkModel : QObject{
     Q_OBJECT // for slots
 
 public:
     BookmarkModel();
-
+    ~BookmarkModel();
     class BookmarkItem{
     public:
         BookmarkItem();
@@ -28,6 +31,10 @@ public:
         bool setUrl(const int& id, const QUrl& url);
         bool setIcon(const int& id, const QString& icon);
 
+        bool addBookmark(const QString& name, const QUrl& url, const QString& gname);
+        bool deleteBookmark(const int& id);
+
+        ~BookmarkItem();
     private:
         int id;
         int gid;
@@ -41,7 +48,10 @@ public:
     class BookmarkGroupItem{
     public:
         BookmarkGroupItem();
-        QVector<QVariant> getGroupById(const int& gid);
+        BookmarkGroupItem getGroupById(const int& gid);
+        //QVector<QVariant> getGroupById(const int& gid);
+        BookmarkGroupItem getGroupByName(const QString& name);
+        //QVector<QVariant> getGroupByName(const QString& name);
         QVector<QVector<QVariant>> getAllGroup();
 
         inline int getGid() { return this->gid; }
@@ -51,6 +61,8 @@ public:
 
         bool setName(const int& gid, const QString& name);
         bool setIcon(const int& gid, const QString& icon);
+
+        ~BookmarkGroupItem();
 
     private:
         int gid;
@@ -66,9 +78,9 @@ public slots:
     QVector<QVector<QVariant>> initGetGroups();
     QVector<QVector<QVariant>> getItemsByGid(const int& gid);
 
-    bool addBookmark();
-    bool deleteBookmark();
-    bool editBookmark();
+    bool addBookmark(const QString& name, const QUrl& url, const QString& gname);
+    bool deleteBookmark(const int& id);
+    bool editBookmark(const int& id, const QString& name="", const QUrl& url=QUrl(""), const QString& gname="");
     
 private:
 

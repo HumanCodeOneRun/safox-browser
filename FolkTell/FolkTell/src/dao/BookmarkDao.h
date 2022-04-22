@@ -23,8 +23,11 @@ public:
     bool setUrl(const int& id, const QUrl& url);
 
     // insert
-    bool insert(const int& gid, const QString& name, const QString& url, const QString& icon);
+    // TODO automatically get icon
+    bool insert(const int& gid, const QString& name, const QUrl& url);
     
+    // delete
+    bool remove(const int& id);
     // debug
     QVector<QVariant> getcolumns();
     bool deleteTable();
