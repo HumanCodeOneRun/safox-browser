@@ -15,7 +15,8 @@ public:
     public:
         BookmarkItem();
         QVector<QVariant> getItemById(const int& id);
-        
+        QVector<QVector<QVariant>> getItemByGid(const int& gid);
+
         inline int getId() { return this->id; }
         inline QString getName() { return this->name; }
         inline int getGid() { return this->gid;}
@@ -41,6 +42,7 @@ public:
     public:
         BookmarkGroupItem();
         QVector<QVariant> getGroupById(const int& gid);
+        QVector<QVector<QVariant>> getAllGroup();
 
         inline int getGid() { return this->gid; }
         inline QString getName() { return this->name; }
@@ -60,9 +62,9 @@ public:
     };
 
 public slots:
-    
+
+    QVector<QVector<QVariant>> initGetGroups();
     QVector<QVector<QVariant>> getItemsByGid(const int& gid);
-    QVector<QVector<QVariant>> getGroupsByGid(const QString& name);
 
     bool addBookmark();
     bool deleteBookmark();

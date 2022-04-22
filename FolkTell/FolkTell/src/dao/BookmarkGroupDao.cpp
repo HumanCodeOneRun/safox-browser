@@ -59,6 +59,29 @@ QVector<QVariant> BookmarkGroupDao::QueryByName(const QString& name){
     return ret;
 }
 
+QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(){
+    QString cmd = "SELECT * FROM " + this->getTableName();
+    QSqlQuery query;
+    
+    QVector<QVector<QVariant>> ret;
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+        return ret; 
+    }
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+        return ret; 
+    }
+
+    while(query.next()){
+        QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2),query.value(3)};
+        ret.emplace_back(temp);
+    }
+
+    return ret;
+}
+
 bool BookmarkGroupDao::setName(const int& id, const QString& name){
     QString cmd = "UPDATE " + this->getTableName() + " SET NAME=:name WHERE GID=:id";
     QSqlQuery query;

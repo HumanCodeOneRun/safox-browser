@@ -25,6 +25,10 @@ QVector<QVariant> BookmarkModel::BookmarkGroupItem::getGroupById(const int& gid)
 
 }
 
+QVector<QVector<QVariant>> BookmarkModel::BookmarkGroupItem::getAllGroup(){
+    return (this->dao).QueryAll();
+}
+
 bool BookmarkModel::BookmarkGroupItem::setName(const int& gid, const QString& name){
     this->name = name;
     return (this->dao).setName(gid, name);
@@ -60,6 +64,10 @@ QVector<QVariant> BookmarkModel::BookmarkItem::getItemById(const int& id){
 
 }
 
+QVector<QVector<QVariant>> BookmarkModel::BookmarkItem::getItemByGid(const int& gid){
+    return (this->dao).QueryByGroupId(gid);
+}
+
 bool BookmarkModel::BookmarkItem::setName(const int& id, const QString& name){
     this->name = name;
     return (this->dao).setName(id, name);
@@ -82,3 +90,16 @@ bool BookmarkModel::BookmarkItem::setIcon(const int& id, const QString& icon){
 
 // bookmark model
 
+QVector<QVector<QVariant>> BookmarkModel::initGetGroups(){
+    BookmarkGroupItem item;
+    return item.getAllGroup();
+}
+
+QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& gid){
+    BookmarkItem item;
+    return item.getItemByGid(gid);
+}
+
+bool BookmarkModel::addBookmark(){
+    
+}

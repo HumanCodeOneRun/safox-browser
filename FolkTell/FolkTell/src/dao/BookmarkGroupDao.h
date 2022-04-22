@@ -14,6 +14,7 @@ public:
     // query
     QVector<QVariant> QueryById(const int& gid);
     QVector<QVariant> QueryByName(const QString& name);
+    QVector<QVector<QVariant>> QueryAll();
 
     // update
     bool setName(const int& id, const QString& name);
