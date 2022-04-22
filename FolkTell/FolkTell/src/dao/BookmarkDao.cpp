@@ -4,7 +4,6 @@ BookmarkDao::BookmarkDao(const QString& _db_path, const QString& _table_name )
 : BaseDao(_db_path, _table_name){
     createTable();
 
-    qDebug() << this->db.tables() << this->getTableName();
 }
 BookmarkDao& BookmarkDao::getDao(){
     static BookmarkDao dao;
