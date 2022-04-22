@@ -16,6 +16,11 @@ public:
     QVector<QVector<QVariant>> QueryByGroupId(const int& gid);
     QVector<QVector<QVariant>> QueryByName(const QString& name);
 
+    // update
+    bool setName(const int& id, const QString& name);
+    bool setGid(const int& id, const int& gid);
+    bool setIcon(const int& id, const QString& icon);
+    bool setUrl(const int& id, const QUrl& url);
 
     // insert
     bool insert(const int& gid, const QString& name, const QString& url, const QString& icon);

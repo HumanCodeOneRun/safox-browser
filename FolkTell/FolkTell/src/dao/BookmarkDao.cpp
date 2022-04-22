@@ -80,6 +80,87 @@ QVector<QVector<QVariant>> BookmarkDao::QueryByName(const QString& name){
     return ret;
 }
 
+bool BookmarkDao::setName(const int& id, const QString& name){
+    QString cmd = "UPDATE " + this->table_name + "SET NAME=:name WHERE ID=:id";
+    QSqlQuery query;
+    
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
+        return false;
+    }
+
+    query.bindValue(":name", name);
+    query.bindValue(":id", id);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool BookmarkDao::setGid(const int& id, const int& gid){
+    QString cmd = "UPDATE " + this->table_name + "SET GID=:gid WHERE ID=:id";
+    QSqlQuery query;
+    
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd in setgid: " << query.lastError().text();
+        return false;
+    }
+
+    query.bindValue(":gid", gid);
+    query.bindValue(":id", id);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd in setgid: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool BookmarkDao::setIcon(const int& id, const QString& icon){
+    QString cmd = "UPDATE " + this->table_name + "SET ICON=:icon WHERE ID=:id";
+    QSqlQuery query;
+    
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd in seticon: " << query.lastError().text();
+        return false;
+    }
+
+    query.bindValue(":icon", icon);
+    query.bindValue(":id", id);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd in seticon: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool BookmarkDao::setUrl(const int& id, const QUrl& url){
+    QString cmd = "UPDATE " + this->table_name + "SET URL=:url WHERE ID=:id";
+    QSqlQuery query;
+    
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd in seturl: " << query.lastError().text();
+        return false;
+    }
+
+    query.bindValue(":url", url);
+    query.bindValue(":id", id);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd in seturl: " << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+
 bool BookmarkDao::insert(const int& gid, const QString& name, const QString& url, const QString& icon){
     QString cmd = "INSERT INTO " + this->getTableName() + "(GID, NAME, URL, ICON)"+" VALUES(:gid, :name, :url, :icon)";
 
@@ -129,6 +210,8 @@ bool BookmarkDao::deleteTable(){
 
     return true;
 }
+
+
 
 BookmarkDao::~BookmarkDao(){
 }
