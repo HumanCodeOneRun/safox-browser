@@ -32,7 +32,7 @@
 			{
 				"command" : 3,
 				"file" : 1,
-				"line" : 32,
+				"line" : 35,
 				"parent" : 0
 			},
 			{
@@ -56,7 +56,7 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 58,
+				"line" : 61,
 				"parent" : 0
 			},
 			{
@@ -180,7 +180,8 @@
 				1,
 				2,
 				5,
-				7
+				7,
+				9
 			]
 		}
 	],
@@ -277,7 +278,8 @@
 				1,
 				2,
 				5,
-				7
+				7,
+				9
 			]
 		},
 		{
@@ -287,7 +289,9 @@
 				3,
 				6,
 				8,
-				10
+				10,
+				13,
+				14
 			]
 		},
 		{
@@ -295,15 +299,16 @@
 			"sourceIndexes" : 
 			[
 				4,
-				9,
-				11
+				11,
+				12,
+				15
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				12
+				16
 			]
 		}
 	],
@@ -362,6 +367,22 @@
 		},
 		{
 			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "pageview.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "pageview.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "pageview.ui",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
 			"path" : "FolkTell_zh_CN.ts",
 			"sourceGroupIndex" : 2
 		},
@@ -369,6 +390,12 @@
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/include/ui_browserwindow.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/include/ui_pageview.h",
 			"sourceGroupIndex" : 1
 		},
 		{

@@ -25,6 +25,9 @@ set(PROJECT_SOURCES
         toolbar.h
         browser.cpp
         browser.h
+        pageview.cpp
+        pageview.h
+        pageview.ui
         ${TS_FILES}
 )
 
