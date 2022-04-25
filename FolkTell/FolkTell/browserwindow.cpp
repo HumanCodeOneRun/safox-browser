@@ -11,12 +11,18 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
 
     //todo:获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
+
+    //...
+
     this->curHeight=1920,this->curWidth=1080;
     QMainWindow::resize(this->curHeight,this->curWidth);
-//    this->setStyleSheet("QMainWindow{background-color:rgba(46, 50, 53, 100);}");
+
+
+    //设置背景颜色
+    this->setStyleSheet("QMainWindow{background-color: rgba(46, 50, 53, 100)}");
 
     /* toolbar */
-    this->tb = new Toolbar(this,0,50,1920,100);
+    this->tb = new Toolbar(this,0,50,1920,50);
 
     /* 关闭按钮 */
     QToolButton* closeBtn = new QToolButton(this);

@@ -2,4 +2,5 @@
 #include "EWIEGA46WW/moc_browser.cpp"
 #include "EWIEGA46WW/moc_browserwindow.cpp"
 #include "EWIEGA46WW/moc_pageview.cpp"
+#include "EWIEGA46WW/moc_qtsingleapplication.cpp"
 #include "EWIEGA46WW/moc_toolbar.cpp"

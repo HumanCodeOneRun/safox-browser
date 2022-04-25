@@ -29,7 +29,7 @@ public:
             BrowserWindow->setObjectName(QString::fromUtf8("BrowserWindow"));
         BrowserWindow->resize(3327, 1793);
         BrowserWindow->setStyleSheet(QString::fromUtf8("border-radius: 0px 0px 8px 8px;\n"
-"background-color: rgba(46, 50, 53, 100);"));
+""));
         centralwidget = new QWidget(BrowserWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setEnabled(true);

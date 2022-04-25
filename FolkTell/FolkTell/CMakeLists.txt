@@ -28,6 +28,10 @@ set(PROJECT_SOURCES
         pageview.cpp
         pageview.h
         pageview.ui
+        mainapplication.cpp
+        mainapplication.h
+        qtsingleapplication.cpp
+        qtsingleapplication.h
         ${TS_FILES}
 )
 

@@ -1,5 +1,8 @@
 D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/EWIEGA46WW/moc_browserwindow.cpp: D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.h \
   D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/moc_predefs.h \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/QHash \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/QPointer \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/qabstractitemmodel.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qalgorithms.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qanystringview.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qarraydata.h \
@@ -34,6 +37,7 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtCore/qiterator.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qline.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qlist.h \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/qlocale.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qlogging.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qmap.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qmargins.h \
@@ -48,9 +52,11 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtCore/qobjectdefs_impl.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qpair.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qpoint.h \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/qpointer.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qprocessordetection.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qrect.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qrefcount.h \
+  D:/Qt/6.2.4/mingw_64/include/QtCore/qregularexpression.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qscopedpointer.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qscopeguard.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qset.h \
@@ -78,6 +84,8 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtCore/qvariant.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qvarlengtharray.h \
   D:/Qt/6.2.4/mingw_64/include/QtCore/qversiontagging.h \
+  D:/Qt/6.2.4/mingw_64/include/QtGui/QPainter \
+  D:/Qt/6.2.4/mingw_64/include/QtGui/qaction.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qbitmap.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qbrush.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qcolor.h \
@@ -89,6 +97,7 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtGui/qimage.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qkeysequence.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qpaintdevice.h \
+  D:/Qt/6.2.4/mingw_64/include/QtGui/qpainter.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qpalette.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qpen.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qpixelformat.h \
@@ -103,17 +112,28 @@ D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_Min
   D:/Qt/6.2.4/mingw_64/include/QtGui/qtgui-config.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qtguiglobal.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qtransform.h \
+  D:/Qt/6.2.4/mingw_64/include/QtGui/qvalidator.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs.h \
   D:/Qt/6.2.4/mingw_64/include/QtGui/qwindowdefs_win.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QLineEdit \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QMainWindow \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/QMenu \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/QStyleOption \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QToolButton \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/QWidget \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractbutton.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractslider.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qabstractspinbox.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qframe.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qlineedit.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qmainwindow.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qmenu.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qrubberband.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qsizepolicy.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qslider.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qstyle.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qstyleoption.h \
+  D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtabbar.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtabwidget.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtoolbutton.h \
   D:/Qt/6.2.4/mingw_64/include/QtWidgets/qtwidgets-config.h \

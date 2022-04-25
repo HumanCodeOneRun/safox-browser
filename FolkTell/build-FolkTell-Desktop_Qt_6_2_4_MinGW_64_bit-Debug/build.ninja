@@ -109,6 +109,22 @@ build CMakeFiles/FolkTell.dir/pageview.cpp.obj: CXX_COMPILER__FolkTell_Debug D$:
   OBJECT_DIR = CMakeFiles\FolkTell.dir
   OBJECT_FILE_DIR = CMakeFiles\FolkTell.dir
 
+build CMakeFiles/FolkTell.dir/mainapplication.cpp.obj: CXX_COMPILER__FolkTell_Debug D$:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainapplication.cpp || cmake_object_order_depends_target_FolkTell
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\FolkTell.dir\mainapplication.cpp.obj.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -ID:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug -ID:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell -ID:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/include -isystem D:/Qt/6.2.4/mingw_64/include/QtCore -isystem D:/Qt/6.2.4/mingw_64/include -isystem D:/Qt/6.2.4/mingw_64/mkspecs/win32-g++ -isystem D:/Qt/6.2.4/mingw_64/include/QtWidgets -isystem D:/Qt/6.2.4/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\FolkTell.dir
+  OBJECT_FILE_DIR = CMakeFiles\FolkTell.dir
+
+build CMakeFiles/FolkTell.dir/qtsingleapplication.cpp.obj: CXX_COMPILER__FolkTell_Debug D$:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/qtsingleapplication.cpp || cmake_object_order_depends_target_FolkTell
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\FolkTell.dir\qtsingleapplication.cpp.obj.d
+  FLAGS = -g -std=gnu++17
+  INCLUDES = -ID:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug -ID:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell -ID:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/include -isystem D:/Qt/6.2.4/mingw_64/include/QtCore -isystem D:/Qt/6.2.4/mingw_64/include -isystem D:/Qt/6.2.4/mingw_64/mkspecs/win32-g++ -isystem D:/Qt/6.2.4/mingw_64/include/QtWidgets -isystem D:/Qt/6.2.4/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\FolkTell.dir
+  OBJECT_FILE_DIR = CMakeFiles\FolkTell.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target FolkTell
@@ -117,7 +133,7 @@ build CMakeFiles/FolkTell.dir/pageview.cpp.obj: CXX_COMPILER__FolkTell_Debug D$:
 #############################################
 # Link the executable FolkTell.exe
 
-build FolkTell.exe: CXX_EXECUTABLE_LINKER__FolkTell_Debug CMakeFiles/FolkTell.dir/FolkTell_autogen/mocs_compilation.cpp.obj CMakeFiles/FolkTell.dir/main.cpp.obj CMakeFiles/FolkTell.dir/browserwindow.cpp.obj CMakeFiles/FolkTell.dir/toolbar.cpp.obj CMakeFiles/FolkTell.dir/browser.cpp.obj CMakeFiles/FolkTell.dir/pageview.cpp.obj | D$:/Qt/6.2.4/mingw_64/lib/libQt6Widgets.a D$:/Qt/6.2.4/mingw_64/lib/libQt6Gui.a D$:/Qt/6.2.4/mingw_64/lib/libQt6Core.a D$:/Qt/6.2.4/mingw_64/lib/libQt6EntryPoint.a || FolkTell_autogen FolkTell_autogen_timestamp_deps
+build FolkTell.exe: CXX_EXECUTABLE_LINKER__FolkTell_Debug CMakeFiles/FolkTell.dir/FolkTell_autogen/mocs_compilation.cpp.obj CMakeFiles/FolkTell.dir/main.cpp.obj CMakeFiles/FolkTell.dir/browserwindow.cpp.obj CMakeFiles/FolkTell.dir/toolbar.cpp.obj CMakeFiles/FolkTell.dir/browser.cpp.obj CMakeFiles/FolkTell.dir/pageview.cpp.obj CMakeFiles/FolkTell.dir/mainapplication.cpp.obj CMakeFiles/FolkTell.dir/qtsingleapplication.cpp.obj | D$:/Qt/6.2.4/mingw_64/lib/libQt6Widgets.a D$:/Qt/6.2.4/mingw_64/lib/libQt6Gui.a D$:/Qt/6.2.4/mingw_64/lib/libQt6Core.a D$:/Qt/6.2.4/mingw_64/lib/libQt6EntryPoint.a || FolkTell_autogen FolkTell_autogen_timestamp_deps
   FLAGS = -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = D:/Qt/6.2.4/mingw_64/lib/libQt6Widgets.a  D:/Qt/6.2.4/mingw_64/lib/libQt6Gui.a  D:/Qt/6.2.4/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  D:/Qt/6.2.4/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -166,7 +182,7 @@ build FolkTell_autogen/timestamp FolkTell_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Phony custom command for CMakeFiles\FolkTell_autogen_timestamp_deps
 
-build CMakeFiles/FolkTell_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/FolkTell_autogen_timestamp_deps: phony D$:/Qt/6.2.4/mingw_64/bin/Qt6Core.dll D$:/Qt/6.2.4/mingw_64/./bin/moc.exe D$:/Qt/6.2.4/mingw_64/./bin/uic.exe D$:/Qt/6.2.4/mingw_64/bin/Qt6Widgets.dll
+build CMakeFiles/FolkTell_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/FolkTell_autogen_timestamp_deps: phony D$:/Qt/6.2.4/mingw_64/bin/Qt6Core.dll D$:/Qt/6.2.4/mingw_64/./bin/uic.exe D$:/Qt/6.2.4/mingw_64/bin/Qt6Widgets.dll D$:/Qt/6.2.4/mingw_64/./bin/moc.exe
 
 
 #############################################

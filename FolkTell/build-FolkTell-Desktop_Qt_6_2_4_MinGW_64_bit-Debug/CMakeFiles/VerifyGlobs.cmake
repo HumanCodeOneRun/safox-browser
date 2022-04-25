@@ -44,7 +44,10 @@ set(OLD_GLOB
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browser.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/main.cpp"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainapplication.cpp"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainmenu.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/pageview.cpp"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/qtsingleapplication.cpp"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -66,7 +69,10 @@ file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/Fo
 set(OLD_GLOB
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browser.h"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.h"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainapplication.h"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainmenu.h"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/pageview.h"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/qtsingleapplication.h"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/toolbar.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
@@ -168,6 +174,7 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/*.ui")
 set(OLD_GLOB
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/browserwindow.ui"
+  "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainmenu.ui"
   "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/pageview.ui"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

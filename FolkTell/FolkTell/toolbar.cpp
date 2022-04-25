@@ -1,16 +1,14 @@
 #include "toolbar.h"
 
+
 Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QWidget(parent)
 {
-    init_x = x;
-    init_y = y;
-    width = width;
-    height = height;
+    this->init_x = x;
+    this->init_y = y;
+    this->width = width;
+    this->height = height;
     this->setGeometry(x,y,width,height);
-    //todo:组件背景颜色设置
-    this->setStyleSheet("Toolbar{background-color:white;}");
-
 
     /* 书签按钮 */
     bookmarkerBtn = new QToolButton(parent);
@@ -51,4 +49,19 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     urlBar = new QLineEdit(parent);
     urlBar->setGeometry(x+460,y+10,1000,30);
     urlBar->setStyleSheet("QLineEdit{background-color:rgba(35, 38, 43, 100);border-radius:8px;}");
+}
+
+void Toolbar::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    /* 绘制Toolbar背景 */
+    p.setPen(Qt::NoPen);
+    p.setBrush(QColor(50, 54, 64, 100));
+    p.drawRect(0,0,this->width,this->height);
 }

@@ -1,12 +1,22 @@
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
-#include <QWidget>
+#include <QMenu>
+#include <QHash>
 #include<QToolButton>
 #include<QLineEdit>
+#include <QPointer>
+#include<QPainter>
+#include<QStyleOption>
 
-class Toolbar: public QWidget
+class Preferences;
+class HistoryMenu;
+class BookmarksMenu;
+class BrowserWindow;
+
+class Toolbar:public QWidget
 {
     Q_OBJECT
+
 public:
     explicit Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0);
     QToolButton* bookmarkerBtn;
@@ -17,11 +27,16 @@ public:
     QToolButton* settingBtn;
     QToolButton* addBtn;
     QLineEdit* urlBar;
+
 private:
     int init_x;
     int init_y;
     int width;
     int height;
+    void init();
+    void paintEvent(QPaintEvent *event);
+    BrowserWindow* m_window;
+    QPalette palette;
 };
 
 #endif // TOOLBAR_H

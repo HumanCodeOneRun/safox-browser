@@ -32,7 +32,7 @@
 			{
 				"command" : 3,
 				"file" : 1,
-				"line" : 35,
+				"line" : 39,
 				"parent" : 0
 			},
 			{
@@ -56,7 +56,7 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 61,
+				"line" : 65,
 				"parent" : 0
 			},
 			{
@@ -181,7 +181,9 @@
 				2,
 				5,
 				7,
-				9
+				9,
+				12,
+				14
 			]
 		}
 	],
@@ -279,7 +281,9 @@
 				2,
 				5,
 				7,
-				9
+				9,
+				12,
+				14
 			]
 		},
 		{
@@ -291,7 +295,9 @@
 				8,
 				10,
 				13,
-				14
+				15,
+				17,
+				18
 			]
 		},
 		{
@@ -300,15 +306,15 @@
 			[
 				4,
 				11,
-				12,
-				15
+				16,
+				19
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				16
+				20
 			]
 		}
 	],
@@ -380,6 +386,28 @@
 			"backtrace" : 4,
 			"path" : "pageview.ui",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "mainapplication.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "mainapplication.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "qtsingleapplication.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "qtsingleapplication.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 4,

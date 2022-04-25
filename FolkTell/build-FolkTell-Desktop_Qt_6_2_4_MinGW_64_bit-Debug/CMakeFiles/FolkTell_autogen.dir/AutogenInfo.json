@@ -282,9 +282,21 @@
 			null
 		],
 		[
+			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainapplication.h",
+			"MU",
+			"EWIEGA46WW/moc_mainapplication.cpp",
+			null
+		],
+		[
 			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/pageview.h",
 			"MU",
 			"EWIEGA46WW/moc_pageview.cpp",
+			null
+		],
+		[
+			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/qtsingleapplication.h",
+			"MU",
+			"EWIEGA46WW/moc_qtsingleapplication.cpp",
 			null
 		],
 		[
@@ -374,7 +386,17 @@
 			null
 		],
 		[
+			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/mainapplication.cpp",
+			"MU",
+			null
+		],
+		[
 			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/pageview.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/qtsingleapplication.cpp",
 			"MU",
 			null
 		],
