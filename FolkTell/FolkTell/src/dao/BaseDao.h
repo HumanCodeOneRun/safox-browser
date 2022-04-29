@@ -6,7 +6,7 @@
 #include <QtSql/QSqlQuery>
 #include <QReadWriteLock>
 #include <QtSql/QSqlError>
-#define DEFAULT_DB_PATH "./.folktell.db"
+#define DEFAULT_DB_PATH "./folktell_schema"
 #define DEFAULT_TABLE_NAME "dummy_table"
 
 class BaseDao {

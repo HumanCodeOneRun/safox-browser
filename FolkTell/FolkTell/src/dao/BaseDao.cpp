@@ -1,4 +1,4 @@
-#include "BaseDao.h"
+#include "basedao.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -6,10 +6,11 @@
 bool BaseDao::checkdbpath(const QString& _db_path){
     std::string path_string = _db_path.toStdString();
     std::ifstream fin(path_string);
+    qDebug()<<"checkdpath test1";
     if(!fin){
         std::ofstream fout;
         fout.open(path_string, std::ios::app|std::ios::out);
-        
+        qDebug()<<"checkdpath test2";
         if(!fout.is_open()){
             qDebug() << "[error] fail to open/create db file!\n";
             return false;

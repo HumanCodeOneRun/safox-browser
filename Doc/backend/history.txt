@@ -1,0 +1,9 @@
+
+
+notice：
+1，注意修改cmakelists 里的 col:14 路径,同时cmakelists里添了些新内容
+2，运行时termianl切换到FolkTell文件夹(src)上一层,执行
+mkdir build
+cd build
+cmake ..
+make

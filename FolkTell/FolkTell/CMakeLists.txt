@@ -11,10 +11,14 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools )
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql) 
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core)
+find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
+
+
 
 set(TS_FILES FolkTell_zh_CN.ts)
 
@@ -28,10 +32,22 @@ set(PROJECT_SOURCES
         src/toolbar.ui
         src/browser.cpp
         src/browser.h
-        src/dao/BaseDao.h
-        src/dao/BaseDao.cpp
-        src/dao/BookmarkDao.h
-        src/dao/BookmarkDao.cpp
+        #src/history/historymodel.cpp
+        #src/history/historymodel.h
+        src/history/historyitem.cpp
+        src/history/historyitem.h
+        src/history/history.cpp
+        src/history/history.h
+        src/history/historymodel.h
+        src/history/historymodel.cpp
+        src/webengine/webview.cpp
+        src/webengine/webview.h
+        src/dao/basedao.h
+        src/dao/basedao.cpp
+        src/dao/bookmarkdao.cpp
+        src/dao/bookmarkdao.h
+        src/dao/bookmarkgroupdao.cpp
+        src/dao/bookmarkgroupdao.h
         ${TS_FILES}
 )
 
@@ -62,15 +78,15 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::Sql)
+target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::Core Qt6::Sql)
 
-set_target_properties(FolkTell PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
+#set_target_properties(FolkTell PROPERTIES
+ #   MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+  #  MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+   # MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    #MACOSX_BUNDLE TRUE
+    #WIN32_EXECUTABLE TRUE
+#)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)

@@ -1,15 +1,46 @@
-#include "browserwindow.h"
+//#include "browserwindow.h"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QtWebEngineCore/QtWebEngineCore>
-#include <QtWebEngineWidgets/QWebEngineView>
+
+//test lib used by cuddly
+//#include "history/historymodel.h"
+#include <iostream>
+#include <QObject>
+#include <QList>
+#include <string>
+#include <QString>
+#include <QDateTime>
+#include <QDate>
 #include <QDebug>
+#include <QMainWindow>
+#include <QWebEnginePage>
+
+//#include "webengine/webview.h"
+//#include "history/history.h"
+//include "history/historymodel.h"
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include "dao/basedao.h"
+
 
 int main(int argc, char *argv[])
 {
+    //just test code
     QApplication a(argc, argv);
+
+    
+
+
+    a.exec();    
+}
+
+
+/*
+oringinal code in main():
+QApplication a(argc, argv);
+
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -20,9 +51,10 @@ int main(int argc, char *argv[])
         }
     }
     BrowserWindow w;
-
-
-
     w.show();
     return a.exec();
-}
+
+
+*/
+
+
