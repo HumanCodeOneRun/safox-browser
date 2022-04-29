@@ -1,0 +1,19 @@
+# ninja log v5
+1	108	0	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	87691ac11f6e0e24
+1310	5456	6725899224749683	CMakeFiles/FolkTell.dir/qtsingleapplication.cpp.obj	b2ac5ccb105b0867
+13	570	6729496755609025	FolkTell_autogen/timestamp	6faa2f492234cb5b
+1262	4789	6725899218020065	CMakeFiles/FolkTell.dir/browser.cpp.obj	b4cf702cc3af27a3
+13	570	6729496755609025	FolkTell_autogen/mocs_compilation.cpp	6faa2f492234cb5b
+13	570	6729496755609025	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/timestamp	6faa2f492234cb5b
+594	8947	6729417893554724	CMakeFiles/FolkTell.dir/browserwindow.cpp.obj	8e2b2eca28cdf25d
+13	570	6729496755609025	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/mocs_compilation.cpp	6faa2f492234cb5b
+1476	8824	6725989751308244	CMakeFiles/FolkTell.dir/mainapplication.cpp.obj	2886d84afa6e18b7
+611	7707	6729417881131865	CMakeFiles/FolkTell.dir/pageview.cpp.obj	f88f0be351309b38
+2206	7537	6726027300127080	CMakeFiles/FolkTell.dir/main.cpp.obj	3ad207fce2ccd9b2
+628	8596	6729417890032065	CMakeFiles/FolkTell.dir/toolbar.cpp.obj	921d897cb4d920d5
+2131	7753	6726027302307529	CMakeFiles/FolkTell.dir/FolkTell_autogen/mocs_compilation.cpp.obj	c0f39c5d18fef1cd
+8948	10066	6729417904671841	FolkTell.exe	d7b460c844644677
+1173	1824	6729417453129684	CMakeFiles/FolkTell.dir/FolkTell_autogen/EWIEGA46WW/qrc_icon.cpp.obj	f4449c42b4969103
+110	1100	6729496747698583	build.ninja	f7af397439512e06
+818	1149	6729417446436887	FolkTell_autogen/EWIEGA46WW/qrc_icon.cpp	ec423f22fed015eb
+818	1149	6729417446436887	D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/EWIEGA46WW/qrc_icon.cpp	ec423f22fed015eb

@@ -32,6 +32,7 @@ set(PROJECT_SOURCES
         mainapplication.h
         qtsingleapplication.cpp
         qtsingleapplication.h
+        icon.qrc
         ${TS_FILES}
 )
 

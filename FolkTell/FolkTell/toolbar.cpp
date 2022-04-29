@@ -14,36 +14,51 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     bookmarkerBtn = new QToolButton(parent);
     bookmarkerBtn->setGeometry(x+150,y+10,45,30);
     bookmarkerBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon bookmaker = QIcon(":/icon/image/bookmaker.png");
+    bookmarkerBtn->setIcon(bookmaker);
 
     /* 首页按钮 */
     homeBtn = new QToolButton(parent);
     homeBtn->setGeometry(x+232,y+10,45,30);
     homeBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon homepage = QIcon(":/icon/image/homepage.png");
+    homeBtn->setIcon(homepage);
 
     /* 下载按钮 */
     downloadBtn = new QToolButton(parent);
     downloadBtn->setGeometry(x+1575,y+10,45,30);
     downloadBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon download = QIcon(":/icon/image/download.png");
+    downloadBtn->setIcon(download);
 
     /* 历史按钮 */
     historyBtn = new QToolButton(parent);
     historyBtn->setGeometry(x+1640,y+10,45,30);
     historyBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon history = QIcon(":/icon/image/history.png");
+    historyBtn->setIcon(history);
 
     /* 账户按钮 */
     accountBtn = new QToolButton(parent);
     accountBtn->setGeometry(x+1705,y+10,45,30);
     accountBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon account = QIcon(":/icon/image/account.png");
+    accountBtn->setIcon(account);
+
 
     /* 设置按钮 */
     settingBtn = new QToolButton(parent);
     settingBtn->setGeometry(x+1770,y+10,45,30);
     settingBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon setting = QIcon(":/icon/image/setting.png");
+    settingBtn->setIcon(setting);
 
     /* 添加按钮 */
     addBtn = new QToolButton(parent);
     addBtn->setGeometry(x+1770,y+10,45,30);
     addBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon add = QIcon(":/icon/image/add.png");
+    addBtn->setIcon(add);
 
     /* 网址 */
     urlBar = new QLineEdit(parent);

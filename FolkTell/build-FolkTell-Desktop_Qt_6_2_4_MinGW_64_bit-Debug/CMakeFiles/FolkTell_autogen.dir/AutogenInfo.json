@@ -262,7 +262,8 @@
 		"D:/Qt/6.2.4/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsAdditionalTargetInfo.cmake",
 		"D:/Qt/6.2.4/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsVersionlessTargets.cmake",
 		"D:/Qt/6.2.4/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake",
-		"D:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeParseArguments.cmake"
+		"D:/Qt/Tools/CMake_64/share/cmake-3.21/Modules/CMakeParseArguments.cmake",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/icon.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell",
 	"DEP_FILE" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/FolkTell_autogen/deps",
