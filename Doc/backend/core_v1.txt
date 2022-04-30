@@ -1,39 +1,39 @@
-类结构:
-MainApplication:QsingleApplication:
-    //与浏览器无关但与程序有关类
-    CommandLineOption //该类用于处理启动程序时的一些参数传递
+Console:
+控制台类，内含message类
+message有category和level属性（比如网络类别，报错等级）
+维护一个message队列
+用来处理事务信息,比如报错
+JsonSettings:
+维护一个本地的json文档，
+// QT数据库的知识 https://www.xinbaoku.com/archive/2AcqsEIy.html
 
-    //浏览器相关类
-<<<<<<< HEAD
-    HistoryManager
-=======
-    History
-    HistoryManager
-    Bookmarks
->>>>>>> 739d347292381acb3e7cec6dfe2be967ba9b5299
-    BookmarksManager
-    DownloadManager
-    SearchEngineManager
-    ClosedWindowsManager
-    UserAgentManager//该类相当原来LoginManage,账户的数据库管理相关操作也会在这一模块
-    PluginManager
-    SessionManager
+HistoryModel:
 
-    Windows //BrowserWindow List存储打开的多窗口
+model类，内含Entry类，作为项
+定义了enum类型 HistoryEntryRole, HistoryType作为角色，给项赋值。
+Entry:
+void setData(const QVariant &value, int role) override;
+void setItemData(const QVariant &value, int role);
+QString getTitle() const;
+QUrl getUrl() const;
+QDateTime getTimeVisited() const;
+QIcon getIcon() const;
+quint64 getIdentifier() const; //获取用户编号
 
-    //浏览器一些相关的状态参数(参数多的话后期可以独立成一类)
-    //......后期再不断补充
+m_urls:  键值对，一个url可以有多个entry
+M_identifiers:  map，用户编号和对应的entry
 
+创建该类时需要读取本地json文件，修改该类后会保存修改到本地json文件
 
-    Settings //Settings中存储一些默认设置和设置参数等，当用户没有设置参数时加载默认设置
-    commonstate //该类存储浏览器常用的一些表示状态的参数类似falkon中的qzcommon,该类也可用于存储浏览器的一些默认参数值
+Utils：
+normalizeUrl()
+
 
 
 BrowserWindow:
-    Toolbar*
     TabWidget*
     Navigation*
-    BookmarksView*
+    BookMarksToolBar*
 
 TabWidget: QTabWidget
     WebTab*
@@ -42,14 +42,6 @@ WebTab: Qwidget
     TabbedWebView*
 
 TabbedWebView: WebView
-
-HistoryView
-    HistoryManager*
-
-BookmarksView
-    BookmarksManager*
-
-Toolbar
 
 
 

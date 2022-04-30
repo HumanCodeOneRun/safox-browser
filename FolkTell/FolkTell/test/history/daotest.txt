@@ -1,0 +1,48 @@
+/*
+    BaseDao dao;
+    dao.printInfo();
+    dao.createTable();
+    */
+    
+
+
+    
+    
+    //QString cmd = "CREATE TABLE IF NOT EXISTS test (ID INTEGER PRIMARY KEY, NAME TEXT)";
+
+    //QSqlQuery query(cmd);
+    
+    
+    /*
+    select test:
+    QSqlQuery query("select * from test");
+    while(query.next()) {
+        QString name = query.value(1).toString();
+        qDebug()<<"name: "<<name;
+    }
+    */
+
+    /*
+    insert test:
+    QString cmd = "INSERT INTO test(ID, NAME)  VALUES(:id, :name)";
+    QSqlQuery query;
+    query.prepare(cmd);
+    query.bindValue(":id", 123);
+    query.bindValue(":name", QString("haha"));
+    if(!query.exec())
+        qDebug()<<"exec failed";
+    
+    insert test2:
+    QString cmd = "INSERT INTO test(ID, NAME)  VALUES(:id, :name)";
+    QSqlQuery query(db);
+    query.prepare(cmd);
+    query.bindValue(":id", 456);
+    query.bindValue(":name", QString("handsome boy"));
+    if(!query.exec())
+        qDebug()<<"exec failed";
+    */
+    
+    
+
+
+    //QString cmd = "INSERT INTO " + this->getTableName() + "(ID, NAME)"+" VALUES(:id, :name)";

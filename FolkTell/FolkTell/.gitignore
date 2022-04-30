@@ -71,3 +71,16 @@ Thumbs.db
 *.dll
 *.exe
 
+CMakeFiles
+CmakeCache.txt
+*.cmake
+FolkTell_autogen
+.lupdate
+*.prev
+*.user
+*.sh
+build
+.qtc_clangd
+.vscode
+Testing
+*.db
