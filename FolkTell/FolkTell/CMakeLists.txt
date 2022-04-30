@@ -32,6 +32,8 @@ set(PROJECT_SOURCES
         src/toolbar.ui
         src/browser.cpp
         src/browser.h
+        src/mainapplication.cpp
+        src/mainapplication.h
         #src/history/historymodel.cpp
         #src/history/historymodel.h
         src/history/historyitem.cpp
