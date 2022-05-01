@@ -29,8 +29,8 @@ set(PROJECT_SOURCES
         src/toolbar.ui
         src/browser.cpp
         src/browser.h
-        src/BookmarkModel.h
-        src/BookmarkModel.cpp
+        src/bookmark/BookmarkModel.h
+        src/bookmark/BookmarkModel.cpp
         src/dao/BaseDao.h
         src/dao/BaseDao.cpp
         src/dao/BookmarkDao.h
@@ -69,7 +69,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::Sql Qt6::Core)
+target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core)
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

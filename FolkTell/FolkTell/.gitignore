@@ -84,3 +84,4 @@ build
 .vscode
 Testing
 *.db
+.folktell.db-journal

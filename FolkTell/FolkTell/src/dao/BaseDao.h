@@ -2,6 +2,7 @@
 #define BASEDAO_H
 
 #include <QDebug>
+#include <QUrl>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QReadWriteLock>

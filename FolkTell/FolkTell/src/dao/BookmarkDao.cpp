@@ -170,7 +170,8 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
 
     QSqlQuery query(this->db);
     query.prepare(cmd);
-    int id = qHash(name);
+
+    int id = qHash(url.toString());
 
     query.bindValue(":uid", uid);
     query.bindValue(":id", id);
