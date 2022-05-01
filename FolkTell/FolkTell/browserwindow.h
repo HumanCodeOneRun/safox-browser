@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QWidget>
 #include "toolbar.h"
-#include <QToolButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BrowserWindow; }
@@ -17,15 +16,8 @@ class BrowserWindow : public QMainWindow
 public:
     BrowserWindow(QWidget *parent = nullptr);
     int curHeight,curWidth;
-    Toolbar* tb;
+    ToolBar* tb;
     ~BrowserWindow();
-
-private slots:
-    void on_closeBtn_clicked();
-
-    void on_minBtn_clicked();
-
-    void on_hidBtn_clicked();
 
 private:
     Ui::BrowserWindow *ui;

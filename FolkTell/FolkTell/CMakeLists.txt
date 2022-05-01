@@ -23,16 +23,9 @@ set(PROJECT_SOURCES
         browserwindow.ui
         toolbar.cpp
         toolbar.h
+        toolbar.ui
         browser.cpp
         browser.h
-        pageview.cpp
-        pageview.h
-        pageview.ui
-        mainapplication.cpp
-        mainapplication.h
-        qtsingleapplication.cpp
-        qtsingleapplication.h
-        icon.qrc
         ${TS_FILES}
 )
 
