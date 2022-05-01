@@ -23,10 +23,8 @@ int main(int argc, char *argv[])
     }
     BrowserWindow w;
 
-    BookmarkModel model;
 
-    //w.show();
-    //return a.exec();
-    return 1;
+    w.show();
+    return a.exec();
 
 }

@@ -81,7 +81,7 @@ QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndName(const int& uid, const 
 }
 
 bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
-    QString cmd = "UPDATE " + this->table_name + "SET NAME=:name WHERE ID=:id AND UID=:uid";
+    QString cmd = "UPDATE " + this->table_name + " SET NAME =:name WHERE ID =:id AND UID =:uid";
     QSqlQuery query(this->db);
     
     if(!query.prepare(cmd)){
@@ -102,7 +102,7 @@ bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
 }
 
 bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
-    QString cmd = "UPDATE " + this->table_name + "SET GID=:gid WHERE ID=:id AND UID=:uid";
+    QString cmd = "UPDATE " + this->table_name + " SET GID=:gid WHERE ID=:id AND UID=:uid";
     QSqlQuery query(this->db);
     
     if(!query.prepare(cmd)){
@@ -123,7 +123,7 @@ bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
 }
 
 bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
-    QString cmd = "UPDATE " + this->table_name + "SET ICON=:icon WHERE ID=:id AND UID=:uid";
+    QString cmd = "UPDATE " + this->table_name + " SET ICON=:icon WHERE ID=:id AND UID=:uid";
     QSqlQuery query(this->db);
     
     if(!query.prepare(cmd)){
@@ -144,7 +144,7 @@ bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
 }
 
 bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
-    QString cmd = "UPDATE " + this->table_name + "SET URL=:url WHERE ID=:id AND UID=:uid";
+    QString cmd = "UPDATE " + this->table_name + " SET URL=:url WHERE ID=:id AND UID=:uid";
     QSqlQuery query(this->db);
     
     if(!query.prepare(cmd)){
@@ -166,7 +166,7 @@ bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
 
 
 bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, const QUrl& url, const QUrl& icon){
-    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, ID, GID, NAME, URL)"+" VALUES(:uid, :id, :gid, :name, :url, :icon)";
+    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, ID, GID, NAME, URL, ICON)"+" VALUES(:uid, :id, :gid, :name, :url, :icon)";
 
     QSqlQuery query(this->db);
     query.prepare(cmd);
@@ -177,7 +177,8 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
     query.bindValue(":id", id);
     query.bindValue(":gid", gid);
     query.bindValue(":name", name);
-    query.bindValue(":url", url);
+    query.bindValue(":url", url.toString());
+    query.bindValue(":icon",icon.toString());
     
     if(!query.exec()){
         qDebug() << "[error] fail to insert,  " << query.lastError().text();

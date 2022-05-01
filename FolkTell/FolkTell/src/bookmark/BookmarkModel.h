@@ -34,6 +34,7 @@ public:
 
         bool addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
+        
 
         ~BookmarkItem();
     private:
@@ -65,6 +66,7 @@ public:
         bool setName(const int& uid, const int& gid, const QString& name);
         bool setIcon(const int& uid, const int& gid, const QUrl& icon);
 
+        bool deleteBookmarkGroup(const int& uid, const int& gid);
         ~BookmarkGroupItem();
 
     private:
@@ -86,7 +88,7 @@ public:
     bool addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon);
     bool deleteBookmark(const int& uid, const int& id);
     bool editBookmark(const int& uid, const int& id, const QString& name="", const QUrl& url=QUrl(""), const QString& gname="");
-    
+    bool deleteBookmarkGroup(const int& uid, const int& gid);
 
 private:
 

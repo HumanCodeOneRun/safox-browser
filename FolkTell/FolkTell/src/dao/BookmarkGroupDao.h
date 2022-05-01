@@ -1,7 +1,7 @@
 #ifndef BOOKMARKGROUPDAO_H
 #define BOOKMARKGROUPDAO_H
 #include "BaseDao.h"
-
+#include <QDateTime>
 #define BOOKMARKGROUPDAO_TABLE_NAME "BookmarkGroup"
 
 class BookmarkGroupDao : public BaseDao{
@@ -23,6 +23,9 @@ public:
     // insert
     bool insert(const int& uid, const QString& name, const QString& icon);
     
+    // delete
+    bool remove(const int& uid, const int& gid);
+
     // debug
 
     bool deleteTable();

@@ -11,7 +11,7 @@ BookmarkGroupDao& BookmarkGroupDao::getDao(){
 }
 bool BookmarkGroupDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, GID INTEGER AUTOINCREMENT, NAME TEXT UNIQUE, ICON TEXT, PRIMARY KEY(UID, GID));";
+                " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT UNIQUE, ICON TEXT);";
     QSqlQuery query(this->db);
     bool ok = query.exec(cmd);
 
@@ -68,8 +68,7 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndName(const int& uid, const QStr
 QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
     QString cmd = "SELECT * FROM " + this->getTableName() + " WHERE UID="+QString::number(uid);
     QSqlQuery query(this->db);
-    qDebug() << cmd;
-    qDebug() << this->getDbPath();
+    
     QVector<QVector<QVariant>> ret;
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
@@ -90,14 +89,15 @@ QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
 }
 
 bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString& icon){
-    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, NAME, ICON) VALUES(:uid,:name,:icon)";
+    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, ICON) VALUES(:uid,:gid, :name,:icon)";
     QSqlQuery query(this->db);
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
     }
-    int id = qHash(name);
+    int id = qHash(QDateTime::currentDateTime().toString()+name);
     query.bindValue(":uid", uid);
+    query.bindValue(":gid", id);
     query.bindValue(":name", name);
     query.bindValue(":icon", icon);
 
@@ -145,6 +145,24 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
 
     return true;
 }
+
+ bool BookmarkGroupDao::remove(const int& uid, const int& gid){
+    QString cmd = "DELETE FROM " + this->getTableName() + " WHERE UID=:uid AND GID=:gid";
+    QSqlQuery query(this->db);
+     if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+        return false; 
+    }
+    query.bindValue(":uid", uid);
+    query.bindValue(":gid", gid);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+        return false; 
+    }
+
+    return true;
+ }
 
 BookmarkGroupDao::~BookmarkGroupDao(){
     (this->db).close();

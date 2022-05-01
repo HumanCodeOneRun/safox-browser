@@ -100,6 +100,10 @@ bool BookmarkModel::BookmarkGroupItem::setIcon(const int& uid, const int& gid, c
     return (this->dao).setIcon(uid, gid, icon.toString());
 }
 
+bool BookmarkModel::BookmarkGroupItem::deleteBookmarkGroup(const int& uid, const int& gid){
+    return (this->dao).remove(uid, gid);
+}
+
 BookmarkModel::BookmarkGroupItem::~BookmarkGroupItem(){
     (this->dao).close();
 }
@@ -234,6 +238,12 @@ bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& n
 bool BookmarkModel::deleteBookmark(const int& uid, const int& id){
     BookmarkItem item;
     return item.deleteBookmark(uid, id);
+}
+
+
+bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
+    BookmarkGroupItem item;
+    return item.deleteBookmarkGroup(uid, gid);
 }
 
 BookmarkModel::~BookmarkModel(){
