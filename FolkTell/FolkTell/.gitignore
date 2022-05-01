@@ -85,3 +85,6 @@ build
 Testing
 *.db
 .folktell.db-journal
+../../.DS_Store
+../../Doc/.DS_Store
+../.DS_Store
