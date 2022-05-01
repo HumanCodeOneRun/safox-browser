@@ -1,4 +1,4 @@
-#include "BookmarkModel.h"
+#include "bookmarkmodel.h"
 
 // bookmark group item
 BookmarkModel::BookmarkGroupItem::BookmarkGroupItem()

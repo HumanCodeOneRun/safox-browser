@@ -7,7 +7,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-#include "src/bookmark/BookmarkModel.h"
+
 
 int main(int argc, char *argv[])
 {

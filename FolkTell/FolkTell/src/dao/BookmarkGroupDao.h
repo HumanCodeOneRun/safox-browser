@@ -1,6 +1,6 @@
 #ifndef BOOKMARKGROUPDAO_H
 #define BOOKMARKGROUPDAO_H
-#include "BaseDao.h"
+#include "basedao.h"
 #include <QDateTime>
 #define BOOKMARKGROUPDAO_TABLE_NAME "BookmarkGroup"
 

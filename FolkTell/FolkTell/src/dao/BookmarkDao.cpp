@@ -1,4 +1,4 @@
-#include "BookmarkDao.h"
+#include "bookmarkdao.h"
 
 BookmarkDao::BookmarkDao(const QString& _db_path, const QString& _table_name )
 : BaseDao(_db_path, _table_name){

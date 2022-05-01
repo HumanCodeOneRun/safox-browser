@@ -1,6 +1,6 @@
 #ifndef BOOKMARKDAO_H
 #define BOOKMARKDAO_H
-#include "BaseDao.h"
+#include "basedao.h"
 
 #define BOOKMARKDAO_TABLE_NAME "Bookmark"
 
