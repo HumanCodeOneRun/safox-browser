@@ -5,31 +5,13 @@
 
 
 #include <QObject>
-
 #include <QString>
 #include <QUrl>
 #include <QDateTime>
 #include <QHash>
 #include "../webengine/webview.h"
 #include "historydao.h"
-//#include "historymodel.h"
 
-
-/*
-struct HistoryEntry{
-    int id;
-    QString title;
-    QDateTime date;
-    QUrl url;
-    //for test
-    
-    int count;
-    QDateTime date;
-    QString urlString;
-    QString title;
-    
-};
-*/
 
 #define HISTORY_ID_SEED 999
 
@@ -40,6 +22,8 @@ class History:public QObject {
     Q_OBJECT
     public:
     explicit History(const int& _userid, QObject* parent=nullptr);
+    HistoryDao* getHistoryDao();
+    HistoryModel* getHistoryModel();
 
     
     Q_SIGNALS:
@@ -48,7 +32,7 @@ class History:public QObject {
     //void historyEntryDeleted(HistoryEntry& historyEntry);
     void historyEntryCleared();
 
-    public: //later it be changed to private
+    private: //later it be changed to private
     HistoryModel* m_historyModel;
     HistoryDao* m_historyDao;
     unsigned int userid;

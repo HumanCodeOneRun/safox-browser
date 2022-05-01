@@ -9,10 +9,11 @@
 void HistoryModel::init() {
     //use database to load the data structure
     QDateTime today = QDateTime::currentDateTime();
-    QList<qint64> dayTimestamp = m_history->m_historyDao->queryDayTimestamp();
+    QList<qint64> dayTimestamp = m_history->getHistoryDao()->queryDayTimestamp();
     for(int i=0; i<dayTimestamp.count(); i++) {
         HistoryItem* dayItem = new HistoryItem(NULL);
-        dayItem->m_endTimestamp = dayTimestamp[i];
+        dayItem->setEndTimestamp(dayTimestamp[i]);
+        //dayItem->m_endTimestamp = dayTimestamp[i];
         m_rootItem->prependChild(dayItem);
         if(i == dayTimestamp.count() - 1) {
             QDateTime day = QDateTime::fromMSecsSinceEpoch(dayTimestamp[i]);
@@ -22,17 +23,18 @@ void HistoryModel::init() {
         }
     }
 
-    QList<HistoryEntry> historyEntrys = m_history->m_historyDao->queryHistoryEntry();
+    QList<HistoryEntry> historyEntrys = m_history->getHistoryDao()->queryHistoryEntry();
     for(int i=0; i<historyEntrys.count(); i++) {
         HistoryItem* historyItem = new HistoryItem(NULL);
-        historyItem->historyEntry = historyEntrys[i];
+        historyItem->setHistoryEntry(historyEntrys[i]);
         qint64 timestamp = historyEntrys[i].date.toMSecsSinceEpoch();
-        historyItem->m_endTimestamp = timestamp;
+        historyItem->setEndTimestamp(timestamp);
+        //historyItem->m_endTimestamp = timestamp;
 
         QList<HistoryItem*> dayItems = m_rootItem->getChildren();
         for(int i=0; i<dayItems.count(); i++) {
             HistoryItem* dayItem = dayItems[i];
-            if(dayItem->m_endTimestamp <= timestamp) {
+            if(dayItem->getEndTimestamp() <= timestamp) {
                 dayItem->prependChild(historyItem);
                 break;
             }
@@ -57,21 +59,24 @@ void HistoryModel::addHistoryEntry(HistoryEntry& historyEntry) {
     if(m_todayItem == nullptr) {
         m_todayItem = new HistoryItem(NULL);
         m_rootItem->prependChild(m_todayItem);
-        HistoryEntry& historyEntry = m_todayItem->historyEntry;
+        HistoryEntry historyEntry;
         historyEntry.url = QUrl("todayItem");
         historyEntry.urlid = rand(); 
         historyEntry.title = "todayItem";
         historyEntry.iconUrl = QUrl("todayItem");
         historyEntry.date = (QDateTime::currentDateTime());
-        m_todayItem->m_endTimestamp = historyEntry.date.toMSecsSinceEpoch();
-        m_history->m_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, m_todayItem->m_endTimestamp);
+        m_todayItem->setHistoryEntry(historyEntry);
+        m_todayItem->setEndTimestamp(historyEntry.date.toMSecsSinceEpoch());
+        //m_todayItem->m_endTimestamp = historyEntry.date.toMSecsSinceEpoch();
+        m_history->getHistoryDao()->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, m_todayItem->getEndTimestamp());
 
     }
     deleteHistoryEntry(historyEntry);//for adding no repeated element
 
     HistoryItem* historyItem = new HistoryItem(NULL);
-    historyItem->historyEntry = historyEntry;
-    historyItem->m_endTimestamp = (QDateTime::currentDateTime()).toMSecsSinceEpoch();
+    historyItem->setHistoryEntry(historyEntry);
+    historyItem->setEndTimestamp((QDateTime::currentDateTime()).toMSecsSinceEpoch());
+    //historyItem->m_endTimestamp = (QDateTime::currentDateTime()).toMSecsSinceEpoch();
     m_todayItem->prependChild(historyItem);
 }
 
@@ -89,7 +94,7 @@ HistoryItem* HistoryModel::findHistoryItem(const HistoryEntry& historyEntry) {
         */
         for(int j=0; j<dayItem->getChildrenCount(); j++) {
             item = dayItem->getChild(j);
-            if(historyEntry.urlid == item->historyEntry.urlid) {
+            if(historyEntry.urlid == (item->getHistoryEntry()).urlid) {
                 return item;
             }
         } 
@@ -114,7 +119,7 @@ void HistoryModel::deleteHistoryEntry(HistoryEntry& historyEntry) {
     HistoryItem* item = findHistoryItem(historyEntry);
     if(item == NULL)
         return;//the entry is not found
-    HistoryItem* m_parent = item->m_parent;
+    HistoryItem* m_parent = item->getParent();
     m_parent->removeChild(item);
 }
 
@@ -125,8 +130,8 @@ void HistoryModel::deleteHistoryEntry(const int dayIndex, const int entryIndex) 
         return;
     }
     HistoryItem* historyItem = dayItem->getChild(entryIndex);
-    HistoryEntry historyEntry = historyItem->historyEntry;
-    m_history->m_historyDao->deleteByPriKey(historyEntry.urlid, historyEntry.url);
+    HistoryEntry historyEntry = historyItem->getHistoryEntry();
+    m_history->getHistoryDao()->deleteByPriKey(historyEntry.urlid, historyEntry.url);
     dayItem->removeChild(historyItem);
 }
 
@@ -144,7 +149,7 @@ QList<qint64> HistoryModel::queryDayTimestamp() {
     QList<qint64> ret;
     QList<HistoryItem*> dayItems = m_rootItem->getChildren();
     for(int i=0; i<dayItems.count(); i++) {
-        ret.append(dayItems[i]->m_endTimestamp);
+        ret.append(dayItems[i]->getEndTimestamp());
     }
     return ret;
 }
@@ -154,7 +159,7 @@ QList<HistoryEntry> HistoryModel::queryDayHistoryEntry(const int index) {
     HistoryItem* dayItem = m_rootItem->getChild(index);
     QList<HistoryItem*> children = dayItem->getChildren();
     for(int i=0; i<children.count(); i++) {
-        ret.append(children[i]->historyEntry);
+        ret.append(children[i]->getHistoryEntry());
     }
     return ret;
 }
@@ -172,12 +177,12 @@ void HistoryModel::getRootChildrenNum() {
 void HistoryModel::traverse() {
     std::cout<<"traverse() begin"<<std::endl;
     for(int i=0; i<m_rootItem->getChildrenCount(); i++) {
-        HistoryItem* historyItem = m_rootItem->m_children.at(i);
+        HistoryItem* historyItem = (m_rootItem->getChildren()).at(i);
         std::cout<<"list: "<<i<<std::endl;
-        std::cout<<"list endTimestamp: "<<historyItem->m_endTimestamp<<std::endl;
+        std::cout<<"list endTimestamp: "<<historyItem->getEndTimestamp()<<std::endl;
         for(int j=0; j<historyItem->getChildrenCount(); j++) {
-            HistoryItem* item = historyItem->m_children.at(j);
-            std::cout<<"id: "<< item->historyEntry.urlid<<"  endTimestamp: "<<item->m_endTimestamp<<" title: "<<item->historyEntry.title.toStdString()<<std::endl;
+            HistoryItem* item = (historyItem->getChildren()).at(j);
+            std::cout<<"id: "<< (item->getHistoryEntry()).urlid<<"  endTimestamp: "<<item->getEndTimestamp()<<" title: "<<(item->getHistoryEntry()).title.toStdString()<<std::endl;
         }
         std::cout<<"..........."<<std::endl;
     }

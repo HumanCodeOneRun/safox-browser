@@ -33,7 +33,7 @@ class HistoryDao:BaseDao {
     QList<qint64> queryDayTimestamp();
     QList<HistoryEntry> queryHistoryEntry();
 
-    public://just for test and it should be changed to private
+    private://just for test and it should be changed to private
     unsigned int userid;
 };
 

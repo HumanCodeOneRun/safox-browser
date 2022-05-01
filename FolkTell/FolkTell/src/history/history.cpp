@@ -69,3 +69,11 @@ QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
 void History::deleteHistoryEntryHelp(const int dayIndex, const int entryIndex) {
     m_historyModel->deleteHistoryEntry(dayIndex, entryIndex);
 }
+
+HistoryDao* History::getHistoryDao() {
+    return m_historyDao;
+}
+
+HistoryModel* History::getHistoryModel() {
+    return m_historyModel;
+}

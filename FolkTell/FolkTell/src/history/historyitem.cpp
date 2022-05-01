@@ -32,3 +32,23 @@ void HistoryItem::clearChildren() {
 QList<HistoryItem*> HistoryItem::getChildren() {
     return m_children;
 }
+
+qint64 HistoryItem::getEndTimestamp() {
+    return m_endTimestamp;
+}
+
+void HistoryItem::setEndTimestamp(const qint64 _endTimestamp) {
+    m_endTimestamp = _endTimestamp;
+}
+
+HistoryItem* HistoryItem::getParent() {
+    return m_parent;
+}
+
+void HistoryItem::setHistoryEntry(const HistoryEntry _historyEntry) {
+    historyEntry = _historyEntry;
+}
+
+HistoryEntry HistoryItem::getHistoryEntry() {
+    return historyEntry;
+}

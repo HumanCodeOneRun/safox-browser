@@ -25,8 +25,7 @@ class HistoryModel final : public QStandardItemModel
 
 
     public:
-        HistoryEntry* historyEntry;
-        explicit HistoryModel(History* history);//later change to history
+        explicit HistoryModel(History* history);
         void init();
         
     
@@ -39,17 +38,18 @@ class HistoryModel final : public QStandardItemModel
         QList<qint64> queryDayTimestamp();
         QList<HistoryEntry> queryDayHistoryEntry(const int index);
 
-    public:
+    private://later change to private
+        HistoryItem* m_rootItem;
+        HistoryItem* m_todayItem;
+        History* m_history;
+    
     //test code
+    public:
         static void test();
         void traverse();
         void getRootChildrenNum();
 
-
-    public://later change to private
-        HistoryItem* m_rootItem;
-        HistoryItem* m_todayItem;
-        History* m_history;
+    
         
 };  
 
