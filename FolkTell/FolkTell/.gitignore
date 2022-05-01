@@ -73,6 +73,7 @@ Thumbs.db
 
 CMakeFiles
 CmakeCache.txt
+*.txt.user
 *.cmake
 FolkTell_autogen
 .lupdate
@@ -84,3 +85,6 @@ build
 .vscode
 Testing
 *.db
+
+//macos file
+*.DS_Store
