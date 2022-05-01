@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
+set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
         src/history/history.h
         src/history/historymodel.h
         src/history/historymodel.cpp
+        src/history/historydao.h
+        src/history/historydao.cpp
         src/webengine/webview.cpp
         src/webengine/webview.h
         src/dao/basedao.h
@@ -50,6 +52,11 @@ set(PROJECT_SOURCES
         src/dao/bookmarkdao.h
         src/dao/bookmarkgroupdao.cpp
         src/dao/bookmarkgroupdao.h
+        qtsingleapplication.cpp
+        qtsingleapplication.h
+        mainmenu.cpp
+        mainmenu.h
+        icon.qrc
         ${TS_FILES}
 )
 

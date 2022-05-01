@@ -11,12 +11,12 @@
 
 
 
+
 class HistoryModel final : public QStandardItemModel
 {
     Q_OBJECT
     public:
     enum Roles {
-        //IdRole = Qt::UserRole
         IdRole = Qt::UserRole + 1,
         TitleRole = Qt::UserRole + 2,
         DateRole = Qt::UserRole + 3,
@@ -33,8 +33,11 @@ class HistoryModel final : public QStandardItemModel
     public slots:
         void addHistoryEntry(HistoryEntry& historyEntry);
         HistoryItem* findHistoryItem(const HistoryEntry& historyEntry);
-        void deleteHistoryEntry(HistoryEntry& historyEntry);
+        void deleteHistoryEntry(HistoryEntry& historyEntry);//just for adding no repeated element
+        void deleteHistoryEntry(const int dayIndex, const int entryIndex);
         void clearHistoryEntry();
+        QList<qint64> queryDayTimestamp();
+        QList<HistoryEntry> queryDayHistoryEntry(const int index);
 
     public:
     //test code
@@ -60,5 +63,7 @@ notice:
 1, when comes to multiple users, we can store all user_id in a table such as users_id, 
 and create history_user_id table to restore the data about the history for one spectific user
 2, the id in historyEntry is a identifier of Entry and maybe we can hash url to generate it
+
+
 
 */

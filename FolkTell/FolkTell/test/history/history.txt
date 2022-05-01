@@ -1,6 +1,6 @@
 
 header relationship:
-webview -> history -> historyitem -> historymodel
+webview -> (historydao->) history -> historyitem -> historymodel
 /*
 test code in main():
 

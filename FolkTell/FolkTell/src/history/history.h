@@ -7,11 +7,11 @@
 #include <QObject>
 
 #include <QString>
-#include <QString>
 #include <QUrl>
 #include <QDateTime>
 #include <QHash>
 #include "../webengine/webview.h"
+#include "historydao.h"
 //#include "historymodel.h"
 
 
@@ -36,24 +36,10 @@ struct HistoryEntry{
 
 class HistoryModel;
 
-struct HistoryEntry{
-    uint id;
-    QString title;
-    QDateTime date;
-    QUrl url;
-    //for test
-    /*
-    int count;
-    QDateTime date;
-    QString urlString;
-    QString title;
-    */
-};
-
 class History:public QObject {
     Q_OBJECT
     public:
-    explicit History(QObject* parent=nullptr);
+    explicit History(const int& _userid, QObject* parent=nullptr);
 
     
     Q_SIGNALS:
@@ -64,6 +50,8 @@ class History:public QObject {
 
     public: //later it be changed to private
     HistoryModel* m_historyModel;
+    HistoryDao* m_historyDao;
+    unsigned int userid;
 
     
 
@@ -71,10 +59,13 @@ class History:public QObject {
 
     public slots:
     void addHistoryEntry(WebView* webview);
-    HistoryEntry makeHistoryEntry(const QString& title, const QUrl& url);
-    void addHistoryEntryHelp(const QString& title,const QUrl& url);
-    void deleteHistoryEntryHelp(const QString& title,const QUrl& url, const QDateTime& date);
+    HistoryEntry makeHistoryEntry(const QString& title, const QUrl& url, const QUrl& iconUrl);
+    void addHistoryEntryHelp(const QString& title,const QUrl& url, const QUrl& iconUrl);
+    void deleteHistoryEntryHelp(const QString& title,const QUrl& url, const QUrl& iconUrl, const QDateTime& date);
+    void deleteHistoryEntryHelp(const int dayIndex, const int entryIndex);
     void clearHistoryEntryHelp();
+    QList<qint64> queryDayTimestamp();
+    QList<HistoryEntry> queryDayHistoryEntry(const int index);
 
 };
 #endif

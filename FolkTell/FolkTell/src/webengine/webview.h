@@ -9,23 +9,27 @@ class WebView: public QWebEngineView {
     Q_OBJECT
     public:
     explicit WebView(QWidget* parent = 0);
-    void changeTitle(const QString& newTitle);
-    void changeUrl(const QUrl& newUrl);
+    
     QString getTitle();
     QUrl getUrl();
+    QUrl getIconUrl();
 
     bool getConnectedToHistory();
     void setConnectedToHistory(bool _connectToHistory);
 
 
 
-    public:
+    public slots:
+    void changeTitle(const QString& newTitle);
+    void changeUrl(const QUrl& newUrl);
+    void changeIconUrl(const QUrl& iconUrl);
     
 
     public://later should be changed to private
     QString title;
     QUrl url;
     bool connectedToHistory;
+    QUrl iconUrl;
 
 
     Q_SIGNALS:

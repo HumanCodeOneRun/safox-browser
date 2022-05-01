@@ -26,6 +26,7 @@ class HistoryItem
     HistoryItem* getChild(int index);
     void removeChild(HistoryItem* item);
     void clearChildren();
+    QList<HistoryItem*> getChildren();
 
 
 

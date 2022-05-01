@@ -28,3 +28,7 @@ void HistoryItem::removeChild(HistoryItem* item) {
 void HistoryItem::clearChildren() {
     m_children.clear();
 }
+
+QList<HistoryItem*> HistoryItem::getChildren() {
+    return m_children;
+}
