@@ -12,19 +12,19 @@ public:
     bool createTable() override;
 
     // query
-    QVector<QVariant> QueryById(const int& gid);
-    QVector<QVariant> QueryByName(const QString& name);
-    QVector<QVector<QVariant>> QueryAll();
+    QVector<QVariant> QueryByUidAndId(const int& uid, const int& gid);
+    QVector<QVariant> QueryByUidAndName(const int &uid, const QString& name);
+    QVector<QVector<QVariant>> QueryAll(const int& uid);
 
     // update
-    bool setName(const int& id, const QString& name);
-    bool setIcon(const int& id, const QString& icon);
+    bool setName(const int& uid, const int& id, const QString& name);
+    bool setIcon(const int& uid, const int& id, const QString& icon);
 
     // insert
-    bool insert(const int& gid, const QString& name, const QString& url, const QString& icon);
+    bool insert(const int& uid, const QString& name, const QString& icon);
     
     // debug
-    QVector<QVariant> getcolumns();
+
     bool deleteTable();
     ~BookmarkGroupDao();
 };

@@ -49,7 +49,7 @@ QVector<QVariant> BookmarkModel::BookmarkGroupItem::getGroupById(const int& gid)
 BookmarkModel::BookmarkGroupItem BookmarkModel::BookmarkGroupItem::getGroupByName(const QString& name){
     QVector<QVariant> ret = (this->dao).QueryByName(name);
     if(ret.empty()){
-        qDebug() << "[error] fail to query group by id";
+        qDebug() << "[error] fail to query group by name";
         return *this;
     }
     this->gid = ret.value(0).toInt();
@@ -81,6 +81,14 @@ QVector<QVariant> BookmarkModel::BookmarkGroupItem::getGroupByName(const QString
 QVector<QVector<QVariant>> BookmarkModel::BookmarkGroupItem::getAllGroup(){
     return (this->dao).QueryAll();
 }
+
+bool BookmarkModel::BookmarkGroupItem::addGroup(const QString& name, const int& count, const QString& icon){
+    this->name = name;
+    this->count = count;
+    this->icon = icon;
+    return (this->dao).insert(name, count, icon);
+}
+
 
 bool BookmarkModel::BookmarkGroupItem::setName(const int& gid, const QString& name){
     this->name = name;
@@ -148,6 +156,11 @@ bool BookmarkModel::BookmarkItem::setIcon(const int& id, const QString& icon){
 bool BookmarkModel::BookmarkItem::addBookmark(const QString& name, const QUrl& url, const QString& gname){
     BookmarkGroupItem gitem;
     BookmarkGroupItem target = gitem.getGroupByName(gname);
+    
+    if(target.getGid() == -1){
+        qDebug() << "[error] fail to get the group.";
+        return false;
+    }
 
     return (this->dao).insert(target.getGid(), name, url);
 }
@@ -175,6 +188,12 @@ QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& gid){
     BookmarkItem item;
     return item.getItemByGid(gid);
 }
+
+bool BookmarkModel::addBookmarkGroup(const QString& name, const int& count, const QString& icon){
+    BookmarkGroupItem item;
+    return item.addGroup(name, count, icon);
+}
+
 
 bool BookmarkModel::addBookmark(const QString& name, const QUrl& url, const QString& gname){
     BookmarkItem item;

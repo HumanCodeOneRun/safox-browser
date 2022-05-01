@@ -1,15 +1,14 @@
 #ifndef BOOKMARKMODEL_H
 #define BOOKMARKMODEL_H
+
 #include <QtWebEngineCore>
-#include <QObject>
 #include "dao/BookmarkDao.h"
 #include "dao/BookmarkGroupDao.h"
-#include "BookmarkModel.moc"
+//#include "BookmarkModel.moc"
 // TODO: 1. auto-increment for count in bookmark group
 //       2. consider return BookmarkItem/BookmarkItem for convinience
 
-class BookmarkModel : QObject{
-    Q_OBJECT // for slots
+class BookmarkModel {
 
 public:
     BookmarkModel();
@@ -53,6 +52,7 @@ public:
         BookmarkGroupItem getGroupByName(const QString& name);
         //QVector<QVariant> getGroupByName(const QString& name);
         QVector<QVector<QVariant>> getAllGroup();
+        bool addGroup(const QString& name, const int& count, const QString& icon);
 
         inline int getGid() { return this->gid; }
         inline QString getName() { return this->name; }
@@ -73,20 +73,22 @@ public:
         BookmarkGroupDao dao;
     };
 
-public slots:
+public:
 
     QVector<QVector<QVariant>> initGetGroups();
     QVector<QVector<QVariant>> getItemsByGid(const int& gid);
 
+    bool addBookmarkGroup(const QString& name, const int& count, const QString& icon);
     bool addBookmark(const QString& name, const QUrl& url, const QString& gname);
     bool deleteBookmark(const int& id);
     bool editBookmark(const int& id, const QString& name="", const QUrl& url=QUrl(""), const QString& gname="");
     
+
 private:
 
 
 };
 
-
+//#include "BookmarkModel.moc"
 
 #endif

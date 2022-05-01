@@ -6,6 +6,8 @@
 #include <QtWebEngineCore/QtWebEngineCore>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
+#include <QObject>
+#include "src/BookmarkModel.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,8 +23,13 @@ int main(int argc, char *argv[])
     }
     BrowserWindow w;
 
+    BookmarkModel* model = new BookmarkModel();
+    qDebug() << model->initGetGroups();
+    model->addBookmark("必应", QUrl("www.bing.com"), "test");
 
 
-    w.show();
-    return a.exec();
+    //w.show();
+    //return a.exec();
+    return 1;
+
 }
