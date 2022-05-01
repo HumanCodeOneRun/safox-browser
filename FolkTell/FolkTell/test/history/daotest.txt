@@ -1,0 +1,408 @@
+    /*
+    BaseDao dao;
+    dao.printInfo();
+    dao.createTable();
+    */
+    
+    /*
+    //test for Qlist::at
+    const int entryIndex = 0;
+    QList<HistoryItem*> historyItems;
+    if(entryIndex < historyItems.count() - 1) {
+        HistoryItem* historyItem = historyItems.at(entryIndex);
+        qDebug()<<"secceed exec";
+    }
+    else {
+        qDebug()<<"out of range";
+    }
+    */
+    
+
+    /*
+    // test for deleteHistoryEntry
+    History* history = new History();
+    
+    history->deleteHistoryEntryHelp(1, 1);
+    history->m_historyModel->traverse();
+    */
+    
+    
+    
+
+    /*
+    //test for webview and history model
+    History* history = new History();
+    WebView* webview = new WebView();
+    webview->load(QUrl("https://www.scut.edu.cn/new/"));
+    history->addHistoryEntry(webview);
+    history->m_historyModel->traverse();
+    */
+    
+
+    //History* history = new History();
+    //history->m_historyModel->traverse();
+    /*
+    //test for querDayHistoryEntry
+    History* history = new History();
+    QList<HistoryEntry> historyEntrys  = history->queryDayHistoryEntry(0);
+    for(int i=0; i<historyEntrys.count(); i++) {
+        qDebug()<<"title: "<<historyEntrys[i].title<<"url: "<<historyEntrys[i].url.toString();
+    }
+    */
+    
+    /*
+    //test for querDayTimestamp
+    History* history = new History();
+    QList<qint64> dayTimestamp = history->queryDayTimestamp();
+    for(int i=0; i<dayTimestamp.count(); i++) {
+        qDebug()<<dayTimestamp[i];
+    }
+    */
+
+
+    /*
+    //test for webview and history model
+    History* history = new History();
+    WebView* webview = new WebView();
+    webview->load(QUrl("https://www.scut.edu.cn/new/"));
+    history->addHistoryEntry(webview);
+    history->m_historyModel->traverse();
+    */
+    
+
+
+
+    /*
+     //test for queryhistoryEntry
+    HistoryDao* historydao = new HistoryDao();
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    QString title = "todayItem";
+    QUrl url("todayItem");
+    QUrl iconUrl("todayItem");
+
+    qint64 timestamp = QDateTime(QDate(2022, 4, 28), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    historydao->userid = userid;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "jd";
+    url = QUrl("https://www.jd.com");
+    urlid = 16;
+    timestamp = QDateTime(QDate(2022, 4, 28), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "bilibili";
+    url = QUrl("https://www.bilibili.com");
+    timestamp = QDateTime(QDate(2022, 4, 28), QTime(3, 45, 0)).toMSecsSinceEpoch();
+    urlid = 17;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "todayItem";
+    url = QUrl("todayItem");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    urlid = 18;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "zhihu";
+    url = QUrl("https://www.zhihu.com");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    urlid = 2603651262;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "qzone";
+    url = QUrl("https://qzone.qq.com");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(4, 0, 0)).toMSecsSinceEpoch();
+    urlid = 20;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "todayItem";
+    url = QUrl("todayItem");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    urlid = 21;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "zcool";
+    url = QUrl("https://www.zcool.com.cn");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    urlid = 22;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "github";
+    url = QUrl("https://github.com");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(4, 0, 0)).toMSecsSinceEpoch();
+    urlid = 23;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    //historydao->queryByUserid();
+    QList<HistoryEntry> ret = historydao->queryHistoryEntry();
+    for(int i=0; i<ret.count(); i++) {
+        qDebug()<<ret[i].urlid<<" "<<ret[i].url<<" "<<ret[i].title<<" "<<ret[i].date.toMSecsSinceEpoch();
+    }
+    */
+   
+    
+
+
+
+    /*
+    //test for QDateTime
+    QDateTime startDate(QDate(2012, 7, 7), QTime(8, 30, 0));
+    QDateTime endDate(QDate(2012, 7, 7), QTime(16, 30, 0));
+    qDebug() << "Days from startDate to endDate: " << startDate.daysTo(endDate); 
+    */
+       
+
+    /*
+    //test for query datTimestamp
+    HistoryDao* historydao = new HistoryDao();
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    QString title = "no";
+    QUrl url("todayItem");
+    QUrl iconUrl("https://www.google.com");
+    qint64 timestamp = 100;
+    historydao->userid = userid;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    url = QUrl("todayItem");
+    urlid = 16;
+    timestamp = 120;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    url = QUrl("todayItem");
+    timestamp = 130;
+    urlid = 17;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    //historydao->queryByUserid();
+    QList<qint64> dayTimestamp = historydao->queryDayTimestamp();
+    for(int i=0; i<dayTimestamp.count(); i++) {
+        qDebug()<<dayTimestamp[i];
+    }
+    */
+    
+
+
+    /*
+    //test for srand and rand
+    srand(time(0));
+    unsigned int test = rand();
+    qDebug()<<test;
+    */
+
+    
+    
+    /*
+    //test for historydao select insert createTable delete and clearTable
+    HistoryDao* historydao = new HistoryDao();
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    QString title = "no";
+    QUrl url("https://www.google.com");
+    QUrl iconUrl("https://www.google.com");
+    qint64 timestamp = 100;
+    historydao->userid = userid;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    historydao->queryByUserid();
+    url = QUrl("https://www.baidu.com");
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    historydao->queryByUserid();
+    historydao->deleteByPriKey(urlid, url);
+    qDebug()<<"after delete";
+    historydao->queryByUserid();
+    qDebug()<<"after truncate";
+    historydao->clearTable();
+    historydao->queryByUserid();
+    */
+    
+    
+   /*
+   //test for delete all records
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("./test");
+    db.open();
+    QString cmd = "delete from test;";
+    QSqlQuery query(db);
+    if(!query.exec(cmd)) {
+        qDebug()<<"something error happens"<<query.lastError().text();
+    }
+    else {
+        qDebug()<<"succeed exec";
+    }
+    cmd = "vacuum";
+    if(!query.exec(cmd)) {
+        qDebug()<<"something error happens"<<query.lastError().text();
+    }
+    else {
+        qDebug()<<"succeed exec";
+    }
+   */
+    
+    /*
+    //test for delete
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("./test");
+    db.open();
+    QString cmd = "delete from test where userid = :userid and urlid = :urlid and url = :url";
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    const QUrl url("https://www.baidu.com");
+    QSqlQuery query(db);
+    query.prepare(cmd);
+    query.bindValue(":userid", userid);
+    query.bindValue(":urlid", urlid);
+    query.bindValue(":url", url);
+    if(!query.exec()) {
+        qDebug()<<"something error happens"<<query.lastError().text();
+    }
+    else {
+        while(query.next()) {
+            qDebug()<<query.value(0)<<" "<<query.value(1)<<" "<<query.value(2)<<" "<<query.value(3)<<" "<<query.value(4)<<" "<<query.value(5); 
+        }
+    }
+    */
+   
+
+
+    /*
+    //test for select 
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("./test");
+    db.open();
+    
+    QString cmd = "select * from test where userid = 15";
+    QSqlQuery query(db);
+    if(!query.exec(cmd)) {
+        qDebug()<<"something error happens"<<query.lastError().text();
+    }
+    else {
+        while(query.next()) {
+            qDebug()<<query.value(0)<<" "<<query.value(1)<<" "<<query.value(2)<<" "<<query.value(3)<<" "<<query.value(4)<<" "<<query.value(5); 
+        }
+    }
+    */
+    
+    
+    /*
+    //test for create table
+    QSqlDatabase db;
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("./test");
+    db.open();
+    QString cmd = "CREATE TABLE IF NOT EXISTS test (userid integer unsigned, urlid integer unsigned, title text, url text, iconUrl text, timestamp bigint unsigned, primary key(userid, urlid) )";
+    QSqlQuery query(db);
+    bool ok = query.exec(cmd);
+    if(!ok) 
+        qDebug()<<"something error happens"<<query.lastError().text();
+    else
+        qDebug()<<"exec succeed";
+    */
+    
+    
+    
+    
+    
+    
+
+   /*
+   //test for insert
+    QSqlDatabase db;
+   db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("./test");
+    db.open();
+    //QString cmd = "insert into test (userid, urlid, title, url, iconUrl) values (:userid, :urlid, :title, :url, :iconUrl)";
+    QString cmd = "insert or replace into test (userid, urlid, title, url, iconUrl, timestamp) values (:userid, :urlid, :title, :url, :iconUrl, :timestamp)";
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    const QString title = "no";
+    const QUrl url("https://www.baidu.com");
+    const QUrl iconUrl("https://www.baidu.com");
+    const qint64 timestamp = 100;
+    QSqlQuery query(db);
+    query.prepare(cmd);
+    query.bindValue(":userid", userid);
+    query.bindValue(":urlid", urlid);
+    query.bindValue(":title", title);
+    query.bindValue(":url", url);
+    query.bindValue(":iconUrl", iconUrl);
+    query.bindValue(":timestamp", timestamp);
+    if(!query.exec()) 
+        qDebug()<<"something error happens"<<query.lastError().text();
+    else
+        qDebug()<<"exec succeed";
+   */
+
+
+
+
+   /*
+     //test for queryhistoryEntry
+    HistoryDao* historydao = new HistoryDao();
+    unsigned int userid = 15;
+    unsigned int urlid = 15;
+    QString title = "todayItem";
+    QUrl url("todayItem");
+    QUrl iconUrl("todayItem");
+
+    qint64 timestamp = QDateTime(QDate(2022, 4, 28), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    historydao->userid = userid;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "jd";
+    url = QUrl("https://www.jd.com");
+    urlid = 16;
+    timestamp = QDateTime(QDate(2022, 4, 28), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "bilibili";
+    url = QUrl("https://www.bilibili.com");
+    timestamp = QDateTime(QDate(2022, 4, 28), QTime(3, 45, 0)).toMSecsSinceEpoch();
+    urlid = 17;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "todayItem";
+    url = QUrl("todayItem");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    urlid = 18;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "zhihu";
+    url = QUrl("https://www.zhihu.com");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    urlid = 19;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "qzone";
+    url = QUrl("https://qzone.qq.com");
+    timestamp = QDateTime(QDate(2022, 4, 29), QTime(4, 0, 0)).toMSecsSinceEpoch();
+    urlid = 20;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "todayItem";
+    url = QUrl("todayItem");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(1, 0, 0)).toMSecsSinceEpoch();
+    urlid = 21;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+
+    title = "zcool";
+    url = QUrl("https://www.zcool.com.cn");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(3, 0, 0)).toMSecsSinceEpoch();
+    urlid = 22;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+
+    title = "github";
+    url = QUrl("https://github.com");
+    timestamp = QDateTime(QDate(2022, 4, 30), QTime(4, 0, 0)).toMSecsSinceEpoch();
+    urlid = 23;
+    historydao->insertHistoryEntry(urlid, title, url, iconUrl, timestamp);
+    //historydao->queryByUserid();
+    QList<HistoryEntry> ret = historydao->queryHistoryEntry();
+    for(int i=0; i<ret.count(); i++) {
+        qDebug()<<ret[i].urlid<<" "<<ret[i].url<<" "<<ret[i].title<<" "<<ret[i].date.toMSecsSinceEpoch();
+    }
+    */

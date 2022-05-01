@@ -1,0 +1,140 @@
+
+header relationship:
+webview -> (historydao->) history -> historyitem -> historymodel
+/*
+test code in main():
+
+test1:
+HistoryModel historyModel;
+    HistoryEntry a, b, c, d, e;
+    a.id = 1;
+    b.id = 2;
+    c.id = 3;
+    d.id = 4;
+    e.id = 5;
+    historyModel.addHistoryEntry(a);
+    historyModel.addHistoryEntry(b);
+    historyModel.m_todayItem = NULL;//change for next day
+    historyModel.addHistoryEntry(c);
+    historyModel.addHistoryEntry(d);
+    historyModel.m_todayItem = NULL;//change for next day
+    historyModel.addHistoryEntry(e);
+    historyModel.traverse();
+
+
+test 2:
+QDate current = QDate::currentDate();
+    qint64 timestamp = (QDateTime::currentDateTime()).toMSecsSinceEpoch();
+    QString str = QString::number(timestamp);
+    std::cout<<str.toStdString()<<std::endl;
+    for(int i= 0; i<10000000; i++) {
+
+    }
+    timestamp = (QDateTime::currentDateTime()).toMSecsSinceEpoch();
+    str = QString::number(timestamp);
+    std::cout<<str.toStdString()<<std::endl;
+
+test 3:
+//test for prepend not repeated element and delete element and clear hisotryModel
+    HistoryModel historyModel;
+    HistoryEntry a, b, c, d, e, f;
+    a.id = 1;
+    b.id = 2;
+    c.id = 3;
+    d.id = 4;
+    e.id = 5;
+    
+    a.date = (QDateTime::currentDateTime());
+    historyModel.addHistoryEntry(a);
+    b.date = (QDateTime::currentDateTime());
+    historyModel.addHistoryEntry(b);
+    for(int i=0; i<10000000; i++) {
+
+
+    }
+    historyModel.m_todayItem = NULL;//change for next day
+    c.date = (QDateTime::currentDateTime());
+    historyModel.addHistoryEntry(c);
+    d.date = (QDateTime::currentDateTime());
+    historyModel.addHistoryEntry(d);
+    for(int i=0; i<10000000; i++) {
+        
+
+    }
+    historyModel.m_todayItem = NULL;//change for next day
+    
+    f.id = e.id;
+    e.date = (QDateTime::currentDateTime());
+    f.date = e.date;
+    historyModel.addHistoryEntry(e);
+    historyModel.addHistoryEntry(f);
+    historyModel.traverse();
+
+    std::cout<<"delete the historyEntry e"<<std::endl;
+    historyModel.deleteHistoryEntry(f);
+    historyModel.traverse();
+
+    std::cout<<"clear the historyModel"<<std::endl;
+    historyModel.clearHistoryEntry();
+    historyModel.traverse();
+
+test4: addHistoryEntry in history
+WebView* webview = new WebView();
+    webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
+    webview->show();
+    History *history = new History();
+    history->addHistoryEntry(webview);
+
+*/
+
+/*
+can't get the title of url?
+main() code?
+QApplication a(argc, argv);
+   
+   WebView* webview = new WebView();
+    webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
+    const QUrl url = webview->url();
+    QString title = ((QWebEngineView*) webview)->title();
+    webview->show();
+    for(int i=0; i<1000000; i++) {
+        for(int j=0; j<100000; j++);
+    }
+    //title = "hello world";
+    
+    if(title == "") {
+        qDebug()<<"it is null";
+    }
+    std::string str = "hello world";
+    qDebug()<<title.toStdString().c_str();
+    title = "hello world";
+    qDebug()<<title.toStdString().c_str();
+    //std::cout<<<<std::endl;
+   return a.exec();
+
+test 5: test for qhash
+uint seed = 999;
+    uint result;
+    QUrl url("https://doc.qt.io/qt-5/qwebengineview.html");
+    QString str = url.toString();
+    result = qHash(str, seed);
+    qDebug()<<result;
+    qDebug()<<str;
+
+
+test 6: test for add no repeated element for hstory
+QApplication a(argc, argv);
+    WebView* webview = new WebView();
+    webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
+    History* history = new History();
+    history->addHistoryEntry(webview);
+
+    WebView* webview1 = new WebView();
+    webview1->load(QUrl("https://www.baidu.com"));
+    history->addHistoryEntry(webview1);
+
+    WebView* webview2 = new WebView();
+    webview2->load(QUrl("https://www.baidu.com"));
+    history->addHistoryEntry(webview2);
+    a.exec();
+*/

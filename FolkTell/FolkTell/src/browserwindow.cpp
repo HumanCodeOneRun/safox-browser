@@ -1,9 +1,10 @@
 #include "browserwindow.h"
 #include "./ui_browserwindow.h"
 
-BrowserWindow::BrowserWindow(QWidget *parent)
+BrowserWindow::BrowserWindow(QWidget *parent, const int & window_id)
     : QMainWindow(parent)
     , ui(new Ui::BrowserWindow)
+    , id(window_id)
 {
     ui->setupUi(this);
 
@@ -21,6 +22,17 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     tb->resize(tb->width,tb->height);
 
 
+}
+
+int BrowserWindow::get_windowid(){
+    return this->id;
+}
+
+bool BrowserWindow::set_windowid(const int & window_id){
+    assert(window_id >= 0);
+    
+    this->id = window_id;
+    return true;
 }
 
 BrowserWindow::~BrowserWindow()
