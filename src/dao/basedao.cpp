@@ -23,8 +23,13 @@ bool BaseDao::checkdbpath(const QString& _db_path){
 BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_db_path), table_name(_table_name){
     if(!this->checkdbpath(_db_path))
         return;
+    if (QSqlDatabase::contains("qt_sql_default_connection"))
+        this->db = QSqlDatabase::database("qt_sql_default_connection");
+        //this->db = QSqlDatabase::addDatabase("QSQLITE");
+    else
+        this->db = QSqlDatabase::addDatabase("QSQLITE");
+
     
-    this->db = QSqlDatabase::addDatabase("QSQLITE");
     (this->db).setDatabaseName(this->db_path);
     if(!(this->db).open()){
         qDebug() << "[error]fail to open db! " << db.lastError().text();
@@ -58,7 +63,7 @@ bool BaseDao::isTableExist(){
 
 bool BaseDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->table_name +
-                " (ID INTEGER PRIMARY KEY, NAME TEXT)";
+                " (ID INTEGER PRIMARY KEY, NAME TEXT UNIQUE)";
 
     QSqlQuery query(cmd);
 
@@ -88,6 +93,24 @@ void BaseDao::printInfo(){
     qDebug() << "[info] database name is: "+(this->db).databaseName();
     qDebug() << "[info] connection name is: "+(this->db).connectionName();
     qDebug() << "[info] current table name is: " +(this->table_name);
+}
+
+QVector<QVariant> BaseDao::getcolumns(){
+    QString cmd = "PRAGMA  table_info("+this->table_name+")";
+    QSqlQuery query(this->db);
+    query.prepare(cmd);
+    
+    QVector<QVariant> ret;
+    if(!query.exec()){
+        qDebug() << "[error] fail to query by id,  " << query.lastError().text();
+        return ret;
+    }
+    
+    while(query.next()){
+        ret.append({query.value(0), query.value(1),query.value(2),query.value(3),query.value(4)});
+    }
+
+    return ret;
 }
 
 BaseDao::~BaseDao(){

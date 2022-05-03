@@ -1,7 +1,7 @@
 #ifndef BOOKMARKGROUPDAO_H
 #define BOOKMARKGROUPDAO_H
 #include "basedao.h"
-
+#include <QDateTime>
 #define BOOKMARKGROUPDAO_TABLE_NAME "BookmarkGroup"
 
 class BookmarkGroupDao : public BaseDao{
@@ -12,19 +12,22 @@ public:
     bool createTable() override;
 
     // query
-    QVector<QVariant> QueryById(const int& gid);
-    QVector<QVariant> QueryByName(const QString& name);
-    QVector<QVector<QVariant>> QueryAll();
+    QVector<QVariant> QueryByUidAndId(const int& uid, const int& gid);
+    QVector<QVariant> QueryByUidAndName(const int &uid, const QString& name);
+    QVector<QVector<QVariant>> QueryAll(const int& uid);
 
     // update
-    bool setName(const int& id, const QString& name);
-    bool setIcon(const int& id, const QString& icon);
+    bool setName(const int& uid, const int& id, const QString& name);
+    bool setIcon(const int& uid, const int& id, const QString& icon);
 
     // insert
-    bool insert(const int& gid, const QString& name, const QString& url, const QString& icon);
+    bool insert(const int& uid, const QString& name, const QString& icon);
     
+    // delete
+    bool remove(const int& uid, const int& gid);
+
     // debug
-    QVector<QVariant> getcolumns();
+
     bool deleteTable();
     ~BookmarkGroupDao();
 };

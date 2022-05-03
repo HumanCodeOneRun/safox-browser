@@ -11,7 +11,7 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include "..\toolbar\toolbar.h"
+#include "../toolbar/toolbar.h"
 #include <QToolButton>
 
 QT_BEGIN_NAMESPACE

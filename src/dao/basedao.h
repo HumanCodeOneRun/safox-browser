@@ -2,11 +2,13 @@
 #define BASEDAO_H
 
 #include <QDebug>
+#include <QUrl>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QReadWriteLock>
 #include <QtSql/QSqlError>
-#define DEFAULT_DB_PATH "./folktell_schema"
+#include <QtSql/QSqlRecord>
+#define DEFAULT_DB_PATH "./.folktell.db"
 #define DEFAULT_TABLE_NAME "dummy_table"
 
 class BaseDao {
@@ -27,6 +29,7 @@ public:
 
     // for debug purpose
     virtual void printInfo();
+    QVector<QVariant> getcolumns();
     ~BaseDao();
 
 protected:

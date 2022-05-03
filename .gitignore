@@ -88,3 +88,5 @@ Testing
 
 //macos file
 *.DS_Store
+.folktell.db-journal
+build
