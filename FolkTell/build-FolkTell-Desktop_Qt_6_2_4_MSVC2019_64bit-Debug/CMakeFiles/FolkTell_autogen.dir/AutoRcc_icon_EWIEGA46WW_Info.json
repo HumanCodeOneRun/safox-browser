@@ -1,0 +1,28 @@
+{
+	"BUILD_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug/FolkTell_autogen",
+	"CMAKE_BINARY_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell",
+	"CMAKE_SOURCE_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell",
+	"INCLUDE_DIR" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug/FolkTell_autogen/include",
+	"INPUTS" : 
+	[
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/history.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/bookmaker.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/download.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/homepage.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/setting.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/add.png",
+		"D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/image/account.png"
+	],
+	"LOCK_FILE" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug/CMakeFiles/FolkTell_autogen.dir/AutoRcc_icon_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "icon" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_icon.cpp",
+	"RCC_EXECUTABLE" : "D:/Qt/6.2.4/msvc2019_64/./bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/build-FolkTell-Desktop_Qt_6_2_4_MSVC2019_64bit-Debug/CMakeFiles/FolkTell_autogen.dir/AutoRcc_icon_EWIEGA46WW_Used.txt",
+	"SOURCE" : "D:/myCode/softwareEngineer/FolkTell/FolkTell/FolkTell/icon.qrc",
+	"VERBOSITY" : 0
+}

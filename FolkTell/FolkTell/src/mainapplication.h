@@ -2,11 +2,11 @@
 #define MAINAPPLICATION_H
 #include <QList>
 #include <QPointer>
-#include "qtsingleapplication.h"
+#include <QApplication>
 
 class QMenu;
 
-class MainApplication:public QtSingleApplication
+class MainApplication:QApplication
 {
 public:
     explicit MainApplication(int &argc, char** argv);

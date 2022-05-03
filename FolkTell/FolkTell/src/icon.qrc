@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>image/bookmaker.png</file>
+        <file>image/homepage.png</file>
+        <file>image/download.png</file>
+        <file>image/history.png</file>
+        <file>image/account.png</file>
+        <file>image/setting.png</file>
+        <file>image/add.png</file>
+    </qresource>
+    <qresource prefix="/new/prefix1"/>
+</RCC>

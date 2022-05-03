@@ -23,24 +23,13 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include "dao/basedao.h"
+#include "browserwindow/browserwindow.h"
 
 
 int main(int argc, char *argv[])
 {
     //just test code
     QApplication a(argc, argv);
-
-    
-
-
-    a.exec();    
-}
-
-
-/*
-oringinal code in main():
-QApplication a(argc, argv);
-
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -53,8 +42,11 @@ QApplication a(argc, argv);
     BrowserWindow w;
     w.show();
     return a.exec();
+}
 
 
-*/
+
+
+
 
 

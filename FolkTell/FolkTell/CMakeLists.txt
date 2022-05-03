@@ -24,12 +24,12 @@ set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/browserwindow.cpp
-        src/browserwindow.h
-        src/browserwindow.ui
-        src/toolbar.cpp
-        src/toolbar.h
-        src/toolbar.ui
+        src/browserwindow/browserwindow.cpp
+        src/browserwindow/browserwindow.h
+        src/browserwindow/browserwindow.ui
+        src/toolbar/toolbar.cpp
+        src/toolbar/toolbar.h
+        src/toolbar/toolbar.ui
         src/browser.cpp
         src/browser.h
         src/mainapplication.cpp
@@ -52,11 +52,12 @@ set(PROJECT_SOURCES
         src/dao/bookmarkdao.h
         src/dao/bookmarkgroupdao.cpp
         src/dao/bookmarkgroupdao.h
-        qtsingleapplication.cpp
-        qtsingleapplication.h
-        mainmenu.cpp
-        mainmenu.h
-        icon.qrc
+#        qtsingleapplication.cpp
+#        qtsingleapplication.h
+#        mainmenu.cpp
+#        mainmenu.h
+#        mainmenu.ui
+#        icon.qrc
         ${TS_FILES}
 )
 
