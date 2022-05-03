@@ -12,24 +12,24 @@ public:
     bool createTable() override;
 
     // query
-    QVector<QVariant> QueryById(const int& id);
-    QVector<QVector<QVariant>> QueryByGroupId(const int& gid);
-    QVector<QVector<QVariant>> QueryByName(const QString& name);
+    QVector<QVariant> QueryByUidAndId(const int& uid, const int& id);
+    QVector<QVector<QVariant>> QueryByUidAndGroupId(const int& uid, const int& gid);
+    QVector<QVector<QVariant>> QueryByUidAndName(const int& uid, const QString& name);
 
     // update
-    bool setName(const int& id, const QString& name);
-    bool setGid(const int& id, const int& gid);
-    bool setIcon(const int& id, const QString& icon);
-    bool setUrl(const int& id, const QUrl& url);
+    bool setName(const int& uid,const int& id, const QString& name);
+    bool setGid(const int& uid,const int& id, const int& gid);
+    bool setIcon(const int& uid,const int& id, const QString& icon);
+    bool setUrl(const int& uid,const int& id, const QUrl& url);
 
     // insert
     // TODO automatically get icon
-    bool insert(const int& gid, const QString& name, const QUrl& url);
+    bool insert(const int& uid, const int& gid, const QString& name, const QUrl& url, const QUrl& icon);
     
     // delete
-    bool remove(const int& id);
+    bool remove(const int& uid, const int& id);
     // debug
-    QVector<QVariant> getcolumns();
+    //QVector<QVariant> getcolumns();
     bool deleteTable();
     ~BookmarkDao();
 };
