@@ -10,5 +10,7 @@ folktell_add_test(history)
 ```
 make --build build --config Debug --target all --
 cd build
-make test/ninja test
+make test
+*or*
+ninja test
 ```
