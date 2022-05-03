@@ -1,0 +1,85 @@
+类结构:
+MainApplication:QsingleApplication:
+    //与浏览器无关但与程序有关类
+    CommandLineOption //该类用于处理启动程序时的一些参数传递
+
+    //浏览器相关类
+    History
+    HistoryManager
+    Bookmarks
+    BookmarksManager
+    DownloadManager
+    SearchEngineManager
+    ClosedWindowsManager
+    UserAgentManager//该类相当原来LoginManage,账户的数据库管理相关操作也会在这一模块
+    PluginManager
+    SessionManager
+
+    Windows //BrowserWindow List存储打开的多窗口
+
+    //浏览器一些相关的状态参数(参数多的话后期可以独立成一类)
+    //......后期再不断补充
+
+
+    Settings //Settings中存储一些默认设置和设置参数等，当用户没有设置参数时加载默认设置
+    commonstate //该类存储浏览器常用的一些表示状态的参数类似falkon中的qzcommon,该类也可用于存储浏览器的一些默认参数值
+
+
+BrowserWindow:
+    TabWidget*
+    Navigation*
+    BookMarksToolBar*
+
+TabWidget: QTabWidget
+    WebTab*
+
+WebTab: Qwidget
+    TabbedWebView*
+
+TabbedWebView: WebView
+
+
+
+
+
+
+
+
+
+
+
+
+
+目录结构:(相当于模块的概念了)
+Windows(Windows需用的特定的文件)
+Mac
+linux
+data//浏览器产生的本地数据
+src//以下模块也主要是指文件夹（.h .cpp文件夹存放在里头）
+    3rdparty//第三方库
+    app
+    Bookmarks
+    history
+    network
+    navigation
+    webtab
+    useragent
+cmakelists
+
+
+
+问题:
+
+
+优化：
+1, 基本功能做完后，也许后期可以尝试加一个start after crash处理
+2, 后期拓展时可以考虑给浏览器加一些快捷键
+3, 后期拓展可以考虑加菜单Menu,SideBar在BrowserWindow类中
+4, 先做完win后期有空再拓展Mac、linux
+
+
+其他:
+1, 一些类可能扩展成多类，如Navigation在上面书写中只是一个咧，然而在实际开发中可能会不断扩展类似falkon中的NavigationBar,NavigationContainer, UserAgentManager等类似的还有BookMark、History等，
+也可以说是模块的概念
+2，一个类（如A）包含一个类（如B）的指针还是该类？如果A中的B要频繁更换，建议含类B的指针，如BrowserWindow含有的是TabWidget*
+3, 广告拦截可放入
