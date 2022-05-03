@@ -1,3 +1,0 @@
-make --build build --config Debug --target all --
-cd build
-make test/ninja test
