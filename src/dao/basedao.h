@@ -8,6 +8,7 @@
 #include <QReadWriteLock>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlRecord>
+
 #define DEFAULT_DB_PATH "./.folktell.db"
 #define DEFAULT_TABLE_NAME "dummy_table"
 

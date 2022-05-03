@@ -12,14 +12,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
-
+# add your own cmake prefix path
+list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 #find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
 
-# add your own cmake prefix path
-list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/dao)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -41,8 +41,6 @@ set(PROJECT_SOURCES
         src/browser.h
         src/mainapplication.cpp
         src/mainapplication.h
-        #src/history/historymodel.cpp
-        #src/history/historymodel.h
         src/history/historyitem.cpp
         src/history/historyitem.h
         src/history/history.cpp
@@ -81,7 +79,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
     )
 
-    qt_add_executable(FolkTell
+    qt_add_executable(
+        FolkTell
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
