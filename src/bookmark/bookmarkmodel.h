@@ -2,8 +2,8 @@
 #define BOOKMARKMODEL_H
 
 #include <QtWebEngineCore>
-#include "../dao/bookmarkdao.h"
-#include "../dao/bookmarkgroupdao.h"
+#include "bookmarkdao.h"
+#include "bookmarkgroupdao.h"
 
 //#include "BookmarkModel.moc"
 // TODO: 1. auto-increment for count in bookmark group

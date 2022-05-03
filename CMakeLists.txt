@@ -11,8 +11,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 # add your own cmake prefix path
 list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/dao)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core) 
@@ -40,7 +43,15 @@ set(PROJECT_SOURCES
         ${TS_FILES}
 )
 
+
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_library(
+        FolkTell_lib
+        SHARED
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
 
     qt_add_executable(FolkTell
         MANUAL_FINALIZATION
@@ -70,6 +81,7 @@ else()
 endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core)
+target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core)
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -79,6 +91,12 @@ set_target_properties(FolkTell PROPERTIES
     WIN32_EXECUTABLE TRUE
     AUTOMOC TRUE
 )
+
+
+
+
+enable_testing()
+add_subdirectory(tests)
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)
