@@ -1,4 +1,4 @@
-#include "src/user/usermodel.h"
+#include "user/usermodel.h"
 
 bool t_getItemById() {
     UserModel um;

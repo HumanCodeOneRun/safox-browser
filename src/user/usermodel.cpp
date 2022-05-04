@@ -4,7 +4,7 @@
 // User item
 
 UserModel::UserItem::UserItem()
-:id(-1), name("null"), password("123456"), samename({});
+:id(-1), name("null"), password("123456"), samename({})
 {
     this->dao = UserDao::getDao();
 }
@@ -23,7 +23,7 @@ QVector<QVariant> UserModel::UserItem::getItemById(const int& id){
 }
 
 QVector<QVector<QVariant>> UserModel::UserItem::getItemByName(const QString& name){
-    QVector<QVector<QVariant> ret = (this->dao).QueryByName(name);
+    QVector<QVector<QVariant>> ret = (this->dao).QueryByName(name);
     if(ret.empty()){
         qDebug() << "[error] fail to query user item by name";
         return ret;
@@ -55,7 +55,7 @@ bool UserModel::UserItem::setPassword(const int& id, const QString& password){
     return (this->dao).setPassword(id, password);
 }
 
-bool UserModel::UserItem::addUser(const int& id, const QString& password){
+bool UserModel::UserItem::addUser(const QString& name, const QString& password){
     return (this->dao).insert(name, password);
 }
 
@@ -93,19 +93,15 @@ bool UserModel::editUser(const int& id, const QString& name, const QString& pass
 }
 
 
-bool UserModel::deleteUser(const int& id){
-    UserItem item;
-    return item.deleteUser(id);
-}
 
 UserModel::~UserModel(){
     
 }
 
-bool queryUserName(const QString& name){
+bool UserModel::queryUserName(const QString& name){
     UserItem item;
     if(!name.isEmpty()){
-        if(item.getItemByName().isEmpty()){
+        if(item.getItemByName(name).isEmpty()){
             qDebug() << "[error] fail to query User name ";
             return false;
         }else {
@@ -115,9 +111,9 @@ bool queryUserName(const QString& name){
     return false;
 }
 
-bool queryUserId(const int& id){
+bool UserModel::queryUserId(const int& id){
     UserItem item;
-    if (!item.getItemById.isEmpty()){
+    if (!item.getItemById(id).isEmpty()){
         return true;
     }else {
         qDebug() << "[error] fail to query User id";
@@ -126,7 +122,7 @@ bool queryUserId(const int& id){
    
 }
 
-bool queryUserPassword(const int& id, const QString& password){
+bool UserModel::queryUserPassword(const int& id, const QString& password){
     UserItem item;
     if(!item.getItemByIdPassword(id, password).isEmpty()) {
         return true;
@@ -137,12 +133,12 @@ bool queryUserPassword(const int& id, const QString& password){
 
 }
 
-bool addRegisterUser(const QString& name, const QString& password){
+bool UserModel::addRegisterUser(const QString& name, const QString& password){
     UserItem item;
     return item.addUser(name, password);
 }
 
-bool UserModel::bool deleteRegisterUser(const int& id){
+bool UserModel::deleteRegisterUser(const int& id){
     UserItem item;
     return item.deleteUser(id);
 }

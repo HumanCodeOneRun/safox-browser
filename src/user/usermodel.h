@@ -1,6 +1,6 @@
 #include <QtWebEngineCore>
 #include <QObject>
-#include "dao/UserDao.h"
+#include "dao/userdao.h"
 
 // TODO: 1. auto-increment for count in User group
 //       2. consider return UserItem/UserItem for convinience
