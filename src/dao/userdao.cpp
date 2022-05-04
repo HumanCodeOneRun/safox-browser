@@ -43,7 +43,7 @@ QVector<QVariant> UserDao::QueryById(const int& id){
 }
 
 QVector<QVariant> UserDao::QueryByIdPassword(const int& id, const QString& password){
-    QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id) + " AND PASSWORD="+password;
+    QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id) + " AND PASSWORD=\""+password+"\"";
     QSqlQuery query(this->db);
     query.prepare(cmd);
     
@@ -61,7 +61,7 @@ QVector<QVariant> UserDao::QueryByIdPassword(const int& id, const QString& passw
 }
 
 QVector<QVector<QVariant>> UserDao::QueryByName(const QString& name){
-    QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME="+name;
+    QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME=\""+name+"\"";
     QSqlQuery query(this->db);
     query.prepare(cmd);
 
@@ -80,27 +80,30 @@ QVector<QVector<QVariant>> UserDao::QueryByName(const QString& name){
 }
 
 bool UserDao::setName(const int& id, const QString& name){
-    QString cmd = "UPDATE " + this->table_name + "SET NAME=:name WHERE ID=:id";
+//    QString cmd = "UPDATE " + this->table_name + "SET NAME =\"" + name + "\" WHERE ID"+QString::number(id);
+    QString cmd = "UPDATE " + this->getTableName() + " SET NAME= \""+name+"\" WHERE ID= " + QString::number(id);
+
     QSqlQuery query(this->db);
-    
+
+    query.bindValue(":name", name);
+    query.bindValue(":id", id);
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
         return false;
     }
 
-    query.bindValue(":name", name);
-    query.bindValue(":id", id);
 
     if(!query.exec()){
         qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
         return false;
     }
 
+
     return true;
 }
 
 bool UserDao::setPassword(const int& id, const QString& password){
-    QString cmd = "UPDATE " + this->table_name + "SET PASSWORD=:password WHERE ID=:id";
+    QString cmd = "UPDATE " + this->getTableName() + " SET PASSWORD= \""+password+"\" WHERE ID= " + QString::number(id);
     QSqlQuery query(this->db);
     
     if(!query.prepare(cmd)){
@@ -108,8 +111,6 @@ bool UserDao::setPassword(const int& id, const QString& password){
         return false;
     }
 
-    query.bindValue(":password", password);
-    query.bindValue(":id", id);
 
     if(!query.exec()){
         qDebug() << "[error] fail to exec cmd in setpassword: " << query.lastError().text();
@@ -168,6 +169,23 @@ QVector<QVariant> UserDao::getcolumns(){
     }
 
     return ret;
+}
+void UserDao::showAll (){
+    QString cmd = "SELECT * FROM "+this->table_name;
+    QSqlQuery query(this->db);
+    query.prepare(cmd);
+
+    if(!query.exec()){
+        qDebug() << "[error] fail to query all  " << query.lastError().text();
+    }
+
+    while(query.next()){
+        int id = query.value(0).toInt();
+        QString name = query.value(1).toString();
+        QString pwd = query.value(2).toString();
+        qDebug()<<id<<name<<pwd;
+    }
+
 }
 
 bool UserDao::deleteTable(){

@@ -22,6 +22,7 @@ public:
     bool remove(const int& id);
     // debug
     QVector<QVariant> getcolumns();
+    void showAll();
     bool deleteTable();
     ~UserDao();
 };
