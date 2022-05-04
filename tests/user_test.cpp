@@ -2,7 +2,7 @@
 
 bool t_getItemById() {
     UserModel um;
-
+    return 0;
 }
 bool t_addUsr() {
     UserModel um;
