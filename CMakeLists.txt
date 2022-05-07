@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
-list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+#list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
