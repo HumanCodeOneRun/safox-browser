@@ -18,6 +18,14 @@ bool add_group_test(){
         ||  !model.addBookmarkGroup(1, "test123123", QUrl("test3.icon"));
 }
 
+bool delete_group_test(){
+    BookmarkModel model;
+
+    return 0
+        ||  !model.deleteBookmarkGroup(1, 802222310);
+        
+}
+
 
 int main(int argc, char** argv){
     return 0 

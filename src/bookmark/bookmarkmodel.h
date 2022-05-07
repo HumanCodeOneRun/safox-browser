@@ -19,7 +19,7 @@ public:
         BookmarkItem();
         QVector<QVariant> getItemByUidAndId(const int& uid, const int& id);
         QVector<QVector<QVariant>> getItemByUidAndGid(const int& uid, const int& gid);
-
+        
         inline int getUid() { return this->uid; }
         inline int getId() { return this->id; }
         inline QString getName() { return this->name; }

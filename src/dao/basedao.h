@@ -39,6 +39,7 @@ protected:
     QString table_name;
     QSqlDatabase db;
 
+
 };
 
 

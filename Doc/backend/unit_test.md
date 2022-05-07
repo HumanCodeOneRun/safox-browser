@@ -8,7 +8,8 @@ folktell_add_test(history)
 
 ## how to run a unit test?
 ```
-make --build build --config Debug --target all --
-cd build
-make test/ninja test
+cmake ..
+cmake --build .
+ctest
+
 ```

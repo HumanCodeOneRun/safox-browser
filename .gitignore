@@ -91,3 +91,5 @@ Testing
 .DS_Store
 .folktell.db-journal
 build
+.idea
+cmake-build-debug

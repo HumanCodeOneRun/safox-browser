@@ -57,8 +57,13 @@ set(PROJECT_SOURCES
         src/dao/bookmarkdao.h
         src/dao/bookmarkgroupdao.cpp
         src/dao/bookmarkgroupdao.h
+        src/dao/userdao.h
+        src/dao/userdao.cpp
         src/bookmark/bookmarkmodel.h
         src/bookmark/bookmarkmodel.cpp
+        src/user/usermodel.h
+        src/user/usermodel.cpp
+        # src/tests/user/user_test.cpp
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
@@ -124,7 +129,6 @@ set_target_properties(FolkTell PROPERTIES
 
 enable_testing()
 add_subdirectory(tests)
-
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)
 endif()

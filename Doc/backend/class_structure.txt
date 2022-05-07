@@ -4,13 +4,9 @@ MainApplication:QsingleApplication:
     CommandLineOption //该类用于处理启动程序时的一些参数传递
 
     //浏览器相关类
-<<<<<<< HEAD
-    HistoryManager
-=======
     History
     HistoryManager
     Bookmarks
->>>>>>> 739d347292381acb3e7cec6dfe2be967ba9b5299
     BookmarksManager
     DownloadManager
     SearchEngineManager
