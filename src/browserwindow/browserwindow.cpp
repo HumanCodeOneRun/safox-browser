@@ -9,6 +9,7 @@
 #include "browserwindow.h"
 #include "./ui_browserwindow.h"
 
+
 BrowserWindow::BrowserWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::BrowserWindow)
@@ -23,7 +24,10 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     //...
 
     this->curHeight=1920,this->curWidth=1080;
-    QMainWindow::resize(this->curHeight,this->curWidth);
+    this->scale = 1.0;
+    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
+
+    CreateSystemTrayIcon();
 
 
     //设置背景颜色
@@ -49,6 +53,9 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     hidBtn->setStyleSheet("QToolButton{background-color:rgba(57, 194, 77, 100);border-radius:10px;}");
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
+
+//    打开历史界面
+    this->historyTest = new HistoryWidget(this,0,100,1920,980);
 }
 
 BrowserWindow::~BrowserWindow()
@@ -56,20 +63,48 @@ BrowserWindow::~BrowserWindow()
     delete ui;
 }
 
-
+/* 关闭窗口 */
 void BrowserWindow::on_closeBtn_clicked()
 {
-    this->close();
+    qDebug()<<"exit";
+    QApplication::exit(0);
 }
 
 
 void BrowserWindow::on_minBtn_clicked()
 {
-
+    this->scale = this->scale == 1.0 ? 0.5 : 1.0;
+    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 }
 
 void BrowserWindow::on_hidBtn_clicked()
 {
+    this->hide();
+}
 
+void BrowserWindow::CreateSystemTrayIcon(){
+    //初始化两个项目
+    QAction* showAction = new QAction(QStringLiteral("显示"));//项1
+    QAction* exitAction = new QAction(QStringLiteral("退出"));//项2
+    //项1的点击槽函数
+    connect(showAction, &QAction::triggered, this, [=]()
+    {
+        this->show();
+    });
+    //项2的点击槽函数
+    connect(exitAction , &QAction::triggered, this, [=]()
+    {
+        qDebug()<<"exit";
+        QApplication::exit(0);
+    });
+
+    //初始化菜单并添加项
+    QMenu* trayMenu = new QMenu(this);//菜单
+    trayMenu->addAction(showAction);
+    trayMenu->addAction(exitAction );
+    QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/icon/image/download.png"));    //设置托盘图标
+    trayIcon->setContextMenu(trayMenu);                                     //设置菜单
+    trayIcon->show();
 }
 

@@ -1,4 +1,4 @@
-#include "browserwindow.h"
+#include "browserwindow/browserwindow.h"
 
 #include <QApplication>
 #include <QLocale>

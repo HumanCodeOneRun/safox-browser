@@ -49,6 +49,12 @@ set(PROJECT_SOURCES
         src/history/historymodel.cpp
         src/history/historydao.h
         src/history/historydao.cpp
+        src/history/historybar.h
+        src/history/historybar.cpp
+        src/history/historybar.ui
+        src/history/historywidget.h
+        src/history/historywidget.cpp
+        src/history/historywidget.ui
         src/webengine/webview.cpp
         src/webengine/webview.h
         src/dao/basedao.h
@@ -69,7 +75,7 @@ set(PROJECT_SOURCES
 #        mainmenu.cpp
 #        mainmenu.h
 #        mainmenu.ui
-#        icon.qrc
+        src/icon.qrc
 
         ${TS_FILES}
 )
@@ -77,12 +83,12 @@ set(PROJECT_SOURCES
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_library(
-        FolkTell_lib
-        SHARED
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
+#    qt_add_library(
+#        FolkTell_lib
+#        SHARED
+#        MANUAL_FINALIZATION
+#        ${PROJECT_SOURCES}
+#    )
 
     qt_add_executable(
         FolkTell
@@ -113,7 +119,7 @@ else()
 endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
-target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+#target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -128,7 +134,7 @@ set_target_properties(FolkTell PROPERTIES
 
 
 enable_testing()
-add_subdirectory(tests)
+#add_subdirectory(tests)
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)
 endif()
