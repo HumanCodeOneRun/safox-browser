@@ -29,6 +29,7 @@ set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
+<<<<<<< HEAD
         #src/browserwindow/browserwindow.cpp
         #src/browserwindow/browserwindow.h
         #src/browserwindow/browserwindow.ui
@@ -74,6 +75,50 @@ set(PROJECT_SOURCES
         src/lib/downloads/downloadmanager.cpp
         src/lib/dao/connections.h
         src/lib/dao/connections.cpp
+=======
+        src/browserwindow/browserwindow.cpp
+        src/browserwindow/browserwindow.h
+        src/browserwindow/browserwindow.ui
+        src/toolbar/toolbar.cpp
+        src/toolbar/toolbar.h
+        src/toolbar/toolbar.ui
+        src/browser.cpp
+        src/browser.h
+        src/mainapplication.cpp
+        src/mainapplication.h
+        src/history/historyitem.cpp
+        src/history/historyitem.h
+        src/history/history.cpp
+        src/history/history.h
+        src/history/historymodel.h
+        src/history/historymodel.cpp
+        src/history/historydao.h
+        src/history/historydao.cpp
+        src/history/historybar.h
+        src/history/historybar.cpp
+        src/history/historybar.ui
+        src/history/historywidget.h
+        src/history/historywidget.cpp
+        src/history/historywidget.ui
+        src/webengine/webview.cpp
+        src/webengine/webview.h
+        src/dao/basedao.h
+        src/dao/basedao.cpp
+        src/dao/bookmarkdao.cpp
+        src/dao/bookmarkdao.h
+        src/dao/bookmarkgroupdao.cpp
+        src/dao/bookmarkgroupdao.h
+        src/dao/userdao.h
+        src/dao/userdao.cpp
+        src/bookmark/bookmarkmodel.h
+        src/bookmark/bookmarkmodel.cpp
+        src/bookmark/bookmarkwidget.h
+        src/bookmark/bookmarkwidget.cpp
+        src/bookmark/bookmarkwidget.ui
+        src/user/usermodel.h
+        src/user/usermodel.cpp
+        # src/tests/user/user_test.cpp
+>>>>>>> 3eaab7e (add bookmarkWidget)
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp

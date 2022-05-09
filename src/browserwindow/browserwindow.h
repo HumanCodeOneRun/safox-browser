@@ -11,8 +11,14 @@
 
 #include <QMainWindow>
 #include <QWidget>
+<<<<<<< HEAD
 #include "../toolbar/toolbar.h"
 #include "../history/historywidget.h"
+=======
+#include "..\toolbar\toolbar.h"
+#include "..\history\historywidget.h"
+#include "..\bookmark\bookmarkwidget.h"
+>>>>>>> 3eaab7e (add bookmarkWidget)
 #include <QToolButton>
 #include <QSystemTrayIcon>
 #include <QAction>
@@ -32,6 +38,7 @@ public:
     double scale;
     Toolbar* tb;
     HistoryWidget* historyTest;
+    BookmarkWidget* bookmarkTest;
     int userid;
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
@@ -45,6 +52,8 @@ private slots:
     void on_hidBtn_clicked();
 
     void accept_history_signal();
+
+    void accept_bookmarker_signal();
 
 private:
     Ui::BrowserWindow *ui;

@@ -29,6 +29,8 @@ class Toolbar:public QWidget
 
 public:
     explicit Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0);
+    QToolButton* backBtn;
+    QToolButton* goBtn;
     QToolButton* bookmarkerBtn;
     QToolButton* historyBtn;
     QToolButton* homeBtn;
@@ -51,9 +53,11 @@ private:
 
 private slots:
     void on_historyBtn_clicked();
+    void on_bookmarkerBtn_clicked();
 
 signals:
     void on_historyBtn_passSignal();
+    void on_bookmarkerBtn_passSignal();
 };
 
 #endif // TOOLBAR_H

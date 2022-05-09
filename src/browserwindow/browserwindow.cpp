@@ -19,7 +19,8 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     /* 隐藏默认标题栏 */
     setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
 
-    //todo:获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
+    //todo: 获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
+    //todo: 窗口拖拽
 
     //...
 
@@ -54,11 +55,18 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
-    //    打开历史界面
+    // 初始化历史界面并隐藏
     this->historyTest = new HistoryWidget(this,0,100,1920,980);
     this->historyTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
+    }
+
+    // 初始化书签界面并隐藏
+    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980);
+    this->bookmarkTest->hide();
+    if(tb){
+       connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
 
 
@@ -115,11 +123,20 @@ void BrowserWindow::CreateSystemTrayIcon(){
 }
 
 void BrowserWindow::accept_history_signal(){
-    qDebug("receive signal from toolBar");
     if(this->historyTest->isVisible()){
         this->historyTest->hide();
     }else{
         this->historyTest->show();
     }
 }
+
+void BrowserWindow::accept_bookmarker_signal(){
+    qDebug("receive signal");
+    if(this->bookmarkTest->isVisible()){
+        this->bookmarkTest->hide();
+    }else{
+        this->bookmarkTest->show();
+    }
+}
+
 
