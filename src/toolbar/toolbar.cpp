@@ -18,12 +18,27 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     this->height = height;
     this->setGeometry(x,y,width,height);
 
+    /* 后退按钮 */
+    backBtn = new QToolButton(parent);
+    backBtn->setGeometry(x+30,y+10,45,30);
+    backBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon back = QIcon(":/icon/image/arrow-left-allow.png");
+    backBtn->setIcon(back);
+
+    /* 前进按钮 */
+    goBtn = new QToolButton(parent);
+    goBtn->setGeometry(x+73,y+10,45,30);
+    goBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    QIcon go = QIcon(":/icon/image/arrow-right-allow.png");
+    goBtn->setIcon(go);
+
     /* 书签按钮 */
     bookmarkerBtn = new QToolButton(parent);
     bookmarkerBtn->setGeometry(x+150,y+10,45,30);
     bookmarkerBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon bookmaker = QIcon(":/icon/image/bookmaker.png");
     bookmarkerBtn->setIcon(bookmaker);
+    connect(bookmarkerBtn,&QToolButton::clicked,this,&Toolbar::on_bookmarkerBtn_clicked);
 
     /* 首页按钮 */
     homeBtn = new QToolButton(parent);
@@ -73,7 +88,12 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     /* 网址 */
     urlBar = new QLineEdit(parent);
     urlBar->setGeometry(x+460,y+10,1000,30);
-    urlBar->setStyleSheet("QLineEdit{background-color:rgba(35, 38, 43, 100);border-radius:8px;}");
+    urlBar->setStyleSheet("QLineEdit{background-color:rgba(35, 38, 43, 100);border-radius:8px;color:rgba(136, 136, 136, 100);font-size:14px;}");
+    urlBar->setText("www.baidu.com");
+    urlBar->setAlignment(Qt::AlignHCenter);
+    QAction * pActLeft = new QAction(this);
+    pActLeft->setIcon(QIcon(":/icon/image/search.png"));
+    urlBar->addAction(pActLeft,QLineEdit::LeadingPosition);
 }
 
 void Toolbar::paintEvent(QPaintEvent *event)
@@ -93,4 +113,9 @@ void Toolbar::paintEvent(QPaintEvent *event)
 
 void Toolbar::on_historyBtn_clicked(){
     emit on_historyBtn_passSignal();
+}
+
+void Toolbar::on_bookmarkerBtn_clicked(){
+    qDebug("click");
+    emit on_bookmarkerBtn_passSignal();
 }

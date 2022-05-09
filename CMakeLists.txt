@@ -67,6 +67,9 @@ set(PROJECT_SOURCES
         src/dao/userdao.cpp
         src/bookmark/bookmarkmodel.h
         src/bookmark/bookmarkmodel.cpp
+        src/bookmark/bookmarkwidget.h
+        src/bookmark/bookmarkwidget.cpp
+        src/bookmark/bookmarkwidget.ui
         src/user/usermodel.h
         src/user/usermodel.cpp
         # src/tests/user/user_test.cpp

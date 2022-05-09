@@ -9,6 +9,11 @@
         <file>image/add.png</file>
         <file>image/clock.png</file>
         <file>image/down.png</file>
+        <file>image/search.png</file>
+        <file>image/arrow-left-allow.png</file>
+        <file>image/arrow-left-refuse.png</file>
+        <file>image/arrow-right-allow.png</file>
+        <file>image/arrow-right-refuse.png</file>
     </qresource>
     <qresource prefix="/new/prefix1"/>
 </RCC>

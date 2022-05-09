@@ -10,12 +10,13 @@
 #define TOOLBAR_H
 #include <QMenu>
 #include <QHash>
-#include<QToolButton>
-#include<QLineEdit>
-#include<QIcon>
+#include <QToolButton>
+#include <QLineEdit>
+#include <QIcon>
 #include <QPointer>
-#include<QPainter>
-#include<QStyleOption>
+#include <QPainter>
+#include <QStyleOption>
+#include <QAction>
 #include "..\history\historywidget.h"
 
 class Preferences;
@@ -29,6 +30,8 @@ class Toolbar:public QWidget
 
 public:
     explicit Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0);
+    QToolButton* backBtn;
+    QToolButton* goBtn;
     QToolButton* bookmarkerBtn;
     QToolButton* historyBtn;
     QToolButton* homeBtn;
@@ -51,9 +54,11 @@ private:
 
 private slots:
     void on_historyBtn_clicked();
+    void on_bookmarkerBtn_clicked();
 
 signals:
     void on_historyBtn_passSignal();
+    void on_bookmarkerBtn_passSignal();
 };
 
 #endif // TOOLBAR_H
