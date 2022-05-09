@@ -11,9 +11,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
+option(${PROJECT_NAME}_TEST "enable test" OFF)
+
+# set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
-#list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+# list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -77,12 +79,14 @@ set(PROJECT_SOURCES
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_library(
-        FolkTell_lib
-        SHARED
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
+    if(${PROJECT_NAME}_TEST)
+        qt_add_library(
+            FolkTell_lib
+            SHARED
+            MANUAL_FINALIZATION
+            ${PROJECT_SOURCES}
+        )
+    endif()
 
     qt_add_executable(
         FolkTell
@@ -113,7 +117,7 @@ else()
 endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
-target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -126,9 +130,12 @@ set_target_properties(FolkTell PROPERTIES
 
 
 
+if(${PROJECT_NAME}_TEST)
+    target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
-enable_testing()
-add_subdirectory(tests)
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)
 endif()
