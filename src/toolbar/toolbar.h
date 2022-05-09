@@ -16,6 +16,7 @@
 #include <QPointer>
 #include<QPainter>
 #include<QStyleOption>
+#include "..\history\historywidget.h"
 
 class Preferences;
 class HistoryMenu;
@@ -36,6 +37,7 @@ public:
     QToolButton* settingBtn;
     QToolButton* addBtn;
     QLineEdit* urlBar;
+    HistoryWidget* historyTest;
 
 private:
     int init_x;
@@ -46,6 +48,12 @@ private:
     void paintEvent(QPaintEvent *event);
     BrowserWindow* m_window;
     QPalette palette;
+
+private slots:
+    void on_historyBtn_clicked();
+
+signals:
+    void on_historyBtn_passSignal();
 };
 
 #endif // TOOLBAR_H

@@ -10,7 +10,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height) :
     ui->setupUi(this);
     this->setGeometry(x,y,width,height);
     this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 100);gridline-color:rgba(219,219,219,100);}"
-                        "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);}");
+                        "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);font-size:20px;}");
 
 
 
@@ -24,8 +24,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height) :
 /*--------遍历QList：------------------*/
     QList<qint64>::iterator i = historyDateList.begin();
     while(i!=historyDateList.end()){
-        QString str = QString::number(*i);
-        QDateTime time = QDateTime::fromString(str);
+        QDateTime time = QDateTime::fromMSecsSinceEpoch(*i);
         qDebug()<<time;
         i++;
     }
