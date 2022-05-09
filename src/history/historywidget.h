@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QTableWidget>
+#include <QHeaderView>
+#include <QDate>
 #include "historybar.h"
 
 namespace Ui {
@@ -21,6 +23,7 @@ public:
 private:
     Ui::HistoryWidget *ui;
     QList<qint64> loadHistory(const int &userid);
+    void initTable();
 };
 
 #endif // HISTORYWIDGET_H

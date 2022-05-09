@@ -71,17 +71,5 @@ void HistoryBar::paintEvent(QPaintEvent *event)
 }
 
 void HistoryBar::loadHistory(const int &userid){
-    History* userHistory = new History(userid);
-    // 测试添加历史
-    // WebView* userWebview = new WebView(this);
-    // userWebview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
-    // userWebview->show();
-    // userHistory->addHistoryEntry(userWebview);
-    QList<qint64> res = userHistory->queryDayTimestamp();
-    qDebug()<<res.length();
-    QList<qint64>::iterator i = res.begin();
-    while(i!=res.end()){
-        qDebug()<<*i;
-        i++;
-    }
+
 }
