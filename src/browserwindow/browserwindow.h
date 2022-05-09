@@ -11,10 +11,15 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include "../toolbar/toolbar.h"
+#include "..\toolbar\toolbar.h"
+#include "..\history\historywidget.h"
 #include <QToolButton>
+#include <QSystemTrayIcon>
+#include <QAction>
+#include <QMenu>
 
 QT_BEGIN_NAMESPACE
+class HistoryBar;
 namespace Ui { class BrowserWindow; }
 QT_END_NAMESPACE
 
@@ -23,9 +28,13 @@ class BrowserWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    BrowserWindow(QWidget *parent = nullptr);
     int curHeight,curWidth;
+    double scale;
     Toolbar* tb;
+    HistoryWidget* historyTest;
+    int userid;
+    BrowserWindow(QWidget *parent = nullptr);
+    void CreateSystemTrayIcon();
     ~BrowserWindow();
 
 private slots:

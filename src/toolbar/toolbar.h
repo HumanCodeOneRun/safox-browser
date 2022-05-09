@@ -12,6 +12,7 @@
 #include <QHash>
 #include<QToolButton>
 #include<QLineEdit>
+#include<QIcon>
 #include <QPointer>
 #include<QPainter>
 #include<QStyleOption>

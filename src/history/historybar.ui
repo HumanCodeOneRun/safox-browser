@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>ToolBar</class>
- <widget name="ToolBar" class="QWidget">
+ <class>HistoryBar</class>
+ <widget class="QWidget" name="HistoryBar">
   <property name="geometry">
    <rect>
     <x>0</x>

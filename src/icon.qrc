@@ -7,6 +7,8 @@
         <file>image/account.png</file>
         <file>image/setting.png</file>
         <file>image/add.png</file>
+        <file>image/clock.png</file>
+        <file>image/down.png</file>
     </qresource>
     <qresource prefix="/new/prefix1"/>
 </RCC>

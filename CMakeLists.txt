@@ -51,6 +51,12 @@ set(PROJECT_SOURCES
         src/history/historymodel.cpp
         src/history/historydao.h
         src/history/historydao.cpp
+        src/history/historybar.h
+        src/history/historybar.cpp
+        src/history/historybar.ui
+        src/history/historywidget.h
+        src/history/historywidget.cpp
+        src/history/historywidget.ui
         src/webengine/webview.cpp
         src/webengine/webview.h
         src/dao/basedao.h
@@ -71,7 +77,7 @@ set(PROJECT_SOURCES
 #        mainmenu.cpp
 #        mainmenu.h
 #        mainmenu.ui
-#        icon.qrc
+        src/icon.qrc
 
         ${TS_FILES}
 )
@@ -117,7 +123,6 @@ else()
 endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
-
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
