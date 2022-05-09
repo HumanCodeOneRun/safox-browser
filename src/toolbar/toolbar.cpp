@@ -45,6 +45,8 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     historyBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon history = QIcon(":/icon/image/history.png");
     historyBtn->setIcon(history);
+    connect(historyBtn,&QToolButton::clicked,this,&Toolbar::on_historyBtn_clicked);
+
 
     /* 账户按钮 */
     accountBtn = new QToolButton(parent);
@@ -87,4 +89,8 @@ void Toolbar::paintEvent(QPaintEvent *event)
     p.setPen(Qt::NoPen);
     p.setBrush(QColor(50, 54, 64, 100));
     p.drawRect(0,0,this->width,this->height);
+}
+
+void Toolbar::on_historyBtn_clicked(){
+    emit on_historyBtn_passSignal();
 }

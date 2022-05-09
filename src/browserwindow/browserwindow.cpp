@@ -54,8 +54,14 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
-//    打开历史界面
+    //    打开历史界面
     this->historyTest = new HistoryWidget(this,0,100,1920,980);
+    this->historyTest->hide();
+    if(tb){
+       connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
+    }
+
+
 }
 
 BrowserWindow::~BrowserWindow()
@@ -106,5 +112,14 @@ void BrowserWindow::CreateSystemTrayIcon(){
     trayIcon->setIcon(QIcon(":/icon/image/download.png"));    //设置托盘图标
     trayIcon->setContextMenu(trayMenu);                                     //设置菜单
     trayIcon->show();
+}
+
+void BrowserWindow::accept_history_signal(){
+    qDebug("receive signal from toolBar");
+    if(this->historyTest->isVisible()){
+        this->historyTest->hide();
+    }else{
+        this->historyTest->show();
+    }
 }
 

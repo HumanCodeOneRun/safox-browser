@@ -44,6 +44,8 @@ private slots:
 
     void on_hidBtn_clicked();
 
+    void accept_history_signal();
+
 private:
     Ui::BrowserWindow *ui;
 };
