@@ -31,7 +31,7 @@ public:
     // for debug purpose
     virtual void printInfo();
     QVector<QVariant> getcolumns();
-    ~BaseDao();
+    virtual ~BaseDao();
 
 protected:
     bool checkdbpath(const QString& _db_path);

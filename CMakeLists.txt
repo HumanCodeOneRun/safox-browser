@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(${PROJECT_NAME}_TEST "enable test" OFF)
+option(${PROJECT_NAME}_TEST "enable test" ON)
 
 # set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
@@ -71,7 +71,6 @@ set(PROJECT_SOURCES
         src/bookmark/bookmarkmodel.cpp
         src/user/usermodel.h
         src/user/usermodel.cpp
-        # src/tests/user/user_test.cpp
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp

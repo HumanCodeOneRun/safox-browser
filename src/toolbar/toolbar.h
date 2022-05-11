@@ -10,13 +10,13 @@
 #define TOOLBAR_H
 #include <QMenu>
 #include <QHash>
-#include<QToolButton>
-#include<QLineEdit>
-#include<QIcon>
+#include <QToolButton>
+#include <QLineEdit>
+#include <QIcon>
 #include <QPointer>
-#include<QPainter>
-#include<QStyleOption>
-#include "..\history\historywidget.h"
+#include <QPainter>
+#include <QStyleOption>
+#include "../history/historywidget.h"
 
 class Preferences;
 class HistoryMenu;
