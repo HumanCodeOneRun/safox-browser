@@ -13,6 +13,8 @@
 
 :white_check_mark:    unit test模块
 
+:white_check_mark:    user支持并发读写
+
 
 ### 待完成
 
