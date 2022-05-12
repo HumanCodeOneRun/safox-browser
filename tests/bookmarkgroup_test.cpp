@@ -1,7 +1,9 @@
 #include "bookmark/bookmarkmodel.h"
+#include "taskscheduler/databasetaskscheduler.h"
 
+DatabaseTaskScheduler scheduler;
 bool init_getgroup_test(){
-    BookmarkModel model;
+    BookmarkModel model(scheduler);
 
     auto groups = model.initGetGroups(1);
     groups = model.initGetGroups(2);
@@ -10,7 +12,7 @@ bool init_getgroup_test(){
 }
 
 bool add_group_test(){
-    BookmarkModel model;
+    BookmarkModel model(scheduler);
 
     return 0
         ||  !model.addBookmarkGroup(1, "test112313", QUrl("test1.icon"))
@@ -19,7 +21,7 @@ bool add_group_test(){
 }
 
 bool delete_group_test(){
-    BookmarkModel model;
+    BookmarkModel model(scheduler);
 
     return 0
         ||  !model.deleteBookmarkGroup(1, 802222310);
