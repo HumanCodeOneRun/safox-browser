@@ -15,7 +15,7 @@ option(${PROJECT_NAME}_TEST "enable test" OFF)
 
 # set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
-# list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+ list(APPEND CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -71,7 +71,7 @@ set(PROJECT_SOURCES
         src/bookmark/bookmarkmodel.cpp
         src/user/usermodel.h
         src/user/usermodel.cpp
-        # src/tests/user/user_test.cpp
+
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
@@ -79,8 +79,11 @@ set(PROJECT_SOURCES
 #        mainmenu.ui
         src/icon.qrc
 
-        ${TS_FILES}
-)
+#        ${TS_FILES}
+        src/taskscheduler/databasetaskscheduler.h
+        src/taskscheduler/databasetaskscheduler.cpp
+#        tests/user_test.cpp
+        )
 
 
 

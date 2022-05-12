@@ -1,15 +1,11 @@
 #include <QtWebEngineCore>
-#include <QObject>
 #include "dao/userdao.h"
+#include "taskscheduler/databasetaskscheduler.h"
 
-// TODO: 1. auto-increment for count in User group
-//       2. consider return UserItem/UserItem for convinience
-
-class UserModel : QObject{
-    Q_OBJECT // for slots
+class UserModel  {
 
 public:
-    UserModel();
+    explicit UserModel (DatabaseTaskScheduler &taskScheduler);
     ~UserModel();
     class UserItem{
     public:
@@ -35,7 +31,7 @@ public:
     };
 
    
-public slots:
+public :
 
     bool addRegisterUser(const QString& name, const QString& password);
     bool deleteRegisterUser(const int& id);
@@ -44,6 +40,6 @@ public slots:
     bool queryUserId(const int& id);
     bool queryUserPassword(const int& id, const QString& password);
 private:
-
+    DatabaseTaskScheduler &m_taskScheduler;
 
 };

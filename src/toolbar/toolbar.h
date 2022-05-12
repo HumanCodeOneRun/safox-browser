@@ -16,7 +16,7 @@
 #include <QPointer>
 #include<QPainter>
 #include<QStyleOption>
-#include "..\history\historywidget.h"
+#include "../history/historywidget.h"
 
 class Preferences;
 class HistoryMenu;
