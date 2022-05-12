@@ -11,7 +11,9 @@
 
 :white_check_mark:	User basic
 
-:white_check_mark:    unit test模块
+:white_check_mark:  unit test模块
+
+:white_check_mark:  User支持并发读写
 
 
 ### 待完成
