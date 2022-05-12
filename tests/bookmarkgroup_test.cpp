@@ -30,6 +30,7 @@ bool delete_group_test(){
 
 
 int main(int argc, char** argv){
+    scheduler.run();
     return 0 
         || init_getgroup_test()
         || add_group_test();

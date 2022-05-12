@@ -40,6 +40,7 @@ bool delete_bookmark_test() {
 }
 
 int main(int argc, char **argv) {
+    scheduler.run();
     return 0
            || !add_bookmark_test()
            || !get_bookmark_bygid_test()

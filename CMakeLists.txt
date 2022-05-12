@@ -32,7 +32,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Web
 set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
-#        src/main.cpp
+        src/main.cpp
         src/browserwindow/browserwindow.cpp
         src/browserwindow/browserwindow.h
         src/browserwindow/browserwindow.ui
@@ -83,7 +83,7 @@ set(PROJECT_SOURCES
         src/taskscheduler/databasetaskscheduler.h
         src/taskscheduler/databasetaskscheduler.cpp
 #        tests/user_test.cpp
-        tests/bookmark_test.cpp
+#        tests/bookmark_test.cpp
         )
 
 
