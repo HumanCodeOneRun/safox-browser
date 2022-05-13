@@ -40,7 +40,6 @@ bool t_editUsr(int id) {
 int main() {
     scheduler.run();
 
-//    dao.deleteTable();
     int ret = 0
             || t_addUsr()
             || t_deleteUsr()

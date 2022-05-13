@@ -11,14 +11,14 @@
 
 :white_check_mark:	User basic
 
-:white_check_mark:    unit test模块
+:white_check_mark:  unit test模块
+
+:white_check_mark:  User, Bookmark支持并发读写
 
 :white_check_mark:    user支持并发读写
 
 
 ### 待完成
-
-:red_circle:	Bookmark支持并发读写
 
 :red_circle:	download模块
 
