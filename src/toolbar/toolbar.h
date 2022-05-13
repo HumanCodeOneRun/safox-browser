@@ -14,8 +14,13 @@
 #include <QLineEdit>
 #include <QIcon>
 #include <QPointer>
+<<<<<<< HEAD
 #include <QPainter>
 #include <QStyleOption>
+=======
+#include<QPainter>
+#include<QStyleOption>
+>>>>>>> 6cfd2cb610b05dd9878d436209eaf41bb78b2dcb
 #include "../history/historywidget.h"
 
 class Preferences;

@@ -4,6 +4,7 @@
 #include <QtWebEngineCore>
 #include "bookmarkdao.h"
 #include "bookmarkgroupdao.h"
+#include "taskscheduler/databasetaskscheduler.h"
 
 //#include "BookmarkModel.moc"
 // TODO: 1. auto-increment for count in bookmark group
@@ -12,7 +13,7 @@
 class BookmarkModel {
 
 public:
-    BookmarkModel();
+    explicit BookmarkModel(DatabaseTaskScheduler &taskScheduler);
     ~BookmarkModel();
     class BookmarkItem{
     public:
@@ -91,6 +92,7 @@ public:
     bool deleteBookmarkGroup(const int& uid, const int& gid);
 
 private:
+    DatabaseTaskScheduler &m_taskScheduler;
 
 
 };
