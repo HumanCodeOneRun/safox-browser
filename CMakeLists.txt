@@ -84,6 +84,11 @@ set(PROJECT_SOURCES
         src/taskscheduler/databasetaskscheduler.cpp
 #        tests/user_test.cpp
 #        tests/bookmark_test.cpp
+        src/setting/Config.h
+        src/setting/Config.cpp
+        src/setting/homepage.h
+        src/setting/homepage.cpp
+#        tests/homepage_test.cpp
         )
 
 
