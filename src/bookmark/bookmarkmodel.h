@@ -32,10 +32,11 @@ public:
         bool setUrl(const int& uid, const int& id, const QUrl& url);
         bool setIcon(const int& uid, const int& id, const QUrl& icon);
 
-        bool addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon);
+        bool addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
         
-
+        // for debug
+        void dropTable();
         ~BookmarkItem();
     private:
         int uid;
@@ -67,13 +68,15 @@ public:
         bool setIcon(const int& uid, const int& gid, const QUrl& icon);
 
         bool deleteBookmarkGroup(const int& uid, const int& gid);
+
+        // for debug
+        void dropTable();
         ~BookmarkGroupItem();
 
     private:
         int uid;
         int gid;
         QString name;
-        int count; // number of bookmark in this group
         QUrl icon;
 
         BookmarkGroupDao dao;
@@ -90,8 +93,10 @@ public:
     bool editBookmark(const int& uid, const int& id, const QString& name="", const QUrl& url=QUrl(""), const QString& gname="");
     bool deleteBookmarkGroup(const int& uid, const int& gid);
 
+    // for debug
+    void resetDB();
 private:
-
+   
 
 };
 

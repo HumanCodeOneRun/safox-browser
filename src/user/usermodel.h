@@ -44,6 +44,6 @@ public slots:
     bool queryUserId(const int& id);
     bool queryUserPassword(const int& id, const QString& password);
 private:
-
+    
 
 };

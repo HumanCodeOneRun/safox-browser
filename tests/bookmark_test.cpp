@@ -4,8 +4,8 @@ bool add_bookmark_test(){
     BookmarkModel model;
 
     return 0
-        ||  !model.addBookmark(1, "bookmarktest3", QUrl("test.com"), "test112313", QUrl("test.icon"))
-        ||  !model.addBookmark(1, "bookmarktest4", QUrl("test2.com"), "test123123", QUrl("test3.icon"));
+        ||  !model.addBookmark(1, "bookmarktest1", QUrl("test.com"), "bookmark_added", QUrl("test.icon"))
+        ||  !model.addBookmark(1, "bookmarktest2", QUrl("test2.com"), "bookmark_added2", QUrl("test3.icon"));
 }
 
 bool get_bookmark_bygid_test(){
@@ -37,8 +37,8 @@ bool delete_bookmark_test(){
 
 int main(int argc, char** argv){
     return 0
-        ||  !add_bookmark_test()
-        ||  !get_bookmark_bygid_test()
-        ||  !edit_bokmark_test()
-        ||  !delete_bookmark_test();
+        ||  !add_bookmark_test();
+        //||  !get_bookmark_bygid_test()
+        //||  !edit_bokmark_test()
+        //||  !delete_bookmark_test();
 }

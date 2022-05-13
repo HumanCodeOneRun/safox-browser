@@ -16,7 +16,9 @@ bool add_group_test(){
         ||  !model.addBookmarkGroup(1, "test112313", QUrl("test1.icon"))
         ||  !model.addBookmarkGroup(2, "test221313", QUrl("test2.icon"))
         ||  !model.addBookmarkGroup(1, "test123123", QUrl("test3.icon"));
+
 }
+
 
 bool delete_group_test(){
     BookmarkModel model;
@@ -28,6 +30,7 @@ bool delete_group_test(){
 
 
 int main(int argc, char** argv){
+
     return 0 
         || init_getgroup_test()
         || add_group_test();

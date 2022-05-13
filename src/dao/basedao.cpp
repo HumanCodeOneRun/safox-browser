@@ -23,7 +23,6 @@ BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_d
         return;
     if (QSqlDatabase::contains("qt_sql_default_connection"))
         this->db = QSqlDatabase::database("qt_sql_default_connection");
-        //this->db = QSqlDatabase::addDatabase("QSQLITE");
     else
         this->db = QSqlDatabase::addDatabase("QSQLITE");
 

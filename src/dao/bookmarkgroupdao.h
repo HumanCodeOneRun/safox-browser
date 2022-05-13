@@ -6,7 +6,7 @@
 
 class BookmarkGroupDao : public BaseDao{
 public:
-    explicit BookmarkGroupDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKGROUPDAO_TABLE_NAME);
+    BookmarkGroupDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKGROUPDAO_TABLE_NAME);
     
     static BookmarkGroupDao& getDao();
     bool createTable() override;

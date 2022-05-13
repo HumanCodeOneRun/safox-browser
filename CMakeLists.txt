@@ -15,7 +15,7 @@ option(${PROJECT_NAME}_TEST "enable test" ON)
 
 # set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
-# list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -71,6 +71,11 @@ set(PROJECT_SOURCES
         src/bookmark/bookmarkmodel.cpp
         src/user/usermodel.h
         src/user/usermodel.cpp
+
+        #src/downloads/downloaditem.h
+        #src/downloads/downloaditem.cpp
+        #src/downloads/downloadmanager.h
+        #src/downloads/downloadmanager.cpp
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp

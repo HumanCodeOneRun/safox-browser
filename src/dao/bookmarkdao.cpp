@@ -11,7 +11,7 @@ BookmarkDao& BookmarkDao::getDao(){
 }
 bool BookmarkDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, ID INTEGER NOT NULL, GID INTEGER, NAME TEXT UNIQUE, URL TEXT, ICON TEXT, PRIMARY KEY(UID, ID));";
+                " (UID INTEGER NOT NULL, ID INTEGER NOT NULL, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT, PRIMARY KEY(UID, ID));";
     QSqlQuery query(this->db);
     bool ok = query.exec(cmd);
 
@@ -169,7 +169,10 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
     QString cmd = "INSERT INTO " + this->getTableName() + "(UID, ID, GID, NAME, URL, ICON)"+" VALUES(:uid, :id, :gid, :name, :url, :icon)";
 
     QSqlQuery query(this->db);
-    query.prepare(cmd);
+    if(!query.prepare(cmd)){
+        qDebug() << "[error] fail to prepare, " << query.lastError().text();
+        return false;
+    }
 
     int id = qHash(url.toString());
 
@@ -184,7 +187,6 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
         qDebug() << "[error] fail to insert,  " << query.lastError().text();
         return false;
     }
-
     return true;
 }
 
