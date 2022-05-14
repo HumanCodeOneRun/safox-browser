@@ -1,5 +1,6 @@
 #include "webview.h"
-
+#include "../lib/adblock/adblock_request_interceptor.h"
+#include "../lib/adblock/default_request_interceptor.h"
 
 
 void WebView::changeTitle(const QString& newTitle) {
@@ -29,6 +30,9 @@ QWebEngineView(parent)
     QObject::connect(this, &QWebEngineView::urlChanged, this, &WebView::changeUrl);
     QObject::connect(this, &QWebEngineView::iconUrlChanged, this, &WebView::changeIconUrl);
     connectedToHistory = 0;
+    m_adblockRequestInterceptor = NULL;
+    m_defaultRequestInterceptor = NULL;
+
 }
 
 
@@ -56,6 +60,20 @@ bool WebView::getConnectedToHistory() {
 
 void WebView::setConnectedToHistory(bool _connectedToHistory) {
     connectedToHistory = _connectedToHistory;
+}
+
+void WebView::setAdblockRequestInterceptor() {
+    if(!m_adblockRequestInterceptor)
+        m_adblockRequestInterceptor = new AdblockRequestInterceptor();
+    this->page()->setUrlRequestInterceptor(m_adblockRequestInterceptor);
+    this->reload();
+}
+
+void WebView::setDefaultRequestInterceptor() {
+    if(!m_defaultRequestInterceptor)
+        m_defaultRequestInterceptor = new DefaultRequestInterceptor();
+    this->page()->setUrlRequestInterceptor(m_defaultRequestInterceptor);
+    this->reload();
 }
 
 /*
