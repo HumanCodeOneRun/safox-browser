@@ -1,7 +1,7 @@
 #include "historydao.h"
 
-HistoryDao::HistoryDao(const int& _userid, const QString& _db_path, const QString& _table_name):
-userid(_userid), BaseDao(_db_path, _table_name) {
+HistoryDao::HistoryDao(const int& _userid, const QString&conn_name ,const QString& _db_path, const QString& _table_name):
+userid(_userid), BaseDao(conn_name, _db_path, _table_name) {
     createTable();
 }
 

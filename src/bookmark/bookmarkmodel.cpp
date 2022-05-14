@@ -1,10 +1,12 @@
 #include "bookmarkmodel.h"
 
 // bookmark group item
+BookmarkGroupDao BookmarkModel::BookmarkGroupItem::dao = BookmarkGroupDao::getDao();
+BookmarkDao BookmarkModel::BookmarkItem::dao = BookmarkDao::getDao();
 BookmarkModel::BookmarkGroupItem::BookmarkGroupItem()
-:gid(-1), name("null"), count(-1), icon("null")
+:gid(-1), name("null"), uid(-1), icon("null")
 {
-    this->dao = BookmarkGroupDao::getDao();
+    //this->dao = BookmarkGroupDao::getDao();
 }
 
 BookmarkModel::BookmarkGroupItem BookmarkModel::BookmarkGroupItem::getGroupByUidAndId(const int& uid, const int& gid){
@@ -13,9 +15,9 @@ BookmarkModel::BookmarkGroupItem BookmarkModel::BookmarkGroupItem::getGroupByUid
         qDebug() << "[error] fail to query group by uid and id";
         return *this;
     }
-    this->gid = ret.value(0).toInt();
-    this->name = ret.value(1).toString();
-    this->count = ret.value(2).toInt();
+    this->uid = ret.value(0).toInt();
+    this->gid = ret.value(1).toInt();
+    this->name = ret.value(2).toString();
     this->icon = ret.value(3).toUrl();
 
     return *this;
@@ -49,12 +51,12 @@ QVector<QVariant> BookmarkModel::BookmarkGroupItem::getGroupById(const int& gid)
 BookmarkModel::BookmarkGroupItem BookmarkModel::BookmarkGroupItem::getGroupByUidAndName(const int& uid, const QString& name){
     QVector<QVariant> ret = (this->dao).QueryByUidAndName(uid, name);
     if(ret.empty()){
-        qDebug() << "[error] fail to query group by uid and name";
+        qDebug() << "[warning] no group named " << name;
         return *this;
     }
-    this->gid = ret.value(0).toInt();
-    this->name = ret.value(1).toString();
-    this->count = ret.value(2).toInt();
+    this->uid = ret.value(0).toInt();
+    this->gid = ret.value(1).toInt();
+    this->name = ret.value(2).toString();
     this->icon = ret.value(3).toUrl();
 
     return *this;
@@ -104,6 +106,10 @@ bool BookmarkModel::BookmarkGroupItem::deleteBookmarkGroup(const int& uid, const
     return (this->dao).remove(uid, gid);
 }
 
+QString BookmarkModel::BookmarkGroupItem::get_connection(){
+    return (this->dao).get_connection();
+}
+
 BookmarkModel::BookmarkGroupItem::~BookmarkGroupItem(){
     (this->dao).close();
 }
@@ -114,7 +120,7 @@ BookmarkModel::BookmarkGroupItem::~BookmarkGroupItem(){
 BookmarkModel::BookmarkItem::BookmarkItem()
 :id(-1), gid(-1), name("null"), url("null"), icon("null")
 {
-    this->dao = BookmarkDao::getDao();
+    //this->dao = BookmarkDao::getDao();
 }
 
 QVector<QVariant> BookmarkModel::BookmarkItem::getItemByUidAndId(const int& uid, const int& id){
@@ -157,20 +163,17 @@ bool BookmarkModel::BookmarkItem::setIcon(const int& uid,const int& id, const QU
     return (this->dao).setIcon(uid, id, icon.toString());
 }
 
-bool BookmarkModel::BookmarkItem::addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname,  const QUrl& icon){
-    BookmarkGroupItem gitem;
-    BookmarkGroupItem target = gitem.getGroupByUidAndName(uid, name);
-    int gid;
-    if((gid = target.getGid()) == -1){
-        qDebug() << "[error] fail to get the group.";
-        return false;
-    }
+bool BookmarkModel::BookmarkItem::addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid,  const QUrl& icon){
 
     return (this->dao).insert(uid, gid, name, url, icon);
 }
 
 bool BookmarkModel::BookmarkItem::deleteBookmark(const int& uid, const int& id){
     return (this->dao).remove(uid, id);
+}
+
+QString BookmarkModel::BookmarkItem::get_connection(){
+    return (this->dao).get_connection();
 }
 
 BookmarkModel::BookmarkItem::~BookmarkItem(){
@@ -220,10 +223,40 @@ bool BookmarkModel::addBookmarkGroup(const int& uid, const QString& name,  const
 
 bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon){
     BookmarkItem item;
+    BookmarkGroupItem gitem;
     std::promise<bool> pm;
     std::future<bool> future = pm.get_future();
-    m_taskScheduler.post([&pm,&item, &uid, &name, &url, &gname, &icon](){
-       int ret =  item.addBookmark(uid, name, url, gname, icon);
+
+    std::promise<int> get_pm;
+    std::future<int> get_future = get_pm.get_future();
+
+    //gitem.print_db_state();
+    m_taskScheduler.post([&uid, &get_pm, &gname, &gitem](){
+        int ret = gitem.getGroupByUidAndName(uid, gname).getGid();
+        get_pm.set_value(ret);
+        
+    });
+    int gid = get_future.get();
+
+    if(gid == -1){
+        //gitem.print_db_state();
+        m_taskScheduler.post([&gitem, &gid, &gname, &uid, &pm](){
+            int ret = gitem.addGroup(uid, gname, QUrl("src/image/bookmaker.png"));
+            pm.set_value(ret);
+        });
+        bool ok = future.get();
+        
+        //gitem.print_db_state();
+        m_taskScheduler.post([&gitem, &gid, &gname, &uid, &get_pm](){
+            int ret = gitem.getGroupByUidAndName(uid, gname).getGid();
+            get_pm.set_value(ret);
+        });
+        gid = get_future.get();
+    }
+
+    
+    m_taskScheduler.post([&gid, &pm,&item, &uid, &name, &url, &gname, &icon](){
+       int ret = item.addBookmark(uid, name, url, gid, icon);
        pm.set_value(ret);
     });
     return future.get();
@@ -245,7 +278,7 @@ bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& n
             int ret = item.setName(uid, id, name);
             pm.set_value(ret);
         });
-        name_valid =  future.get();
+        name_valid = future.get();
     }
 
     if(!url.isEmpty()){

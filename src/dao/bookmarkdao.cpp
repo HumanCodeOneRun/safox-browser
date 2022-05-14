@@ -1,9 +1,11 @@
 #include "bookmarkdao.h"
 
-BookmarkDao::BookmarkDao(const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_path, _table_name){
+BookmarkDao::BookmarkDao(const QString& _conn_name, const QString& _db_path, const QString& _table_name )
+: BaseDao(_conn_name, _db_path, _table_name){
     createTable();
 
+    if(!(this->db).isOpen())
+        (this->db).open();
 }
 BookmarkDao& BookmarkDao::getDao(){
     static BookmarkDao dao;
@@ -11,7 +13,7 @@ BookmarkDao& BookmarkDao::getDao(){
 }
 bool BookmarkDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, ID INTEGER NOT NULL, GID INTEGER, NAME TEXT UNIQUE, URL TEXT, ICON TEXT, PRIMARY KEY(UID, ID));";
+                " (UID INTEGER NOT NULL, ID INTEGER NOT NULL, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT, PRIMARY KEY(UID, ID));";
     QSqlQuery query(this->db);
     bool ok = query.exec(cmd);
 
@@ -237,7 +239,9 @@ bool BookmarkDao::deleteTable(){
     return true;
 }
 
-
+QString BookmarkDao::get_connection(){
+    return (this->db).connectionName();
+}
 
 BookmarkDao::~BookmarkDao(){
 }

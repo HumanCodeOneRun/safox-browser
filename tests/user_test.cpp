@@ -41,14 +41,14 @@ int main() {
     scheduler.run();
 
     int ret = 0
-            || t_addUsr()
-            || t_deleteUsr()
-            || t_queryUsr(1)
-            || t_editUsr(1);
+            || !t_addUsr()
+            || !t_deleteUsr()
+            || !t_queryUsr(1)
+            || !t_editUsr(1);
 //    int ret = 0
 //            || t_addUsr();
 //    UserDao dao;
 //    dao.showAll();
 //    dao.deleteTable();
-
+    return ret;
 }

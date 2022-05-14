@@ -1,9 +1,10 @@
 #include "bookmarkgroupdao.h"
 
-BookmarkGroupDao::BookmarkGroupDao(const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_path, _table_name){
+BookmarkGroupDao::BookmarkGroupDao(const QString &_db_conn, const QString& _db_path, const QString& _table_name )
+: BaseDao(_db_conn,_db_path, _table_name){
     createTable();
-
+    if(!(this->db).isOpen())
+        (this->db).open();
 }
 BookmarkGroupDao& BookmarkGroupDao::getDao(){
     static BookmarkGroupDao dao;
@@ -11,7 +12,7 @@ BookmarkGroupDao& BookmarkGroupDao::getDao(){
 }
 bool BookmarkGroupDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT UNIQUE, ICON TEXT);";
+                " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT);";
     QSqlQuery query(this->db);
     bool ok = query.exec(cmd);
 
@@ -56,10 +57,8 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndName(const int& uid, const QStr
         return ret;
     }
 
-    QSqlRecord rec = query.record();
-    
-    if(!rec.isEmpty()){
-        ret.append({rec.value("UID"), rec.value("GID"),rec.value("NAME"),rec.value("ICON")});
+    while(query.next()){
+        ret.append({query.value(0), query.value(1),query.value(2),query.value(3)});
     }
 
     return ret;
@@ -163,6 +162,10 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
 
     return true;
  }
+
+QString BookmarkGroupDao::get_connection(){
+    return (this->db).connectionName();
+}
 
 BookmarkGroupDao::~BookmarkGroupDao(){
     (this->db).close();

@@ -19,7 +19,7 @@ public:
     public:
         BookmarkItem();
         QVector<QVariant> getItemByUidAndId(const int& uid, const int& id);
-        QVector<QVector<QVariant>> getItemByUidAndGid(const int& uid, const int& gid);
+        QVector< QVector<QVariant> > getItemByUidAndGid(const int& uid, const int& gid);
         
         inline int getUid() { return this->uid; }
         inline int getId() { return this->id; }
@@ -33,9 +33,10 @@ public:
         bool setUrl(const int& uid, const int& id, const QUrl& url);
         bool setIcon(const int& uid, const int& id, const QUrl& icon);
 
-        bool addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon);
+        bool addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
         
+        QString get_connection();
 
         ~BookmarkItem();
     private:
@@ -46,7 +47,7 @@ public:
         QUrl url;
         QUrl icon;
 
-        BookmarkDao dao;
+        static BookmarkDao dao;
     };
 
     class BookmarkGroupItem{
@@ -68,16 +69,17 @@ public:
         bool setIcon(const int& uid, const int& gid, const QUrl& icon);
 
         bool deleteBookmarkGroup(const int& uid, const int& gid);
+        void print_db_state(){this->dao.print_db_state();}
+        QString get_connection();
         ~BookmarkGroupItem();
 
     private:
         int uid;
         int gid;
         QString name;
-        int count; // number of bookmark in this group
         QUrl icon;
 
-        BookmarkGroupDao dao;
+        static BookmarkGroupDao dao;
     };
 
 public:

@@ -3,10 +3,10 @@
 #include "basedao.h"
 
 #define BOOKMARKDAO_TABLE_NAME "Bookmark"
-
+#define CONN_NAME "bookmark_conn"
 class BookmarkDao : public BaseDao{
 public:
-    explicit BookmarkDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);
+    explicit BookmarkDao(const QString& _conn_name=CONN_NAME, const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);
     
     static BookmarkDao& getDao();
     bool createTable() override;
@@ -31,6 +31,8 @@ public:
     // debug
     //QVector<QVariant> getcolumns();
     bool deleteTable();
+
+    QString get_connection();
     ~BookmarkDao();
 };
 
