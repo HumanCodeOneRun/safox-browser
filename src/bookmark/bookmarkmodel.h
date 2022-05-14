@@ -4,6 +4,7 @@
 #include <QtWebEngineCore>
 #include "bookmarkdao.h"
 #include "bookmarkgroupdao.h"
+#include "taskscheduler/databasetaskscheduler.h"
 
 //#include "BookmarkModel.moc"
 // TODO: 1. auto-increment for count in bookmark group
@@ -12,13 +13,13 @@
 class BookmarkModel {
 
 public:
-    BookmarkModel();
+    explicit BookmarkModel(DatabaseTaskScheduler &taskScheduler);
     ~BookmarkModel();
     class BookmarkItem{
     public:
         BookmarkItem();
         QVector<QVariant> getItemByUidAndId(const int& uid, const int& id);
-        QVector<QVector<QVariant>> getItemByUidAndGid(const int& uid, const int& gid);
+        QVector< QVector<QVariant> > getItemByUidAndGid(const int& uid, const int& gid);
         
         inline int getUid() { return this->uid; }
         inline int getId() { return this->id; }
@@ -35,8 +36,8 @@ public:
         bool addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
         
-        // for debug
-        void dropTable();
+        QString get_connection();
+
         ~BookmarkItem();
     private:
         int uid;
@@ -46,7 +47,7 @@ public:
         QUrl url;
         QUrl icon;
 
-        BookmarkDao dao;
+        static BookmarkDao dao;
     };
 
     class BookmarkGroupItem{
@@ -68,9 +69,8 @@ public:
         bool setIcon(const int& uid, const int& gid, const QUrl& icon);
 
         bool deleteBookmarkGroup(const int& uid, const int& gid);
-
-        // for debug
-        void dropTable();
+        void print_db_state(){this->dao.print_db_state();}
+        QString get_connection();
         ~BookmarkGroupItem();
 
     private:
@@ -79,7 +79,7 @@ public:
         QString name;
         QUrl icon;
 
-        BookmarkGroupDao dao;
+        static BookmarkGroupDao dao;
     };
 
 public:
@@ -96,7 +96,8 @@ public:
     // for debug
     void resetDB();
 private:
-   
+    DatabaseTaskScheduler &m_taskScheduler;
+
 
 };
 

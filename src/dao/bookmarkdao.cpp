@@ -1,9 +1,11 @@
 #include "bookmarkdao.h"
 
-BookmarkDao::BookmarkDao(const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_path, _table_name){
+BookmarkDao::BookmarkDao(const QString& _conn_name, const QString& _db_path, const QString& _table_name )
+: BaseDao(_conn_name, _db_path, _table_name){
     createTable();
 
+    if(!(this->db).isOpen())
+        (this->db).open();
 }
 BookmarkDao& BookmarkDao::getDao(){
     static BookmarkDao dao;
@@ -239,7 +241,9 @@ bool BookmarkDao::deleteTable(){
     return true;
 }
 
-
+QString BookmarkDao::get_connection(){
+    return (this->db).connectionName();
+}
 
 BookmarkDao::~BookmarkDao(){
 }

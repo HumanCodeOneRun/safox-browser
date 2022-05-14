@@ -18,13 +18,14 @@ bool BaseDao::checkdbpath(const QString& _db_path){
     return true;
 }
 
-BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_db_path), table_name(_table_name){
+BaseDao::BaseDao(const QString& _conn_name,const QString& _db_path, const QString& _table_name):conn_name(_conn_name),db_path(_db_path), table_name(_table_name){
     if(!this->checkdbpath(_db_path))
         return;
-    if (QSqlDatabase::contains("qt_sql_default_connection"))
-        this->db = QSqlDatabase::database("qt_sql_default_connection");
+    if (QSqlDatabase::contains(conn_name))
+        this->db = QSqlDatabase::database(conn_name);
+        //this->db = QSqlDatabase::addDatabase("QSQLITE");
     else
-        this->db = QSqlDatabase::addDatabase("QSQLITE");
+        this->db = QSqlDatabase::addDatabase("QSQLITE", conn_name);
 
     
     (this->db).setDatabaseName(this->db_path);

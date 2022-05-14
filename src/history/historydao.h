@@ -8,7 +8,7 @@
 #include <QString>
 
 #define HISTORYDAO_TABLE_NAME "history"
-
+#define HISTORY_CONN "history_conn"
 
 struct HistoryEntry{
     unsigned int urlid;
@@ -21,7 +21,7 @@ struct HistoryEntry{
 class HistoryDao:BaseDao {
 
     public:
-    HistoryDao(const int& _userid, const QString& _db_path = DEFAULT_DB_PATH, const QString& _table_name = HISTORYDAO_TABLE_NAME);
+    HistoryDao(const int& _userid, const QString&conn_name = HISTORY_CONN, const QString& _db_path = DEFAULT_DB_PATH, const QString& _table_name = HISTORYDAO_TABLE_NAME);
 
     bool insertHistoryEntry(const unsigned int& id, const QString &title, const QUrl& url, const QUrl& iconUrl, const qint64& timestamp);
     bool createTable();

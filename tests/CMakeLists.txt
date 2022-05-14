@@ -11,8 +11,17 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/bookmark)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/dao)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/user)
+<<<<<<< HEAD
 
 folktell_add_test(bookmarkgroup)
 folktell_add_test(bookmark)
 folktell_add_test(user)
 #folktell_add_test(download)
+=======
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/taskscheduler)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/setting)
+folktell_add_test(user)
+folktell_add_test(bookmark)
+folktell_add_test(bookmarkgroup)
+#folktell_add_test(homepage)
+>>>>>>> thread_dev

@@ -14,8 +14,8 @@
 #include <QLineEdit>
 #include <QIcon>
 #include <QPointer>
-#include <QPainter>
-#include <QStyleOption>
+#include<QPainter>
+#include<QStyleOption>
 #include "../history/historywidget.h"
 
 class Preferences;

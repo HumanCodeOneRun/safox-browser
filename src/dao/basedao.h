@@ -11,10 +11,10 @@
 
 #define DEFAULT_DB_PATH "./.folktell.db"
 #define DEFAULT_TABLE_NAME "dummy_table"
-
+#define DEFAULT_CONN_NAME "base_conn"
 class BaseDao {
 public:
-    explicit BaseDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name=DEFAULT_TABLE_NAME);  
+    explicit BaseDao(const QString& _conn_name=DEFAULT_CONN_NAME, const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name=DEFAULT_TABLE_NAME);  
     static BaseDao& getDao();
 
 
@@ -37,6 +37,7 @@ protected:
     bool checkdbpath(const QString& _db_path);
     QString db_path;
     QString table_name;
+    QString conn_name;
     QSqlDatabase db;
 
 

@@ -1,9 +1,10 @@
 #include "bookmarkgroupdao.h"
 
-BookmarkGroupDao::BookmarkGroupDao(const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_path, _table_name){
+BookmarkGroupDao::BookmarkGroupDao(const QString &_db_conn, const QString& _db_path, const QString& _table_name )
+: BaseDao(_db_conn,_db_path, _table_name){
     createTable();
-
+    if(!(this->db).isOpen())
+        (this->db).open();
 }
 BookmarkGroupDao& BookmarkGroupDao::getDao(){
     static BookmarkGroupDao dao;
@@ -162,18 +163,8 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
     return true;
  }
 
-bool BookmarkGroupDao::deleteTable(){
-    QString cmd = "DROP TABLE " + this->table_name;
-    
-    QSqlQuery query(this->db);
-    query.prepare(cmd);
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to delete table,  " << query.lastError().text();
-        return false;
-    }
-
-    return true;
+QString BookmarkGroupDao::get_connection(){
+    return (this->db).connectionName();
 }
 
 BookmarkGroupDao::~BookmarkGroupDao(){

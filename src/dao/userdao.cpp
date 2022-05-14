@@ -1,7 +1,7 @@
 #include "userdao.h"
 
-UserDao::UserDao(const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_path, _table_name){
+UserDao::UserDao(const QString&_conn_name, const QString& _db_path, const QString& _table_name )
+: BaseDao(_conn_name, _db_path, _table_name){
     createTable();
 
 }

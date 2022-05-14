@@ -82,9 +82,14 @@ set(PROJECT_SOURCES
 #        mainmenu.h
 #        mainmenu.ui
         src/icon.qrc
-
+        src/taskscheduler/databasetaskscheduler.h
+        src/taskscheduler/databasetaskscheduler.cpp
+        #src/setting/Config.h
+        #src/setting/Config.cpp
+        #src/setting/homepage.h
+        #src/setting/homepage.cpp
         ${TS_FILES}
-)
+        )
 
 
 

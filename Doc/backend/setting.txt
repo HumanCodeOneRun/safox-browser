@@ -1,0 +1,3 @@
+setting:
+    implement config operation
+    implement homepage : set/read via config
