@@ -39,7 +39,7 @@ void DownloadManager::on_requested(QWebEngineDownloadRequest* request, const QUr
 
     request->setDownloadDirectory(save_path);
     request->setDownloadFileName(name);
-    
+    emit download_items_num_changed();
     request->accept();
 }
 
@@ -48,9 +48,18 @@ void DownloadManager::on_delete(const QString& url){
     item->on_cancel();
     (this->download_items).remove(url);
 
-    emit delete_item();
+    emit download_items_num_changed();
 }
 
+void DownloadManager::on_pause(const QString& url){
+    auto item = this->download_items[url];
+    item->on_pause();
+    
+}
+void DownloadManager::on_resume(const QString& url){
+    auto item = this->download_items[url];
+    item->on_resume();
+}
 
 DownloadManager::~DownloadManager(){
     

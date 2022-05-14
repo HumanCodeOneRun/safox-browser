@@ -37,14 +37,11 @@ void pause_and_resume_test(){
         qDebug() << "name is " << name;
         manager->on_requested(request, url, icon, save_path, name);
 
-        auto item_list = manager->get_items();
-        auto item = item_list[0];
-
-        item->on_pause();
+        manager->on_pause(url.toString());
 
         sleep(5);
 
-        item->on_resume();
+        manager->on_resume(url.toString());
     }
     ); 
 
@@ -74,6 +71,6 @@ void delete_test(){
 int main(int argc, char** argv){
     QApplication app(argc, argv);
 
-    delete_test();
+    pause_and_resume_test();
     return app.exec();
 }
