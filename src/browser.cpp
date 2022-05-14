@@ -1,7 +1,7 @@
 #include "browser.h"
 
-Browser::Browser(QObject *parent,int userid)
-    : QObject{parent}
+Browser::Browser(int userid)
 {
     this->userid = userid;
+    this->baseHistory = new History(userid);
 }

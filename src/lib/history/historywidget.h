@@ -12,22 +12,22 @@
 namespace Ui {
 class HistoryWidget;
 }
-
+class BrowserWindow;
 class HistoryWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HistoryWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0);
+    explicit HistoryWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow *root=nullptr);
     int width,height;
     HistoryBar* historyBar;
     ~HistoryWidget();
 
 private:
     Ui::HistoryWidget *ui;
-    QList<qint64> loadHistory(const int &userid);
     void initTable();
     void paintEvent(QPaintEvent *event);
+
 };
 
 #endif // HISTORYWIDGET_H

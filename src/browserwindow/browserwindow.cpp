@@ -11,7 +11,8 @@
 
 
 BrowserWindow::BrowserWindow(QWidget *parent)
-    : QMainWindow(parent)
+//    :QMainWindow()
+    : QMainWindow(parent),Browser(11111111)
     , ui(new Ui::BrowserWindow)
 {
     ui->setupUi(this);
@@ -55,19 +56,21 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
+
     // 初始化历史界面并隐藏
-    this->historyTest = new HistoryWidget(this,0,100,1920,980);
+    this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
     this->historyTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
     }
 
     // 初始化书签界面并隐藏
-    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980);
+    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980,this);
     this->bookmarkTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
+
 
 
 }

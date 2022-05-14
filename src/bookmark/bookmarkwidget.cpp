@@ -1,14 +1,14 @@
 #include "bookmarkwidget.h"
 #include "ui_bookmarkwidget.h"
-Browser* temp = new Browser();
-BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height) :
+#include <browserwindow/browserwindow.h>
+BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,BrowserWindow* root) :
     QWidget(parent),
     ui(new Ui::BookmarkWidget)
 {
     ui->setupUi(this);
     this->width = width;
     this->height = height;
-    this->bookmark = new BookmarkModel();
+    this->bookmark = new BookmarkModel(root->Browser::dts);
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);
@@ -27,11 +27,11 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height)
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
-    this->bookmark->addBookmarkGroup(temp->userid,"firstGroup",QUrl("www.testIcon.com"));
-    this->userBookmark = this->bookmark->initGetGroups(temp->userid);
-    this->bookmark->addBookmark(temp->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
-    qDebug("vector:");
-    qDebug()<<this->userBookmark;
+//    this->bookmark->addBookmarkGroup(root->userid,"firstGroup",QUrl("www.testIcon.com"));
+//    this->userBookmark = this->bookmark->initGetGroups(root->userid);
+//    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
+//    qDebug("vector:");
+//    qDebug()<<this->userBookmark;
 
 
 }

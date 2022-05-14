@@ -12,6 +12,7 @@
 #include <QMainWindow>
 #include <QWidget>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "../toolbar/toolbar.h"
 #include "../history/historywidget.h"
 =======
@@ -19,6 +20,12 @@
 #include "..\history\historywidget.h"
 #include "..\bookmark\bookmarkwidget.h"
 >>>>>>> 3eaab7e (add bookmarkWidget)
+=======
+#include "../lib/toolbar/toolbar.h"
+#include "../lib/history/historywidget.h"
+#include "../lib/bookmark/bookmarkwidget.h"
+#include "../browser.h"
+>>>>>>> 950f40a (edit browser)
 #include <QToolButton>
 #include <QSystemTrayIcon>
 #include <QAction>
@@ -29,7 +36,7 @@ class HistoryBar;
 namespace Ui { class BrowserWindow; }
 QT_END_NAMESPACE
 
-class BrowserWindow : public QMainWindow
+class BrowserWindow : public QMainWindow, public Browser
 {
     Q_OBJECT
 
