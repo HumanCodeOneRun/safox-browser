@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>BookmarkWidget</class>
- <widget class="QWidget" name="BookmarkWidget">
+ <class>BookmarkItem</class>
+ <widget name="BookmarkItem" class="QWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
