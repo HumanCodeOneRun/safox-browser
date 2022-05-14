@@ -26,4 +26,7 @@ DownloadItem::DownloadItem(const QString& _name, const QUrl& icon, QWebEngineDow
 {
 }
 
+DownloadItem::~DownloadItem(){
+    
+}
 

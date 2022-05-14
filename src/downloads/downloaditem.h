@@ -21,10 +21,54 @@ public:
 
     inline QWebEngineDownloadRequest* get_request() { return this->download_request; }
     
+    inline QString get_name() { return this->name; }
+    inline QString get_save_path() {return this->save_path; }
+    inline QString get_download_path () { return this->download_path.toString();}
+    inline QString get_icon() { return this->Icon.toString(); }
+
 public Q_SLOTS:
-    void set_received(qint64 bytes);
+    inline void set_received(qint64 bytes) {
+        this->bytes_received = bytes; 
+        qDebug() << "received bytes: " << this->bytes_received;
+        emit bytes_received_changed(this->bytes_received);
+    }
+    inline void set_total(qint64 bytes) {
+        this->bytes_total = bytes; 
+        qDebug() << "total bytes: " << this->bytes_total;
+        emit bytes_total_changed(this->bytes_total);
+    }
+
+    inline void set_finished(bool ok){
+        this->finished = ok;
+        emit finish_changed(ok);
+    }
+
+    inline void on_pause(){
+        qDebug() << "pause now";
+        this->pause = true;
+        this->download_request->pause();
+    }
+
+    inline void on_resume(){
+        qDebug() << "resume now";
+        this->pause = false;
+        this->download_request->resume();
+    }
+
+    inline void on_cancel(){
+        qDebug() << "cancel now";
+        this->pause = false;
+        this->download_request->cancel();
+    }
+
+
+signals:
+    void bytes_received_changed(qint64);
+    void bytes_total_changed(qint64);
+    void finish_changed(bool);
 
 private:
+
     QString name;
     QString save_path;
     QUrl download_path;

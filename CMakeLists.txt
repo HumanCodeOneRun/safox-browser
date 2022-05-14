@@ -72,10 +72,10 @@ set(PROJECT_SOURCES
         src/user/usermodel.h
         src/user/usermodel.cpp
 
-        #src/downloads/downloaditem.h
-        #src/downloads/downloaditem.cpp
-        #src/downloads/downloadmanager.h
-        #src/downloads/downloadmanager.cpp
+        src/downloads/downloaditem.h
+        src/downloads/downloaditem.cpp
+        src/downloads/downloadmanager.h
+        src/downloads/downloadmanager.cpp
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp

@@ -7,7 +7,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-
+#include "downloads/downloadmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    
     BrowserWindow w;
 
 

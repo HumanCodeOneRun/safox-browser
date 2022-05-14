@@ -32,11 +32,7 @@ bool delete_group_test(){
 
 
 int main(int argc, char** argv){
-<<<<<<< HEAD
-
-=======
     scheduler.run();
->>>>>>> thread_dev
     return 0 
         || init_getgroup_test()
         || add_group_test();

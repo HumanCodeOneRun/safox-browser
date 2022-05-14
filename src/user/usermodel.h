@@ -1,3 +1,5 @@
+#ifndef USER_H_
+#define USER_H_
 #include <QtWebEngineCore>
 #include "dao/userdao.h"
 #include "taskscheduler/databasetaskscheduler.h"
@@ -40,10 +42,8 @@ public :
     bool queryUserId(const int& id);
     bool queryUserPassword(const int& id, const QString& password);
 private:
-<<<<<<< HEAD
-    
-=======
     DatabaseTaskScheduler &m_taskScheduler;
->>>>>>> thread_dev
 
 };
+
+#endif
