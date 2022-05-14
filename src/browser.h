@@ -7,7 +7,8 @@ class Browser : public QObject
 {
     Q_OBJECT
 public:
-    explicit Browser(QObject *parent = nullptr);
+    explicit Browser(QObject *parent = nullptr,int userid=11111111);
+    int userid;
 
 signals:
 

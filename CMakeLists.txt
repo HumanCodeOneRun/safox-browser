@@ -115,6 +115,9 @@ set(PROJECT_SOURCES
         src/bookmark/bookmarkwidget.h
         src/bookmark/bookmarkwidget.cpp
         src/bookmark/bookmarkwidget.ui
+        src/bookmark/bookmarkitem.h
+        src/bookmark/bookmarkitem.cpp
+        src/bookmark/bookmarkitem.ui
         src/user/usermodel.h
         src/user/usermodel.cpp
         # src/tests/user/user_test.cpp
