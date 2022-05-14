@@ -15,7 +15,7 @@
 
 :white_check_mark:  User, Bookmark支持并发读写
 
-:white_check_mark:    user支持并发读写
+:white_check_mark:  download模块
 
 
 ### 待完成
