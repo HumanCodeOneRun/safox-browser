@@ -120,14 +120,45 @@ set(PROJECT_SOURCES
         src/bookmark/bookmarkitem.ui
         src/user/usermodel.h
         src/user/usermodel.cpp
+<<<<<<< HEAD
         # src/tests/user/user_test.cpp
 >>>>>>> 3eaab7e (add bookmarkWidget)
+=======
+
+        src/lib/third_party/ad-block/ad_block_client.cc
+        src/lib/third_party/ad-block/ad_block_client.h
+        src/lib/third_party/ad-block/bad_fingerprint.h
+        src/lib/third_party/ad-block/bad_fingerprints.h
+        src/lib/third_party/ad-block/base.h
+        src/lib/third_party/ad-block/BloomFilter.cpp
+        src/lib/third_party/ad-block/BloomFilter.h
+        src/lib/third_party/ad-block/context_domain.cc
+        src/lib/third_party/ad-block/context_domain.h
+		src/lib/third_party/ad-block/cosmetic_filter.cc
+        src/lib/third_party/ad-block/cosmetic_filter.h
+        src/lib/third_party/ad-block/filter.cc
+        src/lib/third_party/ad-block/filter.h
+        src/lib/third_party/ad-block/hashFn.cc
+        src/lib/third_party/ad-block/hashFn.h
+        src/lib/third_party/ad-block/hash_set.h
+        src/lib/third_party/ad-block/no_fingerprint_domain.cc
+        src/lib/third_party/ad-block/no_fingerprint_domain.h
+        src/lib/third_party/ad-block/protocol.cc
+        src/lib/third_party/ad-block/protocol.h
+
+        src/lib/adblock/adblock_request_interceptor.cpp
+        src/lib/adblock/adblock_request_interceptor.h
+        src/lib/adblock/default_request_interceptor.cpp
+        src/lib/adblock/default_request_interceptor.h
+
+>>>>>>> 80f5383 (finish adblock)
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
 #        mainmenu.h
 #        mainmenu.ui
         src/icon.qrc
+<<<<<<< HEAD
         src/lib/taskscheduler/databasetaskscheduler.h
         src/lib/taskscheduler/databasetaskscheduler.cpp
         src/lib/setting/Config.h
@@ -135,6 +166,19 @@ set(PROJECT_SOURCES
         src/lib/setting/homepage.h
         src/lib/setting/homepage.cpp
         ${TS_FILES}
+=======
+
+#        ${TS_FILES}
+        src/taskscheduler/databasetaskscheduler.h
+        src/taskscheduler/databasetaskscheduler.cpp
+#        tests/user_test.cpp
+#        tests/bookmark_test.cpp
+        src/setting/config.h
+        src/setting/config.cpp
+        src/setting/homepage.h
+        src/setting/homepage.cpp
+#        tests/homepage_test.cpp
+>>>>>>> 80f5383 (finish adblock)
         )
 
 
@@ -179,14 +223,14 @@ endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
-set_target_properties(FolkTell PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-    AUTOMOC TRUE
-)
+#set_target_properties(FolkTell PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+#    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+#    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+#    MACOSX_BUNDLE TRUE
+#    WIN32_EXECUTABLE TRUE
+#    AUTOMOC TRUE
+#)
 
 
 
