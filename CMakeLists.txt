@@ -11,9 +11,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
+option(${PROJECT_NAME}_TEST "enable test" OFF)
+
+# set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
-#list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+# list(APPEND CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macos")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -34,48 +36,74 @@ set(PROJECT_SOURCES
         src/browserwindow/browserwindow.cpp
         src/browserwindow/browserwindow.h
         src/browserwindow/browserwindow.ui
-        src/toolbar/toolbar.cpp
-        src/toolbar/toolbar.h
-        src/toolbar/toolbar.ui
+        src/lib/toolbar/toolbar.cpp
+        src/lib/toolbar/toolbar.h
+        src/lib/toolbar/toolbar.ui
         src/browser.cpp
         src/browser.h
         src/mainapplication.cpp
         src/mainapplication.h
-        src/history/historyitem.cpp
-        src/history/historyitem.h
-        src/history/history.cpp
-        src/history/history.h
-        src/history/historymodel.h
-        src/history/historymodel.cpp
-        src/history/historydao.h
-        src/history/historydao.cpp
-        src/history/historybar.h
-        src/history/historybar.cpp
-        src/history/historybar.ui
-        src/history/historywidget.h
-        src/history/historywidget.cpp
-        src/history/historywidget.ui
-        src/webengine/webview.cpp
-        src/webengine/webview.h
-        src/dao/basedao.h
-        src/dao/basedao.cpp
-        src/dao/bookmarkdao.cpp
-        src/dao/bookmarkdao.h
-        src/dao/bookmarkgroupdao.cpp
-        src/dao/bookmarkgroupdao.h
-        src/dao/userdao.h
-        src/dao/userdao.cpp
-        src/bookmark/bookmarkmodel.h
-        src/bookmark/bookmarkmodel.cpp
-        src/bookmark/bookmarkwidget.h
-        src/bookmark/bookmarkwidget.cpp
-        src/bookmark/bookmarkwidget.ui
-        src/bookmark/bookmarkitem.h
-        src/bookmark/bookmarkitem.cpp
-        src/bookmark/bookmarkitem.ui
-        src/user/usermodel.h
-        src/user/usermodel.cpp
-        # src/tests/user/user_test.cpp
+        src/lib/history/historyitem.cpp
+        src/lib/history/historyitem.h
+        src/lib/history/history.cpp
+        src/lib/history/history.h
+        src/lib/history/historymodel.h
+        src/lib/history/historymodel.cpp
+        src/lib/history/historydao.h
+        src/lib/history/historydao.cpp
+        src/lib/history/historybar.h
+        src/lib/history/historybar.cpp
+        src/lib/history/historybar.ui
+        src/lib/history/historywidget.h
+        src/lib/history/historywidget.cpp
+        src/lib/history/historywidget.ui
+        src/lib/webengine/webview.cpp
+        src/lib/webengine/webview.h
+        src/lib/dao/basedao.h
+        src/lib/dao/basedao.cpp
+        src/lib/dao/bookmarkdao.cpp
+        src/lib/dao/bookmarkdao.h
+        src/lib/dao/bookmarkgroupdao.cpp
+        src/lib/dao/bookmarkgroupdao.h
+        src/lib/dao/userdao.h
+        src/lib/dao/userdao.cpp
+        src/lib/bookmark/bookmarkmodel.h
+        src/lib/bookmark/bookmarkmodel.cpp
+        src/lib/bookmark/bookmarkwidget.h
+        src/lib/bookmark/bookmarkwidget.cpp
+        src/lib/bookmark/bookmarkwidget.ui
+        src/lib/bookmark/bookmarkitem.h
+        src/lib/bookmark/bookmarkitem.cpp
+        src/lib/bookmark/bookmarkitem.ui
+        src/lib/user/usermodel.h
+        src/lib/user/usermodel.cpp
+
+        src/lib/third_party/ad-block/ad_block_client.cc
+        src/lib/third_party/ad-block/ad_block_client.h
+        src/lib/third_party/ad-block/bad_fingerprint.h
+        src/lib/third_party/ad-block/bad_fingerprints.h
+        src/lib/third_party/ad-block/base.h
+        src/lib/third_party/ad-block/BloomFilter.cpp
+        src/lib/third_party/ad-block/BloomFilter.h
+        src/lib/third_party/ad-block/context_domain.cc
+        src/lib/third_party/ad-block/context_domain.h
+		src/lib/third_party/ad-block/cosmetic_filter.cc
+        src/lib/third_party/ad-block/cosmetic_filter.h
+        src/lib/third_party/ad-block/filter.cc
+        src/lib/third_party/ad-block/filter.h
+        src/lib/third_party/ad-block/hashFn.cc
+        src/lib/third_party/ad-block/hashFn.h
+        src/lib/third_party/ad-block/hash_set.h
+        src/lib/third_party/ad-block/no_fingerprint_domain.cc
+        src/lib/third_party/ad-block/no_fingerprint_domain.h
+        src/lib/third_party/ad-block/protocol.cc
+        src/lib/third_party/ad-block/protocol.h
+
+        src/lib/adblock/adblock_request_interceptor.cpp
+        src/lib/adblock/adblock_request_interceptor.h
+        src/lib/adblock/default_request_interceptor.cpp
+        src/lib/adblock/default_request_interceptor.h
+
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
@@ -83,18 +111,29 @@ set(PROJECT_SOURCES
 #        mainmenu.ui
         src/icon.qrc
 
-        ${TS_FILES}
-)
+#        ${TS_FILES}
+        src/lib/taskscheduler/databasetaskscheduler.h
+        src/lib/taskscheduler/databasetaskscheduler.cpp
+#        tests/user_test.cpp
+#        tests/bookmark_test.cpp
+        src/lib/setting/config.h
+        src/lib/setting/config.cpp
+        src/lib/setting/homepage.h
+        src/lib/setting/homepage.cpp
+#        tests/homepage_test.cpp
+        )
 
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-#    qt_add_library(
-#        FolkTell_lib
-#        SHARED
-#        MANUAL_FINALIZATION
-#        ${PROJECT_SOURCES}
-#    )
+    if(${PROJECT_NAME}_TEST)
+        qt_add_library(
+            FolkTell_lib
+            SHARED
+            MANUAL_FINALIZATION
+            ${PROJECT_SOURCES}
+        )
+    endif()
 
     qt_add_executable(
         FolkTell
@@ -125,7 +164,6 @@ else()
 endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
-#target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
 set_target_properties(FolkTell PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -138,9 +176,12 @@ set_target_properties(FolkTell PROPERTIES
 
 
 
+if(${PROJECT_NAME}_TEST)
+    target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
-enable_testing()
-#add_subdirectory(tests)
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(FolkTell)
 endif()

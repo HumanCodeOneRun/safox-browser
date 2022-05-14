@@ -179,71 +179,139 @@ BookmarkModel::BookmarkItem::~BookmarkItem(){
 
 
 // bookmark model
-BookmarkModel::BookmarkModel(){
-
+BookmarkModel::BookmarkModel(DatabaseTaskScheduler &taskScheduler):
+m_taskScheduler(taskScheduler)
+{
 }
 
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     BookmarkGroupItem item;
-    return item.getAllGroup(uid);
+    std::promise<QVector<QVector<QVariant>>> pm;
+    std::future<QVector<QVector<QVariant>>> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid](){
+        auto ret =  item.getAllGroup(uid);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& uid, const int& gid){
     BookmarkItem item;
-    return item.getItemByUidAndGid(uid, gid);
+    std::promise<QVector<QVector<QVariant>>> pm;
+    std::future<QVector<QVector<QVariant>>> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid, &gid](){
+        auto ret =  item.getItemByUidAndGid(uid, gid);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 bool BookmarkModel::addBookmarkGroup(const int& uid, const QString& name,  const QUrl& icon){
     BookmarkGroupItem item;
-    return item.addGroup(uid, name, icon);
+    std::promise<bool> pm;
+    std::future<bool> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid, &name,&icon](){
+        int ret =  item.addGroup(uid, name, icon);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 
 bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon){
     BookmarkItem item;
-    return item.addBookmark(uid, name, url, gname, icon);
+    std::promise<bool> pm;
+    std::future<bool> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid, &name, &url, &gname, &icon](){
+       int ret =  item.addBookmark(uid, name, url, gname, icon);
+       pm.set_value(ret);
+    });
+    return future.get();
 }
 
 bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& name, const QUrl& url, const QString& gname){
     BookmarkItem item;
+    int name_valid, url_valid, gid_valid;
+    name_valid = url_valid = gid_valid = 1;
     if(!name.isEmpty()){
-        if(!item.setName(uid, id, name)){
-            qDebug() << "[error] fail to edit bookmark name ";
-            return false;
-        }
+//        if(!item.setName(uid, id, name)){
+//            qDebug() << "[error] fail to edit bookmark name ";
+//            return false;
+//        }
+
+        std::promise<bool> pm;
+        std::future<bool> future = pm.get_future();
+        m_taskScheduler.post([&pm,&item, &uid, &id, &name](){
+            int ret = item.setName(uid, id, name);
+            pm.set_value(ret);
+        });
+        name_valid =  future.get();
     }
 
     if(!url.isEmpty()){
-        if(!item.setUrl(uid, id, url)){
-            qDebug() << "[error] fail to edit bookmark url ";
-            return false;
-        }
+//        if(!item.setUrl(uid, id, url)){
+//            qDebug() << "[error] fail to edit bookmark url ";
+//            return false;
+//        }
+
+        std::promise<bool> pm;
+        std::future<bool> future = pm.get_future();
+        m_taskScheduler.post([&pm,&item, &uid, &id, &url](){
+            int ret = item.setUrl(uid, id, url);
+            pm.set_value(ret);
+        });
+        url_valid = future.get();
     }
 
     if(!gname.isEmpty()){
         BookmarkGroupItem gitem;
-        BookmarkGroupItem target = gitem.getGroupByUidAndName(uid, name);
+        std::promise<BookmarkGroupItem> pm_target;
+        std::future<BookmarkGroupItem> futureTarget = pm_target.get_future();
+        m_taskScheduler.post([&pm_target,&gitem, &uid, &name](){
+            BookmarkGroupItem target = gitem.getGroupByUidAndName(uid, name);
+            pm_target.set_value(target);
+        });
+        BookmarkGroupItem target = futureTarget.get();
 
-        if(!item.setGid(uid, id, target.getGid())){
-            qDebug() << "[error] fail to edit bookmark group ";
-            return false;
-        }
+        std::promise<bool> pm;
+        std::future<bool> future = pm.get_future();
+        m_taskScheduler.post([&pm,&item, &uid, &id, &target](){
+            int ret = item.setGid(uid, id, target.getGid());
+            pm.set_value(ret);
+        });
+        gid_valid =  future.get();
+//        if(!item.setGid(uid, id, target.getGid())){
+//            qDebug() << "[error] fail to edit bookmark group ";
+//            return false;
+//        }
     }
 
-    return true;
+    return name_valid && url_valid && gid_valid;
     
 }
 
 
 bool BookmarkModel::deleteBookmark(const int& uid, const int& id){
     BookmarkItem item;
-    return item.deleteBookmark(uid, id);
+    std::promise<bool> pm;
+    std::future<bool> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid, &id](){
+        int ret =  item.deleteBookmark(uid, id);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 
 bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
     BookmarkGroupItem item;
-    return item.deleteBookmarkGroup(uid, gid);
+    std::promise<bool> pm;
+    std::future<bool> future = pm.get_future();
+    m_taskScheduler.post([&pm,&item, &uid, &gid](){
+        int ret =  item.deleteBookmarkGroup(uid, gid);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 BookmarkModel::~BookmarkModel(){

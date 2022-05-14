@@ -1,0 +1,11 @@
+
+//test for change interceptor
+QApplication a(argc, argv);
+    WebView* webview = new WebView();
+    //AdblockRequestInterceptor interceptor;
+    //webview->page()->setUrlRequestInterceptor(&interceptor);
+    webview->setAdblockRequestInterceptor();
+    webview->setDefaultRequestInterceptor();
+    webview->load(QUrl("https://www.douban.com"));
+    webview->show();
+    return a.exec();

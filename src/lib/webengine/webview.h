@@ -4,6 +4,9 @@
 #include <QObject>
 #include <QWebEngineView>
 
+class AdblockRequestInterceptor;
+class DefaultRequestInterceptor;
+
 
 class WebView: public QWebEngineView {
     Q_OBJECT
@@ -21,6 +24,8 @@ class WebView: public QWebEngineView {
     void changeTitle(const QString& newTitle);
     void changeUrl(const QUrl& newUrl);
     void changeIconUrl(const QUrl& iconUrl);
+    void setAdblockRequestInterceptor();
+    void setDefaultRequestInterceptor();
     
 
     private:
@@ -28,6 +33,9 @@ class WebView: public QWebEngineView {
     QUrl url;
     bool connectedToHistory;
     QUrl iconUrl;
+    //adblock member may be should belong to browserwindow
+    AdblockRequestInterceptor* m_adblockRequestInterceptor;
+    DefaultRequestInterceptor* m_defaultRequestInterceptor;
 
 
     Q_SIGNALS:

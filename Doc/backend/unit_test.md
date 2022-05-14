@@ -8,7 +8,7 @@ folktell_add_test(history)
 
 ## how to run a unit test?
 ```
-cmake ..
+cmake .. -DFolkTell_TEST=ON
 cmake --build .
 ctest
 

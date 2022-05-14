@@ -14,10 +14,16 @@
 #include <QLineEdit>
 #include <QIcon>
 #include <QPointer>
+<<<<<<< HEAD:src/toolbar/toolbar.h
 #include <QPainter>
 #include <QStyleOption>
 #include <QAction>
 #include "..\history\historywidget.h"
+=======
+#include<QPainter>
+#include<QStyleOption>
+#include "../history/historywidget.h"
+>>>>>>> main:src/lib/toolbar/toolbar.h
 
 class Preferences;
 class HistoryMenu;
