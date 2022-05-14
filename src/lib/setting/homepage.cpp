@@ -5,7 +5,7 @@
 #include <QString>
 #include "homepage.h"
 #include <fstream>
-#include "Config.h"
+#include "config.h"
 
 
 QUrl getHomePage() {

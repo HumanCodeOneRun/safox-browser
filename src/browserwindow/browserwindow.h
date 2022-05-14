@@ -11,8 +11,8 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include "../toolbar/toolbar.h"
-#include "../history/historywidget.h"
+#include "../lib/toolbar/toolbar.h"
+#include "../lib/history/historywidget.h"
 #include <QToolButton>
 #include <QSystemTrayIcon>
 #include <QAction>

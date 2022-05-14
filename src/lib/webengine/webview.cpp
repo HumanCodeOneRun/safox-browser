@@ -1,6 +1,6 @@
 #include "webview.h"
-#include "../lib/adblock/adblock_request_interceptor.h"
-#include "../lib/adblock/default_request_interceptor.h"
+#include "../adblock/adblock_request_interceptor.h"
+#include "../adblock/default_request_interceptor.h"
 
 
 void WebView::changeTitle(const QString& newTitle) {

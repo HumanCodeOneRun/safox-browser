@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(${PROJECT_NAME}_TEST "enable test" OFF)
 
- set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
+# set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
 # add your own cmake prefix path
 # list(APPEND CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macos")
 
@@ -36,41 +36,41 @@ set(PROJECT_SOURCES
         src/browserwindow/browserwindow.cpp
         src/browserwindow/browserwindow.h
         src/browserwindow/browserwindow.ui
-        src/toolbar/toolbar.cpp
-        src/toolbar/toolbar.h
-        src/toolbar/toolbar.ui
+        src/lib/toolbar/toolbar.cpp
+        src/lib/toolbar/toolbar.h
+        src/lib/toolbar/toolbar.ui
         src/browser.cpp
         src/browser.h
         src/mainapplication.cpp
         src/mainapplication.h
-        src/history/historyitem.cpp
-        src/history/historyitem.h
-        src/history/history.cpp
-        src/history/history.h
-        src/history/historymodel.h
-        src/history/historymodel.cpp
-        src/history/historydao.h
-        src/history/historydao.cpp
-        src/history/historybar.h
-        src/history/historybar.cpp
-        src/history/historybar.ui
-        src/history/historywidget.h
-        src/history/historywidget.cpp
-        src/history/historywidget.ui
-        src/webengine/webview.cpp
-        src/webengine/webview.h
-        src/dao/basedao.h
-        src/dao/basedao.cpp
-        src/dao/bookmarkdao.cpp
-        src/dao/bookmarkdao.h
-        src/dao/bookmarkgroupdao.cpp
-        src/dao/bookmarkgroupdao.h
-        src/dao/userdao.h
-        src/dao/userdao.cpp
-        src/bookmark/bookmarkmodel.h
-        src/bookmark/bookmarkmodel.cpp
-        src/user/usermodel.h
-        src/user/usermodel.cpp
+        src/lib/history/historyitem.cpp
+        src/lib/history/historyitem.h
+        src/lib/history/history.cpp
+        src/lib/history/history.h
+        src/lib/history/historymodel.h
+        src/lib/history/historymodel.cpp
+        src/lib/history/historydao.h
+        src/lib/history/historydao.cpp
+        src/lib/history/historybar.h
+        src/lib/history/historybar.cpp
+        src/lib/history/historybar.ui
+        src/lib/history/historywidget.h
+        src/lib/history/historywidget.cpp
+        src/lib/history/historywidget.ui
+        src/lib/webengine/webview.cpp
+        src/lib/webengine/webview.h
+        src/lib/dao/basedao.h
+        src/lib/dao/basedao.cpp
+        src/lib/dao/bookmarkdao.cpp
+        src/lib/dao/bookmarkdao.h
+        src/lib/dao/bookmarkgroupdao.cpp
+        src/lib/dao/bookmarkgroupdao.h
+        src/lib/dao/userdao.h
+        src/lib/dao/userdao.cpp
+        src/lib/bookmark/bookmarkmodel.h
+        src/lib/bookmark/bookmarkmodel.cpp
+        src/lib/user/usermodel.h
+        src/lib/user/usermodel.cpp
 
         src/lib/third_party/ad-block/ad_block_client.cc
         src/lib/third_party/ad-block/ad_block_client.h
@@ -106,14 +106,14 @@ set(PROJECT_SOURCES
         src/icon.qrc
 
 #        ${TS_FILES}
-        src/taskscheduler/databasetaskscheduler.h
-        src/taskscheduler/databasetaskscheduler.cpp
+        src/lib/taskscheduler/databasetaskscheduler.h
+        src/lib/taskscheduler/databasetaskscheduler.cpp
 #        tests/user_test.cpp
 #        tests/bookmark_test.cpp
-        src/setting/config.h
-        src/setting/config.cpp
-        src/setting/homepage.h
-        src/setting/homepage.cpp
+        src/lib/setting/config.h
+        src/lib/setting/config.cpp
+        src/lib/setting/homepage.h
+        src/lib/setting/homepage.cpp
 #        tests/homepage_test.cpp
         )
 
@@ -159,14 +159,14 @@ endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
-#set_target_properties(FolkTell PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-#    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-#    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-#    MACOSX_BUNDLE TRUE
-#    WIN32_EXECUTABLE TRUE
-#    AUTOMOC TRUE
-#)
+set_target_properties(FolkTell PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+    AUTOMOC TRUE
+)
 
 
 
