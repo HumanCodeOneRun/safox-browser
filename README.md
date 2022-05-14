@@ -20,8 +20,6 @@
 
 ### 待完成
 
-:red_circle:	download模块
-
 :red_circle:	搜索栏
 
 
