@@ -89,7 +89,7 @@ bool UserModel::editUser(const int &id, const QString &name, const QString &pass
 
         if (pwd_flag && name_flag) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

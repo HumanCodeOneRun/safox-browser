@@ -13,7 +13,7 @@
 #include <QVariant>
 #include "bookmarkmodel.h"
 #include "bookmarkitem.h"
-#include "..\taskscheduler\databasetaskscheduler.h"
+#include "../taskscheduler/databasetaskscheduler.h"
 
 namespace Ui {
 class BookmarkWidget;

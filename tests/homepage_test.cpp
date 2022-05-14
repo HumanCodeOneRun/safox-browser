@@ -2,7 +2,7 @@
 // Created by Howell Young on 2022/5/13.
 //
 
-#include "setting/homepage.h"
+#include "lib/setting/homepage.h"
 #include <QDebug>
 #include <iostream>
 
