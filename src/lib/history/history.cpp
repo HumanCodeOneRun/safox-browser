@@ -8,6 +8,13 @@ userid(_userid), QObject(parent)
     m_historyModel = new HistoryModel(this);
 }
 
+History::History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent):
+userid(_userid), QObject(parent), m_taskScheduler(_m_taskscheduler)
+{   
+    m_historyDao = new HistoryDao(_userid);
+    m_historyModel = new HistoryModel(this);
+}
+
 void History::addHistoryEntry(WebView* webview) {
     const QString title = webview->getTitle();
     const QUrl url = webview->getUrl();
@@ -24,10 +31,12 @@ void History::addHistoryEntry(WebView* webview) {
 void History::addHistoryEntryHelp(const QString& title, const QUrl& url, const QUrl& iconUrl) {
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
-    //code for database
-    m_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
-    
-    emit(historyEntryAdded(historyEntry));
+    HistoryDao* pm_historyDao = m_historyDao;
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
+        pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
+        pm_historyModel->addHistoryEntry(historyEntry);
+    });
 };
 
 
@@ -37,9 +46,14 @@ void History::deleteHistoryEntryHelp(const QString& title, const QUrl& url, cons
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
     historyEntry.date = date;
-    //code for database to delete
-   m_historyDao->deleteByPriKey(historyEntry.urlid, historyEntry.url);
-   emit(historyEntryDeleted(historyEntry));
+    HistoryDao* pm_historyDao = m_historyDao;
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
+        pm_historyDao->deleteByPriKey(historyEntry.urlid, historyEntry.url);
+        pm_historyModel->deleteHistoryEntry(historyEntry); 
+    });
+
+
 }
 
 HistoryEntry History::makeHistoryEntry(const QString& title, const QUrl& url, const QUrl& iconUrl) {
@@ -53,21 +67,41 @@ HistoryEntry History::makeHistoryEntry(const QString& title, const QUrl& url, co
 }
 
 void History::clearHistoryEntryHelp() {
-    //code for database
-    m_historyDao->clearTable();
-    emit(historyEntryCleared());
+    HistoryDao* pm_historyDao = m_historyDao;
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([pm_historyDao, pm_historyModel] {
+        pm_historyDao->clearTable();
+        pm_historyModel->clearHistoryEntry();
+    });
 }
 
 QList<qint64> History::queryDayTimestamp() {
-    return m_historyModel->queryDayTimestamp();
+    std::promise<QList<qint64>> pm;
+    std::future<QList<qint64>> future = pm.get_future();
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([&pm, pm_historyModel] {
+        QList<qint64> ret = pm_historyModel->queryDayTimestamp();
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
-    return m_historyModel->queryDayHistoryEntry(index);
+    std::promise<QList<HistoryEntry>> pm;
+    std::future<QList<HistoryEntry>> future = pm.get_future();
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([&pm, pm_historyModel, index] {
+        QList<HistoryEntry> ret = pm_historyModel->queryDayHistoryEntry(index);
+        pm.set_value(ret);
+    });
+    return future.get();
 }
 
 void History::deleteHistoryEntryHelp(const int dayIndex, const int entryIndex) {
-    m_historyModel->deleteHistoryEntry(dayIndex, entryIndex);
+    HistoryModel* pm_historyModel = m_historyModel;
+    m_taskScheduler->post([pm_historyModel, dayIndex, entryIndex] {
+        pm_historyModel->deleteHistoryEntry(dayIndex, entryIndex);
+    });
 }
 
 HistoryDao* History::getHistoryDao() {

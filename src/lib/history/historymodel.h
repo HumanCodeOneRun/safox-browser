@@ -30,9 +30,9 @@ class HistoryModel final : public QStandardItemModel
         
     
     public slots:
-        void addHistoryEntry(HistoryEntry& historyEntry);
+        void addHistoryEntry(HistoryEntry historyEntry);
         HistoryItem* findHistoryItem(const HistoryEntry& historyEntry);
-        void deleteHistoryEntry(HistoryEntry& historyEntry);//just for adding no repeated element
+        void deleteHistoryEntry(HistoryEntry historyEntry);//just for adding no repeated element
         void deleteHistoryEntry(const int dayIndex, const int entryIndex);
         void clearHistoryEntry();
         QList<qint64> queryDayTimestamp();

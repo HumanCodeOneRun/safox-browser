@@ -1,0 +1,84 @@
+// test for delete historyEntry
+    QApplication a(argc, argv);
+    int user_id = 15;
+    DatabaseTaskScheduler* scheduler = new DatabaseTaskScheduler();
+    scheduler->run();
+    History* history = new History(user_id, scheduler);
+    history->deleteHistoryEntryHelp(0, 0);
+    history->deleteHistoryEntryHelp(0, 0);
+    history->getHistoryModel()->traverse();
+    return a.exec();
+
+
+//test for queryDayHistoryEntry
+QApplication a(argc, argv);
+    int user_id = 15;
+    DatabaseTaskScheduler* scheduler = new DatabaseTaskScheduler();
+    scheduler->run();
+    History* history = new History(user_id, scheduler);
+    //history->clearHistoryEntryHelp();
+    history->getHistoryModel()->traverse();
+    WebView* webview1 = new WebView();
+    webview1->load(QUrl("https://www.scut.edu.cn/new/"));
+    history->addHistoryEntry(webview1);
+    WebView* webview2 = new WebView();
+    webview2->load(QUrl("https://www.bilibili.com"));
+    history->addHistoryEntry(webview2);
+    WebView* webview3 = new WebView();
+    webview3->load(QUrl("https://qzone.qq.com"));
+    history->addHistoryEntry(webview3);
+    history->getHistoryModel()->traverse();
+    qDebug()<<"dayTimestamp list: ";
+    QList<HistoryEntry> dayHistoryEntry = history->queryDayHistoryEntry(0);
+    for(int i=0; i<dayHistoryEntry.count(); i++) {
+        qDebug()<<dayHistoryEntry[i].title;
+    }
+
+    return a.exec();
+
+
+
+
+//test for querydayTimestamp
+QApplication a(argc, argv);
+    int user_id = 15;
+    DatabaseTaskScheduler* scheduler = new DatabaseTaskScheduler();
+    scheduler->run();
+    History* history = new History(user_id, scheduler);
+    //history->clearHistoryEntryHelp();
+    history->getHistoryModel()->traverse();
+    WebView* webview1 = new WebView();
+    webview1->load(QUrl("https://www.scut.edu.cn/new/"));
+    history->addHistoryEntry(webview1);
+    WebView* webview2 = new WebView();
+    webview2->load(QUrl("https://www.bilibili.com"));
+    history->addHistoryEntry(webview2);
+    WebView* webview3 = new WebView();
+    webview3->load(QUrl("https://qzone.qq.com"));
+    history->addHistoryEntry(webview3);
+    history->getHistoryModel()->traverse();
+    qDebug()<<"dayTimestamp list: ";
+    QList<qint64> dayTimestamp = history->queryDayTimestamp();
+    for(int i=0; i<dayTimestamp.count(); i++) {
+        qDebug()<<dayTimestamp[i];
+    }
+
+    return a.exec();
+
+
+DatabaseTaskScheduler scheduler;
+    scheduler.run();
+    std::promise<int> pm;
+    std::future<int> future = pm.get_future();
+    scheduler.post([&pm]() {
+        int i = 3;
+        pm.set_value(i);
+    });
+    std::cout<<future.get()<<std::endl;
+    std::promise<int> pm1;
+    std::future<int> future1 = pm1.get_future();
+    scheduler.post([&pm1]() {
+        int i = 5;
+        pm1.set_value(5);
+    });
+    std::cout<<future1.get()<<std::endl;

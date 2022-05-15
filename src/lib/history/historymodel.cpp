@@ -55,7 +55,7 @@ m_rootItem(new HistoryItem(NULL)), m_history(history)
     connect(m_history, &History::historyEntryCleared, this, &HistoryModel::clearHistoryEntry);
 }
 
-void HistoryModel::addHistoryEntry(HistoryEntry& historyEntry) {
+void HistoryModel::addHistoryEntry(HistoryEntry historyEntry) {
     if(m_todayItem == nullptr) {
         m_todayItem = new HistoryItem(NULL);
         m_rootItem->prependChild(m_todayItem);
@@ -115,7 +115,7 @@ HistoryItem* HistoryModel::findHistoryItem(const HistoryEntry& historyEntry) {
 
 }
 
-void HistoryModel::deleteHistoryEntry(HistoryEntry& historyEntry) {
+void HistoryModel::deleteHistoryEntry(HistoryEntry historyEntry) {
     HistoryItem* item = findHistoryItem(historyEntry);
     if(item == NULL)
         return;//the entry is not found
