@@ -3,15 +3,15 @@
 #include <QtWebEngineCore>
 #include "dao/userdao.h"
 #include "taskscheduler/databasetaskscheduler.h"
-
+#define THREAD_NAME "user"
 class UserModel  {
 
 public:
-    explicit UserModel (DatabaseTaskScheduler &taskScheduler);
+    explicit UserModel (std::shared_ptr<DatabaseTaskScheduler> scheduler);
     ~UserModel();
     class UserItem{
     public:
-        UserItem();
+        UserItem(std::shared_ptr<DatabaseTaskScheduler> scheduler);
         QVector<QVariant> getItemById(const int& id);
         QVector<QVector<QVariant>> getItemByName(const QString& name);
         QVector<QVariant> getItemByIdPassword(const int& id, const QString& password);
@@ -24,12 +24,14 @@ public:
         bool deleteUser(const int& id);
 
         ~UserItem();
+
+
     private:
         int id;
         QString name;
         QString password;
         QVector<QVector<QVariant>> samename;
-        UserDao dao;
+        std::unique_ptr<UserDao> dao;
     };
 
    
@@ -42,8 +44,10 @@ public :
     bool queryUserId(const int& id);
     bool queryUserPassword(const int& id, const QString& password);
 private:
-    DatabaseTaskScheduler &m_taskScheduler;
+    std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
+    std::unique_ptr<UserItem> item;
+    
 };
 
 #endif

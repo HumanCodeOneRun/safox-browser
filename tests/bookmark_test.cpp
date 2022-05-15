@@ -1,18 +1,21 @@
-#include "bookmark/bookmarkmodel.h"
-#include "taskscheduler/databasetaskscheduler.h"
+#include "bookmarkmodel.h"
+#include "databasetaskscheduler.h"
+#include <ctime>
 
-DatabaseTaskScheduler scheduler;
 
-bool add_bookmark_test() {
-    BookmarkModel model(scheduler);
+bool add_bookmark_test(BookmarkModel &model) {
+    clock_t start = clock();
+    for(int i = 0; i < 10; i++){
+        model.addBookmark(i, "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i)), "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i)));
+    }
+    clock_t end = clock();
+    qDebug()<<"time = "<<double(end-start)/CLOCKS_PER_SEC<<"s";
 
-    return 0
-           || !model.addBookmark(2, "bookmarktest3", QUrl("test.com"), "test112313", QUrl("test.icon"))
-           || !model.addBookmark(2, "bookmarktest4", QUrl("test2.com"), "test123123", QUrl("test3.icon"));
+    return 0;
+           
 }
 
-bool get_bookmark_bygid_test() {
-    BookmarkModel model(scheduler);
+bool get_bookmark_bygid_test(BookmarkModel &model) {
 
     auto item1 = model.getItemsByGid(1, 802222310);
     auto item2 = model.getItemsByGid(1, 1104652184);
@@ -24,26 +27,27 @@ bool get_bookmark_bygid_test() {
 
 }
 
-bool edit_bokmark_test() {
-    BookmarkModel model(scheduler);
+bool edit_bokmark_test(BookmarkModel &model) {
 
     return 0
            || !model.editBookmark(1, 494249112, "BookmarkChanged", QUrl("changedQurl"), "bookmarktest3");
 
 }
 
-bool delete_bookmark_test() {
-    BookmarkModel model(scheduler);
+bool delete_bookmark_test(BookmarkModel &model) {
 
     return 0
            || model.deleteBookmark(1, 1428143438);
 }
 
+
 int main(int argc, char **argv) {
-    scheduler.run();
+    auto scheduler = std::make_shared<DatabaseTaskScheduler>(2);
+    scheduler->run();
+    static BookmarkModel model(scheduler);
     return 0
-           || !add_bookmark_test();
-//           || !get_bookmark_bygid_test()
+           || !add_bookmark_test(model);
+//           || !get_bookmark_bygid_test(model);
 //           || !edit_bokmark_test()
 //           || !delete_bookmark_test();
 }

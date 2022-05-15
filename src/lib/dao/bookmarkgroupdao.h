@@ -3,12 +3,11 @@
 #include "basedao.h"
 #include <QDateTime>
 #define BOOKMARKGROUPDAO_TABLE_NAME "BookmarkGroup"
-#define BOOKMARKGROUP_CONN "bookmarkgroup_conn"
+
 class BookmarkGroupDao : public BaseDao{
 public:
-    explicit BookmarkGroupDao(const QString &_db_conn=BOOKMARKGROUP_CONN,const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKGROUPDAO_TABLE_NAME);
-    
-    static BookmarkGroupDao& getDao();
+    explicit BookmarkGroupDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name = BOOKMARKGROUPDAO_TABLE_NAME);
+
     bool createTable() override;
 
     // query
@@ -27,7 +26,7 @@ public:
     bool remove(const int& uid, const int& gid);
 
     // debug
-    void print_db_state(){ if(this->db.open())qDebug() << "db is open"; else qDebug() << "db is closed";}
+    void print_db_state(){ if(this->db_connection.localData()->get_db_connection().isOpen())  qDebug()<< "db is open"; else qDebug() << "db is closed";}
     bool deleteTable();
 
     QString get_connection();

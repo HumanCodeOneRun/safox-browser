@@ -1,18 +1,17 @@
 #include "userdao.h"
 
-UserDao::UserDao(const QString&_conn_name, const QString& _db_path, const QString& _table_name )
-: BaseDao(_conn_name, _db_path, _table_name){
+UserDao::UserDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const QString& _table_name )
+: BaseDao(_scheduler, _table_name){
     createTable();
+    
+}
 
-}
-UserDao& UserDao::getDao(){
-    static UserDao dao;
-    return dao;
-}
+
 bool UserDao::createTable(){
+    check_thread_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
                 " (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, PASSWORD TEXT);";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     bool ok = query.exec(cmd);
 
     if(!ok){
@@ -25,8 +24,9 @@ bool UserDao::createTable(){
 
 
 QVector<QVariant> UserDao::QueryById(const int& id){
+    check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id);
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     
     QVector<QVariant> ret;
@@ -43,8 +43,9 @@ QVector<QVariant> UserDao::QueryById(const int& id){
 }
 
 QVector<QVariant> UserDao::QueryByIdPassword(const int& id, const QString& password){
+    check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id) + " AND PASSWORD=\""+password+"\"";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     
     QVector<QVariant> ret;
@@ -61,8 +62,9 @@ QVector<QVariant> UserDao::QueryByIdPassword(const int& id, const QString& passw
 }
 
 QVector<QVector<QVariant>> UserDao::QueryByName(const QString& name){
+    check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME=\""+name+"\"";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
 
     QVector<QVector<QVariant>> ret;
@@ -80,10 +82,11 @@ QVector<QVector<QVariant>> UserDao::QueryByName(const QString& name){
 }
 
 bool UserDao::setName(const int& id, const QString& name){
+    check_thread_connection();
 //    QString cmd = "UPDATE " + this->table_name + "SET NAME =\"" + name + "\" WHERE ID"+QString::number(id);
     QString cmd = "UPDATE " + this->getTableName() + " SET NAME= \""+name+"\" WHERE ID= " + QString::number(id);
 
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
 
     query.bindValue(":name", name);
     query.bindValue(":id", id);
@@ -103,8 +106,9 @@ bool UserDao::setName(const int& id, const QString& name){
 }
 
 bool UserDao::setPassword(const int& id, const QString& password){
+    check_thread_connection();
     QString cmd = "UPDATE " + this->getTableName() + " SET PASSWORD= \""+password+"\" WHERE ID= " + QString::number(id);
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd in setpassword: " << query.lastError().text();
@@ -122,9 +126,10 @@ bool UserDao::setPassword(const int& id, const QString& password){
 
 
 bool UserDao::insert(const QString& name, const QString& password){
+    check_thread_connection();
     QString cmd = "INSERT INTO " + this->getTableName() + "( NAME, PASSWORD)"+" VALUES( :name, :password)";
 
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     // query.bindValue(":id", id);
     query.bindValue(":name", name);
@@ -139,9 +144,10 @@ bool UserDao::insert(const QString& name, const QString& password){
 }
 
 bool UserDao::remove(const int& id){
+    check_thread_connection();
     QString cmd = "DELETE FROM " + this->table_name + " WHERE ID=:id";
 
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     query.bindValue(":id", id);
 
@@ -154,8 +160,9 @@ bool UserDao::remove(const int& id){
 }
 
 QVector<QVariant> UserDao::getcolumns(){
+    check_thread_connection();
     QString cmd = "PRAGMA  table_info("+this->table_name+")";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     
     QVector<QVariant> ret;
@@ -171,8 +178,9 @@ QVector<QVariant> UserDao::getcolumns(){
     return ret;
 }
 void UserDao::showAll (){
+    check_thread_connection();
     QString cmd = "SELECT * FROM "+this->table_name;
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
 
     if(!query.exec()){
@@ -180,6 +188,7 @@ void UserDao::showAll (){
     }
 
     while(query.next()){
+        
         int id = query.value(0).toInt();
         QString name = query.value(1).toString();
         QString pwd = query.value(2).toString();
@@ -189,9 +198,10 @@ void UserDao::showAll (){
 }
 
 bool UserDao::deleteTable(){
+    check_thread_connection();
     QString cmd = "DROP TABLE " + this->table_name;
     
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
 
     if(!query.exec()){

@@ -1,15 +1,16 @@
 #include "historydao.h"
 
-HistoryDao::HistoryDao(const int& _userid, const QString&conn_name ,const QString& _db_path, const QString& _table_name):
-userid(_userid), BaseDao(conn_name, _db_path, _table_name) {
+HistoryDao::HistoryDao(const int& _userid,std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name):
+userid(_userid), BaseDao(_scheduler, _table_name) {
     createTable();
 }
 
 
 bool HistoryDao::createTable() {
+    check_thread_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() + 
     " (userid integer unsigned, urlid integer unsigned, title text, url text, iconUrl text, timestamp bigint unsigned, primary key(userid, urlid, url) )";
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
 
     if(!query.exec(cmd)){
         qDebug() << "[error] fail to create history table " << query.lastError().text();
@@ -20,8 +21,9 @@ bool HistoryDao::createTable() {
 }
 
 bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, const QUrl& url, const QUrl& iconUrl, const qint64& timestamp) {
+    check_thread_connection();
     QString cmd = "insert or replace into " + this->getTableName() + " (userid, urlid, title, url, iconUrl, timestamp) values (:userid, :urlid, :title, :url, :iconUrl, :timestamp)";
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     query.bindValue(":userid", this->userid);
     query.bindValue(":urlid", urlid);
@@ -37,8 +39,9 @@ bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, con
 }
 
 bool HistoryDao::queryByUserid() {
+    check_thread_connection();
     QString cmd = "select * from " + this->getTableName() + " where userid = " + QString::number(this->userid) ;
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     if(!query.exec(cmd)) {
         qDebug() << "[error] fail to select,  " << query.lastError().text();
         return false;
@@ -52,8 +55,9 @@ bool HistoryDao::queryByUserid() {
 }
 
 QList<qint64> HistoryDao::queryDayTimestamp() {
+    check_thread_connection();
     QString cmd = "select timestamp from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url = \"todayItem\" order by timestamp asc";
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     QList<qint64> ret;
     if(!query.exec(cmd)) {
         qDebug() << "[error] fail to select,  " << query.lastError().text();
@@ -68,8 +72,9 @@ QList<qint64> HistoryDao::queryDayTimestamp() {
 }
 
 QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
+    check_thread_connection();
     QString cmd = "select urlid, title, url, iconUrl, timestamp  from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url != \"todayItem\" order by timestamp asc" ;
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     QList<HistoryEntry> ret;
     if(!query.exec(cmd)) {
         qDebug() << "[error] fail to select,  " << query.lastError().text();
@@ -90,8 +95,9 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
 }
 
 bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
+    check_thread_connection();
     QString cmd = "delete from " + this->getTableName() + " where userid = :userid and urlid = :urlid and url = :url";
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     query.bindValue(":userid", this->userid);
     query.bindValue(":urlid", urlid);
@@ -104,8 +110,9 @@ bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
 }
 
 bool HistoryDao::clearTable() {
+    check_thread_connection();
     QString cmd = "delete from " + this->getTableName();
-    QSqlQuery query(this->db);
+    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     if(!query.exec(cmd)) {
         qDebug() << "[error] fail to clear table, " << query.lastError().text();
         return false;

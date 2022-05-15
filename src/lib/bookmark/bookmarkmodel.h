@@ -6,18 +6,15 @@
 #include "bookmarkgroupdao.h"
 #include "taskscheduler/databasetaskscheduler.h"
 
-//#include "BookmarkModel.moc"
-// TODO: 1. auto-increment for count in bookmark group
-//       2. consider return BookmarkItem/BookmarkItem for convinience
 
 class BookmarkModel {
 
 public:
-    explicit BookmarkModel(DatabaseTaskScheduler &taskScheduler);
+    explicit BookmarkModel(std::shared_ptr<DatabaseTaskScheduler> scheduler);
     ~BookmarkModel();
     class BookmarkItem{
     public:
-        BookmarkItem();
+        BookmarkItem(std::shared_ptr<DatabaseTaskScheduler> scheduler);
         QVector<QVariant> getItemByUidAndId(const int& uid, const int& id);
         QVector< QVector<QVariant> > getItemByUidAndGid(const int& uid, const int& gid);
         
@@ -36,10 +33,14 @@ public:
         bool addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
         
+        
         QString get_connection();
 
         ~BookmarkItem();
+
+        
     private:
+        std::unique_ptr<BookmarkDao> dao;
         int uid;
         int id;
         int gid;
@@ -47,15 +48,14 @@ public:
         QUrl url;
         QUrl icon;
 
-        static BookmarkDao dao;
     };
 
     class BookmarkGroupItem{
     public:
-        BookmarkGroupItem();
-        BookmarkGroupItem getGroupByUidAndId(const int& uid, const int& gid);
+        BookmarkGroupItem(std::shared_ptr<DatabaseTaskScheduler> scheduler);
+        QVector<QVariant> getGroupByUidAndId(const int& uid, const int& gid);
         //QVector<QVariant> getGroupById(const int& gid);
-        BookmarkGroupItem getGroupByUidAndName(const int& uid, const QString& name);
+        QVector<QVariant> getGroupByUidAndName(const int& uid, const QString& name);
         //QVector<QVariant> getGroupByName(const QString& name);
         QVector<QVector<QVariant>> getAllGroup(const int& uid);
         bool addGroup(const int&uid, const QString& name, const QUrl& icon);
@@ -69,38 +69,43 @@ public:
         bool setIcon(const int& uid, const int& gid, const QUrl& icon);
 
         bool deleteBookmarkGroup(const int& uid, const int& gid);
-        void print_db_state(){this->dao.print_db_state();}
+        void print_db_state(){this->dao->print_db_state();}
         QString get_connection();
+        
         ~BookmarkGroupItem();
-
     private:
+        std::unique_ptr<BookmarkGroupDao> dao;
+        
         int uid;
         int gid;
         QString name;
         QUrl icon;
 
-        static BookmarkGroupDao dao;
+        //static BookmarkGroupDao dao;
     };
 
 public:
-
+  
     QVector<QVector<QVariant>> initGetGroups(const int& uid);
     QVector<QVector<QVariant>> getItemsByGid(const int& uid, const int& gid);
 
     bool addBookmarkGroup(const int& uid, const QString& name,  const QUrl& icon);
     bool addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon);
+
+    
     bool deleteBookmark(const int& uid, const int& id);
     bool editBookmark(const int& uid, const int& id, const QString& name="", const QUrl& url=QUrl(""), const QString& gname="");
     bool deleteBookmarkGroup(const int& uid, const int& gid);
 
     // for debug
     void resetDB();
+    
 private:
-    DatabaseTaskScheduler &m_taskScheduler;
+    std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
-
+    std::unique_ptr<BookmarkGroupItem> gitem;
+    std::unique_ptr<BookmarkItem> item;
 };
 
-//#include "BookmarkModel.moc"
 
 #endif

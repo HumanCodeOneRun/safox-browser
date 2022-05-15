@@ -1,11 +1,10 @@
 #include "basedao.h"
 #define USERDAO_TABLE_NAME "User"
-#define USER_CONN "user_conn"
+
 class UserDao : public BaseDao{
 public:
-    explicit UserDao(const QString&_conn_name=USER_CONN, const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = USERDAO_TABLE_NAME);
+    explicit UserDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const QString& _table_name = USERDAO_TABLE_NAME);
     
-    static UserDao& getDao();
     bool createTable() override;
 
     // query

@@ -12,19 +12,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(${PROJECT_NAME}_TEST "enable test" ON)
-
-# set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
-# add your own cmake prefix path
-list(APPEND CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos")
+set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos/lib/cmake")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
-#find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
 
 
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/dao)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib/dao)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core) 
@@ -33,61 +29,63 @@ set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/browserwindow/browserwindow.cpp
-        src/browserwindow/browserwindow.h
-        src/browserwindow/browserwindow.ui
-        src/toolbar/toolbar.cpp
-        src/toolbar/toolbar.h
-        src/toolbar/toolbar.ui
-        src/browser.cpp
-        src/browser.h
-        src/mainapplication.cpp
-        src/mainapplication.h
-        src/history/historyitem.cpp
-        src/history/historyitem.h
-        src/history/history.cpp
-        src/history/history.h
-        src/history/historymodel.h
-        src/history/historymodel.cpp
-        src/history/historydao.h
-        src/history/historydao.cpp
-        src/history/historybar.h
-        src/history/historybar.cpp
-        src/history/historybar.ui
-        src/history/historywidget.h
-        src/history/historywidget.cpp
-        src/history/historywidget.ui
-        src/webengine/webview.cpp
-        src/webengine/webview.h
-        src/dao/basedao.h
-        src/dao/basedao.cpp
-        src/dao/bookmarkdao.cpp
-        src/dao/bookmarkdao.h
-        src/dao/bookmarkgroupdao.cpp
-        src/dao/bookmarkgroupdao.h
-        src/dao/userdao.h
-        src/dao/userdao.cpp
-        src/bookmark/bookmarkmodel.h
-        src/bookmark/bookmarkmodel.cpp
-        src/user/usermodel.h
-        src/user/usermodel.cpp
-
-        src/downloads/downloaditem.h
-        src/downloads/downloaditem.cpp
-        src/downloads/downloadmanager.h
-        src/downloads/downloadmanager.cpp
+        #src/browserwindow/browserwindow.cpp
+        #src/browserwindow/browserwindow.h
+        #src/browserwindow/browserwindow.ui
+        #src/lib/toolbar/toolbar.cpp
+        #src/lib/toolbar/toolbar.h
+        #src/lib/toolbar/toolbar.ui
+        #src/browser.cpp
+        #src/browser.h
+        #src/mainapplication.cpp
+        #src/mainapplication.h
+        
+        #src/lib/history/historyitem.cpp
+        #src/lib/history/historyitem.h
+        #src/lib/history/history.cpp
+        #src/lib/history/history.h
+        #src/lib/history/historymodel.h
+        #src/lib/history/historymodel.cpp
+        #src/lib/history/historydao.h
+        #src/lib/history/historydao.cpp
+        #src/lib/history/historybar.h
+        #src/lib/history/historybar.cpp
+        #src/lib/history/historybar.ui
+        #src/lib/history/historywidget.h
+        #src/lib/history/historywidget.cpp
+        #src/lib/history/historywidget.ui
+        src/lib/webengine/webview.cpp
+        src/lib/webengine/webview.h
+        src/lib/dao/basedao.h
+        src/lib/dao/basedao.cpp
+        src/lib/dao/bookmarkdao.cpp
+        src/lib/dao/bookmarkdao.h
+        src/lib/dao/bookmarkgroupdao.cpp
+        src/lib/dao/bookmarkgroupdao.h
+        src/lib/dao/userdao.h
+        src/lib/dao/userdao.cpp
+        src/lib/bookmark/bookmarkmodel.h
+        src/lib/bookmark/bookmarkmodel.cpp
+        src/lib/user/usermodel.h
+        src/lib/user/usermodel.cpp
+        src/lib/downloads/downloaditem.h
+        src/lib/downloads/downloaditem.cpp
+        src/lib/downloads/downloadmanager.h
+        src/lib/downloads/downloadmanager.cpp
+        src/lib/dao/connections.h
+        src/lib/dao/connections.cpp
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
 #        mainmenu.h
 #        mainmenu.ui
         src/icon.qrc
-        src/taskscheduler/databasetaskscheduler.h
-        src/taskscheduler/databasetaskscheduler.cpp
-        #src/setting/Config.h
-        #src/setting/Config.cpp
-        #src/setting/homepage.h
-        #src/setting/homepage.cpp
+        src/lib/taskscheduler/databasetaskscheduler.h
+        src/lib/taskscheduler/databasetaskscheduler.cpp
+        src/lib/setting/Config.h
+        src/lib/setting/Config.cpp
+        src/lib/setting/homepage.h
+        src/lib/setting/homepage.cpp
         ${TS_FILES}
         )
 

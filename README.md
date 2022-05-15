@@ -1,4 +1,4 @@
-# main branch:rocket:
+# hzy branch:rocket:
 
 
 
@@ -16,6 +16,8 @@
 :white_check_mark:  User, Bookmark支持并发读写
 
 :white_check_mark:  download模块
+
+:white_check_mark:  taskScheduler的多线程化以及保证数据库连接的线程安全
 
 
 ### 待完成

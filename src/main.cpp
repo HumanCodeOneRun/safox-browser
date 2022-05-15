@@ -1,4 +1,4 @@
-#include "browserwindow/browserwindow.h"
+//#include "browserwindow/browserwindow.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -7,7 +7,6 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-#include "downloads/downloadmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,10 +21,10 @@ int main(int argc, char *argv[])
         }
     }
     
-    BrowserWindow w;
+    //BrowserWindow w;
 
 
-    w.show();
+    //w.show();
     return a.exec();
 
 }

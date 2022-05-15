@@ -1,19 +1,15 @@
 #include "bookmarkgroupdao.h"
 
-BookmarkGroupDao::BookmarkGroupDao(const QString &_db_conn, const QString& _db_path, const QString& _table_name )
-: BaseDao(_db_conn,_db_path, _table_name){
+BookmarkGroupDao::BookmarkGroupDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name )
+: BaseDao(_scheduler, _table_name){
     createTable();
-    if(!(this->db).isOpen())
-        (this->db).open();
 }
-BookmarkGroupDao& BookmarkGroupDao::getDao(){
-    static BookmarkGroupDao dao;
-    return dao;
-}
+
 bool BookmarkGroupDao::createTable(){
+    check_thread_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
                 " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT);";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     bool ok = query.exec(cmd);
 
     if(!ok){
@@ -25,8 +21,9 @@ bool BookmarkGroupDao::createTable(){
 }
 
 QVector<QVariant> BookmarkGroupDao::QueryByUidAndId(const int& uid, const int& id){
+    check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE GID="+QString::number(id)+" AND UID="+QString::number(uid);
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     
     QVector<QVariant> ret;
@@ -43,10 +40,12 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndId(const int& uid, const int& i
 }
 
 QVector<QVariant> BookmarkGroupDao::QueryByUidAndName(const int& uid, const QString& name){
+    check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME= '"+name+"'" + " AND UID="+QString::number(uid);
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     QVector<QVariant> ret;
-
+    
+    qDebug() << "[info] query group: current thread is " << QThread::currentThreadId();
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to query by name,  table:" << this->getTableName() << query.lastError().text();
         return ret;
@@ -65,8 +64,9 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndName(const int& uid, const QStr
 }
 
 QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
+    check_thread_connection();
     QString cmd = "SELECT * FROM " + this->getTableName() + " WHERE UID="+QString::number(uid);
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     
     QVector<QVector<QVariant>> ret;
     if(!query.prepare(cmd)){
@@ -88,8 +88,9 @@ QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
 }
 
 bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString& icon){
+    check_thread_connection();
     QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, ICON) VALUES(:uid,:gid, :name,:icon)";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -109,8 +110,9 @@ bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString
 }
 
 bool BookmarkGroupDao::setName(const int&uid, const int& id, const QString& name){
+    check_thread_connection();
     QString cmd = "UPDATE " + this->getTableName() + " SET NAME=:name AND GID=:changed WHERE GID=:id AND UID=:uid";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -127,8 +129,9 @@ bool BookmarkGroupDao::setName(const int&uid, const int& id, const QString& name
 }
 
 bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& icon){
+    check_thread_connection();
     QString cmd = "UPDATE " + this->getTableName() + " SET ICON=:icon WHERE GID=:id AND UID=:uid";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -146,8 +149,9 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
 }
 
  bool BookmarkGroupDao::remove(const int& uid, const int& gid){
+    check_thread_connection();
     QString cmd = "DELETE FROM " + this->getTableName() + " WHERE UID=:uid AND GID=:gid";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
      if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
@@ -164,9 +168,10 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
  }
 
 QString BookmarkGroupDao::get_connection(){
-    return (this->db).connectionName();
+    return (BaseDao::db_connection.localData()->get_db_connection()).connectionName();
 }
 
 BookmarkGroupDao::~BookmarkGroupDao(){
-    (this->db).close();
+    (BaseDao::db_connection.localData()->get_db_connection()).close();
+    qDebug() << "bookmark group dao deconstruction";
 }
