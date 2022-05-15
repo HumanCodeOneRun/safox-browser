@@ -74,7 +74,8 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     /* 设置按钮 */
     settingBtn = new QToolButton(parent);
     settingBtn->setGeometry(x+1770,y+10,45,30);
-    settingBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
+    settingBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}"
+                              "QToolButton::menu-indicator{image:none;}");
     QIcon setting = QIcon(":/icon/image/setting.png");
     settingBtn->setIcon(setting);
     QMenu* settingMenu = new QMenu(this);
@@ -84,9 +85,10 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     settingMenu->addAction(setting2);
     settingMenu->addSeparator();
     settingMenu->setWindowFlags(settingMenu->windowFlags()|Qt::FramelessWindowHint);
-    settingMenu->setAttribute(Qt::WA_TranslucentBackground);
+//    settingMenu->setAttribute(Qt::WA_TranslucentBackground);
     settingBtn->setMenu(settingMenu);
-    connect(settingBtn,&QToolButton::triggered,this,&Toolbar::on_settingBtn_clicked);
+    settingBtn->setPopupMode(QToolButton::InstantPopup);
+    connect(settingBtn,&QToolButton::clicked,this,&Toolbar::on_settingBtn_clicked);
 
     /* 添加按钮 */
     addBtn = new QToolButton(parent);
@@ -130,7 +132,7 @@ void Toolbar::on_bookmarkerBtn_clicked(){
     emit on_bookmarkerBtn_passSignal();
 }
 
-void Toolbar::on_settingBtn_clicked(QAction *action){
+void Toolbar::on_settingBtn_clicked(){
     qDebug("click setting");
 
 }

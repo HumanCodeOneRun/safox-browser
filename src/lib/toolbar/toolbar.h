@@ -55,7 +55,7 @@ private:
 private slots:
     void on_historyBtn_clicked();
     void on_bookmarkerBtn_clicked();
-    void on_settingBtn_clicked(QAction* action);
+    void on_settingBtn_clicked();
 
 signals:
     void on_historyBtn_passSignal();
