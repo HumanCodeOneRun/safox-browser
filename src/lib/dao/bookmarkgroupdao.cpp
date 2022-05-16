@@ -89,15 +89,15 @@ QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
 
 bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString& icon){
     check_thread_connection();
-    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, ICON) VALUES(:uid,:gid, :name,:icon)";
+    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, NAME, ICON) VALUES(:uid, :name,:icon)";
     QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     if(!query.prepare(cmd)){
         qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
         return false; 
     }
-    int id = qHash(QDateTime::currentDateTime().toString()+name);
+    //int id = qHash(name);
     query.bindValue(":uid", uid);
-    query.bindValue(":gid", id);
+    //query.bindValue(":gid", id);
     query.bindValue(":name", name);
     query.bindValue(":icon", icon);
 

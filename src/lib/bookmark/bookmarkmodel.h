@@ -35,7 +35,6 @@ public:
 
         void create_table();
         
-        
         QString get_connection();
 
         ~BookmarkItem();

@@ -8,7 +8,7 @@ BookmarkDao::BookmarkDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const
 bool BookmarkDao::createTable(){
     check_thread_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, ID INTEGER NOT NULL, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT, PRIMARY KEY(UID, ID));";
+                " (UID INTEGER NOT NULL, ID INTEGER PRIMARY KEY AUTOINCREMENT, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT);";
     QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     bool ok = query.exec(cmd);
 
@@ -171,7 +171,7 @@ bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
 
 bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, const QUrl& url, const QUrl& icon){
     check_thread_connection();
-    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, ID, GID, NAME, URL, ICON)"+" VALUES(:uid, :id, :gid, :name, :url, :icon)";
+    QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, URL, ICON)"+" VALUES(:uid, :gid, :name, :url, :icon)";
 
     QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     if(!query.prepare(cmd)){
@@ -179,10 +179,10 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
         return false;
     }
 
-    int id = qHash(url.toString());
+    //int id = qHash(url.toString());
 
     query.bindValue(":uid", uid);
-    query.bindValue(":id", id);
+    //query.bindValue(":id", id);
     query.bindValue(":gid", gid);
     query.bindValue(":name", name);
     query.bindValue(":url", url.toString());

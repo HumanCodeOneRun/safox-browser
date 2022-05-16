@@ -196,7 +196,7 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
         
         auto future_gid = m_taskScheduler->post([this, &gname, &uid](){
             this->gitem->addGroup(uid, gname, QUrl("src/image/bookmaker.png"));
-            return this->gitem->getGroupByUidAndName(uid, gname)[1].toInt();
+            return this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt();
         });
         gid = future_gid.get();
     }
@@ -228,7 +228,7 @@ bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& n
 
     if(!gname.isEmpty()){
         auto future = m_taskScheduler->post([this,&id, &uid, &gname](){
-            auto gid = this->gitem->getGroupByUidAndName(uid, gname)[1].toInt();
+            auto gid = this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt();
             return this->item->setGid(uid, id, gid);
         });
         gid_valid =  future.get();
