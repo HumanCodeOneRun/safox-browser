@@ -71,6 +71,10 @@ QString BookmarkModel::BookmarkGroupItem::get_connection(){
     return (this->dao)->get_connection();
 }
 
+void BookmarkModel::BookmarkGroupItem::create_table(){
+     (this->dao)->createTable();
+}
+
 BookmarkModel::BookmarkGroupItem::~BookmarkGroupItem(){
     
 }
@@ -134,6 +138,10 @@ bool BookmarkModel::BookmarkItem::deleteBookmark(const int& uid, const int& id){
     return (this->dao)->remove(uid, id);
 }
 
+void BookmarkModel::BookmarkItem::create_table(){
+     (this->dao)->createTable();
+}
+
 QString BookmarkModel::BookmarkItem::get_connection(){
     return (this->dao)->get_connection();
 }
@@ -149,6 +157,7 @@ m_taskScheduler(_scheduler)
 {   
     this->gitem = std::make_unique<BookmarkGroupItem>(this->m_taskScheduler);
     this->item = std::make_unique<BookmarkItem>(this->m_taskScheduler);
+
 }
 
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){

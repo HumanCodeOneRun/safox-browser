@@ -32,6 +32,8 @@ DbConnection::DbConnection(const QString& _db_path):db_path(_db_path){
         if(!db.open()){
             qDebug() << "[error]fail to open db! " << db.lastError().text();
         }
+    
+    qDebug() << "[info] connection created, name is " + this->conn_name;
 
 }
 

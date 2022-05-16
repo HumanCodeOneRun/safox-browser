@@ -5,7 +5,7 @@
 
 bool add_bookmark_test(BookmarkModel &model) {
     clock_t start = clock();
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 50; i++){
         model.addBookmark(i, "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i)), "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i)));
     }
     clock_t end = clock();
@@ -42,7 +42,7 @@ bool delete_bookmark_test(BookmarkModel &model) {
 
 
 int main(int argc, char **argv) {
-    auto scheduler = std::make_shared<DatabaseTaskScheduler>(2);
+    auto scheduler = std::make_shared<DatabaseTaskScheduler>(5);
     scheduler->run();
     static BookmarkModel model(scheduler);
     return 0

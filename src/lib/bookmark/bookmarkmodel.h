@@ -32,6 +32,8 @@ public:
 
         bool addBookmark(const int& uid, const QString& name, const QUrl& url, const int& gid, const QUrl& icon);
         bool deleteBookmark(const int& uid, const int& id);
+
+        void create_table();
         
         
         QString get_connection();
@@ -71,6 +73,8 @@ public:
         bool deleteBookmarkGroup(const int& uid, const int& gid);
         void print_db_state(){this->dao->print_db_state();}
         QString get_connection();
+
+        void create_table();
         
         ~BookmarkGroupItem();
     private:
