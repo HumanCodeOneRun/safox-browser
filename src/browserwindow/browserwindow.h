@@ -24,6 +24,7 @@
 #include "../lib/toolbar/toolbar.h"
 #include "../lib/history/historywidget.h"
 #include "../lib/bookmark/bookmarkwidget.h"
+#include "../lib/taskscheduler/databasetaskscheduler.h"
 #include "../browser.h"
 >>>>>>> 950f40a (edit browser)
 #include <QToolButton>
@@ -47,6 +48,7 @@ public:
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
     int userid;
+    DatabaseTaskScheduler* m_taskScheduler;
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();

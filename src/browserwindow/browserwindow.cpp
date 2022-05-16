@@ -15,6 +15,7 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     : QMainWindow(parent),Browser(11111111)
     , ui(new Ui::BrowserWindow)
 {
+    m_taskScheduler = new DatabaseTaskScheduler();
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */
@@ -58,7 +59,9 @@ BrowserWindow::BrowserWindow(QWidget *parent)
 
 
     // 初始化历史界面并隐藏
+    qDebug()<<"[test] browserwindown slot1 init";
     this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
+    qDebug()<<"[test] browserwindown slot2 init";
     this->historyTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);

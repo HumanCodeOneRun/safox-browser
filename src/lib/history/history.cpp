@@ -34,6 +34,7 @@ void History::addHistoryEntryHelp(const QString& title, const QUrl& url, const Q
     HistoryDao* pm_historyDao = m_historyDao;
     HistoryModel* pm_historyModel = m_historyModel;
     m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
+        qDebug()<<"[test] addhisotry entry ";
         pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
         pm_historyModel->addHistoryEntry(historyEntry);
     });

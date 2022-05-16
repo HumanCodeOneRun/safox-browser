@@ -9,7 +9,7 @@ class Browser
 public:
     explicit Browser(int userid);
     int userid;
-    DatabaseTaskScheduler dts;
+    DatabaseTaskScheduler* m_taskScheduler;
     History* baseHistory;
 signals:
 

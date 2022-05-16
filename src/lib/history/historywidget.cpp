@@ -7,6 +7,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     QWidget(parent),
     ui(new Ui::HistoryWidget)
 {
+    qDebug()<<"[test] slot1 in historywidget";
     ui->setupUi(this);
     this->setGeometry(x,y,width,height);
     this->width = width;
@@ -19,8 +20,10 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
 /*--------todo：获取userid-------------*/
     int userid = root->Browser::userid;
 /*------------------------------------*/
+    qDebug()<<"[test] slot2 in historywidget";
     QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
     QDateTime today = QDateTime::currentDateTime();
+    qDebug()<<"[test] slot3 in historywidget";
 
 /*--------遍历QList：------------------*/
     QList<qint64>::iterator i = historyDateList.begin();

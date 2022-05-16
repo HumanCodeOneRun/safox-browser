@@ -8,9 +8,14 @@
 #include <QDebug>
 #include <QObject>
 
+#include "./lib/webengine/webview.h"
+#include "lib/history/historymodel.h"
+
+
 int main(int argc, char *argv[])
 {
-    //test for change interceptor
+    
+    
     QApplication a(argc, argv);
     WebView* webview = new WebView();
     //AdblockRequestInterceptor interceptor;
@@ -36,7 +41,8 @@ QApplication a(argc, argv);
     
     //BrowserWindow w;
 
-
-    //w.show();
+    w.show();
     return a.exec();
-*/
+    
+}
+
