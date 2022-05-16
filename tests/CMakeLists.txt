@@ -7,13 +7,8 @@ macro(folktell_add_test name)
     set_property(TARGET ${name}_test PROPERTY FOLDER "tests")
 endmacro()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/bookmark)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/dao)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/user)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/taskscheduler)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/setting)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src/lib/downloads)
+include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR}/../)
+
 
 folktell_add_test(user)
 folktell_add_test(bookmark)

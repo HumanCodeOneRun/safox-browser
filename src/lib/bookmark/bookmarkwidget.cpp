@@ -8,7 +8,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     ui->setupUi(this);
     this->width = width;
     this->height = height;
-    this->bookmark = new BookmarkModel(*(root->Browser::m_taskScheduler));
+    this->bookmark = new BookmarkModel(std::shared_ptr<DatabaseTaskScheduler>(root->Browser::m_taskScheduler));
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);

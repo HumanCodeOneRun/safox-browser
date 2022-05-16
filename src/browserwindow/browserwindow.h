@@ -11,22 +11,15 @@
 
 #include <QMainWindow>
 #include <QWidget>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "../toolbar/toolbar.h"
-#include "../history/historywidget.h"
-=======
-#include "..\toolbar\toolbar.h"
-#include "..\history\historywidget.h"
-#include "..\bookmark\bookmarkwidget.h"
->>>>>>> 3eaab7e (add bookmarkWidget)
-=======
-#include "../lib/toolbar/toolbar.h"
-#include "../lib/history/historywidget.h"
-#include "../lib/bookmark/bookmarkwidget.h"
-#include "../lib/taskscheduler/databasetaskscheduler.h"
-#include "../browser.h"
->>>>>>> 950f40a (edit browser)
+
+#include "toolbar.h"
+#include "historywidget.h"
+#include "bookmarkwidget.h"
+#include "toolbar.h"
+#include "historywidget.h"
+#include "bookmarkwidget.h"
+#include "databasetaskscheduler.h"
+#include "browser.h"
 #include <QToolButton>
 #include <QSystemTrayIcon>
 #include <QAction>

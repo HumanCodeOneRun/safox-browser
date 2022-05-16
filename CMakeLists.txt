@@ -12,15 +12,28 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(${PROJECT_NAME}_TEST "enable test" ON)
-set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macos/lib/cmake")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 
+function(include_sub_directories_recursively root_dir)
+    if (IS_DIRECTORY ${root_dir})     
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib/dao)
+        include_directories(${root_dir})
+    endif()
+
+    file(GLOB ALL_SUB RELATIVE ${root_dir} ${root_dir}/*) 
+    foreach(sub ${ALL_SUB})
+        if (IS_DIRECTORY ${root_dir}/${sub})
+            include_sub_directories_recursively(${root_dir}/${sub}) 
+        endif()
+    endforeach()
+endfunction()
+
+include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR})
+
+
+
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core) 
@@ -30,31 +43,31 @@ set(TS_FILES FolkTell_zh_CN.ts)
 set(PROJECT_SOURCES
         src/main.cpp
 
-        #src/browserwindow/browserwindow.cpp
-        #src/browserwindow/browserwindow.h
-        #src/browserwindow/browserwindow.ui
-        #src/lib/toolbar/toolbar.cpp
-        #src/lib/toolbar/toolbar.h
-        #src/lib/toolbar/toolbar.ui
-        #src/browser.cpp
-        #src/browser.h
-        #src/mainapplication.cpp
-        #src/mainapplication.h
+        src/browserwindow/browserwindow.cpp
+        src/browserwindow/browserwindow.h
+        src/browserwindow/browserwindow.ui
+        src/lib/toolbar/toolbar.cpp
+        src/lib/toolbar/toolbar.h
+        src/lib/toolbar/toolbar.ui
+        src/browser.cpp
+        src/browser.h
+        src/mainapplication.cpp
+        src/mainapplication.h
         
-        #src/lib/history/historyitem.cpp
-        #src/lib/history/historyitem.h
-        #src/lib/history/history.cpp
-        #src/lib/history/history.h
-        #src/lib/history/historymodel.h
-        #src/lib/history/historymodel.cpp
-        #src/lib/history/historydao.h
-        #src/lib/history/historydao.cpp
-        #src/lib/history/historybar.h
-        #src/lib/history/historybar.cpp
-        #src/lib/history/historybar.ui
-        #src/lib/history/historywidget.h
-        #src/lib/history/historywidget.cpp
-        #src/lib/history/historywidget.ui
+        src/lib/history/historyitem.cpp
+        src/lib/history/historyitem.h
+        src/lib/history/history.cpp
+        src/lib/history/history.h
+        src/lib/history/historymodel.h
+        src/lib/history/historymodel.cpp
+        src/lib/history/historydao.h
+        src/lib/history/historydao.cpp
+        src/lib/history/historybar.h
+        src/lib/history/historybar.cpp
+        src/lib/history/historybar.ui
+        src/lib/history/historywidget.h
+        src/lib/history/historywidget.cpp
+        src/lib/history/historywidget.ui
         src/lib/webengine/webview.cpp
         src/lib/webengine/webview.h
         src/lib/dao/basedao.h
@@ -67,6 +80,10 @@ set(PROJECT_SOURCES
         src/lib/dao/userdao.cpp
         src/lib/bookmark/bookmarkmodel.h
         src/lib/bookmark/bookmarkmodel.cpp
+        src/lib/bookmark/bookmarkitem.h
+        src/lib/bookmark/bookmarkitem.cpp
+        src/lib/bookmark/bookmarkwidget.h
+        src/lib/bookmark/bookmarkwidget.cpp
         src/lib/user/usermodel.h
         src/lib/user/usermodel.cpp
         src/lib/downloads/downloaditem.h

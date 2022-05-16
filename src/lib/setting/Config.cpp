@@ -1,12 +1,10 @@
 //
 // Created by Howell Young on 2022/5/13.
 //
-#include "config.h"
+#include "Config.h"
 
 using namespace std;
 
-
-#include "config.h"
 #include <QtCore/QtCore>
 #include <QDebug>
 
