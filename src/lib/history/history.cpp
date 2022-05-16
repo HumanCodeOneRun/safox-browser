@@ -4,14 +4,14 @@
 History::History(const int& _userid, QObject* parent):
 userid(_userid), QObject(parent)
 {   
-    m_historyDao = new HistoryDao(_userid);
+    m_historyDao = new HistoryDao(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
     m_historyModel = new HistoryModel(this);
 }
 
 History::History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent):
 userid(_userid), QObject(parent), m_taskScheduler(_m_taskscheduler)
 {   
-    m_historyDao = new HistoryDao(_userid);
+    m_historyDao = new HistoryDao(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
     m_historyModel = new HistoryModel(this);
 }
 
@@ -77,23 +77,17 @@ void History::clearHistoryEntryHelp() {
 }
 
 QList<qint64> History::queryDayTimestamp() {
-    std::promise<QList<qint64>> pm;
-    std::future<QList<qint64>> future = pm.get_future();
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([&pm, pm_historyModel] {
-        QList<qint64> ret = pm_historyModel->queryDayTimestamp();
-        pm.set_value(ret);
+    auto future = m_taskScheduler->post([this, pm_historyModel] {
+        return pm_historyModel->queryDayTimestamp();
     });
     return future.get();
 }
 
 QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
-    std::promise<QList<HistoryEntry>> pm;
-    std::future<QList<HistoryEntry>> future = pm.get_future();
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([&pm, pm_historyModel, index] {
-        QList<HistoryEntry> ret = pm_historyModel->queryDayHistoryEntry(index);
-        pm.set_value(ret);
+    auto future = m_taskScheduler->post([this, pm_historyModel, index] {
+        return pm_historyModel->queryDayHistoryEntry(index);
     });
     return future.get();
 }

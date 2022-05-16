@@ -24,25 +24,7 @@ int main(int argc, char *argv[])
     webview->setDefaultRequestInterceptor();
     webview->load(QUrl("https://www.douban.com"));
     webview->show();
-    return a.exec();
-}
-
-/*
-QApplication a(argc, argv);
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
-        const QString baseName = "FolkTell_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
-            a.installTranslator(&translator);
-            break;
-        }
-    }
     
-    //BrowserWindow w;
-
-    w.show();
     return a.exec();
-    
 }
 

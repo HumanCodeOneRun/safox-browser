@@ -41,8 +41,6 @@ class History:public QObject {
     DatabaseTaskScheduler *m_taskScheduler;
     
 
-    
-
 
 
     public slots:
