@@ -172,6 +172,6 @@ QString BookmarkGroupDao::get_connection(){
 }
 
 BookmarkGroupDao::~BookmarkGroupDao(){
-    (BaseDao::db_connection.localData()->get_db_connection()).close();
     qDebug() << "bookmark group dao deconstruction";
+    this->scheduler.~shared_ptr();
 }

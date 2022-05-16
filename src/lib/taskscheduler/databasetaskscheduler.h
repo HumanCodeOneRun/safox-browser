@@ -55,7 +55,7 @@ private:
     std::deque< std::packaged_task<void()> > task_queue;
 
     /// Worker flag - when set to false, the worker thread will halt
-    bool m_working;
+    volatile bool m_working;
 
     std::vector< std::thread > thread_pool;
 
@@ -76,10 +76,11 @@ auto DatabaseTaskScheduler::post(Fn &&f)-> std::future<decltype(f())>{
 
     
     std::future<return_type> ret = task.get_future();
+    {
+        std::unique_lock<std::mutex> lock{m_mutex};
 
-    std::unique_lock<std::mutex> lock{m_mutex};
-
-    task_queue.emplace_back(std::move(task));
+        task_queue.emplace_back(std::move(task));
+    }
     m_cv.notify_one();
 
     return ret;

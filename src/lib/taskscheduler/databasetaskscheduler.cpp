@@ -3,7 +3,7 @@
 // Modified by Steven Wong on 2022/5/15.
 //
 #include "databasetaskscheduler.h"
-
+#include <iostream>
 DatabaseTaskScheduler::DatabaseTaskScheduler(int _num_threads) :
     m_mutex(),
     m_cv(),
@@ -35,10 +35,18 @@ void DatabaseTaskScheduler::run()
 
 void DatabaseTaskScheduler::stop()
 {   
-    std::unique_lock<std::mutex> lock{m_mutex};
+    {
+        std::unique_lock<std::mutex> lock{m_mutex};
+        m_working = false;
+    }
     m_cv.notify_all();
-    for(auto &thread : thread_pool)
-        thread.join();
+
+    for(auto &thread : thread_pool){
+        if(thread.joinable()){
+            std::cout << "[thead exit] thread: " << thread.get_id() << " join\n";
+            thread.join();
+        }
+    }
 
 }
 

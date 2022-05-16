@@ -252,4 +252,5 @@ QString BookmarkDao::get_connection(){
 
 BookmarkDao::~BookmarkDao(){
     qDebug() << "BookmarkDao deconstruction";
+    this->scheduler.~shared_ptr();
 }
