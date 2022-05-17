@@ -40,7 +40,7 @@ public:
     Toolbar* tb;
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
-    BrowserWindow(QWidget *parent = nullptr);
+    BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();
 

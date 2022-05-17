@@ -10,12 +10,12 @@
 #include "./ui_browserwindow.h"
 
 
-BrowserWindow::BrowserWindow(QWidget *parent)
+BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent)
 //    :QMainWindow()
-    : QMainWindow(parent),Browser(11111111)
+    : QMainWindow(parent),Browser(userid, serviceLocator)
     , ui(new Ui::BrowserWindow)
 {
-    m_taskScheduler = new DatabaseTaskScheduler();
+//    m_taskScheduler = new DatabaseTaskScheduler();
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */

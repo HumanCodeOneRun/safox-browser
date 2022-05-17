@@ -8,7 +8,7 @@
 #include "homepage.h"
 #include "databasetaskscheduler.h"
 #include "usermodel.h"
-#include <cmath>
+#include "browserwindow.h"
 #include <vector>
 #define DEFAULT_USR_ID 1
 #define DEFAULT_USR_NAME "default_usr"
@@ -22,6 +22,7 @@ MainApplication::MainApplication(int &argc, char** argv)
 
     m_databaseScheduler = std::make_shared<DatabaseTaskScheduler>();
     registerService(m_databaseScheduler);
+    m_databaseScheduler->run();
 
     m_user = std::make_shared<UserModel>(m_databaseScheduler);
     registerService(m_user);
@@ -29,7 +30,6 @@ MainApplication::MainApplication(int &argc, char** argv)
 
     m_bookmark = std::make_shared<BookmarkModel>(m_databaseScheduler);
     registerService(m_bookmark);
-
 
     //history store in memory, related to uid
     m_history = std::make_shared<History>(defaultUsrId, m_databaseScheduler);
@@ -41,15 +41,12 @@ MainApplication::MainApplication(int &argc, char** argv)
     m_adblock = std::make_shared<AdblockRequestInterceptor>();
     registerService(m_adblock);
 
-    m_databaseScheduler->run();
-
-
 
 
 
 }
 void MainApplication::registerService(std::shared_ptr<QObject>service){
-    if (!m_serviceLocator.addService(service->objectName().toStdString(), service))
+    if (!m_serviceLocator.addService(service ->objectName().toStdString(), service))
         qWarning() << "Could not register " << service->objectName() << " with service registry";
 }
 
@@ -58,4 +55,10 @@ void MainApplication::initDefaultUser() {
         qDebug()<<"init default user failed";
     }
 
+}
+
+std::shared_ptr<BrowserWindow> MainApplication::getNewWindow() {
+    std::shared_ptr<BrowserWindow> w = std::make_shared<BrowserWindow>(DEFAULT_USR_ID, m_serviceLocator);
+    w->show();
+    return w;
 }

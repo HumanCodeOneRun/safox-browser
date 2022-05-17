@@ -22,15 +22,20 @@ class DownloadManager;
 
 class AdblockRequestInterceptor;
 
+class BrowserWindow;
 
-class MainApplication : QApplication {
+class MainApplication : public QApplication {
 public:
     explicit MainApplication(int &argc, char **argv);
 
     /// Registers a service with the MyServiceLocator
-    void registerService(std::shared_ptr<QObject>service);
+    void registerService(std::shared_ptr<QObject> service);
 
     void initDefaultUser();
+
+    /// Spawns and returns the pointer to a new browser window
+    std::shared_ptr<BrowserWindow> getNewWindow();
+
 
 private:
     MyServiceLocator m_serviceLocator;

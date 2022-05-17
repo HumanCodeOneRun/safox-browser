@@ -21,7 +21,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     int userid = root->Browser::userid;
 /*------------------------------------*/
     qDebug()<<"[test] slot2 in historywidget";
-    QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
+    QList<qint64> historyDateList = root->Browser::m_history->queryDayTimestamp();
     QDateTime today = QDateTime::currentDateTime();
     qDebug()<<"[test] slot3 in historywidget";
 

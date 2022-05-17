@@ -58,11 +58,10 @@ public:
      */
     template<class Derived>
     std::shared_ptr<Derived> getServiceAs(const KeyType &key) const {
-        static_assert(std::is_base_of<BaseServiceType, Derived>::value, "Object should inherit from BaseServiceType");
+//        static_assert(std::is_base_of<BaseServiceType, Derived>::value, "Object should inherit from BaseServiceType");
 
         if (std::shared_ptr<BaseServiceType> service = getService(key))
-            return static_cast<std::shared_ptr<Derived>>(service);
-
+            return std::static_pointer_cast<Derived>(service);
         return nullptr;
     }
 
