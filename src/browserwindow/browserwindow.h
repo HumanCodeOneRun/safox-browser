@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-05-03 11:39:08
- * @LastEditTime: 2022-05-03 11:41:06
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-05-17 16:23:32
+ * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \FolkTell\FolkTell\src\browserwindow.h
  */
@@ -11,9 +11,15 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include "../lib/toolbar/toolbar.h"
-#include "../lib/history/historywidget.h"
-#include "../lib/bookmark/bookmarkwidget.h"
+
+#include "toolbar.h"
+#include "historywidget.h"
+#include "bookmarkwidget.h"
+#include "toolbar.h"
+#include "historywidget.h"
+#include "bookmarkwidget.h"
+#include "databasetaskscheduler.h"
+#include "browser.h"
 #include <QToolButton>
 #include <QSystemTrayIcon>
 #include <QAction>
@@ -24,7 +30,7 @@ class HistoryBar;
 namespace Ui { class BrowserWindow; }
 QT_END_NAMESPACE
 
-class BrowserWindow : public QMainWindow
+class BrowserWindow : public QMainWindow, public Browser
 {
     Q_OBJECT
 
@@ -35,6 +41,7 @@ public:
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
     int userid;
+    DatabaseTaskScheduler* m_taskScheduler;
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();

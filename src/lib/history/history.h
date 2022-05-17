@@ -11,6 +11,7 @@
 #include <QHash>
 #include "../webengine/webview.h"
 #include "historydao.h"
+#include "../taskscheduler/databasetaskscheduler.h"
 
 
 #define HISTORY_ID_SEED 999
@@ -22,6 +23,7 @@ class History:public QObject {
     Q_OBJECT
     public:
     explicit History(const int& _userid, QObject* parent=nullptr);
+    explicit History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent=nullptr);
     HistoryDao* getHistoryDao();
     HistoryModel* getHistoryModel();
 
@@ -36,7 +38,7 @@ class History:public QObject {
     HistoryModel* m_historyModel;
     HistoryDao* m_historyDao;
     unsigned int userid;
-
+    DatabaseTaskScheduler *m_taskScheduler;
     
 
 

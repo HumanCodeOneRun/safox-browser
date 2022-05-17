@@ -1,12 +1,13 @@
 #include "historywidget.h"
 #include "ui_historywidget.h"
-
+#include <browserwindow/browserwindow.h>
 //todo: add TableWidget
 
-HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height) :
+HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,BrowserWindow* root) :
     QWidget(parent),
     ui(new Ui::HistoryWidget)
 {
+    qDebug()<<"[test] slot1 in historywidget";
     ui->setupUi(this);
     this->setGeometry(x,y,width,height);
     this->width = width;
@@ -17,11 +18,12 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height) :
 
 
 /*--------todo：获取userid-------------*/
-    int userid = 11111111;
+    int userid = root->Browser::userid;
 /*------------------------------------*/
-
-    QList<qint64> historyDateList = loadHistory(userid);
+    qDebug()<<"[test] slot2 in historywidget";
+    QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
     QDateTime today = QDateTime::currentDateTime();
+    qDebug()<<"[test] slot3 in historywidget";
 
 /*--------遍历QList：------------------*/
     QList<qint64>::iterator i = historyDateList.begin();
@@ -57,16 +59,6 @@ HistoryWidget::~HistoryWidget()
     delete ui;
 }
 
-QList<qint64> HistoryWidget::loadHistory(const int &userid){
-    History* userHistory = new History(userid);
-    // 测试添加历史
-//     WebView* userWebview = new WebView(this);
-//     userWebview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
-//     userWebview->show();
-//     userHistory->addHistoryEntry(userWebview);
-    QList<qint64> res = userHistory->queryDayTimestamp();
-    return res;
-}
 
 void HistoryWidget::initTable(){
     QTableWidget* historyTable=new QTableWidget(this);

@@ -13,18 +13,26 @@
 #include <QVariant>
 #include "bookmarkmodel.h"
 #include "bookmarkitem.h"
+<<<<<<< HEAD
 #include "../browser.h"
+=======
+#include "databasetaskscheduler.h"
+>>>>>>> main-clone
 
 namespace Ui {
 class BookmarkWidget;
 }
+<<<<<<< HEAD
+=======
+class BrowserWindow;
+>>>>>>> main-clone
 
 class BookmarkWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0);
+    explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int width,height;
     BookmarkModel* bookmark;
     QVector<QVector<QVariant>> userBookmark;

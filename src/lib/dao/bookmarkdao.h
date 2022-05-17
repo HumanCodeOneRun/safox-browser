@@ -6,9 +6,8 @@
 
 class BookmarkDao : public BaseDao{
 public:
-    explicit BookmarkDao(const QString& _db_path=DEFAULT_DB_PATH, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);
+    explicit BookmarkDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);
     
-    static BookmarkDao& getDao();
     bool createTable() override;
 
     // query
@@ -31,6 +30,8 @@ public:
     // debug
     //QVector<QVariant> getcolumns();
     bool deleteTable();
+
+    QString get_connection();
     ~BookmarkDao();
 };
 

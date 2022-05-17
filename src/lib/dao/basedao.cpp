@@ -3,62 +3,32 @@
 #include <fstream>
 #include <iostream>
 
-bool BaseDao::checkdbpath(const QString& _db_path){
-    std::string path_string = _db_path.toStdString();
-    std::ifstream fin(path_string);
-    qDebug()<<"checkdpath test1";
-    if(!fin){
-        std::ofstream fout;
-        fout.open(path_string, std::ios::app|std::ios::out);
-        qDebug()<<"checkdpath test2";
-        if(!fout.is_open()){
-            qDebug() << "[error] fail to open/create db file!\n";
-            return false;
-        }
-    }
+QThreadStorage< DbConnection* > BaseDao::db_connection;
 
-    return true;
+BaseDao::BaseDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name):table_name(_table_name){
+    this->scheduler = _scheduler;
+
 }
 
-BaseDao::BaseDao(const QString& _db_path, const QString& _table_name):db_path(_db_path), table_name(_table_name){
-    if(!this->checkdbpath(_db_path))
-        return;
-    if (QSqlDatabase::contains("qt_sql_default_connection"))
-        this->db = QSqlDatabase::database("qt_sql_default_connection");
-        //this->db = QSqlDatabase::addDatabase("QSQLITE");
-    else
-        this->db = QSqlDatabase::addDatabase("QSQLITE");
-
+void BaseDao::check_thread_connection(){
     
-    (this->db).setDatabaseName(this->db_path);
-    if(!(this->db).open()){
-        qDebug() << "[error]fail to open db! " << db.lastError().text();
+    if(!BaseDao::db_connection.hasLocalData()){
+        //BaseDao::db_connection.setLocalData(std::move(std::make_unique<DbConnection>()));
+        qDebug() << "[info] thread: "<<QThread::currentThreadId()<<" create a db connection";
+        BaseDao::db_connection.setLocalData(new DbConnection());
     }
-
-    /*
-    if(!isTableExist()){
-        if(!createTable())
-            return;
-    }
-    */
-    
-}
-
-BaseDao& BaseDao::getDao(){
-    static BaseDao dao;
-    return dao;
 }
 
 bool BaseDao::isconnected(){
-    return (this->db).isOpen();
+    return (BaseDao::db_connection.localData()->get_db_connection()).isOpen();
 }
 
 void BaseDao::close(){
-    (this->db).close();
+    (BaseDao::db_connection.localData()->get_db_connection()).close();
 }
 
 bool BaseDao::isTableExist(){
-    return (this->db).tables().contains(this->table_name);
+    return (BaseDao::db_connection.localData()->get_db_connection()).tables().contains(this->table_name);
 }
 
 bool BaseDao::createTable(){
@@ -80,24 +50,21 @@ QString BaseDao::getTableName(){
     return this->table_name;
 }
 
-QString BaseDao::getDbPath(){
-    return this->db_path;
-}
 
 void BaseDao::printInfo(){
-    if (!(this->db).open()){
+    if (!(BaseDao::db_connection.localData()->get_db_connection()).open()){
         qDebug() <<"[error] db is not connected yet.\n";
         return;
     }
 
-    qDebug() << "[info] database name is: "+(this->db).databaseName();
-    qDebug() << "[info] connection name is: "+(this->db).connectionName();
+    qDebug() << "[info] database name is: "+(BaseDao::db_connection.localData()->get_db_connection()).databaseName();
+    qDebug() << "[info] connection name is: "+(BaseDao::db_connection.localData()->get_db_connection()).connectionName();
     qDebug() << "[info] current table name is: " +(this->table_name);
 }
 
 QVector<QVariant> BaseDao::getcolumns(){
     QString cmd = "PRAGMA  table_info("+this->table_name+")";
-    QSqlQuery query(this->db);
+    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
     query.prepare(cmd);
     
     QVector<QVariant> ret;

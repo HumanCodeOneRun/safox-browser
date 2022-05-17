@@ -9,8 +9,10 @@
 #include <QObject>
 
 
+
 int main(int argc, char *argv[])
 {
+    
     QApplication a(argc, argv);
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -23,7 +25,7 @@ int main(int argc, char *argv[])
     }
     BrowserWindow w;
 
-
     w.show();
     return a.exec();
 }
+

@@ -1,50 +1,60 @@
-#include "bookmark/bookmarkmodel.h"
-#include "taskscheduler/databasetaskscheduler.h"
+#include "bookmarkmodel.h"
+#include "databasetaskscheduler.h"
+#include <ctime>
 
-DatabaseTaskScheduler scheduler;
 
-bool add_bookmark_test() {
-    BookmarkModel model(scheduler);
+bool add_bookmark_test(BookmarkModel &model) {
+    for(int i = 0; i < 10; i++){
+        if(!model.addBookmark(i, "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i)), "bookmarktest"+QString::number(i), QUrl("bookmarktest"+QString::number(i))))
+            return false;
+    } 
 
-    return 0
-           || !model.addBookmark(1, "bookmarktest3", QUrl("test.com"), "test112313", QUrl("test.icon"))
-           || !model.addBookmark(1, "bookmarktest4", QUrl("test2.com"), "test123123", QUrl("test3.icon"));
+    return true;
+           
 }
 
-bool get_bookmark_bygid_test() {
-    BookmarkModel model(scheduler);
+bool get_bookmark_bygid_test(BookmarkModel &model) {
+    for(int i = 0; i < 10; i++){
+        auto item_list = model.getItemsByGid(i, i+1);
+        auto item = item_list.value(0);
+        QString item_name = item.value(3).toString();
 
-    auto item1 = model.getItemsByGid(1, 802222310);
-    auto item2 = model.getItemsByGid(1, 1104652184);
+        if(item_name != "bookmarktest"+QString::number(i))
+            return false;
+    }
+
+    return true;
+}
+
+bool edit_bokmark_test(BookmarkModel &model) {
 
 
-    return 0
-           || item1.empty()
-           || item2.empty();
+    return true
+           && model.editBookmark(0, 1, "BookmarkChanged1", QUrl("changedQurl1"), "bookmarktest3")
+           && model.editBookmark(3, 4, "BookmarkChanged2", QUrl("changedQurl2"), "bookmarktest0");
 
 }
 
-bool edit_bokmark_test() {
-    BookmarkModel model(scheduler);
+bool delete_bookmark_test(BookmarkModel &model) {
 
-    return 0
-           || !model.editBookmark(1, 494249112, "BookmarkChanged", QUrl("changedQurl"), "bookmarktest3");
-
+    return true
+           && model.deleteBookmark(4, 5)
+           && model.deleteBookmark(8, 9);
 }
 
-bool delete_bookmark_test() {
-    BookmarkModel model(scheduler);
-
-    return 0
-           || model.deleteBookmark(1, 1428143438);
-}
 
 int main(int argc, char **argv) {
-    scheduler.run();
-//    return 0
-//           || !add_bookmark_test()
-//           || !get_bookmark_bygid_test()
-//           || !edit_bokmark_test()
-//           || !delete_bookmark_test();
-    return 0;
+    auto scheduler = std::make_shared<DatabaseTaskScheduler>(2);
+    
+    scheduler->run();
+    BookmarkModel model(scheduler);
+
+    bool ok = add_bookmark_test(model)
+            && get_bookmark_bygid_test(model)
+            && edit_bokmark_test(model)
+            && delete_bookmark_test(model);
+    
+    scheduler->stop();
+
+    return !ok;
 }

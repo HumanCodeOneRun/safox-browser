@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2022-05-03 11:39:07
- * @LastEditTime: 2022-05-03 11:40:59
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-05-17 16:23:22
+ * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \FolkTell\FolkTell\src\browserwindow.cpp
  */
@@ -11,9 +11,11 @@
 
 
 BrowserWindow::BrowserWindow(QWidget *parent)
-    : QMainWindow(parent)
+//    :QMainWindow()
+    : QMainWindow(parent),Browser(11111111)
     , ui(new Ui::BrowserWindow)
 {
+    m_taskScheduler = new DatabaseTaskScheduler();
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */
@@ -55,15 +57,18 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
+
     // 初始化历史界面并隐藏
-    this->historyTest = new HistoryWidget(this,0,100,1920,980);
+    qDebug()<<"[test] browserwindown slot1 init";
+    this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
+    qDebug()<<"[test] browserwindown slot2 init";
     this->historyTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
     }
 
     // 初始化书签界面并隐藏
-    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980);
+    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980,this);
     this->bookmarkTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);

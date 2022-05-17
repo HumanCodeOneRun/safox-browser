@@ -10,21 +10,30 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-option(${PROJECT_NAME}_TEST "enable test" OFF)
-
-# set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macos/lib/cmake")
-# add your own cmake prefix path
-# list(APPEND CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macos")
+#set(CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macOS/lib/cmake" )
+option(${PROJECT_NAME}_TEST "enable test" ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
-#find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
+
+function(include_sub_directories_recursively root_dir)
+    if (IS_DIRECTORY ${root_dir})     
+
+        include_directories(${root_dir})
+    endif()
+
+    file(GLOB ALL_SUB RELATIVE ${root_dir} ${root_dir}/*) 
+    foreach(sub ${ALL_SUB})
+        if (IS_DIRECTORY ${root_dir}/${sub})
+            include_sub_directories_recursively(${root_dir}/${sub}) 
+        endif()
+    endforeach()
+endfunction()
+
+include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR})
 
 
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/dao)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core) 
@@ -33,6 +42,7 @@ set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
+
         src/browserwindow/browserwindow.cpp
         src/browserwindow/browserwindow.h
         src/browserwindow/browserwindow.ui
@@ -43,6 +53,7 @@ set(PROJECT_SOURCES
         src/browser.h
         src/mainapplication.cpp
         src/mainapplication.h
+        
         src/lib/history/historyitem.cpp
         src/lib/history/historyitem.h
         src/lib/history/history.cpp
@@ -69,15 +80,19 @@ set(PROJECT_SOURCES
         src/lib/dao/userdao.cpp
         src/lib/bookmark/bookmarkmodel.h
         src/lib/bookmark/bookmarkmodel.cpp
-        src/lib/bookmark/bookmarkwidget.h
-        src/lib/bookmark/bookmarkwidget.cpp
-        src/lib/bookmark/bookmarkwidget.ui
         src/lib/bookmark/bookmarkitem.h
         src/lib/bookmark/bookmarkitem.cpp
-        src/lib/bookmark/bookmarkitem.ui
+        src/lib/bookmark/bookmarkwidget.h
+        src/lib/bookmark/bookmarkwidget.cpp
         src/lib/user/usermodel.h
         src/lib/user/usermodel.cpp
-
+        src/lib/downloads/downloaditem.h
+        src/lib/downloads/downloaditem.cpp
+        src/lib/downloads/downloadmanager.h
+        src/lib/downloads/downloadmanager.cpp
+        src/lib/dao/connections.h
+        src/lib/dao/connections.cpp
+        
         src/lib/third_party/ad-block/ad_block_client.cc
         src/lib/third_party/ad-block/ad_block_client.h
         src/lib/third_party/ad-block/bad_fingerprint.h
@@ -110,17 +125,13 @@ set(PROJECT_SOURCES
 #        mainmenu.h
 #        mainmenu.ui
         src/icon.qrc
-
-#        ${TS_FILES}
         src/lib/taskscheduler/databasetaskscheduler.h
         src/lib/taskscheduler/databasetaskscheduler.cpp
-#        tests/user_test.cpp
-#        tests/bookmark_test.cpp
-        src/lib/setting/config.h
-        src/lib/setting/config.cpp
+        src/lib/setting/Config.h
+        src/lib/setting/Config.cpp
         src/lib/setting/homepage.h
         src/lib/setting/homepage.cpp
-#        tests/homepage_test.cpp
+        ${TS_FILES}
         )
 
 
@@ -165,14 +176,14 @@ endif()
 
 target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
-set_target_properties(FolkTell PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-    AUTOMOC TRUE
-)
+#set_target_properties(FolkTell PROPERTIES
+#    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+#    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+#    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+#    MACOSX_BUNDLE TRUE
+#    WIN32_EXECUTABLE TRUE
+#    AUTOMOC TRUE
+#)
 
 
 

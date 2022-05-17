@@ -1,14 +1,22 @@
+/*
+ * @Author: SC-WSKun 540610423@qq.com
+ * @Date: 2022-05-14 22:01:55
+ * @LastEditors: SC-WSKun 540610423@qq.com
+ * @LastEditTime: 2022-05-17 16:24:30
+ * @FilePath: \FolkTell\src\lib\bookmark\bookmarkwidget.cpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include "bookmarkwidget.h"
 #include "ui_bookmarkwidget.h"
-Browser* temp = new Browser();
-BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height) :
+#include <browserwindow/browserwindow.h>
+BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,BrowserWindow* root) :
     QWidget(parent),
     ui(new Ui::BookmarkWidget)
 {
     ui->setupUi(this);
     this->width = width;
     this->height = height;
-    this->bookmark = new BookmarkModel();
+    this->bookmark = new BookmarkModel(std::shared_ptr<DatabaseTaskScheduler>(root->Browser::m_taskScheduler));
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);
@@ -27,11 +35,11 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height)
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
-    this->bookmark->addBookmarkGroup(temp->userid,"firstGroup",QUrl("www.testIcon.com"));
-    this->userBookmark = this->bookmark->initGetGroups(temp->userid);
-    this->bookmark->addBookmark(temp->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
-    qDebug("vector:");
-    qDebug()<<this->userBookmark;
+//    this->bookmark->addBookmarkGroup(root->userid,"firstGroup",QUrl("www.testIcon.com"));
+//    this->userBookmark = this->bookmark->initGetGroups(root->userid);
+//    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
+//    qDebug("vector:");
+//    qDebug()<<this->userBookmark;
 
 
 }

@@ -3,13 +3,13 @@
 
 // User item
 
-UserModel::UserItem::UserItem()
+UserModel::UserItem::UserItem(std::shared_ptr<DatabaseTaskScheduler> scheduler)
         : id(-1), name("null"), password("123456"), samename({}) {
-    this->dao = UserDao::getDao();
+    this->dao = std::make_unique<UserDao>(scheduler);
 }
 
 QVector<QVariant> UserModel::UserItem::getItemById(const int &id) {
-    QVector<QVariant> ret = (this->dao).QueryById(id);
+    QVector<QVariant> ret = (this->dao)->QueryById(id);
     if (ret.empty()) {
         qDebug() << "[error] fail to query user item by id";
         return ret;
@@ -22,7 +22,7 @@ QVector<QVariant> UserModel::UserItem::getItemById(const int &id) {
 }
 
 QVector<QVector<QVariant>> UserModel::UserItem::getItemByName(const QString &name) {
-    QVector<QVector<QVariant>> ret = (this->dao).QueryByName(name);
+    QVector<QVector<QVariant>> ret = (this->dao)->QueryByName(name);
     if (ret.empty()) {
         qDebug() << "[error] fail to query user item by name";
         return ret;
@@ -32,7 +32,7 @@ QVector<QVector<QVariant>> UserModel::UserItem::getItemByName(const QString &nam
 }
 
 QVector<QVariant> UserModel::UserItem::getItemByIdPassword(const int &id, const QString &password) {
-    QVector<QVariant> ret = (this->dao).QueryByIdPassword(id, password);
+    QVector<QVariant> ret = (this->dao)->QueryByIdPassword(id, password);
     if (ret.empty()) {
         qDebug() << "[error] fail to query user item by id";
         return ret;
@@ -46,66 +46,50 @@ QVector<QVariant> UserModel::UserItem::getItemByIdPassword(const int &id, const 
 
 bool UserModel::UserItem::setName(const int &id, const QString &name) {
     this->name = name;
-    return (this->dao).setName(id, name);
+    return (this->dao)->setName(id, name);
 }
 
 bool UserModel::UserItem::setPassword(const int &id, const QString &password) {
     this->password = password;
-    return (this->dao).setPassword(id, password);
+    return (this->dao)->setPassword(id, password);
 }
 
 bool UserModel::UserItem::addUser(const QString &name, const QString &password) {
-    return (this->dao).insert(name, password);
+    return (this->dao)->insert(name, password);
 }
 
 bool UserModel::UserItem::deleteUser(const int &id) {
-    return (this->dao).remove(id);
+    return (this->dao)->remove(id);
 }
 
 UserModel::UserItem::~UserItem() {
-    (this->dao).close();
+    (this->dao)->close();
 }
 
 
 // User model
-UserModel::UserModel(DatabaseTaskScheduler &taskScheduler) :
-        m_taskScheduler(taskScheduler) {
+UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
+        m_taskScheduler(scheduler) {
+        this->item = std::make_unique<UserItem>(scheduler);
 }
 
 
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {
-    UserItem item;
     if (!name.isEmpty() && !password.isEmpty()) {
-//        if (!item.setName(id, name)) {
-//            qDebug() << "[error] fail to edit User name ";
-//            return false;
-//        } else {
-//            if (!item.setPassword(id, password)) {
-//                qDebug() << "[error] fail to edit User password ";
-//                return false;
-//            }
-//            return true;
-//        }
 
-        std::promise<bool> pmName;
-        std::future<bool> futureName = pmName.get_future();
-        m_taskScheduler.post([&pmName,&item, &id, &name](){
-            int ret = item.setName(id, name);
-            pmName.set_value(ret);
+        auto futureName = m_taskScheduler->post([this, &id, &name](){
+            return this->item->setName(id, name);
         });
         int name_flag = futureName.get();
 
-        std::promise<bool> pmPwd;
-        std::future<bool> futurePwd = pmPwd.get_future();
-        m_taskScheduler.post([&pmPwd,&item, &id, &password](){
-            int ret = item.setPassword(id, password);
-            pmPwd.set_value(ret);
+        auto futurePwd = m_taskScheduler->post([this,&id, &password](){
+            return this->item->setPassword(id, password);
         });
         int pwd_flag = futurePwd.get();
 
         if (pwd_flag && name_flag) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -120,13 +104,11 @@ UserModel::~UserModel() {
 
 bool UserModel::queryUserName(const QString &name) {
     if (!name.isEmpty()) {
-        UserItem item;
-        std::promise<bool> pm;
-        std::future<bool> future = pm.get_future();
-        m_taskScheduler.post([&pm, &item, &name]() {
-            int has = !item.getItemByName(name).isEmpty();
+
+        auto future = m_taskScheduler->post([this, &name]() {
+            int has = this->item->getItemByName(name).isEmpty();
             int ret = has ? 1 : 0;
-            pm.set_value(ret);
+            return ret;
         });
         return future.get();
     }
@@ -135,44 +117,37 @@ bool UserModel::queryUserName(const QString &name) {
 
 bool UserModel::queryUserId(const int &id) {
 
-    UserItem item;
-    std::promise<bool> pm;
-    std::future<bool> future = pm.get_future();
-    m_taskScheduler.post([&pm, &item, &id]() {
-        int has = !item.getItemById(id).isEmpty();
+    auto future = m_taskScheduler->post([this, &id]() {
+        int has = !this->item->getItemById(id).isEmpty();
         int ret = has ? 1 : 0;
-        pm.set_value(ret);
+        return ret;
     });
     return future.get();
 }
 
 bool UserModel::queryUserPassword(const int &id, const QString &password) {
-    UserItem item;
-    std::promise<bool> pm;
-    std::future<bool> future = pm.get_future();
-    m_taskScheduler.post([&pm, &item, &id, &password]() {
-        int has = !item.getItemByIdPassword(id, password).isEmpty();
+
+    auto future = m_taskScheduler->post([this, &id, &password]() {
+        int has = !this->item->getItemByIdPassword(id, password).isEmpty();
         int ret = has ? 1 : 0;
-        pm.set_value(ret);
+        return ret;
     });
     return future.get();
 
 }
 
 bool UserModel::addRegisterUser(const QString &name, const QString &password) {
-    UserItem item;
-    std::promise<bool> pm;
-    std::future<bool> future = pm.get_future();
-    m_taskScheduler.post([&pm, &name, &password, &item]() {
-        int ret = item.addUser(name, password);
-        pm.set_value(ret);
+
+    auto future = m_taskScheduler->post([this, &name, &password]() {
+        return  this->item->addUser(name, password);
     });
     return future.get();
 }
 
 bool UserModel::deleteRegisterUser(const int &id) {
-    UserItem item;
-    return item.deleteUser(id);
+    return m_taskScheduler->post([this, &id](){
+        return this->item->deleteUser(id);
+    }).get();
 }
 
 
