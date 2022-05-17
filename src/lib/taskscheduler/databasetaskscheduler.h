@@ -69,6 +69,7 @@ auto DatabaseTaskScheduler::post(Fn &&f)-> std::future<decltype(f())>{
 
     using return_type = decltype(f());
 
+    
     std::packaged_task<return_type()> task(
             //std::bind(std::forward<Fn>(f), std::forward<Args>(args)...)
             std::forward<Fn>(f)

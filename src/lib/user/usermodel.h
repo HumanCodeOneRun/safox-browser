@@ -1,8 +1,8 @@
 #ifndef USER_H_
 #define USER_H_
 #include <QtWebEngineCore>
-#include "dao/userdao.h"
-#include "taskscheduler/databasetaskscheduler.h"
+#include "../dao/userdao.h"
+#include "../taskscheduler/databasetaskscheduler.h"
 
 class UserModel  {
 

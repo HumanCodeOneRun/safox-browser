@@ -13,8 +13,6 @@ BaseDao::BaseDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QStrin
 void BaseDao::check_thread_connection(){
     
     if(!BaseDao::db_connection.hasLocalData()){
-        //BaseDao::db_connection.setLocalData(std::move(std::make_unique<DbConnection>()));
-        qDebug() << "[info] thread: "<<QThread::currentThreadId()<<" create a db connection";
         BaseDao::db_connection.setLocalData(new DbConnection());
     }
 }

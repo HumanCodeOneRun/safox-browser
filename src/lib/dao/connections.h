@@ -3,7 +3,7 @@
 #include <QSqlDatabase>
 #include <QString>
 #include <fstream>
-
+#include <QThread>
 #define DEFAULT_DB_PATH "./.folktell.db"
 class DbConnection{
 

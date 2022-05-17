@@ -77,14 +77,14 @@ UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {
     if (!name.isEmpty() && !password.isEmpty()) {
 
-        auto futureName = m_taskScheduler->post([this, &id, &name](){
+        auto futureName = m_taskScheduler->post(std::move([this, &id, &name](){
             return this->item->setName(id, name);
-        });
+        }));
         int name_flag = futureName.get();
 
-        auto futurePwd = m_taskScheduler->post([this,&id, &password](){
+        auto futurePwd = m_taskScheduler->post(std::move([this,&id, &password](){
             return this->item->setPassword(id, password);
-        });
+        }));
         int pwd_flag = futurePwd.get();
 
         if (pwd_flag && name_flag) {
@@ -105,11 +105,11 @@ UserModel::~UserModel() {
 bool UserModel::queryUserName(const QString &name) {
     if (!name.isEmpty()) {
 
-        auto future = m_taskScheduler->post([this, &name]() {
+        auto future = m_taskScheduler->post(std::move([this, &name]() {
             int has = this->item->getItemByName(name).isEmpty();
             int ret = has ? 1 : 0;
             return ret;
-        });
+        }));
         return future.get();
     }
     return false;
@@ -117,37 +117,37 @@ bool UserModel::queryUserName(const QString &name) {
 
 bool UserModel::queryUserId(const int &id) {
 
-    auto future = m_taskScheduler->post([this, &id]() {
+    auto future = m_taskScheduler->post(std::move([this, &id]() {
         int has = !this->item->getItemById(id).isEmpty();
         int ret = has ? 1 : 0;
         return ret;
-    });
+    }));
     return future.get();
 }
 
 bool UserModel::queryUserPassword(const int &id, const QString &password) {
 
-    auto future = m_taskScheduler->post([this, &id, &password]() {
+    auto future = m_taskScheduler->post(std::move([this, &id, &password]() {
         int has = !this->item->getItemByIdPassword(id, password).isEmpty();
         int ret = has ? 1 : 0;
         return ret;
-    });
+    }));
     return future.get();
 
 }
 
 bool UserModel::addRegisterUser(const QString &name, const QString &password) {
 
-    auto future = m_taskScheduler->post([this, &name, &password]() {
+    auto future = m_taskScheduler->post(std::move([this, &name, &password]() {
         return  this->item->addUser(name, password);
-    });
+    }));
     return future.get();
 }
 
 bool UserModel::deleteRegisterUser(const int &id) {
-    return m_taskScheduler->post([this, &id](){
+    return m_taskScheduler->post(std::move([this, &id](){
         return this->item->deleteUser(id);
-    }).get();
+    })).get();
 }
 
 

@@ -84,6 +84,8 @@ set(PROJECT_SOURCES
         src/lib/bookmark/bookmarkitem.cpp
         src/lib/bookmark/bookmarkwidget.h
         src/lib/bookmark/bookmarkwidget.cpp
+        src/lib/bookmark/bookmarkwidget.ui
+        src/lib/bookmark/bookmarkitem.ui
         src/lib/user/usermodel.h
         src/lib/user/usermodel.cpp
         src/lib/downloads/downloaditem.h

@@ -4,12 +4,16 @@ BookmarkGroupDao::BookmarkGroupDao(std::shared_ptr<DatabaseTaskScheduler> _sched
 : BaseDao(_scheduler, _table_name){
     createTable();
 }
-
+// TODO create table cannot use prepare?
 bool BookmarkGroupDao::createTable(){
     check_thread_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
                 " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT);";
     QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
+    if(!query.prepare(cmd)){
+        qDebug() << "[eroor] fail to prepare " << query.lastError().text();
+        return false;
+    }
     bool ok = query.exec(cmd);
 
     if(!ok){

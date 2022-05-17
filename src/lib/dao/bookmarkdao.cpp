@@ -10,6 +10,10 @@ bool BookmarkDao::createTable(){
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
                 " (UID INTEGER NOT NULL, ID INTEGER PRIMARY KEY AUTOINCREMENT, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT);";
     QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
+    if(!query.prepare(cmd)){
+        qDebug() << "[eroor] fail to prepare " << query.lastError().text();
+        return false;
+    }
     bool ok = query.exec(cmd);
 
     if(!ok){

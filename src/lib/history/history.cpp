@@ -70,33 +70,33 @@ HistoryEntry History::makeHistoryEntry(const QString& title, const QUrl& url, co
 void History::clearHistoryEntryHelp() {
     HistoryDao* pm_historyDao = m_historyDao;
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([pm_historyDao, pm_historyModel] {
+    m_taskScheduler->post(std::move([pm_historyDao, pm_historyModel] {
         pm_historyDao->clearTable();
         pm_historyModel->clearHistoryEntry();
-    });
+    }));
 }
 
 QList<qint64> History::queryDayTimestamp() {
     HistoryModel* pm_historyModel = m_historyModel;
-    auto future = m_taskScheduler->post([this, pm_historyModel] {
+    auto future = m_taskScheduler->post(std::move([this, pm_historyModel] {
         return pm_historyModel->queryDayTimestamp();
-    });
+    }));
     return future.get();
 }
 
 QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
     HistoryModel* pm_historyModel = m_historyModel;
-    auto future = m_taskScheduler->post([this, pm_historyModel, index] {
+    auto future = m_taskScheduler->post(std::move([this, pm_historyModel, index] {
         return pm_historyModel->queryDayHistoryEntry(index);
-    });
+    }));
     return future.get();
 }
 
 void History::deleteHistoryEntryHelp(const int dayIndex, const int entryIndex) {
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([pm_historyModel, dayIndex, entryIndex] {
+    m_taskScheduler->post(std::move([pm_historyModel, dayIndex, entryIndex] {
         pm_historyModel->deleteHistoryEntry(dayIndex, entryIndex);
-    });
+    }));
 }
 
 HistoryDao* History::getHistoryDao() {

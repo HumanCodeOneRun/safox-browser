@@ -24,17 +24,16 @@ DbConnection::DbConnection(const QString& _db_path):db_path(_db_path){
 
     // open a connection, each thread get one connection
     this->conn_name = "conn_"+QString::number(DbConnection::conn_count);
-    if (!QSqlDatabase::contains(this->conn_name))
+    if (!QSqlDatabase::contains(this->conn_name)){
         DbConnection::conn_count++;
         auto db = QSqlDatabase::addDatabase("QSQLITE", this->conn_name);
-    
         (db).setDatabaseName(this->db_path);
         if(!db.open()){
             qDebug() << "[error]fail to open db! " << db.lastError().text();
         }
     
-    qDebug() << "[info] connection created, name is " + this->conn_name;
-
+        qDebug() << "[info] thread: "<< QThread::currentThreadId() << "connection created, name is " + this->conn_name;
+    }
 }
 
 QSqlDatabase DbConnection::get_db_connection(){

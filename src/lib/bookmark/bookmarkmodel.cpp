@@ -157,7 +157,6 @@ m_taskScheduler(_scheduler)
 {   
     this->gitem = std::make_unique<BookmarkGroupItem>(this->m_taskScheduler);
     this->item = std::make_unique<BookmarkItem>(this->m_taskScheduler);
-
 }
 
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
@@ -171,39 +170,39 @@ QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
 }
 
 QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& uid, const int& gid){
-    auto future = m_taskScheduler->post([this, &uid, &gid](){
+    auto future = m_taskScheduler->post(std::move([this, &uid, &gid](){
         return this->item->getItemByUidAndGid(uid, gid);
-    });
+    }));
     return future.get();
 }
 
 bool BookmarkModel::addBookmarkGroup(const int& uid, const QString& name,  const QUrl& icon){
-    auto future = m_taskScheduler->post([this, &uid, &name,&icon](){
+    auto future = m_taskScheduler->post(std::move([this, &uid, &name,&icon](){
         return this->gitem->addGroup(uid, name, icon);
-    });
+    }));
     return future.get();
 }
 
 
 bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl& url, const QString& gname, const QUrl& icon){
 
-    auto future = m_taskScheduler->post([this, &uid,  &gname](){
+    auto future = m_taskScheduler->post(std::move([this, &uid,  &gname](){
         return this->gitem->getGroupByUidAndName(uid, gname);
-    });
+    }));
     
     int gid;
     if(future.get().isEmpty()){
         
-        auto future_gid = m_taskScheduler->post([this, &gname, &uid](){
+        auto future_gid = m_taskScheduler->post(std::move([this, &gname, &uid](){
             this->gitem->addGroup(uid, gname, QUrl("src/image/bookmaker.png"));
             return this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt();
-        });
+        }));
         gid = future_gid.get();
     }
 
-    auto ret = m_taskScheduler->post([this, &gid, &uid, &name, &url, &gname, &icon](){
+    auto ret = m_taskScheduler->post(std::move([this, &gid, &uid, &name, &url, &gname, &icon](){
        return this->item->addBookmark(uid, name, url, gid, icon);
-    });
+    }));
     
     return ret.get();
 }
@@ -212,25 +211,25 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
 bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& name, const QUrl& url, const QString& gname){
     int name_valid=1, url_valid=1, gid_valid=1;
     if(!name.isEmpty()){
-        auto future = m_taskScheduler->post([this, &uid, &id, &name](){
+        auto future = m_taskScheduler->post(std::move([this, &uid, &id, &name](){
             return this->item->setName(uid, id, name);
-        });
+        }));
         name_valid = future.get();
     }
 
     if(!url.isEmpty()){
 
-        auto future = m_taskScheduler->post([this, &uid, &id, &url](){
+        auto future = m_taskScheduler->post(std::move([this, &uid, &id, &url](){
             return this->item->setUrl(uid, id, url);
-        });
+        }));
         url_valid = future.get();
     }
 
     if(!gname.isEmpty()){
-        auto future = m_taskScheduler->post([this,&id, &uid, &gname](){
+        auto future = m_taskScheduler->post(std::move([this,&id, &uid, &gname](){
             auto gid = this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt();
             return this->item->setGid(uid, id, gid);
-        });
+        }));
         gid_valid =  future.get();
     }
 
@@ -239,17 +238,17 @@ bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& n
 }
 
 bool BookmarkModel::deleteBookmark(const int& uid, const int& id){
-    auto future = m_taskScheduler->post([this, &uid, &id](){
+    auto future = m_taskScheduler->post(std::move([this, &uid, &id](){
         return this->item->deleteBookmark(uid, id);
-    });
+    }));
     return future.get();
 }
 
 
 bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
-    auto future = m_taskScheduler->post([this, &uid, &gid](){
+    auto future = m_taskScheduler->post(std::move([this, &uid, &gid](){
         return this->gitem->deleteBookmarkGroup(uid, gid);
-    });
+    }));
     return future.get();
 }
 
