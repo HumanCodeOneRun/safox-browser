@@ -162,9 +162,9 @@ m_taskScheduler(_scheduler)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     
     
-    auto future = m_taskScheduler->post([this, &uid](){
+    auto future = m_taskScheduler->post(std::move([this, &uid](){
         return this->gitem->getAllGroup(uid);
-    });
+    }));
 
     return future.get();
 }
