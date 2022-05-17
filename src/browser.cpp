@@ -10,6 +10,7 @@
 #include "usermodel.h"
 
 Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
+        userid(userid),
         m_serviceLocator(serviceLocator),
         m_config(serviceLocator.getServiceAs<Config>("Config")),
         m_databaseScheduler(serviceLocator.getServiceAs<DatabaseTaskScheduler>("DatabaseTaskScheduler")),

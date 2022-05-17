@@ -5,4 +5,4 @@
 
 ##特例：history
 * 因为history将用户的历史记录保存在内存中，所以hitory和uid一对一，生命周期和当前uid一致
-* 即切换用户要删除原有history对象，再新建一个，和其他model类不同（全局）
+* 即切换用户要删除原有history对象，再新建一个，并在service中维护和其他model类不同（全局）

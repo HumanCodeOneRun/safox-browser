@@ -24,6 +24,7 @@ class Browser
 public:
 
     explicit Browser(int userid, const MyServiceLocator &serviceLocator);
+    virtual ~Browser();
 //    userid is default user id
 
 

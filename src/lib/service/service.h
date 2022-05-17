@@ -5,7 +5,8 @@
 #ifndef FOLKTELL_SERVICE_H
 #define FOLKTELL_SERVICE_H
 
-#include <string>
+//#include <string>
+#include <QString>
 #include <unordered_map>
 
 class QObject;
@@ -69,5 +70,5 @@ private:
     std::unordered_map<KeyType, std::shared_ptr<BaseServiceType>> m_serviceMap;
 };
 
-using MyServiceLocator = ServiceLocator<std::string, QObject>;
+using MyServiceLocator = ServiceLocator<std::string , QObject>;
 #endif //FOLKTELL_SERVICE_H

@@ -29,7 +29,7 @@ public:
     explicit MainApplication(int &argc, char **argv);
 
     /// Registers a service with the MyServiceLocator
-    void registerService(std::shared_ptr<QObject> service);
+    void registerService(std::string keyType, std::shared_ptr<QObject> service);
 
     void initDefaultUser();
 
