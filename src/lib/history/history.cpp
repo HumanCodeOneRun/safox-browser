@@ -1,75 +1,73 @@
 #include "history.h"
 #include "historymodel.h"
 
-History::History(const int& _userid, QObject* parent):
-userid(_userid), QObject(parent)
-{   
-    m_historyDao = new HistoryDao(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
-    m_historyModel = new HistoryModel(this);
+History::History(const int &_userid, QObject *parent) :
+        userid(_userid), QObject(parent) {
+    m_historyDao = std::make_shared<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
+    m_historyModel = std::make_shared<HistoryModel>(this);
 }
 
-History::History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent):
-userid(_userid), QObject(parent), m_taskScheduler(_m_taskscheduler)
-{   
-    m_historyDao = new HistoryDao(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
-    m_historyModel = new HistoryModel(this);
+History::History(const int &_userid, std::shared_ptr<DatabaseTaskScheduler>_m_taskscheduler, QObject *parent) :
+        userid(_userid), QObject(parent), m_taskScheduler(_m_taskscheduler) {
+    m_historyDao = std::make_shared<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
+    m_historyModel = std::make_shared<HistoryModel>(this);
 }
 
-void History::addHistoryEntry(WebView* webview) {
+void History::addHistoryEntry(WebView *webview) {
     const QString title = webview->getTitle();
     const QUrl url = webview->getUrl();
     const QUrl iconUrl = webview->getUrl();
-    if(webview->getConnectedToHistory() == 0) {
+    if (webview->getConnectedToHistory() == 0) {
         webview->setConnectedToHistory(1);
         QObject::connect(webview, &WebView::sendChangedWebView, this, &History::addHistoryEntry);
     }
-    
-    if(url.toString() != "")
+
+    if (url.toString() != "")
         addHistoryEntryHelp(title, url, iconUrl);
 }
 
-void History::addHistoryEntryHelp(const QString& title, const QUrl& url, const QUrl& iconUrl) {
+void History::addHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl) {
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
-    HistoryDao* pm_historyDao = m_historyDao;
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryDao> pm_historyDao = m_historyDao;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
-        qDebug()<<"[test] addhisotry entry ";
-        pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
+        qDebug() << "[test] addhisotry entry ";
+        pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url,
+                                          historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
         pm_historyModel->addHistoryEntry(historyEntry);
     });
 };
 
 
-
-
-void History::deleteHistoryEntryHelp(const QString& title, const QUrl& url, const QUrl& iconUrl, const QDateTime& date) {
+void
+History::deleteHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl, const QDateTime &date) {
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
     historyEntry.date = date;
-    HistoryDao* pm_historyDao = m_historyDao;
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryDao> pm_historyDao = m_historyDao;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
         pm_historyDao->deleteByPriKey(historyEntry.urlid, historyEntry.url);
-        pm_historyModel->deleteHistoryEntry(historyEntry); 
+        pm_historyModel->deleteHistoryEntry(historyEntry);
     });
 
 
 }
 
-HistoryEntry History::makeHistoryEntry(const QString& title, const QUrl& url, const QUrl& iconUrl) {
+HistoryEntry History::makeHistoryEntry(const QString &title, const QUrl &url, const QUrl &iconUrl) {
     HistoryEntry historyEntry;
     historyEntry.title = title;
     historyEntry.url = url;
     historyEntry.date = QDateTime::currentDateTime();
     historyEntry.iconUrl = iconUrl;
-    historyEntry.urlid = qHash( url.toString(), HISTORY_ID_SEED);
+    historyEntry.urlid = qHash(url.toString(), HISTORY_ID_SEED);
     return historyEntry;
 }
 
 void History::clearHistoryEntryHelp() {
-    HistoryDao* pm_historyDao = m_historyDao;
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryDao> pm_historyDao = m_historyDao;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([pm_historyDao, pm_historyModel] {
         pm_historyDao->clearTable();
         pm_historyModel->clearHistoryEntry();
@@ -77,7 +75,7 @@ void History::clearHistoryEntryHelp() {
 }
 
 QList<qint64> History::queryDayTimestamp() {
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     auto future = m_taskScheduler->post([this, pm_historyModel] {
         return pm_historyModel->queryDayTimestamp();
     });
@@ -85,7 +83,7 @@ QList<qint64> History::queryDayTimestamp() {
 }
 
 QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     auto future = m_taskScheduler->post([this, pm_historyModel, index] {
         return pm_historyModel->queryDayHistoryEntry(index);
     });
@@ -93,16 +91,16 @@ QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
 }
 
 void History::deleteHistoryEntryHelp(const int dayIndex, const int entryIndex) {
-    HistoryModel* pm_historyModel = m_historyModel;
+    std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([pm_historyModel, dayIndex, entryIndex] {
         pm_historyModel->deleteHistoryEntry(dayIndex, entryIndex);
     });
 }
 
-HistoryDao* History::getHistoryDao() {
+std::shared_ptr<HistoryDao> History::getHistoryDao() {
     return m_historyDao;
 }
 
-HistoryModel* History::getHistoryModel() {
+std::shared_ptr<HistoryModel> History::getHistoryModel() {
     return m_historyModel;
 }

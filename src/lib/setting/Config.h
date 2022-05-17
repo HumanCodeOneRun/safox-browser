@@ -9,12 +9,14 @@
 #include<QSettings>
 #include<QVariant>
 
-class Config
-{
+class Config : public QObject {
 public:
     Config(QString filename = "");
+
     virtual ~Config();
+
     void Set(QString, QVariant);
+
     QVariant Get(QString);
 
 private:

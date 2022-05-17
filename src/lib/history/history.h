@@ -19,41 +19,55 @@
 
 class HistoryModel;
 
-class History:public QObject {
-    Q_OBJECT
-    public:
-    explicit History(const int& _userid, QObject* parent=nullptr);
-    explicit History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent=nullptr);
-    HistoryDao* getHistoryDao();
-    HistoryModel* getHistoryModel();
+class History : public QObject {
+Q_OBJECT
+public:
+    explicit History(const int &_userid, QObject *parent = nullptr);
 
-    
-    Q_SIGNALS:
-    void historyEntryAdded(HistoryEntry& historyEntry);
-    void historyEntryDeleted(HistoryEntry& historyEntry);
+    explicit History(const int &_userid, std::shared_ptr<DatabaseTaskScheduler> _m_taskscheduler,
+                     QObject *parent = nullptr);
+
+    std::shared_ptr<HistoryDao> getHistoryDao();
+
+    std::shared_ptr<HistoryModel> getHistoryModel();
+
+
+Q_SIGNALS:
+
+    void historyEntryAdded(HistoryEntry &historyEntry);
+
+    void historyEntryDeleted(HistoryEntry &historyEntry);
+
     //void historyEntryDeleted(HistoryEntry& historyEntry);
     void historyEntryCleared();
 
-    private: //later it be changed to private
-    HistoryModel* m_historyModel;
-    HistoryDao* m_historyDao;
+private: //later it be changed to private
+    std::shared_ptr<HistoryModel> m_historyModel;
+    std::shared_ptr<HistoryDao> m_historyDao;
     unsigned int userid;
-    DatabaseTaskScheduler *m_taskScheduler;
-    
+    std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
 
+public slots:
 
-    public slots:
-    void addHistoryEntry(WebView* webview);
-    HistoryEntry makeHistoryEntry(const QString& title, const QUrl& url, const QUrl& iconUrl);
-    void addHistoryEntryHelp(const QString& title,const QUrl& url, const QUrl& iconUrl);
-    void deleteHistoryEntryHelp(const QString& title,const QUrl& url, const QUrl& iconUrl, const QDateTime& date);
+    void addHistoryEntry(WebView *webview);
+
+    HistoryEntry makeHistoryEntry(const QString &title, const QUrl &url, const QUrl &iconUrl);
+
+    void addHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl);
+
+    void deleteHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl, const QDateTime &date);
+
     void deleteHistoryEntryHelp(const int dayIndex, const int entryIndex);
+
     void clearHistoryEntryHelp();
+
     QList<qint64> queryDayTimestamp();
+
     QList<HistoryEntry> queryDayHistoryEntry(const int index);
 
 };
+
 #endif
 
 

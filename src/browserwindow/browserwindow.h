@@ -40,8 +40,6 @@ public:
     Toolbar* tb;
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
-    int userid;
-    DatabaseTaskScheduler* m_taskScheduler;
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();

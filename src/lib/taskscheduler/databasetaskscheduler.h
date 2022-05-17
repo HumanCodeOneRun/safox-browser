@@ -22,18 +22,18 @@
 #include <future>
 
 
-class DatabaseTaskScheduler {
+class DatabaseTaskScheduler : public QObject {
 public:
-    DatabaseTaskScheduler(int _num_threads=4);
+    DatabaseTaskScheduler(int _num_threads = 4);
 
     ~DatabaseTaskScheduler();
-    
-    
+
 
     //template<class Fn, class ...Args>
     template<class Fn>
-    auto post(Fn && f) -> std::future<decltype(f())>;
-    //decltype(auto) post(Fn && f, Args&&... args); 
+    auto post(Fn &&f) -> std::future<decltype(f())>;
+
+    //decltype(auto) post(Fn && f, Args&&... args);
     /// Starts the worker thread
     void run();
 
@@ -43,7 +43,7 @@ public:
 private:
     /// Main loop of the worker thread
     void workerThread();
-    
+
     /// Mutex
     mutable std::mutex m_mutex;
 
@@ -51,20 +51,20 @@ private:
     std::condition_variable m_cv;
 
     /// Pending tasks
-    
-    std::deque< std::packaged_task<void()> > task_queue;
+
+    std::deque<std::packaged_task<void()> > task_queue;
 
     /// Worker flag - when set to false, the worker thread will halt
     volatile bool m_working;
 
-    std::vector< std::thread > thread_pool;
+    std::vector<std::thread> thread_pool;
 
     int num_threads;
 
 };
 
 template<class Fn>
-auto DatabaseTaskScheduler::post(Fn &&f)-> std::future<decltype(f())>{
+auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
 //decltype(auto) DatabaseTaskScheduler::post(Fn &&f, Args&&... args){
 
     using return_type = decltype(f());
@@ -72,9 +72,9 @@ auto DatabaseTaskScheduler::post(Fn &&f)-> std::future<decltype(f())>{
     std::packaged_task<return_type()> task(
             //std::bind(std::forward<Fn>(f), std::forward<Args>(args)...)
             std::forward<Fn>(f)
-        );
+    );
 
-    
+
     std::future<return_type> ret = task.get_future();
     {
         std::unique_lock<std::mutex> lock{m_mutex};
@@ -85,4 +85,5 @@ auto DatabaseTaskScheduler::post(Fn &&f)-> std::future<decltype(f())>{
 
     return ret;
 }
+
 #endif //FOLKTELL_DATABASETASKSCHEDULER_H
