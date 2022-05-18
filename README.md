@@ -19,7 +19,7 @@
 
 :white_check_mark:  taskScheduler的多线程化以及保证数据库连接的线程安全
 
-
+:white_check_mark:  Service模块处理model生命周期
 ### 待完成
 
 :red_circle:	搜索栏
