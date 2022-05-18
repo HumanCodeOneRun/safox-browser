@@ -33,11 +33,11 @@ void History::addHistoryEntryHelp(const QString& title, const QUrl& url, const Q
     historyEntry = makeHistoryEntry(title, url, iconUrl);
     HistoryDao* pm_historyDao = m_historyDao;
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
+    m_taskScheduler->post(std::move([historyEntry, pm_historyDao, pm_historyModel] {
         qDebug()<<"[test] addhisotry entry ";
         pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url, historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
         pm_historyModel->addHistoryEntry(historyEntry);
-    });
+    }));
 };
 
 
@@ -49,10 +49,10 @@ void History::deleteHistoryEntryHelp(const QString& title, const QUrl& url, cons
     historyEntry.date = date;
     HistoryDao* pm_historyDao = m_historyDao;
     HistoryModel* pm_historyModel = m_historyModel;
-    m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
+    m_taskScheduler->post(std::move([historyEntry, pm_historyDao, pm_historyModel] {
         pm_historyDao->deleteByPriKey(historyEntry.urlid, historyEntry.url);
         pm_historyModel->deleteHistoryEntry(historyEntry); 
-    });
+    }));
 
 
 }
