@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-//    std::shared_ptr<BrowserWindow> w = a.getNewWindow();
+    std::shared_ptr<BrowserWindow> w = a.getNewWindow();
 
     return a.exec();
 }

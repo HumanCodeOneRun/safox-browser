@@ -132,7 +132,9 @@ set(PROJECT_SOURCES
         src/lib/setting/homepage.h
         src/lib/setting/homepage.cpp
 
-        src/lib/service/service.h)
+        src/lib/service/service.h
+#        tests/service_test.cpp
+        )
 
 
 
