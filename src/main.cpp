@@ -9,7 +9,6 @@
 #include <QObject>
 #include "mainapplication.h"
 
-
 int main(int argc, char *argv[])
 {
     
