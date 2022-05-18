@@ -1,10 +1,16 @@
 #include "history.h"
 #include "historymodel.h"
 
-History::History(const int &_userid, DatabaseTaskScheduler*_m_taskscheduler, QObject *parent) :
+History::History(const int &_userid, QObject *parent) :
+        userid(_userid), QObject(parent) {
+    m_historyDao = std::make_shared<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
+    m_historyModel = std::make_shared<HistoryModel>(this);
+}
+
+History::History(const int &_userid, std::shared_ptr<DatabaseTaskScheduler>_m_taskscheduler, QObject *parent) :
         userid(_userid), QObject(parent), m_taskScheduler(_m_taskscheduler) {
-    m_historyDao = std::shared_ptr<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
-    m_historyModel = std::shared_ptr<HistoryModel>(this);
+    m_historyDao = std::make_shared<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
+    m_historyModel = std::make_shared<HistoryModel>(this);
 }
 
 void History::addHistoryEntry(WebView *webview) {
