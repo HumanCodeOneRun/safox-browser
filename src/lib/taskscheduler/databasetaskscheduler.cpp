@@ -74,3 +74,12 @@ void DatabaseTaskScheduler::workerThread()
             break;
     }
 }
+
+#if defined(_MSC_VER)
+void DatabaseTaskScheduler::post(std::function<void()> &&work)
+{
+    std::lock_guard<std::mutex> lock{m_mutex};
+    task_queue.emplace_back(std::move(work));
+    m_cv.notify_one();
+}
+#endif

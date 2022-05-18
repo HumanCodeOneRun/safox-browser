@@ -28,26 +28,26 @@ public:
 
     ~DatabaseTaskScheduler();
 
-    /*
+    
     #if defined(__clang__) || defined(__GNUC__)
     template<class Fn>
     auto post(Fn &&f) -> std::future<decltype(f())>;
 
     #endif
-    */
+    
 
-    //#if defined(_MSC_VER)
+    #if defined(_MSC_VER)
     template<class Fn, class ...Args>
     void post(Fn &&f, Args &&...args)
     {
         std::lock_guard<std::mutex> lock{m_mutex};
-        task_queue.push_back(std::bind(std::forward<Fn>(f), std::forward<Args>(args)...));
+        task_queue.emplace_back(std::bind(std::forward<Fn>(f), std::forward<Args>(args)...));
         m_cv.notify_one();
     }
 
     /// Posts a task to the end of the work queue
     void post(std::function<void()> &&work);
-    //#endif
+    #endif
 
     /// Starts the worker thread
     void run();
@@ -76,7 +76,7 @@ private:
     int num_threads;
 
 };
-/*
+
 #if defined(__clang__) || defined(__GNUC__)
 
 template<class Fn>
@@ -103,7 +103,7 @@ auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
 }
 
 #endif
-*/
+
 
 
 

@@ -75,7 +75,7 @@ void History::clearHistoryEntryHelp() {
     });
 }
 
-/*
+
 #if defined(__clang__) || defined(__GNUC__)
 QList<qint64> History::queryDayTimestamp() {
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
@@ -93,14 +93,14 @@ QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
     return future.get();
 }
 #endif
-*/
-//#if defined(_MSC_VER)
+
+#if defined(_MSC_VER)
 QList<qint64> History::queryDayTimestamp() {
     std::promise<QList<qint64>> pm;
     auto future = pm.get_future();
 
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
-    auto future = m_taskScheduler->post([this, &pm, pm_historyModel] {
+    m_taskScheduler->post([this, &pm, pm_historyModel] {
         pm.set_value(pm_historyModel->queryDayTimestamp());
     });
     return future.get();
@@ -111,12 +111,12 @@ QList<HistoryEntry> History::queryDayHistoryEntry(const int index) {
     auto future = pm.get_future();
 
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
-    auto future = m_taskScheduler->post([this, &pm, pm_historyModel, index] {
+    m_taskScheduler->post([this, &pm, pm_historyModel, index] {
         pm.set_value(pm_historyModel->queryDayHistoryEntry(index));
     });
     return future.get();
 }
-//#endif
+#endif
 void History::deleteHistoryEntryHelp(const int dayIndex, const int entryIndex) {
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([pm_historyModel, dayIndex, entryIndex] {

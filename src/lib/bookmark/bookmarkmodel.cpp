@@ -161,7 +161,7 @@ m_taskScheduler(_scheduler)
 
 }
 
-/*
+
 #if defined(__clang__) || defined(__GNUC__)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     
@@ -256,9 +256,9 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
     return future.get();
 }
 #endif
-*/
 
-//#if defined(_MSC_VER)
+
+#if defined(_MSC_VER)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     std::promise<QVector<QVector<QVariant>>> pm;
     auto future = pm.get_future();
@@ -299,7 +299,7 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
     if(future.get().isEmpty()){
         std::promise<int> temp_pm;
         auto temp_future = temp_pm.get_future();
-        auto future_gid = m_taskScheduler->post([this, &temp_pm, &gname, &uid](){
+        m_taskScheduler->post([this, &temp_pm, &gname, &uid](){
             this->gitem->addGroup(uid, gname, QUrl("src/image/bookmaker.png"));
             temp_pm.set_value(this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt());
         });
@@ -323,29 +323,34 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
 
 bool BookmarkModel::editBookmark(const int& uid, const int& id, const QString& name, const QUrl& url, const QString& gname){
     int name_valid=1, url_valid=1, gid_valid=1;
-    std::promise<bool> pm;
-    auto future = pm.get_future();
+    std::promise<bool> pm1;
+    auto future1 = pm1.get_future();
     if(!name.isEmpty()){
-        m_taskScheduler->post([this, &pm, &uid, &id, &name](){
-            pm.set_value(this->item->setName(uid, id, name));
+        m_taskScheduler->post([this, &pm1, &uid, &id, &name](){
+            pm1.set_value(this->item->setName(uid, id, name));
         });
-        name_valid = future.get();
+        name_valid = future1.get();
     }
 
+    std::promise<bool> pm2;
+    auto future2 = pm2.get_future();
     if(!url.isEmpty()){
 
-        m_taskScheduler->post([this, &pm,&uid, &id, &url](){
-            pm.set_value(this->item->setUrl(uid, id, url));
+        m_taskScheduler->post([this, &pm2,&uid, &id, &url](){
+            pm2.set_value(this->item->setUrl(uid, id, url));
         });
-        url_valid = future.get();
+        url_valid = future2.get();
     }
 
+
+    std::promise<bool> pm3;
+    auto future3 = pm3.get_future();
     if(!gname.isEmpty()){
-        m_taskScheduler->post([this, &pm, &id, &uid, &gname](){
+        m_taskScheduler->post([this, &pm3, &id, &uid, &gname](){
             auto gid = this->gitem->getGroupByUidAndName(uid, gname).value(1).toInt();
-            pm.set_value(this->item->setGid(uid, id, gid));
+            pm3.set_value(this->item->setGid(uid, id, gid));
         });
-        gid_valid =  future.get();
+        gid_valid =  future3.get();
     }
 
     return name_valid && url_valid && gid_valid;
@@ -371,7 +376,7 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
     return future.get();
 }
 
-//#endif
+#endif
 /*
 void BookmarkModel::resetDB(){
     

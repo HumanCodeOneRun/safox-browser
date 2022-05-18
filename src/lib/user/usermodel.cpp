@@ -73,7 +73,7 @@ UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
         this->item = std::make_unique<UserItem>(scheduler);
 }
 
-/*
+
 #if defined(__clang__) || defined(__GNUC__)
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {
     if (!name.isEmpty() && !password.isEmpty()) {
@@ -148,21 +148,23 @@ bool UserModel::deleteRegisterUser(const int &id) {
 }
 
 #endif
-*/
-//#if defined(_MSC_VER)
+
+#if defined(_MSC_VER)
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {
     if (!name.isEmpty() && !password.isEmpty()) {
-        std::promise<bool> pm;
-        auto future = pm.get_future();
-        m_taskScheduler->post([this, &pm, &id, &name](){
-            pm.set_value(this->item->setName(id, name));
+        std::promise<bool> pm1;
+        auto future1 = pm1.get_future();
+        m_taskScheduler->post([this, &pm1, &id, &name](){
+            pm1.set_value(this->item->setName(id, name));
         });
-        int name_flag = future.get();
+        int name_flag = future1.get();
 
-        m_taskScheduler->post([this, &pm, &id, &password](){
-            pm.set_value(this->item->setPassword(id, password));
+        std::promise<bool> pm2;
+        auto future2 = pm1.get_future();
+        m_taskScheduler->post([this, &pm2, &id, &password](){
+            pm2.set_value(this->item->setPassword(id, password));
         });
-        int pwd_flag = future.get();
+        int pwd_flag = future2.get();
 
         if (pwd_flag && name_flag) {
             return true;
@@ -182,7 +184,7 @@ bool UserModel::queryUserName(const QString &name) {
        m_taskScheduler->post([this, &pm, &name]() {
             int has = this->item->getItemByName(name).isEmpty();
             int ret = has ? 1 : 0;
-            return ret;
+            pm.set_value(ret);
         });
         return future.get();
     }
@@ -190,42 +192,50 @@ bool UserModel::queryUserName(const QString &name) {
 }
 
 bool UserModel::queryUserId(const int &id) {
-
-    auto future = m_taskScheduler->post([this, &id]() {
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this, &pm, &id]() {
         int has = !this->item->getItemById(id).isEmpty();
-        int ret = has ? 1 : 0;
-        return ret;
+        int temp = has ? 1 : 0;
+        pm.set_value(temp);
+        //return ret;
     });
     return future.get();
 }
 
 bool UserModel::queryUserPassword(const int &id, const QString &password) {
-
-    auto future = m_taskScheduler->post([this, &id, &password]() {
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this,&pm, &id, &password]() {
         int has = !this->item->getItemByIdPassword(id, password).isEmpty();
         int ret = has ? 1 : 0;
-        return ret;
+        pm.set_value(ret);
     });
     return future.get();
 
 }
 
 bool UserModel::addRegisterUser(const QString &name, const QString &password) {
-
-    auto future = m_taskScheduler->post([this, &name, &password]() {
-        return  this->item->addUser(name, password);
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this,&pm, &name, &password]() {
+        pm.set_value(this->item->addUser(name, password));
     });
     return future.get();
 }
 
 bool UserModel::deleteRegisterUser(const int &id) {
-    return m_taskScheduler->post([this, &id](){
-        return this->item->deleteUser(id);
-    }).get();
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this,&pm, &id]() {
+        pm.set_value(this->item->deleteUser(id));
+    });
+    return future.get();
+
 }
 
 
-//#endif
+#endif
 
 UserModel::~UserModel() {
 
