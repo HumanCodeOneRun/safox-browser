@@ -12,7 +12,7 @@
 #include <vector>
 #include <string>
 #include <QString>
-
+#include <QWidget>
 #define DEFAULT_USR_ID 1
 #define DEFAULT_USR_NAME "default_usr"
 #define DEFAULT_USR_PWD "123456"
@@ -20,25 +20,25 @@
 MainApplication::MainApplication(int &argc, char **argv)
         : QApplication(argc, argv), defaultUsrId(DEFAULT_USR_ID) {
     m_config = std::make_shared<Config>();
-    registerService("Config", m_config);
+    registerService("Config",m_config);
 
     m_databaseScheduler = std::make_shared<DatabaseTaskScheduler>();
-    registerService("DatabaseTaskScheduler", m_databaseScheduler);
+    registerService("DatabaseTaskScheduler",m_databaseScheduler);
     m_databaseScheduler->run();
 
     m_user = std::make_shared<UserModel>(m_databaseScheduler);
-    registerService("UserModel", m_user);
+    registerService("UserModel",m_user);
     initDefaultUser();
 
     m_bookmark = std::make_shared<BookmarkModel>(m_databaseScheduler);
-    registerService("BookmarkModel", m_bookmark);
+    registerService("BookmarkModel",m_bookmark);
 
     //history store in memory, related to uid
     m_history = std::make_shared<History>(defaultUsrId, m_databaseScheduler);
-    registerService("History", m_history);
+    registerService("History",m_history);
 
     m_downloadMgr = std::make_shared<DownloadManager>();
-    registerService("DownloadManager", m_downloadMgr);
+    registerService("DownloadManager",m_downloadMgr);
 
     m_adblock = std::make_shared<AdblockRequestInterceptor>();
     registerService("AdblockRequestInterceptor", m_adblock);
@@ -59,7 +59,7 @@ void MainApplication::initDefaultUser() {
 }
 
 std::shared_ptr<BrowserWindow> MainApplication::getNewWindow() {
-    auto w = std::make_shared<BrowserWindow>(DEFAULT_USR_ID, m_serviceLocator);
+    auto w = std::make_shared<BrowserWindow>(DEFAULT_USR_ID, m_serviceLocator, (QWidget * )nullptr);
     w->show();
     return w;
 }

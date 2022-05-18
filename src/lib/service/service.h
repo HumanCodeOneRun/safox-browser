@@ -5,9 +5,10 @@
 #ifndef FOLKTELL_SERVICE_H
 #define FOLKTELL_SERVICE_H
 
-//#include <string>
-#include <QString>
+#include <string>
+//#include <QString>
 #include <unordered_map>
+#include <map>
 
 class QObject;
 
@@ -59,7 +60,7 @@ public:
      */
     template<class Derived>
     std::shared_ptr<Derived> getServiceAs(const KeyType &key) const {
-//        static_assert(std::is_base_of<BaseServiceType, Derived>::value, "Object should inherit from BaseServiceType");
+        static_assert(std::is_base_of<BaseServiceType, Derived>::value, "Object should inherit from BaseServiceType");
 
         if (std::shared_ptr<BaseServiceType> service = getService(key))
             return std::static_pointer_cast<Derived>(service);
@@ -67,7 +68,7 @@ public:
     }
 
 private:
-    std::unordered_map<KeyType, std::shared_ptr<BaseServiceType>> m_serviceMap;
+    std::map<KeyType, std::shared_ptr<BaseServiceType>> m_serviceMap;
 };
 
 using MyServiceLocator = ServiceLocator<std::string , QObject>;
