@@ -20,6 +20,7 @@ class HistoryWidget : public QWidget
 public:
     explicit HistoryWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow *root=nullptr);
     int width,height;
+    BrowserWindow* root;
     HistoryBar* historyBar;
     QTableWidget* historyTable;
     int index;
@@ -29,11 +30,11 @@ private:
     Ui::HistoryWidget *ui;
     void initTable();
     void paintEvent(QPaintEvent *event);
-    void loadData(BrowserWindow* root,int index);
+    void loadData(int index);
 
 private slots:
     void getItem(QTableWidgetItem* item);
-    void accept_dateBtn_signal();
+    void accept_dateBtn_signal(int index);
 
 };
 

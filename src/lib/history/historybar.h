@@ -28,16 +28,15 @@ public:
     explicit HistoryBar(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int x,y,width,height;
 
-//signals:
-//    void on_dateBtn_passSignal();
-
 private:
     void paintEvent(QPaintEvent *event);
     void loadHistory(const int &userid);
 
 private slots:
-    void on_test_clicked();
+    void on_test_clicked(int index);
 
+signals:
+    void on_dateBtn_passSignal(int index);
 };
 #endif // HISTORYBAR_H
 

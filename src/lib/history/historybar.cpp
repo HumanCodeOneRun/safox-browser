@@ -29,28 +29,27 @@ HistoryBar::HistoryBar(QWidget *parent,int x,int y,int width,int height,BrowserW
     historyBtn->setIconSize(QSize(20,20));
 
 
-    QToolButton* today = new QToolButton(this);
-    today->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    today->setGeometry(0,50,398,50);
-    today->setText("今天");
-    today->setIcon(clock);
-    today->setIconSize(QSize(20,20));
-    connect(today,&QToolButton::clicked,this,&HistoryBar::on_test_clicked);
+//    QToolButton* today = new QToolButton(this);
+//    today->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+//    today->setGeometry(0,50,398,50);
+//    today->setText("今天");
+//    today->setIcon(clock);
+//    today->setIconSize(QSize(20,20));
 
-    QToolButton* yesterday = new QToolButton(this);
-    yesterday->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    yesterday->setGeometry(0,100,398,50);
-    yesterday->setText("昨天");
-    yesterday->setIcon(clock);
-    yesterday->setIconSize(QSize(20,20));
+//    QToolButton* yesterday = new QToolButton(this);
+//    yesterday->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+//    yesterday->setGeometry(0,100,398,50);
+//    yesterday->setText("昨天");
+//    yesterday->setIcon(clock);
+//    yesterday->setIconSize(QSize(20,20));
 
 
-    QToolButton* passSevenDay = new QToolButton(this);
-    passSevenDay->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    passSevenDay->setGeometry(0,150,398,50);
-    passSevenDay->setText("过去7天");
-    passSevenDay->setIcon(clock);
-    passSevenDay->setIconSize(QSize(20,20));
+//    QToolButton* passSevenDay = new QToolButton(this);
+//    passSevenDay->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+//    passSevenDay->setGeometry(0,150,398,50);
+//    passSevenDay->setText("过去7天");
+//    passSevenDay->setIcon(clock);
+//    passSevenDay->setIconSize(QSize(20,20));
 
     /*------------------------------------*/
         QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
@@ -58,11 +57,13 @@ HistoryBar::HistoryBar(QWidget *parent,int x,int y,int width,int height,BrowserW
 
     /*--------遍历QList：------------------*/
         QList<qint64>::iterator i = historyDateList.begin();
-        int btnY = 200;
+        int btnY = 50;
+        int listIndex = 0;
         while(i!=historyDateList.end()){
             QDateTime time = QDateTime::fromMSecsSinceEpoch(*i);
             qDebug()<<time.toString("yyyy-MM-dd");
             QToolButton* tempBtn = new QToolButton(this);
+            connect(tempBtn,&QToolButton::clicked,this,[=](){HistoryBar::on_test_clicked(listIndex);});
             tempBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
             tempBtn->setIcon(clock);
             tempBtn->setIconSize(QSize(20,20));
@@ -70,6 +71,7 @@ HistoryBar::HistoryBar(QWidget *parent,int x,int y,int width,int height,BrowserW
             tempBtn->setText(time.toString("yyyy-MM-dd"));
             btnY+=50;
             i++;
+            listIndex++;
         }
     /*-------------------------------------*/
 
@@ -90,6 +92,6 @@ void HistoryBar::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width,this->height);
 }
 
-void HistoryBar::on_test_clicked(){
-    qDebug("lll");
+void HistoryBar::on_test_clicked(int index){
+    emit on_dateBtn_passSignal(index);
 }

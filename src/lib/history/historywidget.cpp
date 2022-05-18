@@ -12,13 +12,11 @@
 //todo: add TableWidget
 
 HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,BrowserWindow* root) :
-    QWidget(parent),
+    QWidget(parent),width(width),height(height),root(root),
     ui(new Ui::HistoryWidget)
 {
     ui->setupUi(this);
     this->setGeometry(x,y,width,height);
-    this->width = width;
-    this->height = height;
     this->index = 0;
     this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 100);gridline-color:rgba(219,219,219,100);}"
                         "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);font-size:20px;}"
@@ -30,6 +28,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
 //    loadData(root,this->index);
 
     this->historyBar = new HistoryBar(this,0,0,399,980,root);
+    connect(this->historyBar,&HistoryBar::on_dateBtn_passSignal,this,&HistoryWidget::accept_dateBtn_signal);
 
 
     QLabel* nameTitle = new QLabel(this);
@@ -86,7 +85,7 @@ void HistoryWidget::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width,this->height);
 }
 
-void HistoryWidget::loadData(BrowserWindow* root,int index){
+void HistoryWidget::loadData(int index){
 //    qDebug("loadData");
     this->historyTable->clearContents();
     QList<HistoryEntry> testHistory = root->Browser::baseHistory->queryDayHistoryEntry(index);
@@ -113,8 +112,10 @@ void HistoryWidget::getItem(QTableWidgetItem* item){
     qDebug()<<item->text();
 }
 
-void HistoryWidget::accept_dateBtn_signal(){
+void HistoryWidget::accept_dateBtn_signal(int index){
     qDebug("receive signal");
+    qDebug()<<index;
+    loadData(index);
 }
 
 
