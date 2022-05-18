@@ -161,7 +161,7 @@ m_taskScheduler(_scheduler)
 
 }
 
-/*
+
 #if defined(__clang__) || defined(__GNUC__)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     
@@ -256,9 +256,9 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
     return future.get();
 }
 #endif
-*/
 
-//#if defined(_MSC_VER)
+
+#if defined(_MSC_VER)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     std::promise<QVector<QVector<QVariant>>> pm;
     auto future = pm.get_future();
@@ -371,7 +371,7 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
     return future.get();
 }
 
-//#endif
+#endif
 /*
 void BookmarkModel::resetDB(){
     
