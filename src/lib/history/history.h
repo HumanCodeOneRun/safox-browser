@@ -22,7 +22,7 @@ class HistoryModel;
 class History:public QObject {
     Q_OBJECT
     public:
-    explicit History(const int& _userid, QObject* parent=nullptr);
+    //explicit History(const int& _userid, QObject* parent=nullptr);
     explicit History(const int& _userid, DatabaseTaskScheduler* _m_taskscheduler, QObject* parent=nullptr);
     HistoryDao* getHistoryDao();
     HistoryModel* getHistoryModel();
