@@ -65,6 +65,8 @@ set(PROJECT_SOURCES
         src/lib/history/historybar.h
         src/lib/history/historybar.cpp
         src/lib/history/historybar.ui
+        src/lib/popupmenu/popupmenu.h
+        src/lib/popupmenu/popupmenu.cpp
         src/lib/history/historywidget.h
         src/lib/history/historywidget.cpp
         src/lib/history/historywidget.ui

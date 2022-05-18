@@ -1,3 +1,11 @@
+/*
+ * @Author: SC-WSKun 540610423@qq.com
+ * @Date: 2022-05-18 10:23:02
+ * @LastEditors: SC-WSKun 540610423@qq.com
+ * @LastEditTime: 2022-05-18 19:54:14
+ * @FilePath: \FolkTell\src\lib\history\historywidget.cpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include "historywidget.h"
 #include "ui_historywidget.h"
 #include <browserwindow/browserwindow.h>
@@ -7,35 +15,22 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     QWidget(parent),
     ui(new Ui::HistoryWidget)
 {
-    qDebug()<<"[test] slot1 in historywidget";
     ui->setupUi(this);
     this->setGeometry(x,y,width,height);
     this->width = width;
     this->height = height;
+    this->index = 0;
     this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 100);gridline-color:rgba(219,219,219,100);}"
-                        "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);font-size:20px;}");
+                        "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);font-size:20px;}"
+                        "QTableWidget::item{color:white;font-size:14px;border:0;padding-left:20px;}");
 
 
 
-/*--------todo：获取userid-------------*/
-    int userid = root->Browser::userid;
-/*------------------------------------*/
-    qDebug()<<"[test] slot2 in historywidget";
-    QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
-    QDateTime today = QDateTime::currentDateTime();
-    qDebug()<<"[test] slot3 in historywidget";
-
-/*--------遍历QList：------------------*/
-    QList<qint64>::iterator i = historyDateList.begin();
-    while(i!=historyDateList.end()){
-        QDateTime time = QDateTime::fromMSecsSinceEpoch(*i);
-        qDebug()<<time;
-        i++;
-    }
-/*-------------------------------------*/
-
-    this->historyBar = new HistoryBar(this,0,0,399,980,userid);
     initTable();
+//    loadData(root,this->index);
+
+    this->historyBar = new HistoryBar(this,0,0,399,980,root);
+
 
     QLabel* nameTitle = new QLabel(this);
     nameTitle->setText("名称");
@@ -52,6 +47,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     tagTitle->setGeometry(460,822,268,20);
     tagTitle->setStyleSheet("QLabel{background-color:rgba(46, 50, 53, 100);color:white;}");
 
+    connect(this->historyTable,&QTableWidget::itemClicked,this,&HistoryWidget::getItem);
 }
 
 HistoryWidget::~HistoryWidget()
@@ -61,19 +57,19 @@ HistoryWidget::~HistoryWidget()
 
 
 void HistoryWidget::initTable(){
-    QTableWidget* historyTable=new QTableWidget(this);
-    historyTable->setGeometry(400,0,1520,578);
-    historyTable->verticalHeader()->setVisible(false);
-    historyTable->setColumnCount(3);
-//    historyTable->setRowCount(userHistoryList.length());
-    historyTable->setRowCount(11);
+//    qDebug("initTable");
+    this->historyTable=new QTableWidget(this);
+    this->historyTable->setGeometry(400,0,1520,578);
+    this->historyTable->verticalHeader()->setVisible(false);
+    this->historyTable->setColumnCount(3);
+    this->historyTable->setRowCount(11);
     QStringList strs = {"名称", "标签", "网址"};
-    historyTable->setHorizontalHeaderLabels(strs);
-    historyTable->horizontalHeader()->setFixedHeight(48);
-    historyTable->verticalHeader()->setDefaultSectionSize(48);
-    historyTable->setColumnWidth(0,505);
-    historyTable->setColumnWidth(1,133);
-    historyTable->setColumnWidth(2,880);
+    this->historyTable->setHorizontalHeaderLabels(strs);
+    this->historyTable->horizontalHeader()->setFixedHeight(48);
+    this->historyTable->verticalHeader()->setDefaultSectionSize(48);
+    this->historyTable->setColumnWidth(0,505);
+    this->historyTable->setColumnWidth(1,133);
+    this->historyTable->setColumnWidth(2,880);
 }
 
 void HistoryWidget::paintEvent(QPaintEvent *event)
@@ -89,3 +85,37 @@ void HistoryWidget::paintEvent(QPaintEvent *event)
     p.setBrush(QColor(46, 50, 53, 100));
     p.drawRect(0,0,this->width,this->height);
 }
+
+void HistoryWidget::loadData(BrowserWindow* root,int index){
+//    qDebug("loadData");
+    this->historyTable->clearContents();
+    QList<HistoryEntry> testHistory = root->Browser::baseHistory->queryDayHistoryEntry(index);
+    if(testHistory.length()>11){
+        this->historyTable->setRowCount(testHistory.length());
+    }
+    QList<HistoryEntry>::iterator i = testHistory.begin();
+    int rowIndex = 0;
+    while(i!=testHistory.end()){
+        QTableWidgetItem *item0 = new QTableWidgetItem(i->title);
+        QIcon itemIcon(i->iconUrl.toDisplayString());
+        item0->setIcon(itemIcon);
+//        QTableWidgetItem *item1 = new QTableWidgetItem(i->url.tag());
+        QTableWidgetItem *item2 = new QTableWidgetItem(i->url.toDisplayString());
+        this->historyTable->setItem(rowIndex,0,item0);
+//        this->historyTable->setItem(rowIndex,1,item1);
+        this->historyTable->setItem(rowIndex,2,item2);
+        rowIndex++;
+        i++;
+    }
+}
+
+void HistoryWidget::getItem(QTableWidgetItem* item){
+    qDebug()<<item->text();
+}
+
+void HistoryWidget::accept_dateBtn_signal(){
+    qDebug("receive signal");
+}
+
+
+
