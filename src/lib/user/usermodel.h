@@ -1,21 +1,27 @@
 #ifndef USER_H_
 #define USER_H_
+
 #include <QtWebEngineCore>
 #include "../dao/userdao.h"
 #include "../taskscheduler/databasetaskscheduler.h"
 
-class UserModel  {
+class UserModel : public QObject {
 
 public:
-    explicit UserModel (std::shared_ptr<DatabaseTaskScheduler> scheduler);
+    explicit UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler);
+
     ~UserModel();
 
     class UserItem {
     public:
         UserItem(std::shared_ptr<DatabaseTaskScheduler> scheduler);
-        QVector<QVariant> getItemById(const int& id);
-        QVector<QVector<QVariant>> getItemByName(const QString& name);
-        QVector<QVariant> getItemByIdPassword(const int& id, const QString& password);
+
+        QVector<QVariant> getItemById(const int &id);
+
+        QVector<QVector<QVariant>> getItemByName(const QString &name);
+
+        QVector<QVariant> getItemByIdPassword(const int &id, const QString &password);
+
         inline int getId() { return this->id; }
 
         inline QString getName() { return this->name; }
@@ -43,17 +49,23 @@ public:
 
 public :
 
-    bool addRegisterUser(const QString& name, const QString& password);
-    bool deleteRegisterUser(const int& id);
-    bool editUser(const int& id, const QString& name="",const QString& password="123456");
-    bool queryUserName(const QString& name);
-    bool queryUserId(const int& id);
-    bool queryUserPassword(const int& id, const QString& password);
+    bool addRegisterUser(const QString &name, const QString &password);
+
+    bool deleteRegisterUser(const int &id);
+
+    bool editUser(const int &id, const QString &name = "", const QString &password = "123456");
+
+    bool queryUserName(const QString &name);
+
+    bool queryUserId(const int &id);
+
+    bool queryUserPassword(const int &id, const QString &password);
+
 private:
     std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
     std::unique_ptr<UserItem> item;
-    
+
 };
 
 #endif

@@ -133,7 +133,9 @@ set(PROJECT_SOURCES
         src/lib/setting/Config.cpp
         src/lib/setting/homepage.h
         src/lib/setting/homepage.cpp
-        ${TS_FILES}
+
+        src/lib/service/service.h
+#        tests/service_test.cpp
         )
 
 

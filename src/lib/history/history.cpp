@@ -26,7 +26,6 @@ void History::addHistoryEntry(WebView *webview) {
         addHistoryEntryHelp(title, url, iconUrl);
 }
 
-
 void History::addHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl) {
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
@@ -38,7 +37,7 @@ void History::addHistoryEntryHelp(const QString &title, const QUrl &url, const Q
                                           historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
         pm_historyModel->addHistoryEntry(historyEntry);
     });
-};
+}
 
 
 void

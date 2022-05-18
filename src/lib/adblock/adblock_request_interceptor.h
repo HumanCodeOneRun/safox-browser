@@ -9,15 +9,17 @@
 
 #include "../third_party/ad-block/ad_block_client.h"
 
-class AdblockRequestInterceptor : public QWebEngineUrlRequestInterceptor
-{
-    Q_OBJECT
+class AdblockRequestInterceptor : public QWebEngineUrlRequestInterceptor {
+Q_OBJECT
 public:
     AdblockRequestInterceptor(QObject *parent = nullptr);
+
     void interceptRequest(QWebEngineUrlRequestInfo &info);
-private: 
+
+private:
     AdBlockClient client;
 };
+
 #endif
 /*
 */

@@ -7,13 +7,13 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-
-
+#include "mainapplication.h"
 
 int main(int argc, char *argv[])
 {
     
-    QApplication a(argc, argv);
+
+    MainApplication a(argc, argv);
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -23,9 +23,8 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    BrowserWindow w;
+    std::shared_ptr<BrowserWindow> w = a.getNewWindow();
 
-    w.show();
     return a.exec();
 }
 

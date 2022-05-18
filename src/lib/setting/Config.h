@@ -1,3 +1,4 @@
+
 //
 // Created by Howell Young on 2022/5/13.
 //
@@ -9,12 +10,14 @@
 #include<QSettings>
 #include<QVariant>
 
-class Config
-{
+class Config : public QObject {
 public:
     Config(QString filename = "");
+
     virtual ~Config();
+
     void Set(QString, QVariant);
+
     QVariant Get(QString);
 
 private:
@@ -24,3 +27,4 @@ private:
 
 
 #endif //FOLKTELL_CONFIG_H
+

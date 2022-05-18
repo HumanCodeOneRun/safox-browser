@@ -23,9 +23,30 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
                         "QTableWidget::item{color:white;font-size:14px;border:0;padding-left:20px;}");
 
 
-
-    initTable();
-//    loadData(root,this->index);
+//
+//<<<<<<< HEAD
+//=======
+///*--------todo：获取userid-------------*/
+//    int userid = root->Browser::userid;
+///*------------------------------------*/
+//    qDebug()<<"[test] slot2 in historywidget";
+//    QList<qint64> historyDateList = root->Browser::m_history->queryDayTimestamp();
+//    QDateTime today = QDateTime::currentDateTime();
+//    qDebug()<<"[test] slot3 in historywidget";
+//
+///*--------遍历QList：------------------*/
+//    QList<qint64>::iterator i = historyDateList.begin();
+//    while(i!=historyDateList.end()){
+//        QDateTime time = QDateTime::fromMSecsSinceEpoch(*i);
+//        qDebug()<<time;
+//        i++;
+//    }
+///*-------------------------------------*/
+//
+//    this->historyBar = new HistoryBar(this,0,0,399,980,userid);
+//>>>>>>> yhh
+//    initTable();
+////    loadData(root,this->index);
 
     this->historyBar = new HistoryBar(this,0,0,399,980,root);
     connect(this->historyBar,&HistoryBar::on_dateBtn_passSignal,this,&HistoryWidget::accept_dateBtn_signal);
@@ -88,7 +109,7 @@ void HistoryWidget::paintEvent(QPaintEvent *event)
 void HistoryWidget::loadData(int index){
 //    qDebug("loadData");
     this->historyTable->clearContents();
-    QList<HistoryEntry> testHistory = root->Browser::baseHistory->queryDayHistoryEntry(index);
+    QList<HistoryEntry> testHistory = root->Browser::m_history->queryDayHistoryEntry(index);
     if(testHistory.length()>11){
         this->historyTable->setRowCount(testHistory.length());
     }

@@ -28,7 +28,6 @@ public:
 
     ~DatabaseTaskScheduler();
 
-    
     #if defined(__clang__) || defined(__GNUC__)
     template<class Fn>
     auto post(Fn &&f) -> std::future<decltype(f())>;
@@ -49,6 +48,7 @@ public:
     void post(std::function<void()> &&work);
     #endif
 
+
     /// Starts the worker thread
     void run();
 
@@ -65,6 +65,8 @@ private:
     /// Condition variable
     std::condition_variable m_cv;
 
+
+    /// Pending tasks
     std::deque<std::packaged_task<void()> > task_queue;
 
     
@@ -102,7 +104,9 @@ auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
     return ret;
 }
 
+
 #endif
+
 
 
 

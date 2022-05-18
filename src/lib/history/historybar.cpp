@@ -52,7 +52,7 @@ HistoryBar::HistoryBar(QWidget *parent,int x,int y,int width,int height,BrowserW
 //    passSevenDay->setIconSize(QSize(20,20));
 
     /*------------------------------------*/
-        QList<qint64> historyDateList = root->Browser::baseHistory->queryDayTimestamp();
+        QList<qint64> historyDateList = root->Browser::m_history->queryDayTimestamp();
 //        QDateTime today = QDateTime::currentDateTime();
 
     /*--------遍历QList：------------------*/
