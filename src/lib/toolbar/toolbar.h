@@ -18,6 +18,7 @@
 #include<QStyleOption>
 #include <QAction>
 #include "../history/historywidget.h"
+#include "../popupmenu/popupmenu.h"
 
 class Preferences;
 class HistoryMenu;
