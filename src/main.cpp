@@ -7,7 +7,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-#include "mainapplication.h"
+#include "src/core/app/mainapplication.h"
 
 int main(int argc, char *argv[])
 {
