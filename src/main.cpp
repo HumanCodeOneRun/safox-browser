@@ -9,10 +9,10 @@
 #include <QObject>
 #include "src/core/app/mainapplication.h"
 
+#include "./core/history/history.h"
+
 int main(int argc, char *argv[])
 {
-    
-
     MainApplication a(argc, argv);
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -24,7 +24,12 @@ int main(int argc, char *argv[])
         }
     }
     std::shared_ptr<BrowserWindow> w = a.getNewWindow();
-
     return a.exec();
+
+    
 }
 
+/*
+//original code in main
+
+*/

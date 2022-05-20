@@ -22,7 +22,6 @@ class HistoryModel;
 class History : public QObject {
 Q_OBJECT
 public:
-    explicit History(const int &_userid, QObject *parent = nullptr);
 
     explicit History(const int &_userid, std::shared_ptr<DatabaseTaskScheduler> _m_taskscheduler,
                      QObject *parent = nullptr);
@@ -44,7 +43,6 @@ Q_SIGNALS:
 private: //later it be changed to private
     std::shared_ptr<HistoryModel> m_historyModel;
     std::shared_ptr<HistoryDao> m_historyDao;
-    unsigned int userid;
     std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
 
