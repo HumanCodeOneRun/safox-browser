@@ -10,7 +10,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(${PROJECT_NAME}_TEST "enable test" OFF)
+option(${PROJECT_NAME}_TEST "enable test" ON)
 #set(CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macOS/lib/cmake" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
