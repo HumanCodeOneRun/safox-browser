@@ -94,6 +94,9 @@ set(PROJECT_SOURCES
         src/core/downloads/downloaditem.cpp
         src/core/downloads/downloadmanager.h
         src/core/downloads/downloadmanager.cpp
+        src/ui/download/downloadwidget.h
+        src/ui/download/downloadwidget.cpp
+        src/ui/download/downloadwidget.ui
         src/core/dao/connections.h
         src/core/dao/connections.cpp
 

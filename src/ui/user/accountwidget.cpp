@@ -9,8 +9,6 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn) :
     this->setStyleSheet("QWidget{width:300px;height:400px;}"
                         "QLabel{font-size:15px;color:white;background-color:transparent;}"
                         "QLineEdit{background-color:rgba(255,255,255,40);color:rgba(0,1,0,60);font-size:15px;padding-left:10px;}");
-    qDebug()<<btn->width();
-    qDebug()<<btn->height();
     int x = btn->x()-300+btn->width();
     int y = btn->y()+btn->height();
     this->setGeometry(x,y,300,400);
@@ -49,7 +47,7 @@ void AccountWidget::paintEvent(QPaintEvent *event)
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
-    /* 绘制historyWidget背景 */
+    /* 绘制accountWidget背景 */
     p.setPen(Qt::NoPen);
     p.setBrush(QColor(35, 38, 43, 100));
     p.drawRect(0,0,this->width(),this->height());

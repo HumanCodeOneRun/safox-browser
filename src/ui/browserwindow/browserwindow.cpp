@@ -74,11 +74,20 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
 
+    // 初始化账户界面并隐藏
     qDebug()<<"[test] browserwindown slot3 init";
     this->accountTest = new AccountWidget(this,tb->accountBtn);
     this->accountTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_accountBtn_passSignal,this,&BrowserWindow::accept_account_signal);
+    }
+
+    // 初始化下载界面并隐藏
+    qDebug()<<"[test] browserwindown slot4 init";
+    this->downloadTest = new DownloadWidget(this,tb->downloadBtn);
+    this->downloadTest->hide();
+    if(tb){
+       connect(tb,&Toolbar::on_downloadBtn_passSignal,this,&BrowserWindow::accept_download_signal);
     }
 
 }
@@ -194,6 +203,7 @@ void BrowserWindow::accept_history_signal(){
         this->historyTest->show();
         this->bookmarkTest->hide();
         this->accountTest->hide();
+        this->downloadTest->hide();
     }
 }
 
@@ -205,16 +215,30 @@ void BrowserWindow::accept_bookmarker_signal(){
         this->bookmarkTest->show();
         this->historyTest->hide();
         this->accountTest->hide();
+        this->downloadTest->hide();
     }
 }
 
 void BrowserWindow::accept_account_signal(){
+ //    qDebug("receive account signal");
     if(this->accountTest->isVisible()){
         this->accountTest->hide();
     }else{
         this->accountTest->show();
         this->bookmarkTest->hide();
         this->historyTest->hide();
+        this->downloadTest->hide();
     }
 }
 
+void BrowserWindow::accept_download_signal(){
+ //    qDebug("receive download signal");
+    if(this->downloadTest->isVisible()){
+        this->downloadTest->hide();
+    }else{
+        this->downloadTest->show();
+        this->bookmarkTest->hide();
+        this->historyTest->hide();
+        this->accountTest->hide();
+    }
+}

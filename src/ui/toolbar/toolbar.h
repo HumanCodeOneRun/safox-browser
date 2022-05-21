@@ -58,6 +58,7 @@ private slots:
     void on_bookmarkerBtn_clicked();
     void on_settingBtn_clicked();
     void on_accountBtn_clicked();
+    void on_downloadBtn_clicked();
     void home_page();
     void start_search();
     void back_page();
@@ -67,6 +68,7 @@ signals:
     void on_historyBtn_passSignal();
     void on_bookmarkerBtn_passSignal();
     void on_accountBtn_passSignal();
+    void on_downloadBtn_passSignal();
 };
 
 #endif // TOOLBAR_H

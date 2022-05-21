@@ -16,6 +16,7 @@
 #include "src/ui/history/historywidget.h"
 #include "src/ui/bookmark/bookmarkwidget.h"
 #include "src/ui/user/accountwidget.h"
+#include "src/ui/download/downloadwidget.h"
 #include "databasetaskscheduler.h"
 #include "src/core/browser/browser.h"
 #include <QToolButton>
@@ -40,6 +41,7 @@ public:
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
     AccountWidget* accountTest;
+    DownloadWidget* downloadTest;
     BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent = NULL);
     void CreateSystemTrayIcon();
     void paintEvent(QPaintEvent *event);
@@ -60,6 +62,8 @@ private slots:
     void accept_bookmarker_signal();
 
     void accept_account_signal();
+
+    void accept_download_signal();
 
 private:
     Ui::BrowserWindow *ui;

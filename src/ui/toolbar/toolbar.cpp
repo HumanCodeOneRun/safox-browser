@@ -56,6 +56,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     downloadBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon download = QIcon(":/icon/image/download.png");
     downloadBtn->setIcon(download);
+    connect(downloadBtn,&QToolButton::clicked,this,&Toolbar::on_downloadBtn_clicked);
 
     /* 历史按钮 */
     historyBtn = new QToolButton(parent);
@@ -141,17 +142,19 @@ void Toolbar::on_historyBtn_clicked(){
 }
 
 void Toolbar::on_bookmarkerBtn_clicked(){
-    qDebug("click");
     emit on_bookmarkerBtn_passSignal();
 }
 
 void Toolbar::on_settingBtn_clicked(){
-    qDebug("click setting");
 
 }
 
 void Toolbar::on_accountBtn_clicked(){
     emit on_accountBtn_passSignal();
+}
+
+void Toolbar::on_downloadBtn_clicked(){
+    emit on_downloadBtn_passSignal();
 }
 
 void Toolbar::start_search(){
