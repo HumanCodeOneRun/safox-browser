@@ -8,6 +8,7 @@
 #include <string>
 //#include <QString>
 #include <unordered_map>
+#include <memory>
 #include <map>
 
 class QObject;
