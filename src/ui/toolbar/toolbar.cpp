@@ -69,6 +69,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     accountBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon account = QIcon(":/icon/image/account.png");
     accountBtn->setIcon(account);
+    connect(accountBtn,&QToolButton::clicked,this,&Toolbar::on_accountBtn_clicked);
 
 
     /* 设置按钮 */
@@ -143,4 +144,8 @@ void Toolbar::on_bookmarkerBtn_clicked(){
 void Toolbar::on_settingBtn_clicked(){
     qDebug("click setting");
 
+}
+
+void Toolbar::on_accountBtn_clicked(){
+    emit on_accountBtn_passSignal();
 }

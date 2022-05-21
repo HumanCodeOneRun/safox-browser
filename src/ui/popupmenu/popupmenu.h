@@ -3,6 +3,8 @@
 
 #include <QMenu>
 #include <QToolButton>
+#include <QStyleOption>
+#include <QPainter>
 
 class PopupMenu : public QMenu
 {

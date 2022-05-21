@@ -14,7 +14,7 @@
 #include <QLabel>
 #include <QIcon>
 #include <QAction>
-#include <QGroupBox>
+#include <QScrollArea>
 #include <QStyleOption>
 #include <QPainter>
 #include <QVector>
@@ -36,6 +36,7 @@ public:
     explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int width,height;
     BookmarkModel* bookmark;
+    QScrollArea* scrollView;
     QVector<QVector<QVariant>> userBookmark;
     ~BookmarkWidget();
 

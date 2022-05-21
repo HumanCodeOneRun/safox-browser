@@ -40,7 +40,10 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 //    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
 //    qDebug("vector:");
 //    qDebug()<<this->userBookmark;
-    BookmarkItem temp(this,20,100,":/icon/../image/setting.png","test_title","test_description");
+    this->scrollView = new QScrollArea(this);
+    this->scrollView->setGeometry(0,100,width,height);
+    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:transparent;}");
+    BookmarkItem temp(this->scrollView,20,0,":/icon/../image/setting.png","test_title","test_description");
 
 
 }

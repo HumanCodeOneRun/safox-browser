@@ -57,10 +57,12 @@ private slots:
     void on_historyBtn_clicked();
     void on_bookmarkerBtn_clicked();
     void on_settingBtn_clicked();
+    void on_accountBtn_clicked();
 
 signals:
     void on_historyBtn_passSignal();
     void on_bookmarkerBtn_passSignal();
+    void on_accountBtn_passSignal();
 };
 
 #endif // TOOLBAR_H
