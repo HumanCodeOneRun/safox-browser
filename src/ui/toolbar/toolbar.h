@@ -58,6 +58,10 @@ private slots:
     void on_bookmarkerBtn_clicked();
     void on_settingBtn_clicked();
     void on_accountBtn_clicked();
+    void home_page();
+    void start_search();
+    void back_page();
+    void front_page();
 
 signals:
     void on_historyBtn_passSignal();
