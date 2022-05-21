@@ -2,6 +2,8 @@
 #define BOOKMARKITEM_H
 
 #include <QWidget>
+#include <QPixmap>
+#include <QLabel>
 
 namespace Ui {
 class BookmarkItem;

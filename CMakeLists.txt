@@ -126,6 +126,7 @@ set(PROJECT_SOURCES
 #        mainmenu.h
 #        mainmenu.ui
         src/ui/icon.qrc
+        src/ui/app_win32.rc
         src/core/taskscheduler/databasetaskscheduler.h
         src/core/taskscheduler/databasetaskscheduler.cpp
         src/core/setting/Config.h
@@ -199,4 +200,5 @@ else()
         qt_finalize_executable(FolkTell)
     endif()
 endif()
+
 
