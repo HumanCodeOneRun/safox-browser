@@ -20,13 +20,13 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint|Qt::WindowSystemMenuHint|Qt::WindowMinimizeButtonHint);
 
     //todo: 获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
 
     //...
 
-    this->curHeight=1920,this->curWidth=1080;
+    this->curHeight=1920,this->curWidth=1050;
     this->scale = 1.0;
     QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 
@@ -107,13 +107,14 @@ void BrowserWindow::on_closeBtn_clicked()
 
 void BrowserWindow::on_minBtn_clicked()
 {
+
     this->scale = this->scale == 1.0 ? 0.5 : 1.0;
     QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 }
 
 void BrowserWindow::on_hidBtn_clicked()
 {
-    this->hide();
+    this->showMinimized();
 }
 
 void BrowserWindow::CreateSystemTrayIcon(){
