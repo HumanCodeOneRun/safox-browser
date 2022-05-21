@@ -22,6 +22,7 @@
 #include "src/core/browser/browser.h"
 #include <QToolButton>
 #include <QSystemTrayIcon>
+#include <QMouseEvent>
 #include <QAction>
 #include <QMenu>
 #include "service.h"
@@ -42,6 +43,9 @@ public:
     BookmarkWidget* bookmarkTest;
     BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent = NULL);
     void CreateSystemTrayIcon();
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
     ~BrowserWindow();
 
 private slots:

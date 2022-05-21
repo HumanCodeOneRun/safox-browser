@@ -21,7 +21,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */
-    setWindowFlags(Qt::FramelessWindowHint|Qt::Tool|Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint);
 
     //todo: 获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
     //todo: 窗口拖拽
@@ -127,6 +127,45 @@ void BrowserWindow::CreateSystemTrayIcon(){
     trayIcon->setIcon(QIcon(":/icon/image/download.png"));    //设置托盘图标
     trayIcon->setContextMenu(trayMenu);                                     //设置菜单
     trayIcon->show();
+}
+
+
+/*实现窗口拖拽*/
+
+QPoint winP;
+
+void BrowserWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    QWidget::mouseReleaseEvent(event);
+    winP=QPoint();//释放鼠标，清空数据
+}
+
+void BrowserWindow::mousePressEvent(QMouseEvent *event)
+{
+    winP=QPoint();
+    QWidget::mousePressEvent(event);
+    //获取鼠标点击时相对于屏幕的坐标
+    QPoint mouseP = event->globalPos();
+    //窗口相对于屏幕的坐标
+    int x = this->geometry().topLeft().x();
+    int y = this->geometry().topLeft().y();
+    //求出鼠标相对于应用窗口的坐标
+    int x_w=mouseP.x()-x;
+    int y_w=mouseP.y()-y;
+    //将鼠标相对于窗口的坐标保存
+    winP.setX(x_w);
+    winP.setY(y_w);
+}
+
+void BrowserWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QWidget::mouseMoveEvent(event);
+    //获取鼠标移动时相对于屏幕的坐标
+    QPoint mouseP = event->globalPos();
+    //求出窗口相对于桌面的坐标
+    QPoint endP(mouseP.x()-winP.x(),mouseP.y()-winP.y());
+    //窗口移动
+    this->move(endP);
 }
 
 void BrowserWindow::accept_history_signal(){
