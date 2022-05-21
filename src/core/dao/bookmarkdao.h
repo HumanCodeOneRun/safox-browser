@@ -4,6 +4,7 @@
 
 #define BOOKMARKDAO_TABLE_NAME "Bookmark"
 
+
 class BookmarkDao : public BaseDao{
 public:
     explicit BookmarkDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name = BOOKMARKDAO_TABLE_NAME);

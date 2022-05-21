@@ -20,7 +20,6 @@ private:
     
     bool checkdbpath(const QString& _db_path);
 
-    mutable std::mutex m_mutex{};
 };
 
 #endif

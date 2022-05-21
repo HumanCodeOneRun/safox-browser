@@ -48,6 +48,8 @@ private:
     std::shared_ptr<AdblockRequestInterceptor> m_adblock;
     int defaultUsrId;
 
+ 
+    
 };
 
 #endif // MAINAPPLICATION_H

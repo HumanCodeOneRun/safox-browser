@@ -17,6 +17,7 @@ bool get_bookmark_bygid_test(BookmarkModel &model) {
     for(int i = 0; i < 10; i++){
         auto item_list = model.getItemsByGid(i, i+1);
         auto item = item_list.value(0);
+        qDebug() << item_list;
         QString item_name = item.value(3).toString();
 
         if(item_name != "bookmarktest"+QString::number(i))

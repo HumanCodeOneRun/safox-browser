@@ -23,14 +23,27 @@ bool BookmarkDao::createTable(){
 
 QVector<QVariant> BookmarkDao::QueryByUidAndId(const int& uid, const int& id){
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id)+ " AND UID="+QString::number(uid);
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
+    QSqlQuery query(db);
     query.prepare(cmd);
     
     QVector<QVariant> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by id and uid,  " << query.lastError().text();
-        return ret;
+
+    if(!db.transaction()){
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by id and uid,  " << query.lastError().text();
+            return ret;
+        }
+        
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit" ;
+            db.rollback();
+        }
+
+    }
+    else{
+        qDebug() << "[error] fail to start transaction";
     }
     
     while(query.next()){
