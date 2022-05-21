@@ -31,7 +31,7 @@ ui_*.h
 qrc_*.cpp
 Thumbs.db
 *.res
-*.rc
+!*.rc
 /.qmake.cache
 /.qmake.stash
 
@@ -86,7 +86,7 @@ build
 Testing
 *.db
 
-//macos file
+#macos file
 *.DS_Store
 .DS_Store
 .folktell.db-journal
