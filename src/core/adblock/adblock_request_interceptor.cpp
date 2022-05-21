@@ -2,7 +2,8 @@
 
 
 AdblockRequestInterceptor::AdblockRequestInterceptor(const QString _easylist_path, QObject *parent) : QWebEngineUrlRequestInterceptor(parent) {
-    QThread *thread = QThread::create([this, &_easylist_path]{
+    //QThread *thread = QThread::create([this, &_easylist_path]{ crash code
+    QThread *thread = QThread::create([this, _easylist_path]{
         QFile file(_easylist_path);
         QString easyListTxt;
 
