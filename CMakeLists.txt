@@ -10,7 +10,7 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(${PROJECT_NAME}_TEST "enable test" OFF)
+option(${PROJECT_NAME}_TEST "enable test" ON)
 #set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macOS/lib/cmake" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -134,7 +134,6 @@ set(PROJECT_SOURCES
         src/core/setting/homepage.cpp
 
         src/core/service/service.h
-#        tests/service_test.cpp
         )
 
 
@@ -147,13 +146,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
             MANUAL_FINALIZATION
             ${PROJECT_SOURCES}
         )
-    endif()
 
-    qt_add_executable(
-        FolkTell
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
+    else()
+        qt_add_executable(
+            FolkTell
+            MANUAL_FINALIZATION
+            ${PROJECT_SOURCES}
+        )
+    endif()
 
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET FolkTell APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -177,7 +177,6 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
 
 #set_target_properties(FolkTell PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -194,8 +193,10 @@ if(${PROJECT_NAME}_TEST)
     target_link_libraries(FolkTell_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
     enable_testing()
     add_subdirectory(tests)
+else()
+    target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+    if(QT_VERSION_MAJOR EQUAL 6)
+        qt_finalize_executable(FolkTell)
+    endif()
 endif()
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(FolkTell)
-endif()

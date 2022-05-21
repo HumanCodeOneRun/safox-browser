@@ -11,8 +11,8 @@ include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 
 #folktell_add_test(user)
-#folktell_add_test(bookmark)
+folktell_add_test(bookmark)
 #folktell_add_test(bookmarkgroup)
 #folktell_add_test(download)
 #folktell_add_test(homepage)
-folktell_add_test(service)
+#folktell_add_test(service)
