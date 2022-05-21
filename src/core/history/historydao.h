@@ -32,6 +32,10 @@ class HistoryDao:BaseDao {
     QList<qint64> queryDayTimestamp();
     QList<HistoryEntry> queryHistoryEntry();
 
+    void setUserid(const int &_userid);
+
+    ~HistoryDao();
+
     private://just for test and it should be changed to private
     unsigned int userid;
 };

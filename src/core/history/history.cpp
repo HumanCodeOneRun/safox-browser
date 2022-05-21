@@ -7,14 +7,12 @@ History::History(const int &_userid, std::shared_ptr<DatabaseTaskScheduler>_m_ta
     QObject(parent), m_taskScheduler(_m_taskscheduler) {
     m_historyDao = std::make_shared<HistoryDao>(_userid, std::shared_ptr<DatabaseTaskScheduler>(m_taskScheduler));
     m_historyModel = std::make_shared<HistoryModel>(this);
-
-    create_table();
 }
 
-void History::create_table(){
-    m_taskScheduler->post([this](){
-        this->m_historyDao->createTable();
-    });
+void History::loginHistory(const int &_userid) {
+    m_historyDao->setUserid(_userid);
+    m_historyModel->clearHistoryEntry();
+    m_historyModel->init();
 }
 
 void History::addHistoryEntry(WebView *webview) {
@@ -43,8 +41,7 @@ void History::addHistoryEntryHelp(const QString &title, const QUrl &url, const Q
 }
 
 
-void
-History::deleteHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl, const QDateTime &date) {
+void History::deleteHistoryEntryHelp(const QString &title, const QUrl &url, const QUrl &iconUrl, const QDateTime &date) {
     HistoryEntry historyEntry;
     historyEntry = makeHistoryEntry(title, url, iconUrl);
     historyEntry.date = date;
@@ -72,6 +69,7 @@ void History::clearHistoryEntryHelp() {
     std::shared_ptr<HistoryDao> pm_historyDao = m_historyDao;
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([pm_historyDao, pm_historyModel] {
+        qDebug()<<"[test] clearHistoryEntry";
         pm_historyDao->clearTable();
         pm_historyModel->clearHistoryEntry();
     });

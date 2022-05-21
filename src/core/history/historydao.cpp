@@ -2,7 +2,7 @@
 
 HistoryDao::HistoryDao(const int& _userid,std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name):
 userid(_userid), BaseDao(_scheduler, _table_name) {
-    //createTable();
+    createTable();
 }
 
 
@@ -125,3 +125,11 @@ bool HistoryDao::clearTable() {
     return true;
 }
 
+
+void HistoryDao::setUserid(const int& _userid) {
+    userid = _userid;
+}
+
+HistoryDao::~HistoryDao() {
+    this->scheduler.~shared_ptr();
+}

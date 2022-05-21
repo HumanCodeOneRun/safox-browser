@@ -70,9 +70,9 @@ void WebView::setConnectedToHistory(bool _connectedToHistory) {
     connectedToHistory = _connectedToHistory;
 }
 
-void WebView::setAdblockRequestInterceptor() {
+void WebView::setAdblockRequestInterceptor(const QString _easylist_path) {
     if(!m_adblockRequestInterceptor)
-        m_adblockRequestInterceptor = new AdblockRequestInterceptor();
+        m_adblockRequestInterceptor = new AdblockRequestInterceptor(_easylist_path);
     this->page()->setUrlRequestInterceptor(m_adblockRequestInterceptor);
     this->reload();
 }

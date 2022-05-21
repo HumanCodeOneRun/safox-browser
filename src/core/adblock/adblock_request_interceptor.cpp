@@ -1,9 +1,9 @@
 #include "adblock_request_interceptor.h"
 
 
-AdblockRequestInterceptor::AdblockRequestInterceptor(QObject *parent) : QWebEngineUrlRequestInterceptor(parent) {
-    QThread *thread = QThread::create([this]{
-        QFile file("../dependent_files/easylist.txt");
+AdblockRequestInterceptor::AdblockRequestInterceptor(const QString _easylist_path, QObject *parent) : QWebEngineUrlRequestInterceptor(parent) {
+    QThread *thread = QThread::create([this, &_easylist_path]{
+        QFile file(_easylist_path);
         QString easyListTxt;
 
         if(!file.exists()) {
