@@ -109,6 +109,8 @@ private:
 
     std::unique_ptr<BookmarkGroupItem> gitem;
     std::unique_ptr<BookmarkItem> item;
+
+    void create_table();
 };
 
 

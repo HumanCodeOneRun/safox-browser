@@ -39,14 +39,14 @@ bool t_editUsr(int id, UserModel& um) {
 int main() {
     auto scheduler = std::make_shared<DatabaseTaskScheduler>(2);
     scheduler->run();
-    static UserModel model(scheduler);
+    UserModel model(scheduler);
 
     int ret = 0
             //|| !t_addUsr(model)
             || !t_deleteUsr(model)
             || !t_queryUsr(model)
             || !t_editUsr(1, model);
-    
+    scheduler->stop();
 //    int ret = 0
 //            || t_addUsr();
 //    UserDao dao;

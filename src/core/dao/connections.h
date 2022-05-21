@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QString>
 #include <fstream>
+#include <mutex>
 
 #define DEFAULT_DB_PATH "./.folktell.db"
 class DbConnection{
@@ -19,6 +20,7 @@ private:
     
     bool checkdbpath(const QString& _db_path);
 
+    mutable std::mutex m_mutex{};
 };
 
 #endif

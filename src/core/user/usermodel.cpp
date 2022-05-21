@@ -8,6 +8,10 @@ UserModel::UserItem::UserItem(std::shared_ptr<DatabaseTaskScheduler> scheduler)
     this->dao = std::make_unique<UserDao>(scheduler);
 }
 
+void UserModel::UserItem::create_table(){
+    this->dao->createTable();
+}
+
 QVector<QVariant> UserModel::UserItem::getItemById(const int &id) {
     QVector<QVariant> ret = (this->dao)->QueryById(id);
     if (ret.empty()) {
@@ -71,8 +75,15 @@ UserModel::UserItem::~UserItem() {
 UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
         m_taskScheduler(scheduler) {
         this->item = std::make_unique<UserItem>(scheduler);
+
+        create_table();
 }
 
+void UserModel::create_table(){
+    m_taskScheduler->post([this](){
+        this->item->create_table();
+    });
+}
 
 #if defined(__clang__) || defined(__GNUC__)
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {

@@ -2,7 +2,7 @@
 
 UserDao::UserDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const QString& _table_name )
 : BaseDao(_scheduler, _table_name){
-    createTable();
+    //createTable();
     
 }
 

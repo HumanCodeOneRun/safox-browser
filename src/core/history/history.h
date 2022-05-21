@@ -45,6 +45,8 @@ private: //later it be changed to private
     std::shared_ptr<HistoryDao> m_historyDao;
     std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
 
+    void create_table();
+
 
 public slots:
 

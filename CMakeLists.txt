@@ -10,8 +10,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(${PROJECT_NAME}_TEST "enable test" OFF)
-#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macOS/lib/cmake" )
+option(${PROJECT_NAME}_TEST "enable test" ON)
+set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macOS/lib/cmake" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 
@@ -178,14 +178,6 @@ else()
 endif()
 
 
-#set_target_properties(FolkTell PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-#    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-#    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-#    MACOSX_BUNDLE TRUE
-#    WIN32_EXECUTABLE TRUE
-#    AUTOMOC TRUE
-#)
 
 
 
@@ -195,6 +187,14 @@ if(${PROJECT_NAME}_TEST)
     add_subdirectory(tests)
 else()
     target_link_libraries(FolkTell PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
+    set_target_properties(FolkTell PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+        AUTOMOC TRUE
+    )
     if(QT_VERSION_MAJOR EQUAL 6)
         qt_finalize_executable(FolkTell)
     endif()
