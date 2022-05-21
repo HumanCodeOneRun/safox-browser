@@ -12,7 +12,6 @@
 
 
 BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent)
-//    :QMainWindow()
     : QMainWindow(parent),
     Browser(userid, serviceLocator),
     ui(new Ui::BrowserWindow)
@@ -24,7 +23,6 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     setWindowFlags(Qt::FramelessWindowHint);
 
     //todo: 获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
-    //todo: 窗口拖拽
 
     //...
 
