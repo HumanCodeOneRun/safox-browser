@@ -36,6 +36,8 @@ public:
 
         bool deleteUser(const int &id);
 
+        void create_table();
+
         ~UserItem();
 
     private:
@@ -66,6 +68,7 @@ private:
 
     std::unique_ptr<UserItem> item;
 
+    void create_table();
 };
 
 #endif

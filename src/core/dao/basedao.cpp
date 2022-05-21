@@ -5,6 +5,8 @@
 
 QThreadStorage< DbConnection* > BaseDao::db_connection;
 
+std::mutex BaseDao::m_mutex{};
+
 BaseDao::BaseDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name):table_name(_table_name){
     this->scheduler = _scheduler;
 
@@ -15,7 +17,9 @@ void BaseDao::check_thread_connection(){
     if(!BaseDao::db_connection.hasLocalData()){
         //BaseDao::db_connection.setLocalData(std::move(std::make_unique<DbConnection>()));
         qDebug() << "[info] thread: "<<QThread::currentThreadId()<<" create a db connection";
+        std::unique_lock<std::mutex> lock(m_mutex);
         BaseDao::db_connection.setLocalData(new DbConnection());
+        lock.unlock();
     }
 }
 

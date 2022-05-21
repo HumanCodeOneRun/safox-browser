@@ -159,8 +159,15 @@ m_taskScheduler(_scheduler)
     this->gitem = std::make_unique<BookmarkGroupItem>(this->m_taskScheduler);
     this->item = std::make_unique<BookmarkItem>(this->m_taskScheduler);
 
+    create_table();
 }
 
+void BookmarkModel::create_table(){
+    m_taskScheduler->post([this](){
+        this->item->create_table();
+        this->gitem->create_table();
+    });
+}
 
 #if defined(__clang__) || defined(__GNUC__)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){

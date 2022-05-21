@@ -43,6 +43,7 @@ protected:
 
     static void check_thread_connection();
 
+    static std::mutex m_mutex;
 };
 
 

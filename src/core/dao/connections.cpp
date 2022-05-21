@@ -1,6 +1,8 @@
 #include "connections.h"
 #include <QDebug>
 #include <QSqlError>
+#include <mutex>
+
 int DbConnection::conn_count = 0;
 
 bool DbConnection::checkdbpath(const QString& _db_path){
@@ -32,7 +34,6 @@ DbConnection::DbConnection(const QString& _db_path):db_path(_db_path){
         if(!db.open()){
             qDebug() << "[error]fail to open db! " << db.lastError().text();
         }
-    
     qDebug() << "[info] connection created, name is " + this->conn_name;
 
 }

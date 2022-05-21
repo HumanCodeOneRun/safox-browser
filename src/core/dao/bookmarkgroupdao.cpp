@@ -2,7 +2,7 @@
 
 BookmarkGroupDao::BookmarkGroupDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name )
 : BaseDao(_scheduler, _table_name){
-    createTable();
+    //createTable();
 }
 
 bool BookmarkGroupDao::createTable(){
@@ -172,6 +172,4 @@ QString BookmarkGroupDao::get_connection(){
 }
 
 BookmarkGroupDao::~BookmarkGroupDao(){
-    qDebug() << "bookmark group dao deconstruction";
-    this->scheduler.~shared_ptr();
 }
