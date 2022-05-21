@@ -28,6 +28,8 @@ class MainApplication : public QApplication {
 public:
     explicit MainApplication(int &argc, char **argv);
 
+    ~MainApplication();
+
     /// Registers a service with the MyServiceLocator
     void registerService(std::string keyType, std::shared_ptr<QObject> service);
 

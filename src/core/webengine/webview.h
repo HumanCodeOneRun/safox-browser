@@ -24,7 +24,7 @@ class WebView: public QWebEngineView {
     void changeTitle(const QString& newTitle);
     void changeUrl(const QUrl& newUrl);
     void changeIconUrl(const QUrl& iconUrl);
-    void setAdblockRequestInterceptor();
+    void setAdblockRequestInterceptor(const QString _easylist_path = "../dependent_files/easylist.txt");
     void setDefaultRequestInterceptor();
     
 

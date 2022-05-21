@@ -12,7 +12,7 @@
 class AdblockRequestInterceptor : public QWebEngineUrlRequestInterceptor {
 Q_OBJECT
 public:
-    AdblockRequestInterceptor(QObject *parent = nullptr);
+    AdblockRequestInterceptor(const QString _easylist_path = "../dependent_files/easylist.txt", QObject *parent = nullptr);
 
     void interceptRequest(QWebEngineUrlRequestInfo &info);
 

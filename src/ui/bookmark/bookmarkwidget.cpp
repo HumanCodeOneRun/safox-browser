@@ -40,6 +40,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 //    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
 //    qDebug("vector:");
 //    qDebug()<<this->userBookmark;
+    BookmarkItem temp(this,20,100,":/icon/../image/setting.png","test_title","test_description");
 
 
 }

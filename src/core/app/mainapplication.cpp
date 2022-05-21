@@ -63,3 +63,7 @@ std::shared_ptr<BrowserWindow> MainApplication::getNewWindow() {
     w->show();
     return w;
 }
+
+MainApplication::~MainApplication() {
+    m_databaseScheduler->stop();
+}

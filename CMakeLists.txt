@@ -11,7 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(${PROJECT_NAME}_TEST "enable test" OFF)
-#set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macOS/lib/cmake" )
+#set(CMAKE_PREFIX_PATH "/Users/cuddly/Qt/6.2.4/macOS/lib/cmake" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 
@@ -126,6 +126,7 @@ set(PROJECT_SOURCES
 #        mainmenu.h
 #        mainmenu.ui
         src/ui/icon.qrc
+        src/ui/app_win32.rc
         src/core/taskscheduler/databasetaskscheduler.h
         src/core/taskscheduler/databasetaskscheduler.cpp
         src/core/setting/Config.h
@@ -199,4 +200,5 @@ else()
         qt_finalize_executable(FolkTell)
     endif()
 endif()
+
 

@@ -29,6 +29,7 @@ bool BaseDao::isconnected(){
 
 void BaseDao::close(){
     (BaseDao::db_connection.localData()->get_db_connection()).close();
+
 }
 
 bool BaseDao::isTableExist(){
