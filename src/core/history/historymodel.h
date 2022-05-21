@@ -27,6 +27,7 @@ class HistoryModel final : public QStandardItemModel
     public:
         explicit HistoryModel(History* history);
         void init();
+        ~HistoryModel();
         
     
     public slots:

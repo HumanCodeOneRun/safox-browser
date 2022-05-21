@@ -189,3 +189,7 @@ void HistoryModel::traverse() {
     std::cout<<"traverse() exit"<<std::endl;
 }
 
+HistoryModel::~HistoryModel() {
+    clearHistoryEntry();
+    delete m_rootItem;
+}
