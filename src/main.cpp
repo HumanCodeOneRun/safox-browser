@@ -7,13 +7,20 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QDebug>
 #include <QObject>
-#include "src/core/app/mainapplication.h"
+#include <QUrl>
 
+
+/*
+ * QUrl CommandUrl()
+{
+    //if 搜索栏输入url 返回搜索栏url
+    return QUrl (QStringLiteral("https://www.bing.com"));
+}
+*/
 int main(int argc, char *argv[])
 {
     
-
-    MainApplication a(argc, argv);
+    QApplication a(argc, argv);
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
@@ -23,8 +30,13 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    std::shared_ptr<BrowserWindow> w = a.getNewWindow();
 
+//    QUrl url = CommandUrl();
+
+
+    BrowserWindow w;
+    //w.returnTab()->setUrl(url);
+    w.show();
     return a.exec();
 }
 

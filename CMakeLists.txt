@@ -10,8 +10,9 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(${PROJECT_NAME}_TEST "enable test" ON)
 #set(CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macOS/lib/cmake" )
+option(${PROJECT_NAME}_TEST "enable test" OFF)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 
@@ -35,106 +36,109 @@ include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR})
 
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineWidgets WebEngineCore Sql Core) 
 
 set(TS_FILES FolkTell_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
 
-        src/ui/browserwindow/browserwindow.cpp
-        src/ui/browserwindow/browserwindow.h
-        src/ui/browserwindow/browserwindow.ui
-        src/ui/toolbar/toolbar.cpp
-        src/ui/toolbar/toolbar.h
-        src/ui/toolbar/toolbar.ui
-        src/core/browser/browser.cpp
-        src/core/browser/browser.h
-        src/core/app/mainapplication.cpp
-        src/core/app/mainapplication.h
+        src/browserwindow/browserwindow.cpp
+        src/browserwindow/browserwindow.h
+        src/browserwindow/browserwindow.ui
+        src/lib/toolbar/toolbar.cpp
+        src/lib/toolbar/toolbar.h
+        src/lib/toolbar/toolbar.ui
 
-        src/core/history/historyitem.cpp
-        src/core/history/historyitem.h
-        src/core/history/history.cpp
-        src/core/history/history.h
-        src/core/history/historymodel.h
-        src/core/history/historymodel.cpp
-        src/core/history/historydao.h
-        src/core/history/historydao.cpp
-        src/ui/history/historybar.h
-        src/ui/history/historybar.cpp
-        src/ui/history/historybar.ui
-        src/ui/popupmenu/popupmenu.h
-        src/ui/popupmenu/popupmenu.cpp
-        src/ui/history/historywidget.h
-        src/ui/history/historywidget.cpp
-        src/ui/history/historywidget.ui
-        src/core/webengine/webview.cpp
-        src/core/webengine/webview.h
-        src/core/dao/basedao.h
-        src/core/dao/basedao.cpp
-        src/core/dao/bookmarkdao.cpp
-        src/core/dao/bookmarkdao.h
-        src/core/dao/bookmarkgroupdao.cpp
-        src/core/dao/bookmarkgroupdao.h
-        src/core/dao/userdao.h
-        src/core/dao/userdao.cpp
-        src/core/bookmark/bookmarkmodel.h
-        src/core/bookmark/bookmarkmodel.cpp
-        src/ui/bookmark/bookmarkitem.h
-        src/ui/bookmark/bookmarkitem.cpp
-        src/ui/bookmark/bookmarkwidget.h
-        src/ui/bookmark/bookmarkwidget.cpp
-        src/core/user/usermodel.h
-        src/core/user/usermodel.cpp
-        src/core/downloads/downloaditem.h
-        src/core/downloads/downloaditem.cpp
-        src/core/downloads/downloadmanager.h
-        src/core/downloads/downloadmanager.cpp
-        src/core/dao/connections.h
-        src/core/dao/connections.cpp
+        src/lib/tabwidget/tabwidget.cpp
+        src/lib/tabwidget/tabwidget.h
+        src/lib/tabwidget/tabwidget.ui
 
-        src/core/third_party/ad-block/ad_block_client.cc
-        src/core/third_party/ad-block/ad_block_client.h
-        src/core/third_party/ad-block/bad_fingerprint.h
-        src/core/third_party/ad-block/bad_fingerprints.h
-        src/core/third_party/ad-block/base.h
-        src/core/third_party/ad-block/BloomFilter.cpp
-        src/core/third_party/ad-block/BloomFilter.h
-        src/core/third_party/ad-block/context_domain.cc
-        src/core/third_party/ad-block/context_domain.h
-        src/core/third_party/ad-block/cosmetic_filter.cc
-        src/core/third_party/ad-block/cosmetic_filter.h
-        src/core/third_party/ad-block/filter.cc
-        src/core/third_party/ad-block/filter.h
-        src/core/third_party/ad-block/hashFn.cc
-        src/core/third_party/ad-block/hashFn.h
-        src/core/third_party/ad-block/hash_set.h
-        src/core/third_party/ad-block/no_fingerprint_domain.cc
-        src/core/third_party/ad-block/no_fingerprint_domain.h
-        src/core/third_party/ad-block/protocol.cc
-        src/core/third_party/ad-block/protocol.h
+        src/browser.cpp
+        src/browser.h
+        src/mainapplication.cpp
+        src/mainapplication.h
+        
+        src/lib/history/historyitem.cpp
+        src/lib/history/historyitem.h
+        src/lib/history/history.cpp
+        src/lib/history/history.h
+        src/lib/history/historymodel.h
+        src/lib/history/historymodel.cpp
+        src/lib/history/historydao.h
+        src/lib/history/historydao.cpp
+        src/lib/history/historybar.h
+        src/lib/history/historybar.cpp
+        src/lib/history/historybar.ui
+        src/lib/popupmenu/popupmenu.h
+        src/lib/popupmenu/popupmenu.cpp
+        src/lib/history/historywidget.h
+        src/lib/history/historywidget.cpp
+        src/lib/history/historywidget.ui
+        src/lib/webengine/webview.cpp
+        src/lib/webengine/webview.h
+        src/lib/dao/basedao.h
+        src/lib/dao/basedao.cpp
+        src/lib/dao/bookmarkdao.cpp
+        src/lib/dao/bookmarkdao.h
+        src/lib/dao/bookmarkgroupdao.cpp
+        src/lib/dao/bookmarkgroupdao.h
+        src/lib/dao/userdao.h
+        src/lib/dao/userdao.cpp
+        src/lib/bookmark/bookmarkmodel.h
+        src/lib/bookmark/bookmarkmodel.cpp
+        src/lib/bookmark/bookmarkitem.h
+        src/lib/bookmark/bookmarkitem.cpp
+        src/lib/bookmark/bookmarkwidget.h
+        src/lib/bookmark/bookmarkwidget.cpp
+        src/lib/user/usermodel.h
+        src/lib/user/usermodel.cpp
+        src/lib/downloads/downloaditem.h
+        src/lib/downloads/downloaditem.cpp
+        src/lib/downloads/downloadmanager.h
+        src/lib/downloads/downloadmanager.cpp
+        src/lib/dao/connections.h
+        src/lib/dao/connections.cpp
+        
+        src/lib/third_party/ad-block/ad_block_client.cc
+        src/lib/third_party/ad-block/ad_block_client.h
+        src/lib/third_party/ad-block/bad_fingerprint.h
+        src/lib/third_party/ad-block/bad_fingerprints.h
+        src/lib/third_party/ad-block/base.h
+        src/lib/third_party/ad-block/BloomFilter.cpp
+        src/lib/third_party/ad-block/BloomFilter.h
+        src/lib/third_party/ad-block/context_domain.cc
+        src/lib/third_party/ad-block/context_domain.h
+		src/lib/third_party/ad-block/cosmetic_filter.cc
+        src/lib/third_party/ad-block/cosmetic_filter.h
+        src/lib/third_party/ad-block/filter.cc
+        src/lib/third_party/ad-block/filter.h
+        src/lib/third_party/ad-block/hashFn.cc
+        src/lib/third_party/ad-block/hashFn.h
+        src/lib/third_party/ad-block/hash_set.h
+        src/lib/third_party/ad-block/no_fingerprint_domain.cc
+        src/lib/third_party/ad-block/no_fingerprint_domain.h
+        src/lib/third_party/ad-block/protocol.cc
+        src/lib/third_party/ad-block/protocol.h
 
-        src/core/adblock/adblock_request_interceptor.cpp
-        src/core/adblock/adblock_request_interceptor.h
-        src/core/adblock/default_request_interceptor.cpp
-        src/core/adblock/default_request_interceptor.h
+        src/lib/adblock/adblock_request_interceptor.cpp
+        src/lib/adblock/adblock_request_interceptor.h
+        src/lib/adblock/default_request_interceptor.cpp
+        src/lib/adblock/default_request_interceptor.h
 
 #        qtsingleapplication.cpp
 #        qtsingleapplication.h
 #        mainmenu.cpp
 #        mainmenu.h
 #        mainmenu.ui
-        src/ui/icon.qrc
-        src/core/taskscheduler/databasetaskscheduler.h
-        src/core/taskscheduler/databasetaskscheduler.cpp
-        src/core/setting/Config.h
-        src/core/setting/Config.cpp
-        src/core/setting/homepage.h
-        src/core/setting/homepage.cpp
-
-        src/core/service/service.h
-#        tests/service_test.cpp
+        src/icon.qrc
+        src/lib/taskscheduler/databasetaskscheduler.h
+        src/lib/taskscheduler/databasetaskscheduler.cpp
+        src/lib/setting/Config.h
+        src/lib/setting/Config.cpp
+        src/lib/setting/homepage.h
+        src/lib/setting/homepage.cpp
+        ${TS_FILES}
         )
 
 

@@ -4,7 +4,7 @@
 #include <QLocale>
 #include <QTranslator>
 
-//test core used by cuddly
+//test lib used by cuddly
 #include "Core/historymodel.h"
 #include <iostream>
 #include <QObject>
