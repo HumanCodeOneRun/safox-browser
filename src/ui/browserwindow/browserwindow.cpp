@@ -107,9 +107,14 @@ void BrowserWindow::on_closeBtn_clicked()
 
 void BrowserWindow::on_minBtn_clicked()
 {
-
-    this->scale = this->scale == 1.0 ? 0.5 : 1.0;
-    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
+    if(this->scale==0.5){
+        this->showNormal();
+        this->scale = 1;
+    }else{
+        this->scale = 0.5;
+        this->showFullScreen();
+    }
+//    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 }
 
 void BrowserWindow::on_hidBtn_clicked()
