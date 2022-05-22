@@ -17,6 +17,10 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     , ui(new Ui::BrowserWindow)
     ,my_tab(new tabwidget(this))
 {
+
+
+
+
     m_taskScheduler = new DatabaseTaskScheduler();
     ui->setupUi(this);
 
@@ -38,25 +42,19 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     //设置背景颜色
     this->setStyleSheet("QMainWindow{background-color: rgba(46, 50, 53, 100)}");
 
-    /* tabwidget */
-/*
-    QVBoxLayout * vbox = new QVBoxLayout;
-    vbox->addWidget(my_tab);
 
-    this->setLayout(vbox);*/
-    my_tab->move(0, 100);
-    my_tab->resize(1920, 980);
-    my_tab->setTabPosition(QTabWidget::North);
-    my_tab->setTabShape(QTabWidget::Triangular);
-    my_tab->setTabsClosable(true);
-    my_tab->createTab();
-    QUrl url=QStringLiteral("https://www.bing.com");
-    this->returnTab()->setUrl(url);
+    QWidget *centralwidget=new QWidget(this);
+    QVBoxLayout *layout=new QVBoxLayout;
+    layout->setContentsMargins(0, 0, 0, 0);
+    centralwidget->setLayout(layout);
+    centralwidget->setGeometry(0,100,1920,980);
 
 
     /* toolbar */
-    //Toolbar *tb=my_tab->toolbar;
+
+
     this->tb= new Toolbar(this,0,50,1920,50);
+    layout->addWidget(tb);
 
     /* 关闭按钮 */
     QToolButton* closeBtn = new QToolButton(this);
@@ -93,6 +91,18 @@ BrowserWindow::BrowserWindow(QWidget *parent)
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
 
+    /*tabwidget*/
+
+    layout->addWidget(my_tab);
+
+    my_tab->move(0, 100);
+    my_tab->resize(1920, 980);
+    my_tab->setTabPosition(QTabWidget::North);
+    my_tab->setTabShape(QTabWidget::Triangular);
+    my_tab->setTabsClosable(true);
+    my_tab->createTab();
+    QUrl url=QStringLiteral("https://www.bing.com");
+    this->returnTab()->setUrl(url);
 
 
 }
