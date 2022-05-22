@@ -46,8 +46,9 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     QWidget *centralwidget=new QWidget(this);
     QVBoxLayout *layout=new QVBoxLayout;
     layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
     centralwidget->setLayout(layout);
-    centralwidget->setGeometry(0,100,1920,980);
+    centralwidget->setGeometry(0,100,1535,770);
 
 
     /* toolbar */
@@ -96,13 +97,24 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     layout->addWidget(my_tab);
 
     my_tab->move(0, 100);
-    my_tab->resize(1920, 980);
+    my_tab->setGeometry(0,100,1535,770);
     my_tab->setTabPosition(QTabWidget::North);
     my_tab->setTabShape(QTabWidget::Triangular);
     my_tab->setTabsClosable(true);
     my_tab->createTab();
     QUrl url=QStringLiteral("https://www.bing.com");
     this->returnTab()->setUrl(url);
+
+
+    connect(tb->addBtn,&QToolButton::clicked,my_tab,&tabwidget::createTab);
+    connect(tb->urlBar, &QLineEdit::returnPressed, [this]() {
+        my_tab->setUrl(QUrl::fromUserInput(tb->urlBar->text()));
+    });
+    connect(my_tab, &tabwidget::urlChanged, [this](const QUrl &url) {
+        tb->urlBar->setText(url.toDisplayString());
+    });
+
+
 
 
 }
