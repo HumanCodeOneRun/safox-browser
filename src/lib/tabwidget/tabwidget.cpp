@@ -30,7 +30,7 @@ tabwidget::tabwidget(QWidget *parent,QWebEngineProfile *Profile) :
 
 
     setElideMode(Qt::ElideRight);
-    //此属性控制在没有足够空间显示给定选项卡栏大小时如何省略项目
+    //此属性控制在没有足够空间显示给定选项卡栏大小时省略项目
 
 }
 

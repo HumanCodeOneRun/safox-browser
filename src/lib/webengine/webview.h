@@ -20,6 +20,7 @@ class WebView: public QWebEngineView {
 
     QIcon favIcon()const;
     bool isWebActionEnabled(QWebEnginePage::WebAction webAction) const;
+    QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;
 
     public slots:
     void changeTitle(const QString& newTitle);
