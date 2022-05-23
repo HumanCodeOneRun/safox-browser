@@ -6,9 +6,13 @@
 #include <QWebEnginePage>
 #include <QLineEdit>
 #include <QIcon>
+#include <QMenu>
 //#include <toolbar.h>
+#include <bookmarkwidget.h>
 
 class QUrl;
+class BrowserWindow;
+
 
 namespace Ui {
 class tabwidget;
@@ -26,7 +30,7 @@ public:
     ~tabwidget();
     //Toolbar* toolbar;
 
-
+    void setParentWindow(BrowserWindow *ParentWindow);
     WebView *currentWebView() const;
 
 public slots:
@@ -41,6 +45,14 @@ public slots:
 
 private slots:
     void handleCurrentChanged(int index);
+    void handleContextMenuRequested(const QPoint &pos);
+    void reloadTab(int index);
+    void cloneTab(int index);
+    void closeOtherTabs(int index);
+    void reloadAllTabs();
+    void addbookmark(int index);
+
+
 
 
 signals:
@@ -55,7 +67,7 @@ signals:
 
 
 private:
-
+    BrowserWindow *BrowserPoint;
     WebView *webView(int index) const;
     void setupView(WebView *webView);
     Ui::tabwidget *ui;

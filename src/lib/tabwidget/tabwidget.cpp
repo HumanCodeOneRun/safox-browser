@@ -1,6 +1,7 @@
 #include "tabwidget.h"
 #include "ui_tabwidget.h"
 #include "webview.h"
+#include "browserwindow.h"
 #include <QTabBar>
 
 tabwidget::tabwidget(QWidget *parent,QWebEngineProfile *Profile) :
@@ -15,8 +16,8 @@ tabwidget::tabwidget(QWidget *parent,QWebEngineProfile *Profile) :
     Bar->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
     //关闭当前选项卡时，将previous选项卡设为当前选项卡
 
-    //Bar->setContextMenuPolicy(Qt::CustomContextMenu);
-    //connect(Bar, &QTabBar::customContextMenuRequested, this, &tabwidget::handleContextMenuRequested);
+    Bar->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(Bar, &QTabBar::customContextMenuRequested, this, &tabwidget::handleContextMenuRequested);
     //设置右键菜单
     connect(Bar, &QTabBar::tabCloseRequested, this, &tabwidget::closeTab);
     connect(this, &QTabWidget::currentChanged, this, &tabwidget::handleCurrentChanged);
@@ -38,6 +39,7 @@ tabwidget::~tabwidget()
 {
     delete ui;
 }
+
 
 void tabwidget::setupView(WebView *webView)
 {
@@ -189,3 +191,75 @@ void tabwidget::triggerWebPageAction(QWebEnginePage::WebAction action)
         webView->setFocus();
     }
 }
+
+void tabwidget::reloadTab(int index){
+    int i=0;
+    for (i = 0; i < count(); ++i)
+        webView(i)->reload();
+};
+void tabwidget::cloneTab(int index){
+    if (WebView *view = webView(index)) {
+        WebView *tab = createTab();
+        tab->setUrl(view->getUrl());
+    }
+};
+void tabwidget::closeOtherTabs(int index){
+    int i=0;
+    for (i = count() - 1; i > index; --i)
+        closeTab(i);
+    for (i = index - 1; i >= 0; --i)
+        closeTab(i);
+};
+void tabwidget::reloadAllTabs(){
+    for (int i = 0; i < count(); ++i)
+        webView(i)->reload();
+};
+void tabwidget::addbookmark(int index){
+    WebView * view=webView(index);
+    BrowserPoint->bookmarkTest->bookmark->addBookmark(BrowserPoint->Browser::userid,view->getTitle(),view->getUrl(),"默认收藏夹",view->getIconUrl());
+
+};
+void tabwidget::setParentWindow(BrowserWindow *ParentWindow)
+{
+    BrowserPoint=ParentWindow;
+};
+void tabwidget::handleContextMenuRequested(const QPoint &pos)
+{
+
+    QMenu menu;
+    int index=-1;
+    menu.addAction(tr("新增标签页"), this, &tabwidget::createTab, QKeySequence::AddTab);
+    index=tabBar()->tabAt(pos);
+    if(index !=-1){
+        QAction *action = menu.addAction(tr("刷新标签页"));
+        action->setShortcut(QKeySequence::Refresh);
+        connect(action, &QAction::triggered, this, [this,index]() {
+            reloadTab(index);
+        });
+        action = menu.addAction(tr("复制标签页"));
+        connect(action, &QAction::triggered, this, [this,index]() {
+            cloneTab(index);
+        });
+        menu.addSeparator();
+        action = menu.addAction(tr("关闭标签页"));
+        action->setShortcut(QKeySequence::Close);
+        connect(action, &QAction::triggered, this, [this,index]() {
+            closeTab(index);
+        });
+        action = menu.addAction(tr("关闭其他标签页"));
+        connect(action, &QAction::triggered, this, [this,index]() {
+            closeOtherTabs(index);
+        });
+        menu.addSeparator();
+        action = menu.addAction(tr("添加书签"));
+        connect(action, &QAction::triggered, this, [this,index]() {
+            addbookmark(index);
+        });
+        menu.addSeparator();
+    }else{
+        menu.addSeparator();
+    }
+    menu.addAction(tr("重新加载所有标签页"), this, &tabwidget::reloadAllTabs);
+    menu.exec(QCursor::pos());
+
+};

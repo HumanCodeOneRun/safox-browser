@@ -54,7 +54,7 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     /* toolbar */
 
 
-    this->tb= new Toolbar(this,0,50,1920,50);
+    this->tb= new Toolbar(this,0,50,1535,770);
     layout->addWidget(tb);
 
     /* 关闭按钮 */
@@ -95,7 +95,7 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     /*tabwidget*/
 
     layout->addWidget(my_tab);
-
+    my_tab->setParentWindow(this);
     my_tab->move(0, 100);
     my_tab->setGeometry(0,100,1535,770);
     my_tab->setTabPosition(QTabWidget::North);
@@ -113,6 +113,7 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     connect(my_tab, &tabwidget::urlChanged, [this](const QUrl &url) {
         tb->urlBar->setText(url.toDisplayString());
     });
+
 
 
 

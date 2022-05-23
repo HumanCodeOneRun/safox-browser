@@ -46,7 +46,6 @@ public:
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();
-
     tabwidget *returnTab() const;
 
 private slots:
