@@ -20,7 +20,8 @@
 #include <QVector>
 #include <QVariant>
 #include "bookmarkmodel.h"
-#include "src/ui/bookmark/bookmarkitem.h"
+#include "bookmarkitem.h"
+#include "bookmarkbox.h"
 #include "databasetaskscheduler.h"
 
 namespace Ui {

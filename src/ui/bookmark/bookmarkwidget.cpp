@@ -35,15 +35,23 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
-//    this->bookmark->addBookmarkGroup(root->userid,"firstGroup",QUrl("www.testIcon.com"));
-//    this->userBookmark = this->bookmark->initGetGroups(root->userid);
-//    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
+//    this->bookmark->addBookmarkGroup(root->Browser::userid,"firstGroup",QUrl("www.testIcon.com"));
+//    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+//    this->bookmark->addBookmark(root->Browser::userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
 //    qDebug("vector:");
-//    qDebug()<<this->userBookmark;
+    /*--------遍历QList：------------------*/
+//        QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
+//        while(i!=this->userBookmark.end()){
+//            qDebug()<<*i;
+//            i++;
+//        }
+    /*-------------------------------------*/
+
     this->scrollView = new QScrollArea(this);
-    this->scrollView->setGeometry(0,100,width,height);
-    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:transparent;}");
+    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:red;}");
+//    this->scrollView->setLayout()
     BookmarkItem temp(this->scrollView,20,0,":/icon/../image/setting.png","test_title","test_description");
+
 
 
 }
