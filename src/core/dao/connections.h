@@ -5,7 +5,7 @@
 #include <fstream>
 #include <mutex>
 
-#define DEFAULT_DB_PATH "./.folktell.db"
+#define DEFAULT_DB_PATH "./.safox.db"
 class DbConnection{
 
 public:

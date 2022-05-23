@@ -4,8 +4,8 @@
 //
 
 
-#ifndef FOLKTELL_DATABASETASKSCHEDULER_H
-#define FOLKTELL_DATABASETASKSCHEDULER_H
+#ifndef safox_DATABASETASKSCHEDULER_H
+#define safox_DATABASETASKSCHEDULER_H
 
 #include <condition_variable>
 #include <deque>
@@ -113,4 +113,4 @@ auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
 
 
 
-#endif //FOLKTELL_DATABASETASKSCHEDULER_H
+#endif //safox_DATABASETASKSCHEDULER_H

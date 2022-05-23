@@ -2,8 +2,8 @@
 // Created by Howell Young on 2022/5/17.
 //
 
-#ifndef FOLKTELL_SERVICE_H
-#define FOLKTELL_SERVICE_H
+#ifndef safox_SERVICE_H
+#define safox_SERVICE_H
 
 #include <string>
 //#include <QString>
@@ -73,4 +73,4 @@ private:
 };
 
 using MyServiceLocator = ServiceLocator<std::string , QObject>;
-#endif //FOLKTELL_SERVICE_H
+#endif //safox_SERVICE_H

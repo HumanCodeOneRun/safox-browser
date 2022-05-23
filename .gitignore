@@ -75,7 +75,7 @@ CMakeFiles
 CmakeCache.txt
 *.txt.user
 *.cmake
-FolkTell_autogen
+safox_autogen
 .lupdate
 *.prev
 *.user
@@ -89,7 +89,7 @@ Testing
 #macos file
 *.DS_Store
 .DS_Store
-.folktell.db-journal
+.safox.db-journal
 build
 .idea
 cmake-build-debug
