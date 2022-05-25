@@ -159,7 +159,7 @@ m_taskScheduler(_scheduler)
     this->gitem = std::make_unique<BookmarkGroupItem>(this->m_taskScheduler);
     this->item = std::make_unique<BookmarkItem>(this->m_taskScheduler);
 
-    create_table();
+    //create_table();
 }
 
 void BookmarkModel::create_table(){

@@ -2,7 +2,7 @@
 
 BookmarkDao::BookmarkDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const QString& _table_name )
 : BaseDao(_scheduler, _table_name){
-   //createTable();
+   createTable();
 }
 
 bool BookmarkDao::createTable(){
@@ -17,6 +17,7 @@ bool BookmarkDao::createTable(){
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
 

@@ -2,7 +2,7 @@
 
 BookmarkGroupDao::BookmarkGroupDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler, const QString& _table_name )
 : BaseDao(_scheduler, _table_name){
-    //createTable();
+    createTable();
 }
 
 bool BookmarkGroupDao::createTable(){
@@ -17,6 +17,7 @@ bool BookmarkGroupDao::createTable(){
         
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
         if(!ok){
@@ -48,6 +49,8 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndId(const int& uid, const int& i
         
         if(!db.commit()){
             qDebug() << "[error] fail to commit" << db.lastError().text();
+            db.rollback();
+            return ret;
         }
 
         while(query.next()){

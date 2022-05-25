@@ -76,7 +76,7 @@ UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
         m_taskScheduler(scheduler) {
         this->item = std::make_unique<UserItem>(scheduler);
 
-        create_table();
+        //create_table();
 }
 
 void UserModel::create_table(){
