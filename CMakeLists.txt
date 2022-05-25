@@ -85,10 +85,6 @@ set(PROJECT_SOURCES
         src/ui/bookmark/bookmarkitem.cpp
         src/ui/bookmark/bookmarkwidget.h
         src/ui/bookmark/bookmarkwidget.cpp
-        src/ui/bookmark/bookmarkbox.h
-        src/ui/bookmark/bookmarkbox.cpp
-        src/ui/bookmark/bookmarkboxgroup.h
-        src/ui/bookmark/bookmarkboxgroup.cpp
         src/ui/user/accountwidget.h
         src/ui/user/accountwidget.cpp
         src/ui/user/accountwidget.ui
