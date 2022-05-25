@@ -270,7 +270,7 @@ bool UserModel::queryUserPassword(const int &id, const QString &password) {
 bool UserModel::queryUserPassword(const QString &name, const QString &password) {
     std::promise<bool> pm;
     auto future = pm.get_future();
-    m_taskScheduler->post([this, &name, &password]() {
+    m_taskScheduler->post([this,&pm, &name, &password]() {
         int has = !this->item->getItemByNamePassword(name, password).isEmpty();
         int ret = has ? 1 : 0;
         pm.set_value(ret);
@@ -301,7 +301,7 @@ bool UserModel::deleteRegisterUser(const int &id) {
 bool UserModel::deleteRegisterUser(const QString &name) {
     std::promise<bool> pm;
     auto future = pm.get_future();
-    m_taskScheduler->post([this, &name]() {
+    m_taskScheduler->post([this,&pm, &name]() {
         this->item->getItemByName(name);
         int id = this->item->getId();
         pm.set_value(this->item->deleteUser(id));
@@ -311,7 +311,7 @@ bool UserModel::deleteRegisterUser(const QString &name) {
 int UserModel::getUserIdByName(const QString &name){
     std::promise<int> pm;
     auto future = pm.get_future();
-    m_taskScheduler->post([this, &name]() {
+    m_taskScheduler->post([this,&pm, &name]() {
         this->item->getItemByName(name);
         int id = this->item->getId();
         pm.set_value(id)
