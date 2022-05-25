@@ -27,6 +27,7 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
     
 // add测试
     m_user->addRegisterUser("kunkuntest","kunkunpassword");
+    m_user->addRegisterUser("kunkuntest","kunkunpassword");
 
     bool isExist = m_user->queryUserName("kunkuntest");
     qDebug()<<"test测试："<<isExist;
