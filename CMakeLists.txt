@@ -145,6 +145,9 @@ set(PROJECT_SOURCES
         src/core/setting/homepage.cpp
 
         src/core/service/service.h
+
+        src/core/icon/iconmanager.h
+        src/core/icon/iconmanager.cpp
         )
 
 
