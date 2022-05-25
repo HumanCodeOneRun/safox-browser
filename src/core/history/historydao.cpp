@@ -21,8 +21,8 @@ bool HistoryDao::createTable() {
 }
 
 bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, const QUrl& url, const QUrl& iconUrl, const qint64& timestamp) {
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "insert or replace into " + this->getTableName() + " (userid, urlid, title, url, iconUrl, timestamp) values (:userid, :urlid, :title, :url, :iconUrl, :timestamp)";
     
     if(db.transaction()){
@@ -53,8 +53,8 @@ bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, con
 }
 
 bool HistoryDao::queryByUserid() {
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "select * from " + this->getTableName() + " where userid = " + QString::number(this->userid) ;
 
     if(db.transaction()){
@@ -77,8 +77,8 @@ bool HistoryDao::queryByUserid() {
 }
 
 QList<qint64> HistoryDao::queryDayTimestamp() {
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "select timestamp from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url = \"todayItem\" order by timestamp asc";
     QList<qint64> ret;
 
@@ -106,8 +106,8 @@ QList<qint64> HistoryDao::queryDayTimestamp() {
 }
 
 QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "select urlid, title, url, iconUrl, timestamp  from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url != \"todayItem\" order by timestamp asc" ;
     QList<HistoryEntry> ret;
 
@@ -143,8 +143,8 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
 }
 
 bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "delete from " + this->getTableName() + " where userid = :userid and urlid = :urlid and url = :url";
 
     if(db.transaction()){
