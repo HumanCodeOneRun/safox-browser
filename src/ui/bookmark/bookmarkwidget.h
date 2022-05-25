@@ -3,7 +3,7 @@
  * @Date: 2022-05-14 22:01:55
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @LastEditTime: 2022-05-17 17:56:24
- * @FilePath: \FolkTell\src\core\bookmark\bookmarkwidget.h
+ * @FilePath: \safox\src\core\bookmark\bookmarkwidget.h
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #ifndef BOOKMARKWIDGET_H
@@ -14,13 +14,14 @@
 #include <QLabel>
 #include <QIcon>
 #include <QAction>
-#include <QGroupBox>
+#include <QScrollArea>
 #include <QStyleOption>
 #include <QPainter>
 #include <QVector>
 #include <QVariant>
 #include "bookmarkmodel.h"
-#include "src/ui/bookmark/bookmarkitem.h"
+#include "bookmarkitem.h"
+#include "bookmarkbox.h"
 #include "databasetaskscheduler.h"
 
 namespace Ui {
@@ -36,6 +37,7 @@ public:
     explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int width,height;
     BookmarkModel* bookmark;
+    QScrollArea* scrollView;
     QVector<QVector<QVariant>> userBookmark;
     ~BookmarkWidget();
 

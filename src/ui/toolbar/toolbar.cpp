@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-05-17 16:26:01
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \FolkTell\FolkTell\src\toolbar.cpp
+ * @FilePath: \safox\safox\src\toolbar.cpp
  */
 #include "toolbar.h"
 
@@ -24,6 +24,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     backBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon back = QIcon(":/icon/image/arrow-left-allow.png");
     backBtn->setIcon(back);
+    connect(backBtn,&QToolButton::clicked,this,&Toolbar::back_page);
 
     /* 前进按钮 */
     goBtn = new QToolButton(parent);
@@ -31,6 +32,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     goBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon go = QIcon(":/icon/image/arrow-right-allow.png");
     goBtn->setIcon(go);
+    connect(goBtn,&QToolButton::clicked,this,&Toolbar::front_page);
 
     /* 书签按钮 */
     bookmarkerBtn = new QToolButton(parent);
@@ -46,6 +48,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     homeBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon homepage = QIcon(":/icon/image/homepage.png");
     homeBtn->setIcon(homepage);
+    connect(homeBtn,&QToolButton::clicked,this,&Toolbar::home_page);
 
     /* 下载按钮 */
     downloadBtn = new QToolButton(parent);
@@ -53,6 +56,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     downloadBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon download = QIcon(":/icon/image/download.png");
     downloadBtn->setIcon(download);
+    connect(downloadBtn,&QToolButton::clicked,this,&Toolbar::on_downloadBtn_clicked);
 
     /* 历史按钮 */
     historyBtn = new QToolButton(parent);
@@ -69,6 +73,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     accountBtn->setStyleSheet("QToolButton{background-color:rgba(96, 100, 101, 100);border-radius:8px;}");
     QIcon account = QIcon(":/icon/image/account.png");
     accountBtn->setIcon(account);
+    connect(accountBtn,&QToolButton::clicked,this,&Toolbar::on_accountBtn_clicked);
 
 
     /* 设置按钮 */
@@ -93,7 +98,6 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     settingMenu->addAction(setting6);
     settingMenu->addSeparator();
     settingMenu->setWindowFlags(settingMenu->windowFlags()|Qt::FramelessWindowHint);
-//    settingMenu->setAttribute(Qt::WA_TranslucentBackground);
     settingBtn->setMenu(settingMenu);
     settingBtn->setPopupMode(QToolButton::InstantPopup);
     connect(settingBtn,&QToolButton::clicked,this,&Toolbar::on_settingBtn_clicked);
@@ -114,6 +118,8 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QAction * pActLeft = new QAction(this);
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     urlBar->addAction(pActLeft,QLineEdit::LeadingPosition);
+    connect(urlBar,&QLineEdit::editingFinished,this,&Toolbar::start_search);
+    connect(pActLeft,&QAction::triggered,this,&Toolbar::start_search);
 }
 
 void Toolbar::paintEvent(QPaintEvent *event)
@@ -136,11 +142,36 @@ void Toolbar::on_historyBtn_clicked(){
 }
 
 void Toolbar::on_bookmarkerBtn_clicked(){
-    qDebug("click");
     emit on_bookmarkerBtn_passSignal();
 }
 
 void Toolbar::on_settingBtn_clicked(){
-    qDebug("click setting");
 
+}
+
+void Toolbar::on_accountBtn_clicked(){
+    emit on_accountBtn_passSignal();
+}
+
+void Toolbar::on_downloadBtn_clicked(){
+    emit on_downloadBtn_passSignal();
+}
+
+void Toolbar::start_search(){
+    qDebug("search");
+    if(this->urlBar->hasFocus()){
+        // todo: 触发搜索
+    }
+}
+
+void Toolbar::home_page(){
+    // todo: 前往首页
+}
+
+void Toolbar::back_page(){
+    // todo: 返回上一个页面
+}
+
+void Toolbar::front_page(){
+    // todo: 前往下一个页面
 }

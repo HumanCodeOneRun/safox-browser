@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-05-17 16:23:22
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \FolkTell\FolkTell\src\browserwindow.cpp
+ * @FilePath: \safox\safox\src\browserwindow.cpp
  */
 #include "browserwindow.h"
 #include "./ui_browserwindow.h"
@@ -20,13 +20,13 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     ui->setupUi(this);
 
     /* 隐藏默认标题栏 */
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint|Qt::WindowSystemMenuHint|Qt::WindowMinimizeButtonHint);
 
     //todo: 获取屏幕分辨率并赋值给curHeight,curWidth，默认1920*1080
 
     //...
 
-    this->curHeight=1920,this->curWidth=1080;
+    this->curHeight=1920,this->curWidth=1050;
     this->scale = 1.0;
     QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 
@@ -34,7 +34,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
 
     //设置背景颜色
-    this->setStyleSheet("QMainWindow{background-color: rgba(46, 50, 53, 100)}");
+//    this->setStyleSheet("QMainWindow{background-color: rgba(46, 50, 53, 100)}");
 
     /* toolbar */
     this->tb = new Toolbar(this,0,50,1920,50);
@@ -61,19 +61,34 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     // 初始化历史界面并隐藏
     qDebug()<<"[test] browserwindown slot1 init";
     this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
-    qDebug()<<"[test] browserwindown slot2 init";
     this->historyTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
     }
 
     // 初始化书签界面并隐藏
+    qDebug()<<"[test] browserwindown slot2 init";
     this->bookmarkTest = new BookmarkWidget(this,0,100,300,980,this);
     this->bookmarkTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
 
+    // 初始化账户界面并隐藏
+    qDebug()<<"[test] browserwindown slot3 init";
+    this->accountTest = new AccountWidget(this,tb->accountBtn);
+    this->accountTest->hide();
+    if(tb){
+       connect(tb,&Toolbar::on_accountBtn_passSignal,this,&BrowserWindow::accept_account_signal);
+    }
+
+    // 初始化下载界面并隐藏
+    qDebug()<<"[test] browserwindown slot4 init";
+    this->downloadTest = new DownloadWidget(this,tb->downloadBtn);
+    this->downloadTest->hide();
+    if(tb){
+       connect(tb,&Toolbar::on_downloadBtn_passSignal,this,&BrowserWindow::accept_download_signal);
+    }
 
 }
 
@@ -92,13 +107,19 @@ void BrowserWindow::on_closeBtn_clicked()
 
 void BrowserWindow::on_minBtn_clicked()
 {
-    this->scale = this->scale == 1.0 ? 0.5 : 1.0;
-    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
+    if(this->scale==0.5){
+        this->showNormal();
+        this->scale = 1;
+    }else{
+        this->scale = 0.5;
+        this->showFullScreen();
+    }
+//    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
 }
 
 void BrowserWindow::on_hidBtn_clicked()
 {
-    this->hide();
+    this->showMinimized();
 }
 
 void BrowserWindow::CreateSystemTrayIcon(){
@@ -122,9 +143,23 @@ void BrowserWindow::CreateSystemTrayIcon(){
     trayMenu->addAction(showAction);
     trayMenu->addAction(exitAction );
     QSystemTrayIcon* trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/icon/image/download.png"));    //设置托盘图标
-    trayIcon->setContextMenu(trayMenu);                                     //设置菜单
+    trayIcon->setIcon(QIcon(":/icon/image/browser.png"));//设置托盘图标
+    trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
+}
+
+void BrowserWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QStyleOption opt;
+    opt.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+
+    /* 绘制historyWidget背景 */
+    p.setPen(Qt::NoPen);
+    p.setBrush(QColor(46, 50, 53, 100));
+    p.drawRect(0,0,this->width(),this->height());
 }
 
 
@@ -167,20 +202,49 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event)
 }
 
 void BrowserWindow::accept_history_signal(){
+//    qDebug("receive history signal");
     if(this->historyTest->isVisible()){
         this->historyTest->hide();
     }else{
         this->historyTest->show();
+        this->bookmarkTest->hide();
+        this->accountTest->hide();
+        this->downloadTest->hide();
     }
 }
 
 void BrowserWindow::accept_bookmarker_signal(){
-    qDebug("receive signal");
+//    qDebug("receive bookmarker signal");
     if(this->bookmarkTest->isVisible()){
         this->bookmarkTest->hide();
     }else{
         this->bookmarkTest->show();
+        this->historyTest->hide();
+        this->accountTest->hide();
+        this->downloadTest->hide();
     }
 }
 
+void BrowserWindow::accept_account_signal(){
+ //    qDebug("receive account signal");
+    if(this->accountTest->isVisible()){
+        this->accountTest->hide();
+    }else{
+        this->accountTest->show();
+        this->bookmarkTest->hide();
+        this->historyTest->hide();
+        this->downloadTest->hide();
+    }
+}
 
+void BrowserWindow::accept_download_signal(){
+ //    qDebug("receive download signal");
+    if(this->downloadTest->isVisible()){
+        this->downloadTest->hide();
+    }else{
+        this->downloadTest->show();
+        this->bookmarkTest->hide();
+        this->historyTest->hide();
+        this->accountTest->hide();
+    }
+}

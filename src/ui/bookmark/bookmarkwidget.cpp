@@ -3,7 +3,7 @@
  * @Date: 2022-05-14 22:01:55
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @LastEditTime: 2022-05-17 16:24:30
- * @FilePath: \FolkTell\src\core\bookmark\bookmarkwidget.cpp
+ * @FilePath: \safox\src\core\bookmark\bookmarkwidget.cpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #include "src/ui/bookmark/bookmarkwidget.h"
@@ -35,12 +35,23 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
-//    this->bookmark->addBookmarkGroup(root->userid,"firstGroup",QUrl("www.testIcon.com"));
-//    this->userBookmark = this->bookmark->initGetGroups(root->userid);
-//    this->bookmark->addBookmark(root->userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
+//    this->bookmark->addBookmarkGroup(root->Browser::userid,"firstGroup",QUrl("www.testIcon.com"));
+//    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+//    this->bookmark->addBookmark(root->Browser::userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
 //    qDebug("vector:");
-//    qDebug()<<this->userBookmark;
-    BookmarkItem temp(this,20,100,":/icon/../image/setting.png","test_title","test_description");
+    /*--------遍历QList：------------------*/
+//        QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
+//        while(i!=this->userBookmark.end()){
+//            qDebug()<<*i;
+//            i++;
+//        }
+    /*-------------------------------------*/
+
+    this->scrollView = new QScrollArea(this);
+    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:red;}");
+//    this->scrollView->setLayout()
+    BookmarkItem temp(this->scrollView,20,0,":/icon/../image/setting.png","test_title","test_description");
+
 
 
 }

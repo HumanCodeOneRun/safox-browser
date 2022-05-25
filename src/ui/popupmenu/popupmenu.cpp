@@ -11,3 +11,4 @@ void PopupMenu::showEvent(QShowEvent* event)
     QRect geo = btn->geometry();
     this->move(p.x()+geo.width()-this->geometry().width()/2, p.y());
 }
+

@@ -31,7 +31,7 @@ ui_*.h
 qrc_*.cpp
 Thumbs.db
 *.res
-*.rc
+!*.rc
 /.qmake.cache
 /.qmake.stash
 
@@ -75,7 +75,7 @@ CMakeFiles
 CmakeCache.txt
 *.txt.user
 *.cmake
-FolkTell_autogen
+safox_autogen
 .lupdate
 *.prev
 *.user
@@ -86,10 +86,10 @@ build
 Testing
 *.db
 
-//macos file
+#macos file
 *.DS_Store
 .DS_Store
-.folktell.db-journal
+.safox.db-journal
 build
 .idea
 cmake-build-debug
