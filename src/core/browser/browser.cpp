@@ -20,6 +20,13 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         m_downloadMgr(serviceLocator.getServiceAs<DownloadManager>("DownloadManager")),
         m_adblock(serviceLocator.getServiceAs<AdblockRequestInterceptor>("AdblockRequestInterceptor")) {
 
+//    query测试
+    bool isExist = m_user->queryUserName("kunkun33333");
+    qDebug()<<"query测试："<<isExist;
+//    add测试
+    m_user->addRegisterUser("kunkuntest","kunkunpassword");
+
+
     //测试添加历史用
     WebView *webview = new WebView();
     webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));

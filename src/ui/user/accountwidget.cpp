@@ -40,6 +40,7 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
     this->registerBtn->setGeometry(156,284,88,32);
     this->registerBtn->setStyleSheet("QPushButton{background-color:rgba(0,52,181,100);border-radius:5px;color:white;}");
     this->registerBtn->setText("注册");
+    connect(this->registerBtn,&QPushButton::clicked,this,&AccountWidget::on_registerBtn_clicked);
 }
 
 AccountWidget::~AccountWidget()
@@ -65,25 +66,33 @@ void AccountWidget::on_loginBtn_clicked(){
     QString username = this->account->text();
     QString userpass = this->password->text();
     bool isExist = this->root->Browser::m_user->queryUserName(username);
-//    if(isExist){
-//        //todo: 登录改为姓名和密码
-//        bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
-//        if(canLog){
-//            //todo: 获取id
-//            this->Browser::changeUser(newid);
-//        }
+    if(!isExist){
+        //todo: 弹窗显示用户不存在
+        qDebug("user not exist");
+        return;
+    }
+//    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
+//    if(!canLog){
+//        //todo: 弹窗显示密码错误
+//        return;
 //    }
+//    int newid = this->root->Browser::m_user->getUserIdByName(username);
+//    this->root->Browser::changeUser(newid);
+    qDebug("log success");
 }
 
 void AccountWidget::on_registerBtn_clicked(){
     QString username = this->account->text();
     QString userpass = this->password->text();
+    qDebug()<<username;
     bool isExist = this->root->Browser::m_user->queryUserName(username);
     if(isExist){
         //todo: 弹窗显示已存在用户
+        qDebug("user exist");
         return;
     }
     this->root->Browser::m_user->addRegisterUser(username,userpass);
     //todo：弹窗显示注册成功
+    qDebug("register success");
 }
 
