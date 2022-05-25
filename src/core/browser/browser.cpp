@@ -1,3 +1,11 @@
+/*
+ * @Author: SC-WSKun 540610423@qq.com
+ * @Date: 2022-05-23 13:23:38
+ * @LastEditors: SC-WSKun 540610423@qq.com
+ * @LastEditTime: 2022-05-26 00:37:35
+ * @FilePath: \FolkTell\src\core\browser\browser.cpp
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 #include "browser.h"
 #include "adblock_request_interceptor.h"
 #include "bookmarkmodel.h"
@@ -28,7 +36,7 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
 // add测试
     m_user->addRegisterUser("kunkuntest","kunkunpassword");
 
-    bool isExist = m_user->queryUserName("kunkuntest");
+    bool isExist = m_user->queryUserName("kunkuntest2");
     qDebug()<<"test测试："<<isExist;
 
     bool canLog = m_user->queryUserPassword("kunkuntest","kunkunpassword");
