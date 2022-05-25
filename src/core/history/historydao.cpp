@@ -21,32 +21,54 @@ bool HistoryDao::createTable() {
 }
 
 bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, const QUrl& url, const QUrl& iconUrl, const qint64& timestamp) {
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "insert or replace into " + this->getTableName() + " (userid, urlid, title, url, iconUrl, timestamp) values (:userid, :urlid, :title, :url, :iconUrl, :timestamp)";
-    QSqlQuery query(this->db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    query.bindValue(":userid", this->userid);
-    query.bindValue(":urlid", urlid);
-    query.bindValue(":title", title);
-    query.bindValue(":url", url);
-    query.bindValue(":iconUrl", iconUrl);
-    query.bindValue(":timestamp", timestamp);
-    if(!query.exec()){
-        qDebug() << "[error] fail to insert,  " << query.lastError().text();
+    
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        query.bindValue(":userid", this->userid);
+        query.bindValue(":urlid", urlid);
+        query.bindValue(":title", title);
+        query.bindValue(":url", url);
+        query.bindValue(":iconUrl", iconUrl);
+        query.bindValue(":timestamp", timestamp);
+        if(!query.exec()){
+            qDebug() << "[error] fail to insert,  " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
     return true;
 }
 
 bool HistoryDao::queryByUserid() {
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "select * from " + this->getTableName() + " where userid = " + QString::number(this->userid) ;
-    QSqlQuery query(this->db_connection.localData()->get_db_connection());
-    if(!query.exec(cmd)) {
-        qDebug() << "[error] fail to select,  " << query.lastError().text();
-        return false;
-    }
-    else {
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        if(!query.exec(cmd)) {
+            qDebug() << "[error] fail to select,  " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
+        
         while(query.next()) {
             qDebug()<<query.value(0)<<" "<<query.value(1)<<" "<<query.value(2)<<" "<<query.value(3)<<" "<<query.value(4)<<" "<<query.value(5); 
         }
@@ -55,32 +77,52 @@ bool HistoryDao::queryByUserid() {
 }
 
 QList<qint64> HistoryDao::queryDayTimestamp() {
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "select timestamp from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url = \"todayItem\" order by timestamp asc";
-    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     QList<qint64> ret;
-    if(!query.exec(cmd)) {
-        qDebug() << "[error] fail to select,  " << query.lastError().text();
-        return ret;
-    }
-    else {
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        if(!query.exec(cmd)) {
+            qDebug() << "[error] fail to select,  " << query.lastError().text();
+            return ret;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
         while(query.next()) { 
             ret.append(query.value(0).toLongLong());
         }
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
     }
     return ret;
 }
 
 QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "select urlid, title, url, iconUrl, timestamp  from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url != \"todayItem\" order by timestamp asc" ;
-    QSqlQuery query(this->db_connection.localData()->get_db_connection());
     QList<HistoryEntry> ret;
-    if(!query.exec(cmd)) {
-        qDebug() << "[error] fail to select,  " << query.lastError().text();
-        return ret;
-    }
-    else {
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        if(!query.exec(cmd)) {
+            qDebug() << "[error] fail to select,  " << query.lastError().text();
+            return ret;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
+
         while(query.next()) {
             HistoryEntry historyEntry;
             historyEntry.urlid = query.value(0).toLongLong();
@@ -90,20 +132,39 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
             historyEntry.date = QDateTime::fromMSecsSinceEpoch(query.value(4).toLongLong()); 
             ret.append(historyEntry);
         }
+
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
     }
     return ret;
 }
 
 bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "delete from " + this->getTableName() + " where userid = :userid and urlid = :urlid and url = :url";
-    QSqlQuery query(this->db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    query.bindValue(":userid", this->userid);
-    query.bindValue(":urlid", urlid);
-    query.bindValue(":url", url);
-    if(!query.exec()) {
-        qDebug() << "[error] fail to delete by prikey, " << query.lastError().text();
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        query.bindValue(":userid", this->userid);
+        query.bindValue(":urlid", urlid);
+        query.bindValue(":url", url);
+        if(!query.exec()) {
+            qDebug() << "[error] fail to delete by prikey, " << query.lastError().text();
+            return false;
+        }
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        } 
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
     return true;

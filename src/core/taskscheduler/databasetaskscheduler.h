@@ -92,7 +92,7 @@ auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
             std::forward<Fn>(f)
     );
 
-    
+
     std::future<return_type> ret = task.get_future();
     
     {

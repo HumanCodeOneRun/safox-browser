@@ -25,90 +25,124 @@ QVector<QVariant> BookmarkDao::QueryByUidAndId(const int& uid, const int& id){
     check_thread_connection();
     auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id)+ " AND UID="+QString::number(uid);
-    QSqlQuery query(db);
-    query.prepare(cmd);
     
     QVector<QVariant> ret;
 
     if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
         if(!query.exec()){
             qDebug() << "[error] fail to query by id and uid,  " << query.lastError().text();
             return ret;
         }
         
         if(!db.commit()){
-            qDebug() << "[error] fail to commit" ;
+            qDebug() << "[error] fail to commit" << db.lastError().text();;
             db.rollback();
         }
 
+        while(query.next()){
+            ret.append({query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)});
+        }
     }
     else{
-        qDebug() << "[error] fail to start transaction";
-    }
-    
-    while(query.next()){
-        ret.append({query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)});
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
     }
 
     return ret;
 }
 
 QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndGroupId(const int& uid, const int& gid){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE GID="+QString::number(gid) + " AND UID="+QString::number(uid);
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-
     QVector<QVector<QVariant>> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by gid,  " << query.lastError().text();
-        return ret;
-    }
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
 
-    while(query.next()){
-        QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)};
-        ret.emplace_back(temp);
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by gid,  " << query.lastError().text();
+            return ret;
+        }
+        
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit" << db.lastError().text();;
+            db.rollback();
+        }
+
+        while(query.next()){
+            QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)};
+            ret.emplace_back(temp);
+        }
+    }
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
     }
 
     return ret;
 }
 
 QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndName(const int& uid, const QString& name){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME="+name + " AND UID="+QString::number(uid);
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    qDebug() << this->getcolumns();
     QVector<QVector<QVariant>> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by name,  " << query.lastError().text();
-        return ret;
-    }
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by name,  " << query.lastError().text();
+            return ret;
+        }
 
-    while(query.next()){
-        QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)};
-        ret.emplace_back(temp);
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit. " << db.lastError().text();;
+            db.rollback();
+        }
+        while(query.next()){
+            QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2),query.value(3),query.value(4), query.value(5)};
+            ret.emplace_back(temp);
+        }
+    }
+    else{
+        qDebug() << "[error] fail to start transaction. " << db.lastError().text();;
     }
 
     return ret;
 }
 
 bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "UPDATE " + this->table_name + " SET NAME =:name WHERE ID =:id AND UID =:uid";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
-        return false;
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
+            return false;
+        }
+
+        query.bindValue(":name", name);
+        query.bindValue(":id", id);
+        query.bindValue(":uid", uid);
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit" << db.lastError().text();;
+            db.rollback();
+            return false;
+        }
     }
-
-    query.bindValue(":name", name);
-    query.bindValue(":id", id);
-    query.bindValue(":uid", uid);
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction. " << db.lastError().text();;
         return false;
     }
 
@@ -116,21 +150,35 @@ bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
 }
 
 bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "UPDATE " + this->table_name + " SET GID=:gid WHERE ID=:id AND UID=:uid";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in setgid: " << query.lastError().text();
-        return false;
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in setgid: " << query.lastError().text();
+            return false;
+        }
+
+        query.bindValue(":gid", gid);
+        query.bindValue(":id", id);
+        query.bindValue(":uid", uid);
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in setgid: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();;
+            db.rollback();
+            return false;
+        }
     }
 
-    query.bindValue(":gid", gid);
-    query.bindValue(":id", id);
-    query.bindValue(":uid", uid);
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in setgid: " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
         return false;
     }
 
@@ -138,21 +186,34 @@ bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
 }
 
 bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "UPDATE " + this->table_name + " SET ICON=:icon WHERE ID=:id AND UID=:uid";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in seticon: " << query.lastError().text();
-        return false;
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in seticon: " << query.lastError().text();
+            return false;
+        }
+
+        query.bindValue(":icon", icon);
+        query.bindValue(":id", id);
+        query.bindValue(":uid", uid);
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in seticon: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();;
+            return false;
+        }
     }
 
-    query.bindValue(":icon", icon);
-    query.bindValue(":id", id);
-    query.bindValue(":uid", uid);
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in seticon: " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
         return false;
     }
 
@@ -160,21 +221,35 @@ bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
 }
 
 bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "UPDATE " + this->table_name + " SET URL=:url WHERE ID=:id AND UID=:uid";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in seturl: " << query.lastError().text();
-        return false;
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in seturl: " << query.lastError().text();
+            return false;
+        }
+
+        query.bindValue(":url", url);
+        query.bindValue(":id", id);
+        query.bindValue(":uid", uid);
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in seturl: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();;
+            return false;
+        }
     }
 
-    query.bindValue(":url", url);
-    query.bindValue(":id", id);
-    query.bindValue(":uid", uid);
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in seturl: " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction "<< db.lastError().text();;
         return false;
     }
 
@@ -183,42 +258,67 @@ bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
 
 
 bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, const QUrl& url, const QUrl& icon){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, URL, ICON)"+" VALUES(:uid, :gid, :name, :url, :icon)";
 
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare, " << query.lastError().text();
-        return false;
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare, " << query.lastError().text();
+            return false;
+        }
+
+        //int id = qHash(url.toString());
+
+        query.bindValue(":uid", uid);
+        //query.bindValue(":id", id);
+        query.bindValue(":gid", gid);
+        query.bindValue(":name", name);
+        query.bindValue(":url", url.toString());
+        query.bindValue(":icon",icon.toString());
+        
+        if(!query.exec()){
+            qDebug() << "[error] fail to insert,  " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();;
+            return false;
+        }
     }
 
-    //int id = qHash(url.toString());
-
-    query.bindValue(":uid", uid);
-    //query.bindValue(":id", id);
-    query.bindValue(":gid", gid);
-    query.bindValue(":name", name);
-    query.bindValue(":url", url.toString());
-    query.bindValue(":icon",icon.toString());
-    
-    if(!query.exec()){
-        qDebug() << "[error] fail to insert,  " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction "<< db.lastError().text();;
         return false;
     }
     return true;
 }
 
 bool BookmarkDao::remove(const int& uid, const int& id){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "DELETE FROM " + this->table_name + " WHERE ID=:id AND UID=:uid";
 
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    query.bindValue(":id", id);
-    query.bindValue(":uid", uid);
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        query.bindValue(":id", id);
+        query.bindValue(":uid", uid);
 
-    if(!query.exec()){
-        qDebug() << "[error] fail to delete,  " << query.lastError().text();
+        if(!query.exec()){
+            qDebug() << "[error] fail to delete,  " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();;
+            return false;
+        }
+    }
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
         return false;
     }
 

@@ -24,119 +24,196 @@ bool UserDao::createTable(){
 
 
 QVector<QVariant> UserDao::QueryById(const int& id){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id);
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    
     QVector<QVariant> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by id,  " << query.lastError().text();
-        return ret;
-    }
-    
-    while(query.next()){
-        ret.append({query.value(0), query.value(1),query.value(2)});
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by id,  " << query.lastError().text();
+            return ret;
+        }
+        
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
+
+        while(query.next()){
+            ret.append({query.value(0), query.value(1),query.value(2)});
+        }
     }
 
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
+    }
     return ret;
 }
 
 QVector<QVariant> UserDao::QueryByIdPassword(const int& id, const QString& password){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE ID="+QString::number(id) + " AND PASSWORD=\""+password+"\"";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    
     QVector<QVariant> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by id and password,  " << query.lastError().text();
-        return ret;
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by id and password,  " << query.lastError().text();
+            return ret;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
+        
+        while(query.next()){
+            ret.append({query.value(0), query.value(1),query.value(2)});
+        }
     }
-    
-    while(query.next()){
-        ret.append({query.value(0), query.value(1),query.value(2)});
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
     }
 
     return ret;
 }
 
 QVector<QVector<QVariant>> UserDao::QueryByName(const QString& name){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME=\""+name+"\"";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-
     QVector<QVector<QVariant>> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query by name,  " << query.lastError().text();
-        return ret;
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to query by name,  " << query.lastError().text();
+            return ret;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
+
+        while(query.next()){
+            QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2)};
+            ret.emplace_back(temp);
+        }
     }
 
-    while(query.next()){
-        QVector<QVariant> temp = {query.value(0), query.value(1),query.value(2)};
-        ret.emplace_back(temp);
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
     }
 
     return ret;
 }
 
 bool UserDao::setName(const int& id, const QString& name){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
 //    QString cmd = "UPDATE " + this->table_name + "SET NAME =\"" + name + "\" WHERE ID"+QString::number(id);
     QString cmd = "UPDATE " + this->getTableName() + " SET NAME= \""+name+"\" WHERE ID= " + QString::number(id);
 
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
+    if(!db.transaction()){
+        QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
 
-    query.bindValue(":name", name);
-    query.bindValue(":id", id);
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
+        query.bindValue(":name", name);
+        query.bindValue(":id", id);
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
+            return false;
+        }
+
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
+    }
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
-
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
-        return false;
-    }
-
 
     return true;
 }
 
 bool UserDao::setPassword(const int& id, const QString& password){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "UPDATE " + this->getTableName() + " SET PASSWORD= \""+password+"\" WHERE ID= " + QString::number(id);
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    
-    if(!query.prepare(cmd)){
-        qDebug() << "[error] fail to prepare cmd in setpassword: " << query.lastError().text();
-        return false;
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        
+        if(!query.prepare(cmd)){
+            qDebug() << "[error] fail to prepare cmd in setpassword: " << query.lastError().text();
+            return false;
+        }
+
+
+        if(!query.exec()){
+            qDebug() << "[error] fail to exec cmd in setpassword: " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
     }
 
-
-    if(!query.exec()){
-        qDebug() << "[error] fail to exec cmd in setpassword: " << query.lastError().text();
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
-
     return true;
 }
 
 
 bool UserDao::insert(const QString& name, const QString& password){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
     QString cmd = "INSERT INTO " + this->getTableName() + "( NAME, PASSWORD)"+" VALUES( :name, :password)";
 
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    // query.bindValue(":id", id);
-    query.bindValue(":name", name);
-    query.bindValue(":password", password);
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        // query.bindValue(":id", id);
+        query.bindValue(":name", name);
+        query.bindValue(":password", password);
 
-    if(!query.exec()){
-        qDebug() << "[error] fail to insert,  " << query.lastError().text();
+        if(!query.exec()){
+            qDebug() << "[error] fail to insert,  " << query.lastError().text();
+            return false;
+        }
+
+        if(!db.commit()){
+            qDebug() << "[error] fail to commmit " << db.lastError().text();
+            return false;
+        }
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
 
@@ -145,14 +222,27 @@ bool UserDao::insert(const QString& name, const QString& password){
 
 bool UserDao::remove(const int& id){
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "DELETE FROM " + this->table_name + " WHERE ID=:id";
+    
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
+        query.bindValue(":id", id);
 
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    query.bindValue(":id", id);
+        if(!query.exec()){
+            qDebug() << "[error] fail to delete,  " << query.lastError().text();
+            return false;
+        }
 
-    if(!query.exec()){
-        qDebug() << "[error] fail to delete,  " << query.lastError().text();
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return false;
     }
 
@@ -160,19 +250,33 @@ bool UserDao::remove(const int& id){
 }
 
 QVector<QVariant> UserDao::getcolumns(){
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
+
     check_thread_connection();
     QString cmd = "PRAGMA  table_info("+this->table_name+")";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    query.prepare(cmd);
-    
     QVector<QVariant> ret;
-    if(!query.exec()){
-        qDebug() << "[error] fail to query all columns,  " << query.lastError().text();
-        return ret;
-    }
+
+    if(!db.transaction()){
+        QSqlQuery query(db);
+        query.prepare(cmd);
     
-    while(query.next()){
-        ret.append({query.value(0), query.value(1), query.value(2)});
+        if(!query.exec()){
+            qDebug() << "[error] fail to query all columns,  " << query.lastError().text();
+            return ret;
+        }
+        
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return ret;
+        }
+        while(query.next()){
+            ret.append({query.value(0), query.value(1), query.value(2)});
+        }
+    }
+
+    else{
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        return ret;
     }
 
     return ret;
