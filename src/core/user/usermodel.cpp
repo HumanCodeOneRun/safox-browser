@@ -235,9 +235,8 @@ bool UserModel::queryUserName(const QString &name) {
         std::promise<bool> pm;
         auto future = pm.get_future();
        m_taskScheduler->post([this, &pm, &name]() {
-            int has = this->item->getItemByName(name).isEmpty();
-            int ret = has ? 1 : 0;
-            pm.set_value(ret);
+            int has = !this->item->getItemByName(name).isEmpty();
+            pm.set_value(has);
         });
         return future.get();
     }

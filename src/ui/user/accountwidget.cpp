@@ -71,13 +71,13 @@ void AccountWidget::on_loginBtn_clicked(){
         qDebug("user not exist");
         return;
     }
-//    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
-//    if(!canLog){
-//        //todo: 弹窗显示密码错误
-//        return;
-//    }
-//    int newid = this->root->Browser::m_user->getUserIdByName(username);
-//    this->root->Browser::changeUser(newid);
+    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
+    if(!canLog){
+        //todo: 弹窗显示密码错误
+        return;
+    }
+    int newid = this->root->Browser::m_user->getUserIdByName(username);
+    this->root->Browser::changeUser(newid);
     qDebug("log success");
 }
 
