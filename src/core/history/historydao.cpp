@@ -36,11 +36,13 @@ bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, con
         query.bindValue(":timestamp", timestamp);
         if(!query.exec()){
             qDebug() << "[error] fail to insert,  " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     }
@@ -61,11 +63,13 @@ bool HistoryDao::queryByUserid() {
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
         
@@ -86,11 +90,13 @@ QList<qint64> HistoryDao::queryDayTimestamp() {
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
         while(query.next()) { 
@@ -115,11 +121,13 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
 
@@ -155,10 +163,12 @@ bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
         query.bindValue(":url", url);
         if(!query.exec()) {
             qDebug() << "[error] fail to delete by prikey, " << query.lastError().text();
+            db.rollback();
             return false;
         }
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         } 
     }

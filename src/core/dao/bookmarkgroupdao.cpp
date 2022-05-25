@@ -22,6 +22,7 @@ bool BookmarkGroupDao::createTable(){
         }
         if(!ok){
             qDebug() << "[error] fail to create bookmarkgroup table " << query.lastError().text();
+            db.rollback();
             return false;
         }
     }
@@ -44,6 +45,7 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndId(const int& uid, const int& i
         
         if(!query.exec()){
             qDebug() << "[error] fail to query by uid and gid,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
         
@@ -76,16 +78,19 @@ QVector<QVariant> BookmarkGroupDao::QueryByUidAndName(const int& uid, const QStr
         qDebug() << "[info] query group: current thread is " << QThread::currentThreadId();
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to query by name,  table:" << this->getTableName() << query.lastError().text();
+            db.rollback();
             return ret;
         }
         
         if(!query.exec()){
             qDebug() << "[error] fail to exec query by name,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
         while(query.next()){
@@ -111,16 +116,19 @@ QVector<QVector<QVariant>> BookmarkGroupDao::QueryAll(const int& uid){
     
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+            db.rollback();
             return ret; 
         }
 
         if(!query.exec()){
             qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+            db.rollback();
             return ret; 
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
         while(query.next()){
@@ -145,6 +153,7 @@ bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString
         QSqlQuery query(db);
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
         //int id = qHash(name);
@@ -155,11 +164,13 @@ bool BookmarkGroupDao::insert(const int& uid, const QString& name, const QString
 
         if(!query.exec()){
             qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     }
@@ -181,6 +192,7 @@ bool BookmarkGroupDao::setName(const int&uid, const int& id, const QString& name
         QSqlQuery query(db);
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
         query.bindValue(":name", name);
@@ -188,11 +200,13 @@ bool BookmarkGroupDao::setName(const int&uid, const int& id, const QString& name
 
         if(!query.exec()){
             qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     }
@@ -214,6 +228,7 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
         QSqlQuery query(db);
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
         query.bindValue(":uid", uid);
@@ -222,11 +237,13 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
 
         if(!query.exec()){
             qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     }
@@ -248,6 +265,7 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
         QSqlQuery query(db);
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
         query.bindValue(":uid", uid);
@@ -255,11 +273,13 @@ bool BookmarkGroupDao::setIcon(const int& uid, const int& id, const QString& ico
 
         if(!query.exec()){
             qDebug() << "[error] fail to exec cmd : " << query.lastError().text();
+            db.rollback();
             return false; 
         }
 
         if(!db.commit()){
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     }

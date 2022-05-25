@@ -21,8 +21,10 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         m_adblock(serviceLocator.getServiceAs<AdblockRequestInterceptor>("AdblockRequestInterceptor")) {
 
 ////    query测试
+
     bool isExist1 = m_user->queryUserName("kunkun33333");
     qDebug()<<"3333测试："<<isExist1;
+    
 // add测试
     m_user->addRegisterUser("kunkuntest","kunkunpassword");
 

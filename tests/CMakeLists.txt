@@ -10,7 +10,7 @@ endmacro()
 include_sub_directories_recursively(${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 safox_add_test(user)
-#safox_add_test(bookmark)
+safox_add_test(bookmark)
 #safox_add_test(bookmarkgroup)
 #safox_add_test(download)
 #safox_add_test(homepage)

@@ -35,11 +35,13 @@ QVector<QVariant> UserDao::QueryById(const int &id) {
 
         if (!query.exec()) {
             qDebug() << "[error] fail to query by id,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
 
@@ -66,11 +68,13 @@ QVector<QVariant> UserDao::QueryByIdPassword(const int &id, const QString &passw
 
         if (!query.exec()) {
             qDebug() << "[error] fail to query by id and password,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
 
@@ -98,11 +102,13 @@ QVector<QVariant> UserDao::QueryByNamePassword(const QString &name, const QStrin
 
         if (!query.exec()) {
             qDebug() << "[error] fail to query by id and password,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
 
@@ -129,11 +135,13 @@ QVector<QVariant> UserDao::QueryByName(const QString &name) {
 
         if (!query.exec()) {
             qDebug() << "[error] fail to query by name,  " << query.lastError().text();
+            db.rollback();
             return ret;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return ret;
         }
 
@@ -162,17 +170,20 @@ bool UserDao::setName(const int &id, const QString &name) {
         query.bindValue(":id", id);
         if (!query.prepare(cmd)) {
             qDebug() << "[error] fail to prepare cmd in setname: " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
 
         if (!query.exec()) {
             qDebug() << "[error] fail to exec cmd in setname: " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     } else {
@@ -194,17 +205,20 @@ bool UserDao::setPassword(const int &id, const QString &password) {
 
         if (!query.prepare(cmd)) {
             qDebug() << "[error] fail to prepare cmd in setpassword: " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
 
         if (!query.exec()) {
             qDebug() << "[error] fail to exec cmd in setpassword: " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commit " << db.lastError().text();
+            db.rollback();
             return false;
         }
     } else {
@@ -229,6 +243,7 @@ bool UserDao::insert(const QString &name, const QString &password) {
 
         if (!query.exec()) {
             qDebug() << "[error] fail to insert,  " << query.lastError().text();
+            db.rollback();
             return false;
         }
 
