@@ -33,7 +33,7 @@ void History::addHistoryEntryHelp(const QString &title, const QUrl &url, const Q
     std::shared_ptr<HistoryDao> pm_historyDao = m_historyDao;
     std::shared_ptr<HistoryModel> pm_historyModel = m_historyModel;
     m_taskScheduler->post([historyEntry, pm_historyDao, pm_historyModel] {
-        qDebug() << "[test] addhisotry entry ";
+        qDebug() << "[test] add history entry ";
         pm_historyDao->insertHistoryEntry(historyEntry.urlid, historyEntry.title, historyEntry.url,
                                           historyEntry.iconUrl, historyEntry.date.toMSecsSinceEpoch());
         pm_historyModel->addHistoryEntry(historyEntry);
