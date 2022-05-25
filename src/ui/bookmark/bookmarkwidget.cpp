@@ -48,11 +48,11 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     /*-------------------------------------*/
 
     this->scrollView = new QScrollArea(this);
-    this->scrollView->setStyleSheet("QScrollArea{background-color:red;}");
+    this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
     this->scrollView->setGeometry(0,100,width,height-200);
     QVBoxLayout *layout=new QVBoxLayout();
     QWidget* scrollWidget = new QWidget();
-    scrollWidget->setStyleSheet("QWidget{background-color:green;}");
+    scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
 
     this->scrollView->setWidget(scrollWidget);
     BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");

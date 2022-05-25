@@ -29,4 +29,5 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
 
 void Browser::changeUser(int newid){
     this->userid = newid;
+    m_history->loginHistory(newid);
 }
