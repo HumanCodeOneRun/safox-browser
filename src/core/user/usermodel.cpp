@@ -309,7 +309,7 @@ bool UserModel::deleteRegisterUser(const QString &name) {
     return future.get();
 }
 int UserModel::getUserIdByName(const QString &name){
-    std::promise<bool> pm;
+    std::promise<int> pm;
     auto future = pm.get_future();
     m_taskScheduler->post([this, &name]() {
         this->item->getItemByName(name);
