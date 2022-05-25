@@ -8,7 +8,7 @@
 #include "homepage.h"
 #include "databasetaskscheduler.h"
 #include "usermodel.h"
-
+#include <QDebug>
 Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         userid(userid),
         m_serviceLocator(serviceLocator),
@@ -20,6 +20,16 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         m_downloadMgr(serviceLocator.getServiceAs<DownloadManager>("DownloadManager")),
         m_adblock(serviceLocator.getServiceAs<AdblockRequestInterceptor>("AdblockRequestInterceptor")) {
 
+////    query测试
+    bool isExist1 = m_user->queryUserName("kunkun33333");
+    qDebug()<<"3333测试："<<isExist1;
+// add测试
+    m_user->addRegisterUser("kunkuntest","kunkunpassword");
+
+    bool isExist = m_user->queryUserName("kunkuntest");
+    qDebug()<<"test测试："<<isExist;
+
+
     //测试添加历史用
     WebView *webview = new WebView();
     webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
@@ -27,3 +37,7 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
 
 }
 
+void Browser::changeUser(int newid){
+    this->userid = newid;
+    m_history->loginHistory(newid);
+}

@@ -10,6 +10,7 @@ BookmarkItem::BookmarkItem(QWidget *parent,int x,int y,QString url,QString title
     iconLabel->setPixmap(QPixmap(url));
     iconLabel->show();
     iconLabel->setGeometry(x+16,y+25,80,80);
+    iconLabel->setStyleSheet("QLabel{background-color:grey;}");
 
     QLabel* titleLabel = new QLabel(parent);
     titleLabel->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:14px;}");

@@ -36,7 +36,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
 //    this->bookmark->addBookmarkGroup(root->Browser::userid,"firstGroup",QUrl("www.testIcon.com"));
-//    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+
 //    this->bookmark->addBookmark(root->Browser::userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
 //    qDebug("vector:");
     /*--------遍历QList：------------------*/
@@ -48,11 +48,21 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     /*-------------------------------------*/
 
     this->scrollView = new QScrollArea(this);
-    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:red;}");
-//    this->scrollView->setLayout()
-    BookmarkItem temp(this->scrollView,20,0,":/icon/../image/setting.png","test_title","test_description");
+    this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
+    this->scrollView->setGeometry(0,100,width,height-200);
+    QVBoxLayout *layout=new QVBoxLayout();
+    QWidget* scrollWidget = new QWidget();
+    scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
 
+    this->scrollView->setWidget(scrollWidget);
+    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+    BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
+    BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,135,":/icon/../image/setting.png","test_kkkkkk","test_description");
+    //todo: 计算需要的高度
+    scrollWidget->setFixedSize(width,height+200);
+    layout->addWidget(scrollWidget);
 
+    this->scrollView->setLayout(layout);
 
 }
 

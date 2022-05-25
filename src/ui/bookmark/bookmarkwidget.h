@@ -16,9 +16,11 @@
 #include <QAction>
 #include <QScrollArea>
 #include <QStyleOption>
+#include <QVBoxLayout>
 #include <QPainter>
 #include <QVector>
 #include <QVariant>
+#include <QComboBox>
 #include "bookmarkmodel.h"
 #include "bookmarkitem.h"
 #include "bookmarkbox.h"
