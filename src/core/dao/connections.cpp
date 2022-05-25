@@ -29,7 +29,7 @@ DbConnection::DbConnection(const QString& _db_path):db_path(_db_path){
     if (!QSqlDatabase::contains(this->conn_name))
         DbConnection::conn_count++;
         auto db = QSqlDatabase::addDatabase("QSQLITE", this->conn_name);
-    
+
         (db).setDatabaseName(this->db_path);
         if(!db.open()){
             qDebug() << "[error]fail to open db! " << db.lastError().text();

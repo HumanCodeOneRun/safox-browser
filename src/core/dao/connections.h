@@ -4,7 +4,7 @@
 #include <QString>
 #include <fstream>
 #include <mutex>
-
+#include <QSqlDriver>
 #define DEFAULT_DB_PATH "./.safox.db"
 class DbConnection{
 

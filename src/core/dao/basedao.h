@@ -33,7 +33,7 @@ public:
     QVector<QVariant> getcolumns();
     virtual ~BaseDao();
 
-    
+        
 
 protected:
     QString table_name;

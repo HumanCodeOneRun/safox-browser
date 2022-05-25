@@ -10,19 +10,22 @@ bool init_getgroup_test(BookmarkModel &model){
 }
 
 bool add_group_test(BookmarkModel &model){
+    for(int i = 0; i < 10; i++){
+        if(!model.addBookmarkGroup(i, "group_test_"+QString::number(i), QUrl("group_test_icon_"+QString::number(i))))
+            return false;
+    }
 
-    return 0
-        ||  !model.addBookmarkGroup(1, "test112313", QUrl("test1.icon"))
-        ||  !model.addBookmarkGroup(2, "test221313", QUrl("test2.icon"))
-        ||  !model.addBookmarkGroup(1, "test123123", QUrl("test3.icon"));
+    return true;
 
 }
 
 
 bool delete_group_test(BookmarkModel &model){
 
-    return 0
-        ||  !model.deleteBookmarkGroup(1, 802222310);
+
+    return true
+            && model.deleteBookmarkGroup(0, 1)
+            && model.deleteBookmarkGroup(2, 3);
         
 }
 

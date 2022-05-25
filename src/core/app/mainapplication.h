@@ -5,7 +5,6 @@
 #include <QPointer>
 #include <QApplication>
 #include "service.h"
-
 class QMenu;
 
 class Config;

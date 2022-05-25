@@ -7,16 +7,29 @@ BookmarkDao::BookmarkDao(std::shared_ptr<DatabaseTaskScheduler> _scheduler,const
 
 bool BookmarkDao::createTable(){
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
                 " (UID INTEGER NOT NULL, ID INTEGER PRIMARY KEY AUTOINCREMENT, GID INTEGER, NAME TEXT, URL TEXT, ICON TEXT);";
-    QSqlQuery query(BaseDao::db_connection.localData()->get_db_connection());
-    bool ok = query.exec(cmd);
+    
+    if(db.transaction()){
+        QSqlQuery query(db);
+        bool ok = query.exec(cmd);
 
-    if(!ok){
-        qDebug() << "[error] fail to create bookmark table " << query.lastError().text();
-        return false;
+        if(!db.commit()){
+            qDebug() << "[error] fail to commit " << db.lastError().text();
+            return false;
+        }
+
+        if(!ok){
+            qDebug() << "[error] fail to create bookmark table " << query.lastError().text();
+            return false;
+        }
     }
 
+    else{
+        qDebug() <<"[error] fail to strt transaction " << db.lastError().text();
+        return false;
+    }
     return true;
 }
 
@@ -28,7 +41,7 @@ QVector<QVariant> BookmarkDao::QueryByUidAndId(const int& uid, const int& id){
     
     QVector<QVariant> ret;
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
         if(!query.exec()){
@@ -46,18 +59,18 @@ QVector<QVariant> BookmarkDao::QueryByUidAndId(const int& uid, const int& id){
         }
     }
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();;
     }
 
     return ret;
 }
 
 QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndGroupId(const int& uid, const int& gid){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE GID="+QString::number(gid) + " AND UID="+QString::number(uid);
     QVector<QVector<QVariant>> ret;
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
 
@@ -77,18 +90,18 @@ QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndGroupId(const int& uid, con
         }
     }
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();;
     }
 
     return ret;
 }
 
 QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndName(const int& uid, const QString& name){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "SELECT * from " + this->getTableName() + " WHERE NAME="+name + " AND UID="+QString::number(uid);
     QVector<QVector<QVariant>> ret;
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
         
@@ -107,18 +120,18 @@ QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndName(const int& uid, const 
         }
     }
     else{
-        qDebug() << "[error] fail to start transaction. " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction. " << db.lastError().text();;
     }
 
     return ret;
 }
 
 bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "UPDATE " + this->table_name + " SET NAME =:name WHERE ID =:id AND UID =:uid";
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         
         if(!query.prepare(cmd)){
@@ -142,7 +155,7 @@ bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
         }
     }
     else{
-        qDebug() << "[error] fail to start transaction. " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction. " << db.lastError().text();;
         return false;
     }
 
@@ -150,10 +163,10 @@ bool BookmarkDao::setName(const int& uid, const int& id, const QString& name){
 }
 
 bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "UPDATE " + this->table_name + " SET GID=:gid WHERE ID=:id AND UID=:uid";
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         
         if(!query.prepare(cmd)){
@@ -178,7 +191,7 @@ bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();;
         return false;
     }
 
@@ -186,10 +199,10 @@ bool BookmarkDao::setGid(const int& uid, const int& id, const int& gid){
 }
 
 bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
+     check_thread_connection();
     auto db = BaseDao::db_connection.localData()->get_db_connection();
-    check_thread_connection();
     QString cmd = "UPDATE " + this->table_name + " SET ICON=:icon WHERE ID=:id AND UID=:uid";
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         
         if(!query.prepare(cmd)){
@@ -213,7 +226,7 @@ bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();;
         return false;
     }
 
@@ -221,11 +234,11 @@ bool BookmarkDao::setIcon(const int& uid, const int& id, const QString& icon){
 }
 
 bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "UPDATE " + this->table_name + " SET URL=:url WHERE ID=:id AND UID=:uid";
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         
         if(!query.prepare(cmd)){
@@ -249,7 +262,7 @@ bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
     }
 
     else{
-        qDebug() << "[error] fail to start transaction "<< db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction "<< db.lastError().text();;
         return false;
     }
 
@@ -258,11 +271,11 @@ bool BookmarkDao::setUrl(const int& uid, const int& id, const QUrl& url){
 
 
 bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, const QUrl& url, const QUrl& icon){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "INSERT INTO " + this->getTableName() + "(UID, GID, NAME, URL, ICON)"+" VALUES(:uid, :gid, :name, :url, :icon)";
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         if(!query.prepare(cmd)){
             qDebug() << "[error] fail to prepare, " << query.lastError().text();
@@ -290,18 +303,18 @@ bool BookmarkDao::insert(const int& uid, const int& gid, const QString& name, co
     }
 
     else{
-        qDebug() << "[error] fail to start transaction "<< db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction "<< db.lastError().text();;
         return false;
     }
     return true;
 }
 
 bool BookmarkDao::remove(const int& uid, const int& id){
-    auto db = BaseDao::db_connection.localData()->get_db_connection();
     check_thread_connection();
+    auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "DELETE FROM " + this->table_name + " WHERE ID=:id AND UID=:uid";
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
         query.bindValue(":id", id);
@@ -318,7 +331,7 @@ bool BookmarkDao::remove(const int& uid, const int& id){
         }
     }
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();;
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();;
         return false;
     }
 

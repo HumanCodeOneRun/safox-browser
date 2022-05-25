@@ -42,7 +42,7 @@ int main() {
     UserModel model(scheduler);
 
     int ret = 0
-            //|| !t_addUsr(model)
+            || !t_addUsr(model)
             || !t_deleteUsr(model)
             || !t_queryUsr(model)
             || !t_editUsr(1, model);

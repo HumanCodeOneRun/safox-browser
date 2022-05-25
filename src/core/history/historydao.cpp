@@ -25,7 +25,7 @@ bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, con
     check_thread_connection();
     QString cmd = "insert or replace into " + this->getTableName() + " (userid, urlid, title, url, iconUrl, timestamp) values (:userid, :urlid, :title, :url, :iconUrl, :timestamp)";
     
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
         query.bindValue(":userid", this->userid);
@@ -46,7 +46,7 @@ bool HistoryDao::insertHistoryEntry(const uint& urlid, const QString &title, con
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
         return false;
     }
     return true;
@@ -57,7 +57,7 @@ bool HistoryDao::queryByUserid() {
     check_thread_connection();
     QString cmd = "select * from " + this->getTableName() + " where userid = " + QString::number(this->userid) ;
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
@@ -82,7 +82,7 @@ QList<qint64> HistoryDao::queryDayTimestamp() {
     QString cmd = "select timestamp from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url = \"todayItem\" order by timestamp asc";
     QList<qint64> ret;
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
@@ -99,7 +99,7 @@ QList<qint64> HistoryDao::queryDayTimestamp() {
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
         return ret;
     }
     return ret;
@@ -111,7 +111,7 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
     QString cmd = "select urlid, title, url, iconUrl, timestamp  from " + this->getTableName() + " where userid = " + QString::number(this->userid) + " and url != \"todayItem\" order by timestamp asc" ;
     QList<HistoryEntry> ret;
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         if(!query.exec(cmd)) {
             qDebug() << "[error] fail to select,  " << query.lastError().text();
@@ -136,7 +136,7 @@ QList<HistoryEntry> HistoryDao::queryHistoryEntry() {
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
         return ret;
     }
     return ret;
@@ -147,7 +147,7 @@ bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
     check_thread_connection();
     QString cmd = "delete from " + this->getTableName() + " where userid = :userid and urlid = :urlid and url = :url";
 
-    if(!db.transaction()){
+    if(db.transaction()){
         QSqlQuery query(db);
         query.prepare(cmd);
         query.bindValue(":userid", this->userid);
@@ -164,7 +164,7 @@ bool HistoryDao::deleteByPriKey(const unsigned int& urlid, const QUrl& url) {
     }
 
     else{
-        qDebug() << "[error] fail to start transaction " << db.lastError().text();
+        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
         return false;
     }
     return true;
