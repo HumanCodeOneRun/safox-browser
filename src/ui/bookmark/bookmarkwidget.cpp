@@ -48,11 +48,20 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     /*-------------------------------------*/
 
     this->scrollView = new QScrollArea(this);
-    this->scrollView->setStyleSheet("QScrollArea{border:none;background-color:red;}");
-//    this->scrollView->setLayout()
-    BookmarkItem temp(this->scrollView,20,0,":/icon/../image/setting.png","test_title","test_description");
+    this->scrollView->setStyleSheet("QScrollArea{background-color:red;}");
+    this->scrollView->setGeometry(0,100,width,height-200);
+    QVBoxLayout *layout=new QVBoxLayout();
+    QWidget* scrollWidget = new QWidget();
+    scrollWidget->setStyleSheet("QWidget{background-color:green;}");
 
+    this->scrollView->setWidget(scrollWidget);
+    BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
+    BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_kkkkkk","test_description");
+    //todo: 计算需要的高度
+    scrollWidget->setFixedSize(width,height+200);
+    layout->addWidget(scrollWidget);
 
+    this->scrollView->setLayout(layout);
 
 }
 

@@ -16,6 +16,7 @@
 #include <QAction>
 #include <QScrollArea>
 #include <QStyleOption>
+#include <QVBoxLayout>
 #include <QPainter>
 #include <QVector>
 #include <QVariant>

@@ -30,6 +30,7 @@ public:
 
 public:
     int userid;
+    void changeUser(int);
     const MyServiceLocator &m_serviceLocator;
     std::shared_ptr<Config> m_config;
     std::shared_ptr<DatabaseTaskScheduler> m_databaseScheduler;
