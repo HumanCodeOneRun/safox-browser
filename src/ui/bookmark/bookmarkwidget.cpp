@@ -35,6 +35,11 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
+    QComboBox* markerGroup = new QComboBox(this);
+    markerGroup->setGeometry(20,100,260,35);
+    markerGroup->addItem("Group1");
+    markerGroup->addItem("Group2");
+
 //    this->bookmark->addBookmarkGroup(root->Browser::userid,"firstGroup",QUrl("www.testIcon.com"));
 
 //    this->bookmark->addBookmark(root->Browser::userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
@@ -49,7 +54,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 
     this->scrollView = new QScrollArea(this);
     this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
-    this->scrollView->setGeometry(0,100,width,height-200);
+    this->scrollView->setGeometry(0,150,width,height-200);
     QVBoxLayout *layout=new QVBoxLayout();
     QWidget* scrollWidget = new QWidget();
     scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");

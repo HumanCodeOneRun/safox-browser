@@ -234,8 +234,10 @@ bool UserDao::insert(const QString &name, const QString &password) {
 
         if (!db.commit()) {
             qDebug() << "[error] fail to commmit " << db.lastError().text();
+            db.rollback();
             return false;
         }
+        query.finish();
     } else {
         qDebug() << "[error] fail to strt transaction " << db.lastError().text();
         return false;
