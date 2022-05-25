@@ -4,11 +4,11 @@
 // User item
 
 UserModel::UserItem::UserItem(std::shared_ptr<DatabaseTaskScheduler> scheduler)
-        : id(-1), name("null"), password("123456"), samename({}) {
+        : id(-1), name("null"), password("123456") {
     this->dao = std::make_unique<UserDao>(scheduler);
 }
 
-void UserModel::UserItem::create_table(){
+void UserModel::UserItem::create_table() {
     this->dao->createTable();
 }
 
@@ -25,13 +25,15 @@ QVector<QVariant> UserModel::UserItem::getItemById(const int &id) {
 
 }
 
-QVector<QVector<QVariant>> UserModel::UserItem::getItemByName(const QString &name) {
-    QVector<QVector<QVariant>> ret = (this->dao)->QueryByName(name);
+QVector<QVariant> UserModel::UserItem::getItemByName(const QString &name) {
+    QVector<QVariant> ret = (this->dao)->QueryByName(name);
     if (ret.empty()) {
         qDebug() << "[error] fail to query user item by name";
         return ret;
     }
-    this->samename = ret;
+    this->id = ret.value(0).toInt();
+    this->name = ret.value(1).toString();
+    this->password = ret.value(2).toString();
     return ret;
 }
 
@@ -47,6 +49,20 @@ QVector<QVariant> UserModel::UserItem::getItemByIdPassword(const int &id, const 
     return ret;
 
 }
+
+QVector<QVariant> UserModel::UserItem::getItemByNamePassword(const QString &name, const QString &password)  {
+    QVector<QVariant> ret = (this->dao)->QueryByNamePassword(name, password);
+    if (ret.empty()) {
+        qDebug() << "[error] fail to query user item by id";
+        return ret;
+    }
+    this->id = ret.value(0).toInt();
+    this->name = ret.value(1).toString();
+    this->password = ret.value(2).toString();
+    return ret;
+
+}
+
 
 bool UserModel::UserItem::setName(const int &id, const QString &name) {
     this->name = name;
@@ -74,27 +90,28 @@ UserModel::UserItem::~UserItem() {
 // User model
 UserModel::UserModel(std::shared_ptr<DatabaseTaskScheduler> scheduler) :
         m_taskScheduler(scheduler) {
-        this->item = std::make_unique<UserItem>(scheduler);
+    this->item = std::make_unique<UserItem>(scheduler);
 
-        //create_table();
+    //create_table();
 }
 
-void UserModel::create_table(){
-    m_taskScheduler->post([this](){
+void UserModel::create_table() {
+    m_taskScheduler->post([this]() {
         this->item->create_table();
     });
 }
 
 #if defined(__clang__) || defined(__GNUC__)
+
 bool UserModel::editUser(const int &id, const QString &name, const QString &password) {
     if (!name.isEmpty() && !password.isEmpty()) {
 
-        auto futureName = m_taskScheduler->post([this, &id, &name](){
+        auto futureName = m_taskScheduler->post([this, &id, &name]() {
             return this->item->setName(id, name);
         });
         int name_flag = futureName.get();
 
-        auto futurePwd = m_taskScheduler->post([this,&id, &password](){
+        auto futurePwd = m_taskScheduler->post([this, &id, &password]() {
             return this->item->setPassword(id, password);
         });
         int pwd_flag = futurePwd.get();
@@ -144,17 +161,44 @@ bool UserModel::queryUserPassword(const int &id, const QString &password) {
 
 }
 
+bool UserModel::queryUserPassword(const QString &name, const QString &password) {
+
+    auto future = m_taskScheduler->post([this, &name, &password]() {
+        int has = !this->item->getItemByNamePassword(name, password).isEmpty();
+        int ret = has ? 1 : 0;
+        return ret;
+    });
+    return future.get();
+
+}
+
 bool UserModel::addRegisterUser(const QString &name, const QString &password) {
 
     auto future = m_taskScheduler->post([this, &name, &password]() {
-        return  this->item->addUser(name, password);
+        return this->item->addUser(name, password);
     });
     return future.get();
 }
 
 bool UserModel::deleteRegisterUser(const int &id) {
-    return m_taskScheduler->post([this, &id](){
+    return m_taskScheduler->post([this, &id]() {
         return this->item->deleteUser(id);
+    }).get();
+}
+
+bool UserModel::deleteRegisterUser(const QString &name) {
+    return m_taskScheduler->post([this, &name]() {
+        this->item->getItemByName(name);
+        int id = this->item->getId();
+        return this->item->deleteUser(id);
+    }).get();
+}
+
+int UserModel::getUserIdByName(const QString &name){
+    return m_taskScheduler->post([this, &name]() {
+        this->item->getItemByName(name);
+        int id = this->item->getId();
+        return id;
     }).get();
 }
 

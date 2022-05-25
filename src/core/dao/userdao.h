@@ -9,8 +9,10 @@ public:
 
     // query
     QVector<QVariant> QueryById(const int& id);
-    QVector<QVector<QVariant>> QueryByName(const QString& name);
+    QVector<QVariant> QueryByName(const QString& name);
     QVector<QVariant> QueryByIdPassword(const int& id, const QString& password);
+    QVector<QVariant> QueryByNamePassword(const QString& name, const QString& password);
+
     // update
     bool setName(const int& id, const QString& name);
     bool setPassword(const int& id, const QString& password);

@@ -18,9 +18,12 @@ public:
 
         QVector<QVariant> getItemById(const int &id);
 
-        QVector<QVector<QVariant>> getItemByName(const QString &name);
+        QVector<QVariant> getItemByName(const QString &name);
 
         QVector<QVariant> getItemByIdPassword(const int &id, const QString &password);
+
+        QVector<QVariant> getItemByNamePassword(const QString &name, const QString &password);
+
 
         inline int getId() { return this->id; }
 
@@ -44,7 +47,6 @@ public:
         int id;
         QString name;
         QString password;
-        QVector<QVector<QVariant>> samename;
         std::unique_ptr<UserDao> dao;
     };
 
@@ -55,6 +57,8 @@ public :
 
     bool deleteRegisterUser(const int &id);
 
+    bool deleteRegisterUser(const QString &name);
+
     bool editUser(const int &id, const QString &name = "", const QString &password = "123456");
 
     bool queryUserName(const QString &name);
@@ -62,6 +66,10 @@ public :
     bool queryUserId(const int &id);
 
     bool queryUserPassword(const int &id, const QString &password);
+
+    bool queryUserPassword(const QString &name, const QString &password);
+
+    int getUserIdByName(const QString &name);
 
 private:
     std::shared_ptr<DatabaseTaskScheduler> m_taskScheduler;
