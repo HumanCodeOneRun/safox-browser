@@ -270,7 +270,7 @@ bool UserModel::queryUserPassword(const int &id, const QString &password) {
 bool UserModel::queryUserPassword(const QString &name, const QString &password) {
     std::promise<bool> pm;
     auto future = pm.get_future();
-    auto future = m_taskScheduler->post([this, &name, &password]() {
+    m_taskScheduler->post([this, &name, &password]() {
         int has = !this->item->getItemByNamePassword(name, password).isEmpty();
         int ret = has ? 1 : 0;
         pm.set_value(ret);
