@@ -131,9 +131,8 @@ bool UserModel::queryUserName(const QString &name) {
     if (!name.isEmpty()) {
 
         auto future = m_taskScheduler->post([this, &name]() {
-            int has = this->item->getItemByName(name).isEmpty();
-            int ret = has ? 1 : 0;
-            return ret;
+            int has = !this->item->getItemByName(name).isEmpty();
+            return has;
         });
         return future.get();
     }
@@ -143,9 +142,8 @@ bool UserModel::queryUserName(const QString &name) {
 bool UserModel::queryUserId(const int &id) {
 
     auto future = m_taskScheduler->post([this, &id]() {
-        int has = !this->item->getItemById(id).isEmpty();
-        int ret = has ? 1 : 0;
-        return ret;
+        int has = !(this->item->getItemById(id).isEmpty());
+        return has;
     });
     return future.get();
 }

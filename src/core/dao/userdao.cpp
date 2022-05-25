@@ -47,7 +47,7 @@ QVector<QVariant> UserDao::QueryById(const int &id) {
             ret.append({query.value(0), query.value(1), query.value(2)});
         }
     } else {
-        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return ret;
     }
     return ret;
@@ -110,7 +110,7 @@ QVector<QVariant> UserDao::QueryByNamePassword(const QString &name, const QStrin
             ret.append({query.value(0), query.value(1), query.value(2)});
         }
     } else {
-        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return ret;
     }
 
@@ -141,7 +141,7 @@ QVector<QVariant> UserDao::QueryByName(const QString &name) {
             ret.append({query.value(0), query.value(1), query.value(2)});
         }
     } else {
-        qDebug() << "[error] fail to strt transaction " << db.lastError().text();
+        qDebug() << "[error] fail to start transaction " << db.lastError().text();
         return ret;
     }
 

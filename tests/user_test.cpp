@@ -18,6 +18,8 @@ bool t_deleteUsr(UserModel& um) {
     return 1
            &&um.deleteRegisterUser("usr2")
            &&um.deleteRegisterUser("usr3")
+
+//             &&um.deleteRegisterUser("usr100")
            ;
 }
 bool t_queryUsr(UserModel& um) {
@@ -26,13 +28,14 @@ bool t_queryUsr(UserModel& um) {
     &&um.queryUserId(1)
     &&um.queryUserName("usr1")
     &&um.queryUserPassword("usr1","1")
-    &&(um.getUserIdByName("usr1") == 1);
+    &&(um.getUserIdByName("usr1") == 1)
+    ;
 
 }
 
 bool t_editUsr(int id, UserModel& um) {
     
-    return 1 &&  um.editUser(id, "user100", "666");
+    return 1 &&  um.editUser(id, "usr100", "666");
 }
 
 int main() {
@@ -47,6 +50,6 @@ int main() {
               && t_editUsr(1, model)
             ;
     scheduler->stop();
-
+    cout<<!ret;
     return !ret;
 }
