@@ -267,6 +267,18 @@ bool UserModel::queryUserPassword(const int &id, const QString &password) {
 
 }
 
+bool UserModel::queryUserPassword(const QString &name, const QString &password) {
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    auto future = m_taskScheduler->post([this, &name, &password]() {
+        int has = !this->item->getItemByNamePassword(name, password).isEmpty();
+        int ret = has ? 1 : 0;
+        pm.set_value(ret);
+    });
+    return future.get();
+
+}
+
 bool UserModel::addRegisterUser(const QString &name, const QString &password) {
     std::promise<bool> pm;
     auto future = pm.get_future();
@@ -286,7 +298,26 @@ bool UserModel::deleteRegisterUser(const int &id) {
 
 }
 
-
+bool UserModel::deleteRegisterUser(const QString &name) {
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this, &name]() {
+        this->item->getItemByName(name);
+        int id = this->item->getId();
+        pm.set_value(this->item->deleteUser(id));
+    });
+    return future.get();
+}
+int UserModel::getUserIdByName(const QString &name){
+    std::promise<bool> pm;
+    auto future = pm.get_future();
+    m_taskScheduler->post([this, &name]() {
+        this->item->getItemByName(name);
+        int id = this->item->getId();
+        pm.set_value(id)
+    });
+    return future.get();
+}
 #endif
 
 UserModel::~UserModel() {
