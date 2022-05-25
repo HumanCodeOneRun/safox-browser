@@ -76,7 +76,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
     // 初始化账户界面并隐藏
     qDebug()<<"[test] browserwindown slot3 init";
-    this->accountTest = new AccountWidget(this,tb->accountBtn);
+    this->accountTest = new AccountWidget(this,tb->accountBtn,this);
     this->accountTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_accountBtn_passSignal,this,&BrowserWindow::accept_account_signal);
@@ -104,8 +104,14 @@ void BrowserWindow::on_closeBtn_clicked()
     QApplication::exit(0);
 }
 
-
+/* 最小化 */
 void BrowserWindow::on_minBtn_clicked()
+{
+    this->showMinimized();
+}
+
+/* 放大缩小 */
+void BrowserWindow::on_hidBtn_clicked()
 {
     if(this->scale==0.5){
         this->showNormal();
@@ -114,12 +120,6 @@ void BrowserWindow::on_minBtn_clicked()
         this->scale = 0.5;
         this->showFullScreen();
     }
-//    QMainWindow::resize(this->curHeight*this->scale,this->curWidth*this->scale);
-}
-
-void BrowserWindow::on_hidBtn_clicked()
-{
-    this->showMinimized();
 }
 
 void BrowserWindow::CreateSystemTrayIcon(){
