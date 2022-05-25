@@ -35,11 +35,18 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
     
 // add测试
     m_user->addRegisterUser("kunkuntest","kunkunpassword");
-    m_user->addRegisterUser("kunkuntest","kunkunpassword");
 
     bool isExist = m_user->queryUserName("kunkuntest2");
     qDebug()<<"test测试："<<isExist;
 
+    bool canLog = m_user->queryUserPassword("kunkuntest","kunkunpassword");
+    if(!canLog){
+        qDebug()<<"queryUserPassword测试："<<canLog;
+
+    }
+    int newid = m_user->getUserIdByName("kunkuntest");
+    changeUser(newid);
+    qDebug()<<"newid："<<this->userid;
 
     //测试添加历史用
     WebView *webview = new WebView();
