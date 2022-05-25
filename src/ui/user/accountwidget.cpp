@@ -67,18 +67,17 @@ void AccountWidget::on_loginBtn_clicked(){
     QString userpass = this->password->text();
     bool isExist = this->root->Browser::m_user->queryUserName(username);
     if(!isExist){
-        //todo: 弹窗显示用户不存在
-        qDebug("user not exist");
+        this->root->popMessageBox("该用户不存在","错误");
         return;
     }
-    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
-    if(!canLog){
-        //todo: 弹窗显示密码错误
-        return;
-    }
-    int newid = this->root->Browser::m_user->getUserIdByName(username);
-    this->root->Browser::changeUser(newid);
-    qDebug("log success");
+//    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
+//    if(!canLog){
+//        //todo: 弹窗显示密码错误
+//        return;
+//    }
+//    int newid = this->root->Browser::m_user->getUserIdByName(username);
+//    this->root->Browser::changeUser(newid);
+    this->root->popMessageBox("登录成功","成功");
 }
 
 void AccountWidget::on_registerBtn_clicked(){
@@ -87,12 +86,11 @@ void AccountWidget::on_registerBtn_clicked(){
     qDebug()<<username;
     bool isExist = this->root->Browser::m_user->queryUserName(username);
     if(isExist){
-        //todo: 弹窗显示已存在用户
-        qDebug("user exist");
+        this->root->popMessageBox("该用户已存在","错误");
         return;
     }
     this->root->Browser::m_user->addRegisterUser(username,userpass);
-    //todo：弹窗显示注册成功
+    this->root->popMessageBox("注册成功","成功");
     qDebug("register success");
 }
 

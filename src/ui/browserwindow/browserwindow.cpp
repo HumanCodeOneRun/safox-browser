@@ -148,6 +148,31 @@ void BrowserWindow::CreateSystemTrayIcon(){
     trayIcon->show();
 }
 
+void BrowserWindow::popMessageBox(QString text,QString title){
+    QMessageBox box;
+    box.setStyleSheet("QLabel{"
+                      "min-width: 300px;"
+                      "min-height: 200px; "
+                      "font-size:20px;"
+                      "}"
+                      "QPushButton {"
+                      "background-color:#89AFDE;"
+                      " border-style: outset;"
+                      " border-width: 10px;"
+                      " border-radius: 20px;"
+                      " border-color: beige;"
+                      " font: bold 15px;"
+                      " min-width: 15em;"
+                      " min-height: 5em;"
+                      "}"
+                      "");
+    box.setText(text);//设置显示文本
+    box.setWindowTitle(title);//设置弹窗标题
+//    box.setWindowIcon(QIcon(":/new/prefix1/h8.ico"));//弹窗左上角图标
+//    box.setIconPixmap(QPixmap(":/new/prefix1/gg.ico"));//弹窗提示图
+    box.exec();
+}
+
 void BrowserWindow::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

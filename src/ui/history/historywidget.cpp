@@ -33,17 +33,26 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     QLabel* nameTitle = new QLabel(this);
     nameTitle->setText("名称");
     nameTitle->setGeometry(460,622,268,20);
-    nameTitle->setStyleSheet("QLabel{background-color:rgba(46, 50, 53, 100);color:white;}");
+    nameTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;}");
+    name = new QLineEdit(this);
+    name->setGeometry(460,650,400,32);
+    name->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
 
     QLabel* urlTitle = new QLabel(this);
     urlTitle->setText("网址");
     urlTitle->setGeometry(460,717,268,20);
-    urlTitle->setStyleSheet("QLabel{background-color:rgba(46, 50, 53, 100);color:white;}");
+    urlTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;}");
+    url = new QLineEdit(this);
+    url->setGeometry(460,755,400,32);
+    url->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
 
     QLabel* tagTitle = new QLabel(this);
     tagTitle->setText("标签");
     tagTitle->setGeometry(460,822,268,20);
-    tagTitle->setStyleSheet("QLabel{background-color:rgba(46, 50, 53, 100);color:white;}");
+    tagTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;}");
+    tag = new QLineEdit(this);
+    tag->setGeometry(460,850,400,32);
+    tag->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
 
     connect(this->historyTable,&QTableWidget::itemClicked,this,&HistoryWidget::getItem);
 }

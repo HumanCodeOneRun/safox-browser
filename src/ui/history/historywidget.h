@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QLabel>
 #include <QGroupBox>
+#include <QLineEdit>
 #include "src/ui/history/historybar.h"
 
 namespace Ui {
@@ -23,6 +24,9 @@ public:
     BrowserWindow* root;
     HistoryBar* historyBar;
     QTableWidget* historyTable;
+    QLineEdit* name;
+    QLineEdit* tag;
+    QLineEdit* url;
     int index;
     ~HistoryWidget();
 

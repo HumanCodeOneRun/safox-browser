@@ -21,6 +21,7 @@
 #include "src/core/browser/browser.h"
 #include <QToolButton>
 #include <QSystemTrayIcon>
+#include <QMessageBox>
 #include <QMouseEvent>
 #include <QAction>
 #include <QMenu>
@@ -44,6 +45,7 @@ public:
     DownloadWidget* downloadTest;
     BrowserWindow(int userid, const MyServiceLocator &serviceLocator, QWidget *parent = NULL);
     void CreateSystemTrayIcon();
+    void popMessageBox(QString text,QString title);
     void paintEvent(QPaintEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);

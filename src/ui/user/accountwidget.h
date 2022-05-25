@@ -8,6 +8,7 @@
 #include <QToolButton>
 #include <QStyleOption>
 #include <QPainter>
+#include <QMessageBox>
 #include "src/core/user/usermodel.h"
 
 namespace Ui {
