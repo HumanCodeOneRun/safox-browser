@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-05-17 16:26:04
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: \FolkTell\FolkTell\src\toolbar.h
+ * @FilePath: \safox\safox\src\toolbar.h
  */
 #ifndef TOOLBAR_H
 #define TOOLBAR_H
@@ -17,6 +17,10 @@
 #include<QPainter>
 #include<QStyleOption>
 #include <QAction>
+
+#include <QUrl>
+#include <QRegularExpression>
+
 #include "../history/historywidget.h"
 #include "../popupmenu/popupmenu.h"
 
@@ -42,6 +46,8 @@ public:
     QToolButton* addBtn;
     QLineEdit* urlBar;
     HistoryWidget* historyTest;
+    void setParentWindow(BrowserWindow *parent);
+    bool IsUrl(QString input);
 
 private:
     int init_x;
@@ -57,15 +63,22 @@ private slots:
     void on_historyBtn_clicked();
     void on_bookmarkerBtn_clicked();
     void on_settingBtn_clicked();
-
-    void start_search();
+    void on_accountBtn_clicked();
+    void on_downloadBtn_clicked();
     void home_page();
+    void start_search();
     void back_page();
     void front_page();
 
 signals:
     void on_historyBtn_passSignal();
     void on_bookmarkerBtn_passSignal();
+    void on_accountBtn_passSignal();
+    void on_downloadBtn_passSignal();
+
+    void on_goBtn_passSignal();
+    void on_homeBtn_passSignal();
+    void on_backBtn_passSignal();
 };
 
 #endif // TOOLBAR_H

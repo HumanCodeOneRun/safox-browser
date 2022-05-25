@@ -7,8 +7,8 @@
 #include <QLineEdit>
 #include <QIcon>
 #include <QMenu>
-//#include <toolbar.h>
 #include <bookmarkwidget.h>
+
 
 class QUrl;
 class BrowserWindow;
@@ -28,16 +28,19 @@ class tabwidget : public QTabWidget
 public:
     explicit tabwidget(QWidget *parent = nullptr,QWebEngineProfile *Profile= nullptr);
     ~tabwidget();
-    //Toolbar* toolbar;
-
     void setParentWindow(BrowserWindow *ParentWindow);
     WebView *currentWebView() const;
+
+    QUrl returnHomePage();
+    void changeHomePage(QUrl changemain);
 
 public slots:
     void closeTab(int index);
     void setUrl(const QUrl &url);
     void nextTab();
     void previousTab();
+
+
     WebView *createTab(bool makeCurrent = true);
     WebView *createView();
     void triggerWebPageAction(QWebEnginePage::WebAction action);
@@ -61,7 +64,6 @@ signals:
     void urlChanged(const QUrl &url);
     void favIconChanged(const QIcon &icon);
     void webActionEnabledChanged(QWebEnginePage::WebAction action, bool enabled);
-
     void loadProgress(int progress);
 
 
@@ -71,8 +73,9 @@ private:
     WebView *webView(int index) const;
     void setupView(WebView *webView);
     Ui::tabwidget *ui;
-
     QWebEngineProfile *profile;
+
+    QUrl homepage=QStringLiteral("https://www.bing.com");
 };
 
 #endif // TABWIDGET_H

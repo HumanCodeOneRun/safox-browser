@@ -48,13 +48,13 @@ BrowserWindow::BrowserWindow(QWidget *parent)
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
     centralwidget->setLayout(layout);
-    centralwidget->setGeometry(0,100,1535,770);
+    centralwidget->setGeometry(0,100,1920,980);
 
 
     /* toolbar */
 
 
-    this->tb= new Toolbar(this,0,50,1535,770);
+    this->tb= new Toolbar(this,0,50,1920,980);
     layout->addWidget(tb);
 
     /* 关闭按钮 */
@@ -92,31 +92,55 @@ BrowserWindow::BrowserWindow(QWidget *parent)
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
 
+
+    tb->setParentWindow(this);
     /*tabwidget*/
 
     layout->addWidget(my_tab);
     my_tab->setParentWindow(this);
     my_tab->move(0, 100);
-    my_tab->setGeometry(0,100,1535,770);
+    my_tab->setGeometry(0,100,1920,980);
     my_tab->setTabPosition(QTabWidget::North);
     my_tab->setTabShape(QTabWidget::Triangular);
     my_tab->setTabsClosable(true);
     my_tab->createTab();
-    QUrl url=QStringLiteral("https://www.bing.com");
-    this->returnTab()->setUrl(url);
 
+
+    my_tab->setUrl(my_tab->returnHomePage());
+
+    DownloadManager* manager=new DownloadManager;
 
     connect(tb->addBtn,&QToolButton::clicked,my_tab,&tabwidget::createTab);
+    /*
     connect(tb->urlBar, &QLineEdit::returnPressed, [this]() {
+        QUrl *search =new QUrl;
+        search->fromUserInput(tb->urlBar->text());
+        if(search->isValid()){
+            qDebug()<<"错误判断";
+        }else if(!search->isValid()){
+            qDebug()<<"成功判断";
+        }
         my_tab->setUrl(QUrl::fromUserInput(tb->urlBar->text()));
     });
+    */
     connect(my_tab, &tabwidget::urlChanged, [this](const QUrl &url) {
         tb->urlBar->setText(url.toDisplayString());
     });
+    connect(tb,&Toolbar::on_goBtn_passSignal,this,&BrowserWindow::accept_go_signal);
+    connect(tb,&Toolbar::on_backBtn_passSignal,this,&BrowserWindow::accept_back_signal);
+    connect(tb,&Toolbar::on_homeBtn_passSignal,this,&BrowserWindow::accept_home_signal);
 
-
-
-
+    connect(my_tab->currentWebView()->page()->profile(), &QWebEngineProfile::downloadRequested,
+        [manager](QWebEngineDownloadRequest* request){
+            qDebug() << "emit request";
+            QUrl url = request->url();
+            QUrl icon("icon.com");
+            QString save_path = "~/Downloads";
+            QString name = request->downloadFileName();
+            qDebug() << "name is " << name;
+            manager->on_requested(request, url, icon, save_path, name);
+        }
+        );
 
 }
 
@@ -187,7 +211,14 @@ void BrowserWindow::accept_bookmarker_signal(){
     }
 }
 
-tabwidget *BrowserWindow::returnTab() const
-{
-    return my_tab;
-}
+void BrowserWindow::accept_go_signal(){
+    my_tab->triggerWebPageAction(QWebEnginePage::Forward);
+};
+
+void BrowserWindow::accept_home_signal(){
+    my_tab->setUrl(my_tab->returnHomePage());
+};
+
+void BrowserWindow::accept_back_signal(){
+    my_tab->triggerWebPageAction(QWebEnginePage::Back);
+};

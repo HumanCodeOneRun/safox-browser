@@ -10,13 +10,6 @@
 #include <QUrl>
 
 
-/*
- * QUrl CommandUrl()
-{
-    //if 搜索栏输入url 返回搜索栏url
-    return QUrl (QStringLiteral("https://www.bing.com"));
-}
-*/
 int main(int argc, char *argv[])
 {
     
@@ -31,11 +24,9 @@ int main(int argc, char *argv[])
         }
     }
 
-//    QUrl url = CommandUrl();
 
 
     BrowserWindow w;
-    //w.returnTab()->setUrl(url);
     w.show();
     return a.exec();
 }

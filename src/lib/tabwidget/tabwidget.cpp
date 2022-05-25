@@ -27,7 +27,7 @@ tabwidget::tabwidget(QWidget *parent,QWebEngineProfile *Profile) :
         if (index == -1)
             createTab();
     });
-    connect(this, &QTabWidget::currentChanged, this, &tabwidget::handleCurrentChanged);
+
 
 
     setElideMode(Qt::ElideRight);
@@ -262,4 +262,10 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
     menu.addAction(tr("重新加载所有标签页"), this, &tabwidget::reloadAllTabs);
     menu.exec(QCursor::pos());
 
+};
+QUrl tabwidget::returnHomePage(){
+    return homepage;
+};
+void tabwidget::changeHomePage(QUrl changemain){
+    homepage=changemain;
 };

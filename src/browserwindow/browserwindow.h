@@ -13,6 +13,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include "tabwidget.h"
+#include "downloadmanager.h"
 #include "toolbar.h"
 #include "historywidget.h"
 #include "bookmarkwidget.h"
@@ -39,6 +40,7 @@ public:
     int curHeight,curWidth;
     double scale;
     Toolbar* tb;
+    tabwidget *my_tab;
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
     int userid;
@@ -46,7 +48,6 @@ public:
     BrowserWindow(QWidget *parent = nullptr);
     void CreateSystemTrayIcon();
     ~BrowserWindow();
-    tabwidget *returnTab() const;
 
 private slots:
     void on_closeBtn_clicked();
@@ -59,8 +60,15 @@ private slots:
 
     void accept_bookmarker_signal();
 
+    void accept_go_signal();
+
+    void accept_home_signal();
+
+    void accept_back_signal();
+
+
 private:
     Ui::BrowserWindow *ui;
-    tabwidget *my_tab;
+
 };
 #endif // BROWSERWINDOW_H
