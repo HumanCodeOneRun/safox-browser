@@ -13,27 +13,18 @@
 
 class QObject;
 
-/**
- * @class ServiceLocator
- * @brief Handles the registration and lookup of unique services.
- *        This class does not own any of the services stored in its registry.
- *        For QObject-derived types, this would be instantiated with
- *        KeyType = QString, BaseServiceType = QObject
- */
+
 template<class KeyType, class BaseServiceType>
 class ServiceLocator {
 private:
-    /// Non-copyable，this project only needs Pass By Reference
+   
     ServiceLocator(const ServiceLocator &) = delete;
-
-    /// Non-copyable
     ServiceLocator &operator=(const ServiceLocator &) = delete;
 
 public:
-    /// Default constructor
+   
     ServiceLocator() = default;
 
-    /// Default destructor
     ~ServiceLocator() = default;
 
 
@@ -54,11 +45,7 @@ public:
         return it->second;
     }
 
-    /**
-     * @brief getServiceAs Looks for and attempts to return a service with the key
-     * @param key
-     * @return a Derived type pointer to the service if found, or a nullptr if not found
-     */
+
     template<class Derived>
     std::shared_ptr<Derived> getServiceAs(const KeyType &key) const {
         static_assert(std::is_base_of<BaseServiceType, Derived>::value, "Object should inherit from BaseServiceType");

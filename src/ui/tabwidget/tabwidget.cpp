@@ -2,6 +2,7 @@
 #include "ui_tabwidget.h"
 #include "webview.h"
 #include "browserwindow.h"
+#include "iconmanager.h"
 #include <QTabBar>
 
 tabwidget::tabwidget(QWidget *parent) :
@@ -65,7 +66,11 @@ void tabwidget::setupView(WebView *webView)
     connect(webPage, &QWebEnginePage::iconChanged, [this, webView](const QIcon &icon) {
         int index = indexOf(webView);
         QIcon ico = icon.isNull() ? QIcon(QStringLiteral(":defaulticon.png")) : icon;
-
+        
+        qDebug() << "[info] enter icon changed";
+        QUrl url = webView->getUrl();
+        IconManager::check_local_cache(url, icon);
+        
         if (index != -1)
             setTabIcon(index, ico);
         if (currentIndex() == index)
