@@ -211,6 +211,8 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
         gid = future_gid.get();
     }
 
+    else
+        gid  = future.get().value(1).toInt();
     auto ret = m_taskScheduler->post([this, &gid, &uid, &name, &url, &gname, &icon](){
        return this->item->addBookmark(uid, name, url, gid, icon);
     });
@@ -264,7 +266,6 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
 }
 #endif
 
-
 #if defined(_MSC_VER)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     std::promise<QVector<QVector<QVariant>>> pm;
@@ -301,9 +302,10 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
     m_taskScheduler->post([this, &pm, &uid,  &gname](){
         pm.set_value(this->gitem->getGroupByUidAndName(uid, gname));
     });
-    
+
+    auto future_result = future.get();
     int gid;
-    if(future.get().isEmpty()){
+    if(future_result.isEmpty()){
         std::promise<int> temp_pm;
         auto temp_future = temp_pm.get_future();
         m_taskScheduler->post([this, &temp_pm, &gname, &uid](){
@@ -313,8 +315,9 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
         gid = temp_future.get();
     }
 
-    else
-        gid = future.get().value(1).toInt();
+    else{
+        gid = future_result.value(1).toInt();
+    }
 
 
 

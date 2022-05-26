@@ -38,8 +38,9 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     markerGroup->setStyleSheet("QComboBox{color:white;}");
 
     /* 添加分组测试 */
-//    this->bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
+    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
+    
     /* 读取书签分组 */
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
     QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
