@@ -8,6 +8,7 @@ tabwidget::tabwidget(QWidget *parent) :
     QTabWidget(parent),
     ui(new Ui::tabwidget)
 {
+    AdblockOpen=false;
     QTabBar *Bar = this->tabBar();
     Bar->setMovable(true);
     //设置tab可移动
@@ -43,7 +44,11 @@ tabwidget::~tabwidget()
 void tabwidget::setupView(WebView *webView)
 {
     QWebEnginePage *webPage = webView->page();
-
+    if (AdblockOpen){
+        webView->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+    }else{
+        webView->setDefaultRequestInterceptor();
+    }
     connect(webView, &QWebEngineView::titleChanged, [this, webView](const QString &title) {
         int index = indexOf(webView);
         if (index != -1)
@@ -99,16 +104,23 @@ void tabwidget::closeTab(int index)
 */
 
 WebView *tabwidget::createTab(bool makeCurrent){
+    qDebug()<<AdblockOpen;
     WebView *webView = createView();
     if (makeCurrent)
     {
         setCurrentWidget(webView);
+    }
+    if (AdblockOpen){
+        webView->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+    }else{
+        webView->setDefaultRequestInterceptor();
     }
     return webView;
 }
 
 WebView *tabwidget::createView()
 {
+    qDebug()<<AdblockOpen;
     WebView *webView = new WebView;
     QWebEnginePage *webPage = new QWebEnginePage(webView);
     webView->setPage(webPage);
@@ -163,6 +175,12 @@ WebView *tabwidget::webView(int index) const
 void tabwidget::setUrl(const QUrl &url)
 {
     if (WebView *view = currentWebView()) {
+        if (AdblockOpen){
+            view->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+        }else{
+            view->setDefaultRequestInterceptor();
+        }
+        qDebug()<<AdblockOpen;
         view->setUrl(url);
         view->setFocus();
         BrowserPoint->m_history->addHistoryEntry(view);
@@ -253,7 +271,7 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
         action = menu.addAction(tr("添加书签"));
         connect(action, &QAction::triggered, this, [this,index]() {
             addbookmark(index);
-            emit BrowserPoint->bookmarkTest->bookmarkerReload();
+            BrowserPoint->bookmarkTest->bookmarkerReload();
         });
         menu.addSeparator();
     }else{

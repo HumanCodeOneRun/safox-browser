@@ -101,21 +101,7 @@ bool WebView::isWebActionEnabled(QWebEnginePage::WebAction webAction) const
 QIcon WebView::favIcon() const
 {
     QIcon favIcon = icon();
-    //if (!favIcon.isNull())
         return favIcon;
-
-/*
-    if (m_loadProgress < 0) {
-        static QIcon errorIcon(QStringLiteral(":dialog-error.png"));
-        return errorIcon;
-    } else if (m_loadProgress < 100) {
-        static QIcon loadingIcon(QStringLiteral(":view-refresh.png"));
-        return loadingIcon;
-    } else {
-        static QIcon defaultIcon(QStringLiteral(":text-html.png"));
-        return defaultIcon;
-    }
-*/
 }
 QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type){
     BrowserWindow *mainWindow = qobject_cast<BrowserWindow*>(window());

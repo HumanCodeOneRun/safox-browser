@@ -30,7 +30,7 @@ public:
     ~tabwidget();
     void setParentWindow(BrowserWindow *ParentWindow);
     WebView *currentWebView() const;
-
+    bool AdblockOpen;
     QUrl returnHomePage();
     void changeHomePage(QUrl changemain);
 
