@@ -13,6 +13,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QIcon>
+#include <vector>
 #include <QAction>
 #include <QScrollArea>
 #include <QStyleOption>
@@ -38,7 +39,10 @@ public:
     explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int width,height;
     BookmarkModel* bookmark;
+    QWidget* scrollWidget;
+    BrowserWindow* root;
     QScrollArea* scrollView;
+    std::vector<int> gidArr;
     QVector<QVector<QVariant>> userBookmark;
     ~BookmarkWidget();
 
@@ -46,7 +50,8 @@ private:
     Ui::BookmarkWidget *ui;
     QLineEdit* searchKey;
     void paintEvent(QPaintEvent *event);
-    void loadBookmarker();
+private slots:
+    void on_clicked_bookmarkerGroup(int);
 
 };
 

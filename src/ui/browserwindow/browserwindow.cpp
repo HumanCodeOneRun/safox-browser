@@ -266,9 +266,11 @@ void BrowserWindow::accept_history_signal(){
         this->historyTest->hide();
     }else{
         this->historyTest->show();
+        this->historyTest->raise();
         this->bookmarkTest->hide();
         this->accountTest->hide();
         this->downloadTest->hide();
+        this->my_tab->hide();
     }
 }
 
@@ -281,6 +283,7 @@ void BrowserWindow::accept_bookmarker_signal(){
         this->historyTest->hide();
         this->accountTest->hide();
         this->downloadTest->hide();
+        this->my_tab->stackUnder(this->bookmarkTest);
     }
 }
 
@@ -290,8 +293,6 @@ void BrowserWindow::accept_account_signal(){
         this->accountTest->hide();
     }else{
         this->accountTest->show();
-        this->bookmarkTest->hide();
-        this->historyTest->hide();
         this->downloadTest->hide();
     }
 }
@@ -302,8 +303,6 @@ void BrowserWindow::accept_download_signal(){
         this->downloadTest->hide();
     }else{
         this->downloadTest->show();
-        this->bookmarkTest->hide();
-        this->historyTest->hide();
         this->accountTest->hide();
     }
 }

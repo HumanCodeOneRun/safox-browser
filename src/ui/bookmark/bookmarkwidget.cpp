@@ -10,23 +10,21 @@
 #include "ui_bookmarkwidget.h"
 #include "src/ui/browserwindow/browserwindow.h"
 BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,BrowserWindow* root) :
-    QWidget(parent),
+    QWidget(parent),width(width),height(height),root(root),
     ui(new Ui::BookmarkWidget)
 {
     ui->setupUi(this);
-    this->width = width;
-    this->height = height;
     this->bookmark = new BookmarkModel(std::shared_ptr<DatabaseTaskScheduler>(root->Browser::m_databaseScheduler));
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);
     this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
-
     QLabel* title = new QLabel(this);
     title->setText("书签列表");
     title->setGeometry(20,15,56,20);
     title->setStyleSheet("QLabel{color:rgba(225,225,225,100);font-size:14px;}");
 
+    /* 搜索框 */
     searchKey = new QLineEdit(this);
     searchKey->setText("Type here to search");
     searchKey->setGeometry(20,50,260,35);
@@ -35,36 +33,45 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
+    /* 书签分组下拉框 */
     QComboBox* markerGroup = new QComboBox(this);
     markerGroup->setGeometry(20,100,260,35);
-    markerGroup->addItem("Group1");
-    markerGroup->addItem("Group2");
+    markerGroup->setStyleSheet("QComboBox{color:white;}");
 
-//    this->bookmark->addBookmarkGroup(root->Browser::userid,"firstGroup",QUrl("www.testIcon.com"));
+    /* 添加分组测试 */
+//    this->bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
-//    this->bookmark->addBookmark(root->Browser::userid,"testPage",QUrl("www.test.com"),"firstGroup",QUrl("www.testIcon.com"));
-//    qDebug("vector:");
-    /*--------遍历QList：------------------*/
-//        QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
-//        while(i!=this->userBookmark.end()){
-//            qDebug()<<*i;
-//            i++;
-//        }
-    /*-------------------------------------*/
+    /* 读取书签分组 */
+    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+    QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
+    while(i!=this->userBookmark.end()){
+        QList<QVariant>::iterator j = (*i).begin();
+        this->gidArr.push_back((*j).toInt());
+        j++;
+        j++;
+        QString GroupName = (*j).toString();
+        markerGroup->addItem(GroupName);
+        i++;
+    }
+    connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
 
+
+
+//    this->bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
+//    this->bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"secondGroup",QUrl("www.testIcon.com"));
+
+    /* 书签显示 */
     this->scrollView = new QScrollArea(this);
     this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
     this->scrollView->setGeometry(0,150,width,height-200);
     QVBoxLayout *layout=new QVBoxLayout();
-    QWidget* scrollWidget = new QWidget();
+    scrollWidget = new QWidget();
     scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
 
     this->scrollView->setWidget(scrollWidget);
-    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
-    BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
-    BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,135,":/icon/../image/setting.png","test_kkkkkk","test_description");
-    //todo: 计算需要的高度
-    scrollWidget->setFixedSize(width,height+200);
+
+
+
     layout->addWidget(scrollWidget);
 
     this->scrollView->setLayout(layout);
@@ -90,6 +97,14 @@ void BookmarkWidget::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width,this->height);
 }
 
-void BookmarkWidget::loadBookmarker(){
-
+void BookmarkWidget::on_clicked_bookmarkerGroup(int index){
+    qDebug()<<index;
+    int gid = this->gidArr[index];
+    QVector<QVector<QVariant>> bookmarkItems = this->bookmark->getItemsByGid(root->Browser::userid,gid);
+    qDebug()<<bookmarkItems;
+    int count = 0;
+    BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
+    BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,135,":/icon/../image/setting.png","test_kkkkkk","test_description");
+    //todo: 计算需要的高度
+    scrollWidget->setFixedSize(width,200+count*80);
 }
