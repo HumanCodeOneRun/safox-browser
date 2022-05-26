@@ -48,6 +48,9 @@ public:
     bool flag;
     ~BookmarkWidget();
 
+signals:
+    void reloadbookmark();
+
 private:
     Ui::BookmarkWidget *ui;
     QLineEdit* searchKey;
@@ -55,6 +58,10 @@ private:
     void loadBookmarkGroup();
 private slots:
     void on_clicked_bookmarkerGroup(int);
+public slots:
+    void bookmarkerReload();
+
+
 
 };
 

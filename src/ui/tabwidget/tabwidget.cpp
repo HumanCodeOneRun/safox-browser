@@ -253,6 +253,7 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
         action = menu.addAction(tr("添加书签"));
         connect(action, &QAction::triggered, this, [this,index]() {
             addbookmark(index);
+            emit BrowserPoint->bookmarkTest->bookmarkerReload();
         });
         menu.addSeparator();
     }else{

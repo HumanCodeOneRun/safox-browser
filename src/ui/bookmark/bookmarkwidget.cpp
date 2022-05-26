@@ -105,3 +105,6 @@ void BookmarkWidget::loadBookmarkGroup(){
     }
     connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
 }
+void BookmarkWidget::bookmarkerReload(){
+    emit reloadbookmark();
+}

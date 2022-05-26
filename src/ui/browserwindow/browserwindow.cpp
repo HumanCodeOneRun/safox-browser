@@ -285,6 +285,7 @@ void BrowserWindow::accept_bookmarker_signal(){
         this->downloadTest->hide();
         this->my_tab->stackUnder(this->bookmarkTest);
     }
+    bookmarkTest->bookmarkerReload();
 }
 
 void BrowserWindow::accept_account_signal(){
