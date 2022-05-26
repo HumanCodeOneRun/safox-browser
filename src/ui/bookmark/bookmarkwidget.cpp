@@ -45,7 +45,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     this->scrollView->horizontalScrollBar()->setStyleSheet("QScrollBar{height:0px;}");
     this->scrollView->setGeometry(0,150,width,height-200);
     scrollWidget = new QWidget();
-
+    on_clicked_bookmarkerGroup(0);
 }
 
 BookmarkWidget::~BookmarkWidget()
@@ -88,7 +88,7 @@ void BookmarkWidget::loadBookmarkGroup(){
     markerGroup->setStyleSheet("QComboBox{color:white;}");
 
     /* 添加分组测试 */
-//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
+    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
 //    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"ThirdGroup",QUrl("www.testIcon.com"));
 
     /* 读取书签分组 */

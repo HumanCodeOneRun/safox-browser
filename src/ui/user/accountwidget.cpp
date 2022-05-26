@@ -70,12 +70,15 @@ void AccountWidget::on_loginBtn_clicked(){
         this->root->popMessageBox("该用户不存在","错误");
         return;
     }
+    qDebug("000");
     bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
     if(!canLog){
         //todo: 弹窗显示密码错误
         return;
     }
+    qDebug("111");
     int newid = this->root->Browser::m_user->getUserIdByName(username);
+    qDebug("222");
     this->root->Browser::changeUser(newid);
     this->root->popMessageBox("登录成功","成功");
 }
