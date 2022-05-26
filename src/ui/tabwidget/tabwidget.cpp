@@ -165,6 +165,7 @@ void tabwidget::setUrl(const QUrl &url)
     if (WebView *view = currentWebView()) {
         view->setUrl(url);
         view->setFocus();
+        BrowserPoint->m_history->addHistoryEntry(view);
     }
 }
 void tabwidget::nextTab()
