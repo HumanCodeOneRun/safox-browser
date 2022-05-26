@@ -70,15 +70,12 @@ void AccountWidget::on_loginBtn_clicked(){
         this->root->popMessageBox("该用户不存在","错误");
         return;
     }
-    qDebug("000");
     bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
     if(!canLog){
         //todo: 弹窗显示密码错误
         return;
     }
-    qDebug("111");
     int newid = this->root->Browser::m_user->getUserIdByName(username);
-    qDebug("222");
     this->root->Browser::changeUser(newid);
     this->root->popMessageBox("登录成功","成功");
 }
@@ -86,7 +83,6 @@ void AccountWidget::on_loginBtn_clicked(){
 void AccountWidget::on_registerBtn_clicked(){
     QString username = this->account->text();
     QString userpass = this->password->text();
-    qDebug()<<username;
     bool isExist = this->root->Browser::m_user->queryUserName(username);
     if(isExist){
         this->root->popMessageBox("该用户已存在","错误");
@@ -94,6 +90,5 @@ void AccountWidget::on_registerBtn_clicked(){
     }
     this->root->Browser::m_user->addRegisterUser(username,userpass);
     this->root->popMessageBox("注册成功","成功");
-    qDebug("register success");
 }
 

@@ -36,8 +36,10 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 
 
     /*添加书签测试*/
-//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"FirstGroup",QUrl("www.testIcon.com"));
-//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
+    for(int i=0;i<10;i++){
+            root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage"+QString::number(i),QUrl("www.test.com"),"FirstGroup",QUrl("www.testIcon.com"));
+    }
+    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 书签显示 */
     this->scrollView = new QScrollArea(this);
@@ -89,7 +91,8 @@ void BookmarkWidget::loadBookmarkGroup(){
 
     /* 添加分组测试 */
     root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
-//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"ThirdGroup",QUrl("www.testIcon.com"));
+    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
+    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 读取书签分组 */
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
