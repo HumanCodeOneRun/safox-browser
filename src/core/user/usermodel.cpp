@@ -314,7 +314,7 @@ int UserModel::getUserIdByName(const QString &name){
     m_taskScheduler->post([this,&pm, &name]() {
         this->item->getItemByName(name);
         int id = this->item->getId();
-        pm.set_value(id)
+        pm.set_value(id);
     });
     return future.get();
 }
