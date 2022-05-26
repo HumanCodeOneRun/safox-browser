@@ -23,7 +23,6 @@
 #include <QComboBox>
 #include "bookmarkmodel.h"
 #include "bookmarkitem.h"
-#include "bookmarkbox.h"
 #include "databasetaskscheduler.h"
 
 namespace Ui {

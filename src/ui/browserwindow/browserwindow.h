@@ -11,7 +11,7 @@
 
 #include <QMainWindow>
 #include <QWidget>
-
+#include "tabwidget.h"
 #include "toolbar.h"
 #include "src/ui/history/historywidget.h"
 #include "src/ui/bookmark/bookmarkwidget.h"
@@ -39,6 +39,7 @@ public:
     int curHeight,curWidth;
     double scale;
     Toolbar* tb;
+    tabwidget *my_tab;
     HistoryWidget* historyTest;
     BookmarkWidget* bookmarkTest;
     AccountWidget* accountTest;
@@ -66,6 +67,12 @@ private slots:
     void accept_account_signal();
 
     void accept_download_signal();
+
+    void accept_go_signal();
+
+    void accept_home_signal();
+
+    void accept_back_signal();
 
 private:
     Ui::BrowserWindow *ui;

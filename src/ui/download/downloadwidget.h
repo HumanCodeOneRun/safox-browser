@@ -5,6 +5,7 @@
 #include <QToolButton>
 #include <QStyleOption>
 #include <QPainter>
+#include <downloadmanager.h>
 
 namespace Ui {
 class DownloadWidget;

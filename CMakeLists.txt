@@ -10,7 +10,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-option(${PROJECT_NAME}_TEST "enable test" ON)
+option(${PROJECT_NAME}_TEST "enable test" OFF)
+#set(CMAKE_PREFIX_PATH "D:/Qt/6.2.4/msvc2019_64/lib/cmake" )
 set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macOS" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
@@ -45,6 +46,9 @@ set(PROJECT_SOURCES
         src/ui/browserwindow/browserwindow.cpp
         src/ui/browserwindow/browserwindow.h
         src/ui/browserwindow/browserwindow.ui
+        src/ui/tabwidget/tabwidget.cpp
+        src/ui/tabwidget/tabwidget.h
+        src/ui/tabwidget/tabwidget.ui
         src/ui/toolbar/toolbar.cpp
         src/ui/toolbar/toolbar.h
         src/ui/toolbar/toolbar.ui

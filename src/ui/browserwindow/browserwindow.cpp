@@ -90,6 +90,40 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
        connect(tb,&Toolbar::on_downloadBtn_passSignal,this,&BrowserWindow::accept_download_signal);
     }
 
+
+    /*tabwidget*/
+    my_tab=new tabwidget(this);
+    tb->setParentWindow(this);
+    my_tab->setParentWindow(this);
+    my_tab->move(0, 100);
+    my_tab->setGeometry(0,110,1920,980);
+    my_tab->setTabPosition(QTabWidget::North);
+    my_tab->setTabShape(QTabWidget::Triangular);
+    my_tab->setTabsClosable(true);
+    my_tab->createTab();
+    my_tab->setUrl(my_tab->returnHomePage());
+    connect(tb->addBtn,&QToolButton::clicked,my_tab,[=]{
+        my_tab->createTab();
+        my_tab->setUrl(my_tab->returnHomePage());
+    });
+    connect(my_tab, &tabwidget::urlChanged, [this](const QUrl &url) {
+        tb->urlBar->setText(url.toDisplayString());
+    });
+    connect(tb,&Toolbar::on_goBtn_passSignal,this,&BrowserWindow::accept_go_signal);
+    connect(tb,&Toolbar::on_backBtn_passSignal,this,&BrowserWindow::accept_back_signal);
+    connect(tb,&Toolbar::on_homeBtn_passSignal,this,&BrowserWindow::accept_home_signal);
+    DownloadManager* manager=new DownloadManager;
+    connect(my_tab->currentWebView()->page()->profile(), &QWebEngineProfile::downloadRequested,
+        [manager](QWebEngineDownloadRequest* request){
+            qDebug() << "emit request";
+            QUrl url = request->url();
+            QUrl icon("icon.com");
+            QString save_path = "~/Downloads";
+            QString name = request->downloadFileName();
+            qDebug() << "name is " << name;
+            manager->on_requested(request, url, icon, save_path, name);
+        });
+
 }
 
 BrowserWindow::~BrowserWindow()
@@ -273,3 +307,15 @@ void BrowserWindow::accept_download_signal(){
         this->accountTest->hide();
     }
 }
+
+void BrowserWindow::accept_go_signal(){
+    my_tab->triggerWebPageAction(QWebEnginePage::Forward);
+};
+
+void BrowserWindow::accept_home_signal(){
+    my_tab->setUrl(my_tab->returnHomePage());
+};
+
+void BrowserWindow::accept_back_signal(){
+    my_tab->triggerWebPageAction(QWebEnginePage::Back);
+};
