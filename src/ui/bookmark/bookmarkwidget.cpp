@@ -14,7 +14,6 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     ui(new Ui::BookmarkWidget)
 {
     ui->setupUi(this);
-    this->bookmark = new BookmarkModel(std::shared_ptr<DatabaseTaskScheduler>(root->Browser::m_databaseScheduler));
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);
@@ -42,7 +41,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 //    this->bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 读取书签分组 */
-    this->userBookmark = this->bookmark->initGetGroups(root->Browser::userid);
+    this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
     QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
     while(i!=this->userBookmark.end()){
         QList<QVariant>::iterator j = (*i).begin();
@@ -57,7 +56,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 
 
 
-//    this->bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
+    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
 //    this->bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"secondGroup",QUrl("www.testIcon.com"));
 
     /* 书签显示 */
@@ -100,7 +99,7 @@ void BookmarkWidget::paintEvent(QPaintEvent *event)
 void BookmarkWidget::on_clicked_bookmarkerGroup(int index){
     qDebug()<<index;
     int gid = this->gidArr[index];
-    QVector<QVector<QVariant>> bookmarkItems = this->bookmark->getItemsByGid(root->Browser::userid,gid);
+    QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
     qDebug()<<bookmarkItems;
     int count = 0;
     BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
