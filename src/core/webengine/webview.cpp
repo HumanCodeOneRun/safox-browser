@@ -7,6 +7,7 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #include "webview.h"
+#include "browserwindow.h"
 #include "../core/adblock/adblock_request_interceptor.h"
 #include "../core/adblock/default_request_interceptor.h"
 
@@ -89,3 +90,46 @@ something to optimize:
 1, maybe when changed happening, we don't have to send the entire webview*?
 but compare to do, not to do seems to have no advantage.
 */
+
+bool WebView::isWebActionEnabled(QWebEnginePage::WebAction webAction) const
+{
+    return this->page()->action(webAction)->isEnabled();
+}
+
+
+
+QIcon WebView::favIcon() const
+{
+    QIcon favIcon = icon();
+    //if (!favIcon.isNull())
+        return favIcon;
+
+/*
+    if (m_loadProgress < 0) {
+        static QIcon errorIcon(QStringLiteral(":dialog-error.png"));
+        return errorIcon;
+    } else if (m_loadProgress < 100) {
+        static QIcon loadingIcon(QStringLiteral(":view-refresh.png"));
+        return loadingIcon;
+    } else {
+        static QIcon defaultIcon(QStringLiteral(":text-html.png"));
+        return defaultIcon;
+    }
+*/
+}
+QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type){
+    BrowserWindow *mainWindow = qobject_cast<BrowserWindow*>(window());
+    if (!mainWindow)
+        return nullptr;
+
+    switch (type) {
+        case QWebEnginePage::WebBrowserTab: {
+            return mainWindow->my_tab->createTab();
+        }
+        case QWebEnginePage::WebBrowserBackgroundTab: {
+            return mainWindow->my_tab->createView();
+        }
+
+    }
+    return nullptr;
+}

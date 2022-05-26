@@ -20,6 +20,9 @@
 #include "src/ui/history/historywidget.h"
 #include "../popupmenu/popupmenu.h"
 
+#include <QUrl>
+#include <QRegularExpression>
+
 class Preferences;
 class HistoryMenu;
 class BookmarksMenu;
@@ -42,6 +45,8 @@ public:
     QToolButton* addBtn;
     QLineEdit* urlBar;
     HistoryWidget* historyTest;
+    void setParentWindow(BrowserWindow *Parent);
+    bool IsUrl(QString input);
 
 private:
     int init_x;
@@ -68,7 +73,11 @@ signals:
     void on_historyBtn_passSignal();
     void on_bookmarkerBtn_passSignal();
     void on_accountBtn_passSignal();
-    void on_downloadBtn_passSignal();
+    void on_downloadBtn_passSignal();   
+    void on_goBtn_passSignal();
+    void on_homeBtn_passSignal();
+    void on_backBtn_passSignal();
+
 };
 
 #endif // TOOLBAR_H

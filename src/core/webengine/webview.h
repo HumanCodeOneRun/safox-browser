@@ -18,7 +18,9 @@ class WebView: public QWebEngineView {
     bool getConnectedToHistory();
     void setConnectedToHistory(bool _connectToHistory);
 
-
+    QIcon favIcon()const;
+    bool isWebActionEnabled(QWebEnginePage::WebAction webAction) const;
+    QWebEngineView *createWindow(QWebEnginePage::WebWindowType type) override;
 
     public slots:
     void changeTitle(const QString& newTitle);

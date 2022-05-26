@@ -7,6 +7,7 @@
  * @FilePath: \safox\safox\src\toolbar.cpp
  */
 #include "toolbar.h"
+#include "browserwindow.h"
 
 
 Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
@@ -118,7 +119,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QAction * pActLeft = new QAction(this);
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     urlBar->addAction(pActLeft,QLineEdit::LeadingPosition);
-    connect(urlBar,&QLineEdit::editingFinished,this,&Toolbar::start_search);
+    connect(urlBar,&QLineEdit::returnPressed,this,&Toolbar::start_search);
     connect(pActLeft,&QAction::triggered,this,&Toolbar::start_search);
 }
 
@@ -161,17 +162,44 @@ void Toolbar::start_search(){
     qDebug("search");
     if(this->urlBar->hasFocus()){
         // todo: 触发搜索
+        QString Bartext="https://cn.bing.com/search?form=MOZLBR&pc=MOZI&q="+urlBar->text();
+        if(IsUrl(urlBar->text())){
+            qDebug()<<"成功跳转";
+            m_window->my_tab->setUrl(QUrl::fromUserInput(this->urlBar->text()));
+        }else if(!IsUrl(urlBar->text())){
+            qDebug()<<"成功搜索";
+            m_window->my_tab->setUrl(QUrl(Bartext));
+        }
     }
 }
 
 void Toolbar::home_page(){
     // todo: 前往首页
+    emit on_homeBtn_passSignal();
 }
 
 void Toolbar::back_page(){
     // todo: 返回上一个页面
+    emit on_backBtn_passSignal();
 }
 
 void Toolbar::front_page(){
     // todo: 前往下一个页面
+    emit on_goBtn_passSignal();
+}
+void Toolbar::setParentWindow(BrowserWindow *Parent){
+    m_window=Parent;
+};
+bool Toolbar::IsUrl(const QString input){
+    const QString url="^http:.*|^https:.*|^www\..*";
+    QRegularExpression trueUrl;
+    trueUrl.setPattern(url);
+    QRegularExpressionMatch match = trueUrl.match(input);
+    if(match.hasMatch()){
+        qDebug()<<"匹配成功";
+        return (true);
+    } else {
+        qDebug()<<"匹配失败";
+        return (false);
+    }
 }
