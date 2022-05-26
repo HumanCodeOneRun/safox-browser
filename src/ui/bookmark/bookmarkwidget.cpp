@@ -38,7 +38,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     markerGroup->setStyleSheet("QComboBox{color:white;}");
 
     /* 添加分组测试 */
-//    this->bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
+//    this->root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
 
     /* 读取书签分组 */
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
@@ -56,12 +56,13 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 
 
 
-    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
 //    this->bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"secondGroup",QUrl("www.testIcon.com"));
 
     /* 书签显示 */
     this->scrollView = new QScrollArea(this);
     this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
+    this->scrollView->horizontalScrollBar()->setStyleSheet("QScrollBar{height:0px;}");
     this->scrollView->setGeometry(0,150,width,height-200);
     QVBoxLayout *layout=new QVBoxLayout();
     scrollWidget = new QWidget();
@@ -105,5 +106,5 @@ void BookmarkWidget::on_clicked_bookmarkerGroup(int index){
     BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
     BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,135,":/icon/../image/setting.png","test_kkkkkk","test_description");
     //todo: 计算需要的高度
-    scrollWidget->setFixedSize(width,200+count*80);
+    scrollWidget->setFixedSize(width,800+count*135);
 }

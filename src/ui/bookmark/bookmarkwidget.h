@@ -22,6 +22,7 @@
 #include <QVector>
 #include <QVariant>
 #include <QComboBox>
+#include <QScrollBar>
 #include "bookmarkmodel.h"
 #include "bookmarkitem.h"
 #include "databasetaskscheduler.h"
@@ -38,7 +39,6 @@ class BookmarkWidget : public QWidget
 public:
     explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
     int width,height;
-    BookmarkModel* bookmark;
     QWidget* scrollWidget;
     BrowserWindow* root;
     QScrollArea* scrollView;
