@@ -42,14 +42,17 @@ public:
     QWidget* scrollWidget;
     BrowserWindow* root;
     QScrollArea* scrollView;
+    QVBoxLayout *layout;
     std::vector<int> gidArr;
     QVector<QVector<QVariant>> userBookmark;
+    bool flag;
     ~BookmarkWidget();
 
 private:
     Ui::BookmarkWidget *ui;
     QLineEdit* searchKey;
     void paintEvent(QPaintEvent *event);
+    void loadBookmarkGroup();
 private slots:
     void on_clicked_bookmarkerGroup(int);
 

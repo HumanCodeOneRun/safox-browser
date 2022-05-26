@@ -9,7 +9,7 @@ bool BookmarkGroupDao::createTable(){
     check_thread_connection();
     auto db = BaseDao::db_connection.localData()->get_db_connection();
     QString cmd = "CREATE TABLE IF NOT EXISTS " + this->getTableName() +
-                " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ICON TEXT);";
+                " (UID INTEGER NOT NULL, GID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT UNIQUE, ICON TEXT);";
     
     if(db.transaction()){
         QSqlQuery query(db);
