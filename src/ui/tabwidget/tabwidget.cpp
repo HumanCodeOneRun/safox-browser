@@ -219,7 +219,7 @@ void tabwidget::reloadAllTabs(){
 };
 void tabwidget::addbookmark(int index){
     WebView * view=webView(index);
-    BrowserPoint->bookmarkTest->bookmark->addBookmark(BrowserPoint->Browser::userid,view->getTitle(),view->getUrl(),"默认收藏夹",view->getIconUrl());
+    BrowserPoint->Browser::m_bookmark->addBookmark(BrowserPoint->Browser::userid,view->getTitle(),view->getUrl(),"默认收藏夹",view->getIconUrl());
 
 };
 void tabwidget::setParentWindow(BrowserWindow *ParentWindow)

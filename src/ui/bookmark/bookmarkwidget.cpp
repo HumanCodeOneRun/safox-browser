@@ -2,7 +2,7 @@
  * @Author: SC-WSKun 540610423@qq.com
  * @Date: 2022-05-14 22:01:55
  * @LastEditors: SC-WSKun 540610423@qq.com
- * @LastEditTime: 2022-05-17 16:24:30
+ * @LastEditTime: 2022-05-26 16:46:51
  * @FilePath: \safox\src\core\bookmark\bookmarkwidget.cpp
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -32,49 +32,19 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
 
-    /* 书签分组下拉框 */
-    QComboBox* markerGroup = new QComboBox(this);
-    markerGroup->setGeometry(20,100,260,35);
-    markerGroup->setStyleSheet("QComboBox{color:white;}");
-
-    /* 添加分组测试 */
-
-    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
-    
-    /* 读取书签分组 */
-    this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
-    QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
-    while(i!=this->userBookmark.end()){
-        QList<QVariant>::iterator j = (*i).begin();
-        this->gidArr.push_back((*j).toInt());
-        j++;
-        j++;
-        QString GroupName = (*j).toString();
-        markerGroup->addItem(GroupName);
-        i++;
-    }
-    connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
+    loadBookmarkGroup();
 
 
-
-    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
-//    this->bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"secondGroup",QUrl("www.testIcon.com"));
+    /*添加书签测试*/
+//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage1",QUrl("www.test.com"),"FirstGroup",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 书签显示 */
     this->scrollView = new QScrollArea(this);
     this->scrollView->setStyleSheet("QScrollArea{background-color:transparent;}");
+    this->scrollView->horizontalScrollBar()->setStyleSheet("QScrollBar{height:0px;}");
     this->scrollView->setGeometry(0,150,width,height-200);
-    QVBoxLayout *layout=new QVBoxLayout();
     scrollWidget = new QWidget();
-    scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
-
-    this->scrollView->setWidget(scrollWidget);
-
-
-
-    layout->addWidget(scrollWidget);
-
-    this->scrollView->setLayout(layout);
 
 }
 
@@ -98,13 +68,40 @@ void BookmarkWidget::paintEvent(QPaintEvent *event)
 }
 
 void BookmarkWidget::on_clicked_bookmarkerGroup(int index){
-    qDebug()<<index;
+    this->scrollWidget->close();
+    scrollWidget = new QWidget();
     int gid = this->gidArr[index];
-    QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
-    qDebug()<<bookmarkItems;
     int count = 0;
-    BookmarkItem* temp=new BookmarkItem(scrollWidget,20,0,":/icon/../image/setting.png","test_title","test_description");
-    BookmarkItem* temp2=new BookmarkItem(scrollWidget,20,135,":/icon/../image/setting.png","test_kkkkkk","test_description");
-    //todo: 计算需要的高度
-    scrollWidget->setFixedSize(width,200+count*80);
+    QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
+    for(int i=0;i<bookmarkItems.size();i++){
+        BookmarkItem* temp=new BookmarkItem(scrollWidget,20,135*count,bookmarkItems[i][4].toString(),bookmarkItems[i][3].toString(),"description");
+        count++;
+    }
+    scrollWidget->setFixedSize(width,50+count*135);
+    this->scrollView->setWidget(scrollWidget);
+}
+
+void BookmarkWidget::loadBookmarkGroup(){
+    /* 书签分组下拉框 */
+    QComboBox* markerGroup = new QComboBox(this);
+    markerGroup->setGeometry(20,100,260,35);
+    markerGroup->setStyleSheet("QComboBox{color:white;}");
+
+    /* 添加分组测试 */
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"ThirdGroup",QUrl("www.testIcon.com"));
+
+    /* 读取书签分组 */
+    this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
+    QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
+    while(i!=this->userBookmark.end()){
+        QList<QVariant>::iterator j = (*i).begin();
+        j++;
+        this->gidArr.push_back((*j).toInt());
+        j++;
+        QString GroupName = (*j).toString();
+        markerGroup->addItem(GroupName);
+        i++;
+    }
+    connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
 }
