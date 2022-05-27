@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2022-05-03 11:39:08
- * @LastEditTime: 2022-05-17 16:26:01
+ * @LastEditTime: 2022-05-28 01:30:56
  * @LastEditors: SC-WSKun 540610423@qq.com
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \safox\safox\src\toolbar.cpp
  */
 #include "toolbar.h"
 #include "browserwindow.h"
+#include "core/searchengine/searchengineMgr.h"
 
 SeachBar::SeachBar(QWidget* parent):QLineEdit(parent){
 
@@ -95,16 +96,54 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QMenu* settingMenu = new PopupMenu(settingBtn);
     QAction* setting1=new QAction("切换黑夜模式",this);
     QAction* setting2=new QAction("启用广告拦截",this);
-    QAction* setting3=new QAction("更改主页",this);
-    QAction* setting4=new QAction("切换内核",this);
-    QAction* setting5=new QAction("管理账户",this);
-    QAction* setting6=new QAction("管理历史记录",this);
+    QAction* setting3=new QAction("禁用广告拦截",this);
+    QAction* setting4=new QAction("更改主页",this);
+    QAction* setting5=new QAction("切换内核",this);
+    QAction* setting6=new QAction("管理账户",this);
+    QAction* setting7=new QAction("管理历史记录",this);
     settingMenu->addAction(setting1);
     settingMenu->addAction(setting2);
     settingMenu->addAction(setting3);
+    setting3->setEnabled(false);
     settingMenu->addAction(setting4);
     settingMenu->addAction(setting5);
     settingMenu->addAction(setting6);
+    settingMenu->addAction(setting7);
+    /*
+     connect(setting1, &QAction::triggered, m_window, [=]() {
+
+    });
+    */
+    connect(setting2, &QAction::triggered, this, [=]() {
+        m_window->my_tab->AdblockOpen=true;
+        qDebug()<<"1";
+        setting2->setEnabled(false);
+         qDebug()<<"2";
+        setting3->setEnabled(true);
+         qDebug()<<"3";
+        //setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+    });
+    connect(setting3, &QAction::triggered, this, [=]() {
+        m_window->my_tab->AdblockOpen=false;
+        setting2->setEnabled(true);
+        setting3->setEnabled(false);
+        //setDefaultRequestInterceptor();
+    });
+    /*
+    connect(setting4, &QAction::triggered, m_window->my_tab, [=]() {
+        //弹窗或者输入框获取text，然后text转url填入下面函数，参考start_search
+        //m_window->my_tab->changeHomePage(url);
+    });
+    connect(setting5, &QAction::triggered, m_window, [=]() {
+
+    });
+    connect(setting6, &QAction::triggered, m_window, [=]() {
+
+    });
+    connect(setting7, &QAction::triggered, m_window, [=]() {
+
+    });
+    */
     settingMenu->addSeparator();
     settingMenu->setWindowFlags(settingMenu->windowFlags()|Qt::FramelessWindowHint);
     settingBtn->setMenu(settingMenu);
@@ -157,6 +196,7 @@ void Toolbar::on_bookmarkerBtn_clicked(){
 
 void Toolbar::on_settingBtn_clicked(){
 
+
 }
 
 void Toolbar::on_accountBtn_clicked(){
@@ -171,7 +211,8 @@ void Toolbar::start_search(){
     qDebug("search");
     if(this->urlBar->hasFocus()){
         // todo: 触发搜索
-        QString Bartext="https://cn.bing.com/search?form=MOZLBR&pc=MOZI&q="+urlBar->text();
+        SearchEngineManager seMgr;
+        QString Bartext=seMgr.getSearchEngineUrl()+urlBar->text();
         if(IsUrl(urlBar->text())){
             qDebug()<<"成功跳转";
             m_window->my_tab->setUrl(QUrl::fromUserInput(this->urlBar->text()));
@@ -196,9 +237,11 @@ void Toolbar::front_page(){
     // todo: 前往下一个页面
     emit on_goBtn_passSignal();
 }
+
 void Toolbar::setParentWindow(BrowserWindow *Parent){
     m_window=Parent;
 };
+
 bool Toolbar::IsUrl(const QString input){
     const QString url="^http:.*|^https:.*|^www\..*";
     QRegularExpression trueUrl;

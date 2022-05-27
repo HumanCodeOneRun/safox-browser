@@ -2,6 +2,7 @@
 #include "adblock_request_interceptor.h"
 #include "bookmarkmodel.h"
 #include "downloadmanager.h"
+#include "core/useragent/useragent.h"
 #include "history.h"
 #include "../service/service.h"
 #include "Config.h"
@@ -42,6 +43,10 @@ MainApplication::MainApplication(int &argc, char **argv)
 
     m_adblock = std::make_shared<AdblockRequestInterceptor>();
     registerService("AdblockRequestInterceptor", m_adblock);
+
+    m_uaMgr = std::make_shared<UserAgentManager>();
+    registerService("UserAgentManager", m_uaMgr);
+
 
 
 }

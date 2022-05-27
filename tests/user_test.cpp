@@ -26,8 +26,8 @@ bool t_queryUsr(UserModel& um) {
     
     return 1
 //    &&um.queryUserId(1)
-    &&um.queryUserName("usr100")
-//    &&um.queryUserPassword("usr1","1")
+//    &&um.queryUserName("usr100")
+    &&um.queryUserPassword("usr1","1")
 //    &&(um.getUserIdByName("usr1") == 1)
     ;
 
@@ -44,8 +44,8 @@ int main() {
     UserModel model(scheduler);
 
     int ret = 1
-//              && t_addUsr(model)
-//              && t_deleteUsr(model)
+              && t_addUsr(model)
+              && t_deleteUsr(model)
               && t_queryUsr(model)
 //              && t_editUsr(1, model)
             ;

@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 option(${PROJECT_NAME}_TEST "enable test" OFF)
 #set(CMAKE_PREFIX_PATH "D:/Qt/6.2.4/msvc2019_64/lib/cmake" )
-set(CMAKE_PREFIX_PATH "/Users/stevenwong/Qt/6.2.4/macOS" )
+set(CMAKE_PREFIX_PATH "/Users/howellyoung/Qt/6.2.4/macOS" )
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools WebEngineCore Sql Core WebEngineWidgets)
 
@@ -148,7 +148,11 @@ set(PROJECT_SOURCES
 
         src/core/icon/iconmanager.h
         src/core/icon/iconmanager.cpp
-        )
+        src/core/useragent/useragent.h
+        src/core/useragent/useragent.cpp
+        src/core/searchengine/searchengineMgr.h
+        src/core/searchengine/searchengineMgr.cpp
+       )
 
 
 

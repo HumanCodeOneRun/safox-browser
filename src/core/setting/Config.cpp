@@ -39,3 +39,9 @@ QVariant Config::Get(QString qstrkeyname) {
     return qvar;
 
 }
+void Config::Delete(QString qstrkeyname) {
+    m_psetting->remove(qstrkeyname);
+}
+bool Config::Contains(QString qstrkeyname) {
+    return m_psetting->contains(qstrkeyname);
+}
