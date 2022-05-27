@@ -5,21 +5,23 @@
 ## 后端
 
 ### 已完成
-:white_check_mark:	History
+:white_check_mark:	History basic
 
 :white_check_mark:	Bookmark basic
 
 :white_check_mark:	User basic
 
-:white_check_mark:  unit test模块
+:white_check_mark:  unit test 模块
 
-:white_check_mark:  User, Bookmark支持并发读写
+:white_check_mark:  User, Bookmark, History 支持并发读写
 
-:white_check_mark:  download模块
+:white_check_mark:  download 模块
 
-:white_check_mark:  taskScheduler的多线程化以及保证数据库连接的线程安全
+:white_check_mark:  taskScheduler线程池
 
-:white_check_mark:  Service模块处理model生命周期
+:white_check_mark:  Service Locator 中心注册表
+
+:white_check_mark:  UA, Search Engine 切换
 ### 待完成
 
 :red_circle:	搜索栏
