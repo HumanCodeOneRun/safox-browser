@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QGroupBox>
 #include <QLineEdit>
+#include <QMenu>
+#include <QModelIndex>
 #include "src/ui/history/historybar.h"
 
 namespace Ui {
@@ -38,7 +40,7 @@ private:
 
 private slots:
     void getItem(QTableWidgetItem* item);
-    void accept_dateBtn_signal(int index);
+    void requestMenu(QPoint pos);
 
 };
 

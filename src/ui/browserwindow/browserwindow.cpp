@@ -184,20 +184,24 @@ void BrowserWindow::CreateSystemTrayIcon(){
 
 void BrowserWindow::popMessageBox(QString text,QString title){
     QMessageBox box;
-    box.setStyleSheet("QLabel{"
+    box.setStyleSheet("QMessageBox{"
+                      "width:300px;"
+                      "height:200px;"
+                      "background:rgba(57,52,58,100);}"
+                      "QLabel{"
                       "min-width: 300px;"
                       "min-height: 200px; "
                       "font-size:20px;"
+                      "color:white;"
                       "}"
                       "QPushButton {"
-                      "background-color:#89AFDE;"
+                      "background-color:rgba(54,112,209,100);"
                       " border-style: outset;"
-                      " border-width: 10px;"
                       " border-radius: 20px;"
-                      " border-color: beige;"
                       " font: bold 15px;"
-                      " min-width: 15em;"
-                      " min-height: 5em;"
+                      " color:white;"
+                      " min-width: 150px;"
+                      " min-height: 40px;"
                       "}"
                       "");
     box.setText(text);//设置显示文本
@@ -293,6 +297,7 @@ void BrowserWindow::accept_account_signal(){
         this->accountTest->hide();
     }else{
         this->accountTest->show();
+        this->my_tab->stackUnder(this->accountTest);
         this->downloadTest->hide();
     }
 }
@@ -303,7 +308,9 @@ void BrowserWindow::accept_download_signal(){
         this->downloadTest->hide();
     }else{
         this->downloadTest->show();
+        this->my_tab->stackUnder(this->downloadTest);
         this->accountTest->hide();
+
     }
 }
 
@@ -312,6 +319,11 @@ void BrowserWindow::accept_go_signal(){
 };
 
 void BrowserWindow::accept_home_signal(){
+    this->my_tab->show();
+    this->historyTest->hide();
+    this->accountTest->hide();
+    this->downloadTest->hide();
+    this->bookmarkTest->hide();
     my_tab->setUrl(my_tab->returnHomePage());
 };
 

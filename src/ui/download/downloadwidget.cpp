@@ -29,6 +29,6 @@ void DownloadWidget::paintEvent(QPaintEvent *event)
 
     /* 绘制downloadWidget背景 */
     p.setPen(Qt::NoPen);
-    p.setBrush(QColor(35, 38, 43, 100));
+    p.setBrush(QColor(35, 38, 43, 255));
     p.drawRect(0,0,this->width(),this->height());
 }

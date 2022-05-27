@@ -9,6 +9,14 @@
 #include "toolbar.h"
 #include "browserwindow.h"
 
+SeachBar::SeachBar(QWidget* parent):QLineEdit(parent){
+
+}
+
+void SeachBar::focusInEvent(QFocusEvent* event){
+    QLineEdit::focusInEvent(event);
+    QTimer::singleShot(0, this, &QLineEdit::selectAll);
+}
 
 Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QWidget(parent)
@@ -111,7 +119,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     addBtn->setIcon(add);
 
     /* 网址 */
-    urlBar = new QLineEdit(parent);
+    urlBar = new SeachBar(parent);
     urlBar->setGeometry(x+460,y+10,1000,30);
     urlBar->setStyleSheet("QLineEdit{background-color:rgba(35, 38, 43, 100);border-radius:8px;color:rgba(136, 136, 136, 100);font-size:14px;}");
     urlBar->setText("www.baidu.com");
@@ -121,6 +129,7 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     urlBar->addAction(pActLeft,QLineEdit::LeadingPosition);
     connect(urlBar,&QLineEdit::returnPressed,this,&Toolbar::start_search);
     connect(pActLeft,&QAction::triggered,this,&Toolbar::start_search);
+            QTimer::singleShot(0,urlBar,&QLineEdit::selectAll);
 }
 
 void Toolbar::paintEvent(QPaintEvent *event)
