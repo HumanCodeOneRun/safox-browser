@@ -22,6 +22,7 @@ public:
 
     void Delete(QString);
 
+    bool Contains(QString);
 private:
     QString m_filename;
     QSettings *m_psetting;

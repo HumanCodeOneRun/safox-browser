@@ -27,7 +27,6 @@ class Preferences;
 class HistoryMenu;
 class BookmarksMenu;
 class BrowserWindow;
-
 class Toolbar:public QWidget
 {
     Q_OBJECT

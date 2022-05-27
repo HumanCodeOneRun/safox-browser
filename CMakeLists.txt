@@ -150,7 +150,9 @@ set(PROJECT_SOURCES
         src/core/icon/iconmanager.cpp
         src/core/useragent/useragent.h
         src/core/useragent/useragent.cpp
-        )
+        src/core/searchengine/searchengineMgr.h
+        src/core/searchengine/searchengineMgr.cpp
+       )
 
 
 

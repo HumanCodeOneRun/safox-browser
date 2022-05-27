@@ -8,7 +8,7 @@
  */
 #include "toolbar.h"
 #include "browserwindow.h"
-
+#include "core/searchengine/searchengineMgr.h"
 
 Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QWidget(parent)
@@ -201,7 +201,8 @@ void Toolbar::start_search(){
     qDebug("search");
     if(this->urlBar->hasFocus()){
         // todo: 触发搜索
-        QString Bartext="https://cn.bing.com/search?form=MOZLBR&pc=MOZI&q="+urlBar->text();
+        SearchEngineManager seMgr;
+        QString Bartext=seMgr.getSearchEngineUrl()+urlBar->text();
         if(IsUrl(urlBar->text())){
             qDebug()<<"成功跳转";
             m_window->my_tab->setUrl(QUrl::fromUserInput(this->urlBar->text()));
