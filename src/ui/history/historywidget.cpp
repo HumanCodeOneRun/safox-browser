@@ -16,11 +16,11 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     ui(new Ui::HistoryWidget)
 {
     ui->setupUi(this);
-    this->setGeometry(x,y,width,height);
+    this->setGeometry(x+1,y,width,height);
     this->index = 0;
-    this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 100);gridline-color:rgba(219,219,219,100);}"
-                        "QHeaderView::section{background:rgba(46, 50, 53, 100);color:white;border: 1px solid rgba(219,219,219,100);font-size:20px;}"
-                        "QTableWidget::item{color:white;font-size:14px;border:0;padding-left:20px;}");
+    this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 255);gridline-color:rgba(219,219,219,255);border: 1px solid rgba(219,219,219,255);}"
+                        "QHeaderView::section{background:rgba(46, 50, 53, 255);color:white;border: 1px solid rgba(219,219,219,255);font-size:20px;}"
+                        "QTableWidget::item{color:white;font-size:14px;border:0;}");
 
     /* 添加右键菜单 */
 //    this->historyTable->setContextMenuPolicy (Qt::CustomContextMenu);
@@ -71,15 +71,16 @@ void HistoryWidget::initTable(){
     this->historyTable=new QTableWidget(this);
     this->historyTable->setGeometry(400,0,1520,578);
     this->historyTable->verticalHeader()->setVisible(false);
-    this->historyTable->setColumnCount(3);
+    this->historyTable->setColumnCount(4);
     this->historyTable->setRowCount(11);
-    QStringList strs = {"名称", "标签", "网址"};
+    QStringList strs = {"名称", "标签", "网址",""};
     this->historyTable->setHorizontalHeaderLabels(strs);
     this->historyTable->horizontalHeader()->setFixedHeight(48);
     this->historyTable->verticalHeader()->setDefaultSectionSize(48);
     this->historyTable->setColumnWidth(0,505);
     this->historyTable->setColumnWidth(1,133);
-    this->historyTable->setColumnWidth(2,880);
+    this->historyTable->setColumnWidth(2,780);
+    this->historyTable->setColumnWidth(3,100);
 }
 
 void HistoryWidget::paintEvent(QPaintEvent *event)
@@ -114,6 +115,16 @@ void HistoryWidget::loadData(int index){
         this->historyTable->setItem(rowIndex,0,item0);
 //        this->historyTable->setItem(rowIndex,1,item1);
         this->historyTable->setItem(rowIndex,2,item2);
+        QPushButton* closeBtn = new QPushButton();
+        closeBtn->setText("删除历史");
+        closeBtn->setStyleSheet("QPushButton{background-color:transparent;color:white;font-size:15px;}");
+        connect(closeBtn,&QPushButton::clicked,this,[=](){
+            int deleteIndex = historyTable->currentRow();
+            if(deleteIndex!=-1){
+                historyTable->removeRow(deleteIndex);
+            }
+        });
+       this->historyTable->setCellWidget(rowIndex,3,closeBtn);
         rowIndex++;
         i++;
     }

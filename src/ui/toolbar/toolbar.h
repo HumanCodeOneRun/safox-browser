@@ -17,6 +17,7 @@
 #include<QPainter>
 #include<QStyleOption>
 #include <QAction>
+#include <QTimer>
 #include "src/ui/history/historywidget.h"
 #include "../popupmenu/popupmenu.h"
 
@@ -27,6 +28,14 @@ class Preferences;
 class HistoryMenu;
 class BookmarksMenu;
 class BrowserWindow;
+
+/* 重写QLineEdit,添加点击选取全部文字 */
+class SeachBar:public QLineEdit{
+    Q_OBJECT
+public:
+    explicit SeachBar(QWidget *parent = nullptr);
+    void focusInEvent(QFocusEvent* event);
+};
 
 class Toolbar:public QWidget
 {

@@ -21,13 +21,13 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     QLabel* title = new QLabel(this);
     title->setText("书签列表");
     title->setGeometry(20,15,56,20);
-    title->setStyleSheet("QLabel{color:rgba(225,225,225,100);font-size:14px;}");
+    title->setStyleSheet("QLabel{color:white;font-size:14px;}");
 
     /* 搜索框 */
     searchKey = new QLineEdit(this);
     searchKey->setText("Type here to search");
     searchKey->setGeometry(20,50,260,35);
-    searchKey->setStyleSheet("QLineEdit{background-color:rgba(51, 53, 54, 100);color:rgba(255, 255, 255, 50);font-size:15px;border:none;}");
+    searchKey->setStyleSheet("QLineEdit{background-color:rgba(51, 53, 54, 255);color:rgba(255, 255, 255, 128);font-size:15px;border:none;}");
     QAction * pActLeft = new QAction(this);
     pActLeft->setIcon(QIcon(":/icon/image/search.png"));
     searchKey->addAction(pActLeft,QLineEdit::LeadingPosition);
@@ -65,7 +65,7 @@ void BookmarkWidget::paintEvent(QPaintEvent *event)
 
     /* 绘制historyWidget背景 */
     p.setPen(Qt::NoPen);
-    p.setBrush(QColor(46,50,53,70));
+    p.setBrush(QColor(46,50,53,178));
     p.drawRect(0,0,this->width,this->height);
 }
 

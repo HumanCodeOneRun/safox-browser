@@ -9,7 +9,7 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
     ui->setupUi(this);
     this->setStyleSheet("QWidget{width:300px;height:400px;}"
                         "QLabel{font-size:15px;color:white;background-color:transparent;}"
-                        "QLineEdit{background-color:rgba(255,255,255,40);color:rgba(0,1,0,60);font-size:15px;padding-left:10px;}");
+                        "QLineEdit{background-color:rgba(255,255,255,102);color:rgba(0,1,0,153);font-size:15px;padding-left:10px;}");
     int x = btn->x()-300+btn->width();
     int y = btn->y()+btn->height();
     this->setGeometry(x,y,300,400);
@@ -32,13 +32,13 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
 
     this->login = new QPushButton(this);
     this->login->setGeometry(56,284,88,32);
-    this->login->setStyleSheet("QPushButton{background-color:rgba(0,52,181,100);border-radius:5px;color:white;}");
+    this->login->setStyleSheet("QPushButton{background-color:rgba(0,52,181,255);border-radius:5px;color:white;}");
     this->login->setText("登录");
     connect(this->login,&QPushButton::clicked,this,&AccountWidget::on_loginBtn_clicked);
 
     this->registerBtn = new QPushButton(this);
     this->registerBtn->setGeometry(156,284,88,32);
-    this->registerBtn->setStyleSheet("QPushButton{background-color:rgba(0,52,181,100);border-radius:5px;color:white;}");
+    this->registerBtn->setStyleSheet("QPushButton{background-color:rgba(0,52,181,255);border-radius:5px;color:white;}");
     this->registerBtn->setText("注册");
     connect(this->registerBtn,&QPushButton::clicked,this,&AccountWidget::on_registerBtn_clicked);
 }
@@ -58,7 +58,7 @@ void AccountWidget::paintEvent(QPaintEvent *event)
 
     /* 绘制accountWidget背景 */
     p.setPen(Qt::NoPen);
-    p.setBrush(QColor(35, 38, 43, 100));
+    p.setBrush(QColor(35,35,43));
     p.drawRect(0,0,this->width(),this->height());
 }
 
