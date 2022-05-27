@@ -122,6 +122,7 @@ void HistoryWidget::loadData(int index){
             int deleteIndex = historyTable->currentRow();
             if(deleteIndex!=-1){
                 historyTable->removeRow(deleteIndex);
+                root->Browser::m_history->deleteHistoryEntryHelp(index,deleteIndex);
             }
         });
        this->historyTable->setCellWidget(rowIndex,3,closeBtn);
