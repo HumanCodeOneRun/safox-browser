@@ -16,6 +16,7 @@
 #include "homepage.h"
 #include "databasetaskscheduler.h"
 #include "usermodel.h"
+#include "core/useragent/useragent.h"
 #include <QDebug>
 Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         userid(userid),
@@ -26,7 +27,9 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
         m_bookmark(serviceLocator.getServiceAs<BookmarkModel>("BookmarkModel")),
         m_history(serviceLocator.getServiceAs<History>("History")),
         m_downloadMgr(serviceLocator.getServiceAs<DownloadManager>("DownloadManager")),
-        m_adblock(serviceLocator.getServiceAs<AdblockRequestInterceptor>("AdblockRequestInterceptor")) {
+        m_adblock(serviceLocator.getServiceAs<AdblockRequestInterceptor>("AdblockRequestInterceptor")),
+        m_uaMgr(serviceLocator.getServiceAs<UserAgentManager>("UserAgentManager"))
+        {
 
     //测试添加历史用
     WebView *webview = new WebView();

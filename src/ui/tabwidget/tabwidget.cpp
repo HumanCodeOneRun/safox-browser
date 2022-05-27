@@ -6,6 +6,7 @@
 
 tabwidget::tabwidget(QWidget *parent) :
     QTabWidget(parent),
+    profile(QWebEngineProfile::defaultProfile()),
     ui(new Ui::tabwidget)
 {
     AdblockOpen=false;
@@ -287,3 +288,6 @@ QUrl tabwidget::returnHomePage(){
 void tabwidget::changeHomePage(QUrl changemain){
     homepage=changemain;
 };
+QWebEngineProfile* tabwidget:: getProfile(){
+    return this->profile;
+}

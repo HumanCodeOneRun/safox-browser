@@ -19,6 +19,8 @@ class DownloadManager;
 
 class AdblockRequestInterceptor;
 
+class UserAgentManager;
+
 class Browser
 {
 public:
@@ -39,6 +41,7 @@ public:
     std::shared_ptr<History> m_history;
     std::shared_ptr<DownloadManager> m_downloadMgr;
     std::shared_ptr<AdblockRequestInterceptor> m_adblock;
+    std::shared_ptr<UserAgentManager> m_uaMgr;
 };
 
 #endif // BROWSER_H

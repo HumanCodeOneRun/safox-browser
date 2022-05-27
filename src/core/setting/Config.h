@@ -20,6 +20,8 @@ public:
 
     QVariant Get(QString);
 
+    void Delete(QString);
+
 private:
     QString m_filename;
     QSettings *m_psetting;

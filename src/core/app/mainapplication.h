@@ -23,6 +23,8 @@ class AdblockRequestInterceptor;
 
 class BrowserWindow;
 
+class UserAgentManager;
+
 class MainApplication : public QApplication {
 public:
     explicit MainApplication(int &argc, char **argv);
@@ -47,6 +49,7 @@ private:
     std::shared_ptr<History> m_history;
     std::shared_ptr<DownloadManager> m_downloadMgr;
     std::shared_ptr<AdblockRequestInterceptor> m_adblock;
+    std::shared_ptr<UserAgentManager> m_uaMgr;
     int defaultUsrId;
 
  
