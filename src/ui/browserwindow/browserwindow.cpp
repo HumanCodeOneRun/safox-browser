@@ -41,19 +41,19 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
     /* 关闭按钮 */
     QToolButton* closeBtn = new QToolButton(this);
-    closeBtn->setStyleSheet("QToolButton{background-color:rgba(235, 106, 99, 100);border-radius:10px;}");
+    closeBtn->setStyleSheet("QToolButton{background-color:rgba(235, 106, 99, 255);border-radius:10px;}");
     closeBtn->setGeometry(20,15,20,20);
     connect(closeBtn,&QToolButton::clicked,this,&BrowserWindow::on_closeBtn_clicked);
 
     /* 放大缩小按钮 */
     QToolButton* minBtn = new QToolButton(this);
-    minBtn->setStyleSheet("QToolButton{background-color:rgba(241, 195, 78, 100);border-radius:10px;}");
+    minBtn->setStyleSheet("QToolButton{background-color:rgba(241, 195, 78, 255);border-radius:10px;}");
     minBtn->setGeometry(50,15,20,20);
     connect(minBtn,&QToolButton::clicked,this,&BrowserWindow::on_minBtn_clicked);
 
     /* 最小化按钮 */
     QToolButton* hidBtn = new QToolButton(this);
-    hidBtn->setStyleSheet("QToolButton{background-color:rgba(57, 194, 77, 100);border-radius:10px;}");
+    hidBtn->setStyleSheet("QToolButton{background-color:rgba(57, 194, 77, 255);border-radius:10px;}");
     hidBtn->setGeometry(80,15,20,20);
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
@@ -84,7 +84,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
     // 初始化下载界面并隐藏
     qDebug()<<"[test] browserwindown slot4 init";
-    this->downloadTest = new DownloadWidget(this,tb->downloadBtn);
+    this->downloadTest = new DownloadWidget(this,tb->downloadBtn,this);
     this->downloadTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_downloadBtn_passSignal,this,&BrowserWindow::accept_download_signal);
