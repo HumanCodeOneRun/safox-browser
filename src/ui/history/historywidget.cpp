@@ -22,9 +22,6 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
                         "QHeaderView::section{background:rgba(46, 50, 53, 255);color:white;border: 1px solid rgba(219,219,219,255);font-size:20px;}"
                         "QTableWidget::item{color:white;font-size:14px;border:0;}");
 
-    /* 添加右键菜单 */
-//    this->historyTable->setContextMenuPolicy (Qt::CustomContextMenu);
-//    connect(this->historyTable,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(requestMenu(QPoint)));
     initTable();
 //    loadData(this->index);
 
@@ -44,18 +41,18 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     QLabel* urlTitle = new QLabel(this);
     urlTitle->setText("网址");
     urlTitle->setGeometry(460,717,268,20);
-    urlTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;color:white;}");
+    urlTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;}");
     url = new QLineEdit(this);
     url->setGeometry(460,755,400,32);
-    url->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
+    url->setStyleSheet("QLineEdit{background-color:#7A7A7A;color:white;font-size:15px;}");
 
     QLabel* tagTitle = new QLabel(this);
     tagTitle->setText("标签");
     tagTitle->setGeometry(460,822,268,20);
-    tagTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;color:white;}");
+    tagTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;}");
     tag = new QLineEdit(this);
     tag->setGeometry(460,850,400,32);
-    tag->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
+    tag->setStyleSheet("QLineEdit{background-color:#7A7A7A;color:white;font-size:15px;}");
 
     connect(this->historyTable,&QTableWidget::itemClicked,this,&HistoryWidget::getItem);
 }
@@ -122,6 +119,7 @@ void HistoryWidget::loadData(int index){
             int deleteIndex = historyTable->currentRow();
             if(deleteIndex!=-1){
                 historyTable->removeRow(deleteIndex);
+                root->Browser::m_history->deleteHistoryEntryHelp(index,deleteIndex);
             }
         });
        this->historyTable->setCellWidget(rowIndex,3,closeBtn);
@@ -140,24 +138,6 @@ void HistoryWidget::getItem(QTableWidgetItem* item){
     this->url->setText(itemStr);
 }
 
-void HistoryWidget::requestMenu(QPoint pos){
-    qDebug("request menu");
-//    //设置菜单选项
-//    QMenu *menu = new QMenu(this);
-//    QAction *pnew = new QAction("第一项",this->historyTable);
-//    QAction *pnew1 = new QAction("第二项",this->historyTable);
-//    connect (pnew,SIGNAL(triggered()),this,SLOT(clickgoose()));
-//    connect (pnew1,SIGNAL(triggered()),this,SLOT(clickmms()));
-//    menu->addAction(pnew);
-//    menu->addAction(pnew1);
-//    menu->move (cursor ().pos ());
-//    menu->show ();
-//    //获得鼠标点击的x，y坐标点
-//    int x = pos.x ();
-//    int y = pos.y ();
-//    QModelIndex index = this->historyTable->indexAt (QPoint(x,y));
-//    int row  = index.row ();//获得QTableWidget列表点击的行数
-}
 
 
 

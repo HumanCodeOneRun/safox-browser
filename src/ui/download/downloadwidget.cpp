@@ -1,17 +1,133 @@
 #include "downloadwidget.h"
 #include "ui_downloadwidget.h"
+#include <browserwindow.h>
 
-DownloadWidget::DownloadWidget(QWidget *parent,QToolButton* btn) :
-    QWidget(parent),
+DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString title,QString downloadUrl,BrowserWindow* root):QWidget(parent),downloadUrl(downloadUrl),root(root){
+    this->setGeometry(0,0,250,60);
+    this->setStyleSheet("QWidget{background-color:transparent;}"
+                        "QLabel{color:white;font-size:15px;background-color:transparent;}");
+
+    /* 监听计时器 */
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &DownloadItemWidget::timeoutslots);
+
+    /* icon */
+    QLabel* iconLabel = new QLabel(this);
+    iconLabel->setPixmap(QPixmap(iconUrl));
+    iconLabel->show();
+    iconLabel->setGeometry(0,10,40,40);
+    iconLabel->setStyleSheet("QLabel{background-color:grey;}");
+
+    /* title */
+    QLabel* downloadTitle = new QLabel(this);
+    downloadTitle->setText(title);
+    downloadTitle->setGeometry(60,10,102,20);
+
+    /* 进度条 */
+    progress = new QProgressBar(this);
+    progress->setStyleSheet("QProgressBar::chunk"
+                            "{"
+                            "border-radius:11px;"
+                            "background:qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #01FAFF,stop:1  #26B4FF);"
+                            "border-radius:5px;"
+                            "border:1px solid black;"
+                            "background-color:skyblue;"
+                            "width:8px;margin:0.5px;"
+                            "}"
+                            "QProgressBar"
+                            "{"
+                            "height:20px;"
+                            "text-align:center;"
+                            "font-size:14px;"
+                            "color:white;"
+                            "border-radius:11px;"
+                            "background: #1D5573 ;"
+                            "}");
+    progress->setGeometry(60,30,125,20);
+    progress->setValue(0);
+
+    /* 开始/暂停按钮 */
+    startBtn = new QToolButton(this);
+    startBtn->setGeometry(192,18,24,24);
+    QIcon start = QIcon(":/icon/image/play.png");
+    startBtn->setIcon(start);
+    connect(startBtn,&QToolButton::clicked,this,&DownloadItemWidget::go);
+
+    /* 取消按钮 */
+    deleteBtn = new QToolButton(this);
+    deleteBtn->setGeometry(226,18,24,24);
+    QIcon del = QIcon(":/icon/image/close.png");
+    deleteBtn->setIcon(del);
+    connect(deleteBtn,&QToolButton::clicked,this,&DownloadItemWidget::del);
+}
+
+DownloadItemWidget::~DownloadItemWidget(){
+
+}
+
+void DownloadItemWidget::go(){
+    if(progress->value()>= 100){
+        return;
+    }
+    if(timer->isActive()){
+        timer->stop();
+//        root->Browser::m_downloadMgr->on_pause(downloadUrl);
+        startBtn->setIcon(QIcon(":/icon/image/play.png"));
+    }else{
+        timer->start(100);
+//        root->Browser::m_downloadMgr->on_resume(downloadUrl);
+        startBtn->setIcon(QIcon(":/icon/image/pause.png"));
+    }
+}
+
+void DownloadItemWidget::del(){
+//    root->Browser::m_downloadMgr->on_delete(downloadUrl);
+    emit on_del_passSignal();
+    this->close();
+}
+
+void DownloadItemWidget::timeoutslots(){
+    int index = progress->value();
+    //todo: 获取进度赋值给index
+    index++;
+    //
+    if (index > 100)
+    {
+        timer->stop();
+        //todo: 删除实例
+        return;
+    }
+    progress->setValue(index);
+}
+
+DownloadWidget::DownloadWidget(QWidget *parent,QToolButton* btn,BrowserWindow* root) :
+    QWidget(parent),root(root),
     ui(new Ui::DownloadWidget)
 {
     ui->setupUi(this);
-    this->setStyleSheet("QWidget{width:300px;height:400px;}");
     int x = btn->x()-300+btn->width();
     int y = btn->y()+btn->height();
     this->setGeometry(x,y,300,400);
 
+    items = new QScrollArea(this);
+    items->horizontalScrollBar()->setStyleSheet("QScrollBar{height:0px;}");
+    items->setStyleSheet("QScrollArea{background-color:transparent;}");
+    items->setGeometry(10,10,280,380);
+    scrollWidget = new QWidget();
+    scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
+    QVBoxLayout *labelLayout=new QVBoxLayout();
+    scrollWidget->setLayout(labelLayout);
+
     //todo: 与download的对接
+    index = 1;
+    DownloadItemWidget* item = new DownloadItemWidget(this,"","test_title","test_origin",root);
+    connect(item,&DownloadItemWidget::on_del_passSignal,this,[=](){
+        index--;
+        scrollWidget->setFixedSize(QSize(280,index*60));
+    });
+    labelLayout->addWidget(item);
+    scrollWidget->setFixedSize(QSize(280,index*60));
+    items->setWidget(scrollWidget);
 }
 
 DownloadWidget::~DownloadWidget()
@@ -31,4 +147,8 @@ void DownloadWidget::paintEvent(QPaintEvent *event)
     p.setPen(Qt::NoPen);
     p.setBrush(QColor(35, 38, 43, 255));
     p.drawRect(0,0,this->width(),this->height());
+}
+
+void DownloadWidget::addItem(){
+
 }

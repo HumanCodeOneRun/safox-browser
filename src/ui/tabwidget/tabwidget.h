@@ -30,9 +30,10 @@ public:
     ~tabwidget();
     void setParentWindow(BrowserWindow *ParentWindow);
     WebView *currentWebView() const;
-
+    bool AdblockOpen;
     QUrl returnHomePage();
     void changeHomePage(QUrl changemain);
+    QWebEngineProfile* getProfile();
 
 public slots:
     void closeTab(int index);
@@ -74,7 +75,6 @@ private:
     void setupView(WebView *webView);
     Ui::tabwidget *ui;
     QWebEngineProfile *profile;
-
     QUrl homepage=QStringLiteral("https://www.bing.com");
 };
 

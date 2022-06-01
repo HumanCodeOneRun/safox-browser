@@ -40,7 +40,6 @@ private:
 
 private slots:
     void getItem(QTableWidgetItem* item);
-    void requestMenu(QPoint pos);
 
 };
 

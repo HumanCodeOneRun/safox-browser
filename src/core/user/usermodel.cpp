@@ -235,7 +235,7 @@ bool UserModel::queryUserName(const QString &name) {
         std::promise<bool> pm;
         auto future = pm.get_future();
        m_taskScheduler->post([this, &pm, &name]() {
-            int has = !this->item->getItemByName(name).isEmpty();
+            int has = !this->item->getItemByName(name).empty();
             pm.set_value(has);
         });
         return future.get();
@@ -247,7 +247,7 @@ bool UserModel::queryUserId(const int &id) {
     std::promise<bool> pm;
     auto future = pm.get_future();
     m_taskScheduler->post([this, &pm, &id]() {
-        int has = !this->item->getItemById(id).isEmpty();
+        int has = !this->item->getItemById(id).empty();
         int temp = has ? 1 : 0;
         pm.set_value(temp);
         //return ret;
@@ -259,7 +259,7 @@ bool UserModel::queryUserPassword(const int &id, const QString &password) {
     std::promise<bool> pm;
     auto future = pm.get_future();
     m_taskScheduler->post([this,&pm, &id, &password]() {
-        int has = !this->item->getItemByIdPassword(id, password).isEmpty();
+        int has = !this->item->getItemByIdPassword(id, password).empty();
         int ret = has ? 1 : 0;
         pm.set_value(ret);
     });
@@ -271,9 +271,8 @@ bool UserModel::queryUserPassword(const QString &name, const QString &password) 
     std::promise<bool> pm;
     auto future = pm.get_future();
     m_taskScheduler->post([this,&pm, &name, &password]() {
-        int has = !this->item->getItemByNamePassword(name, password).isEmpty();
-        int ret = has ? 1 : 0;
-        pm.set_value(ret);
+        int has = !this->item->getItemByNamePassword(name, password).empty();
+        pm.set_value(has);
     });
     return future.get();
 
