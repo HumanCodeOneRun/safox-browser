@@ -25,6 +25,8 @@ public:
     inline QString get_save_path() {return this->save_path; }
     inline QString get_download_path () { return this->download_path.toString();}
     inline QString get_icon() { return this->Icon.toString(); }
+    inline qint64 get_bytes_received() { return this->bytes_received; }
+    inline qint64 get_bytes_total() { return this->bytes_total; }
 
 public Q_SLOTS:
     inline void set_received(qint64 bytes) {

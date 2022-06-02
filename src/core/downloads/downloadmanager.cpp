@@ -4,8 +4,8 @@ DownloadManager::DownloadManager(){
     //load_download_items();
 }
 
-QVector< std::shared_ptr<DownloadItem> > DownloadManager::get_items(){
-    return download_items.values();
+QMap<QString, std::shared_ptr<DownloadItem>> DownloadManager::get_items(){
+    return download_items;
 }
 
 
@@ -42,6 +42,7 @@ void DownloadManager::on_requested(QWebEngineDownloadRequest* request, const QUr
     emit download_items_num_changed();
     request->accept();
 }
+
 
 void DownloadManager::on_delete(const QString& url){
     auto item = this->download_items[url];
