@@ -94,56 +94,58 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     QIcon setting = QIcon(":/icon/image/setting.png");
     settingBtn->setIcon(setting);
     QMenu* settingMenu = new PopupMenu(settingBtn);
-    QAction* setting1=new QAction("切换黑夜模式",this);
-    QAction* setting2=new QAction("启用广告拦截",this);
-    QAction* setting3=new QAction("禁用广告拦截",this);
-    QAction* setting4=new QAction("更改主页",this);
-    QAction* setting5=new QAction("切换内核",this);
-    QAction* setting6=new QAction("管理账户",this);
-    QAction* setting7=new QAction("管理历史记录",this);
+    QAction* setting1=new QAction("启用广告拦截",this);
+    QAction* setting2=new QAction("禁用广告拦截",this);
+    QAction* setting3=new QAction("保存当前页为主页",this);
     settingMenu->addAction(setting1);
     settingMenu->addAction(setting2);
+    setting2->setEnabled(false);
     settingMenu->addAction(setting3);
-    setting3->setEnabled(false);
-    settingMenu->addAction(setting4);
-    settingMenu->addAction(setting5);
-    settingMenu->addAction(setting6);
-    settingMenu->addAction(setting7);
-    /*
-     connect(setting1, &QAction::triggered, m_window, [=]() {
-
-    });
-    */
-    connect(setting2, &QAction::triggered, this, [=]() {
+    connect(setting1, &QAction::triggered, this, [=]() {
         m_window->my_tab->AdblockOpen=true;
-        qDebug()<<"1";
-        setting2->setEnabled(false);
-         qDebug()<<"2";
-        setting3->setEnabled(true);
-         qDebug()<<"3";
+        setting1->setEnabled(false);
+        setting2->setEnabled(true);
         //setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
     });
-    connect(setting3, &QAction::triggered, this, [=]() {
+    connect(setting2, &QAction::triggered, this, [=]() {
         m_window->my_tab->AdblockOpen=false;
-        setting2->setEnabled(true);
-        setting3->setEnabled(false);
+        setting1->setEnabled(true);
+        setting2->setEnabled(false);
         //setDefaultRequestInterceptor();
     });
-    /*
-    connect(setting4, &QAction::triggered, m_window->my_tab, [=]() {
-        //弹窗或者输入框获取text，然后text转url填入下面函数，参考start_search
-        //m_window->my_tab->changeHomePage(url);
+    connect(setting3, &QAction::triggered, this, [=]() {
+        QUrl CurrentUrl=m_window->my_tab->currentWebView()->getUrl();
+        m_window->my_tab->changeHomePage(CurrentUrl);
     });
-    connect(setting5, &QAction::triggered, m_window, [=]() {
+    //setting4切换搜索引擎
+    QMenu *SearchMenu=new QMenu;
+    SearchMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:200px;}"
+                            "QMenu::item{color:white;padding:35px 30px 0px 30px;}");
+    QActionGroup *SearchGroup=new QActionGroup(parent);
+    QAction *BaiduSearch=new QAction(tr("百度"), SearchMenu);
+    QAction *BingSearch=new QAction(tr("Bing"), SearchMenu);
+    QAction *GoogleSearch=new QAction(tr("Google"), SearchMenu);
+    SearchMenu->addAction(BaiduSearch);
+    SearchMenu->addAction(BingSearch);
+    SearchMenu->addAction(GoogleSearch);
+    BaiduSearch->setCheckable(true);
+    BingSearch->setCheckable(true);
+    GoogleSearch->setCheckable(true);
+    m_searchManager=new SearchEngineManager;
+    connect(BaiduSearch, &QAction::triggered, this, [=]() {
+        this->m_searchManager->changeDefaultSearchEngine("baidu");
+    } );
+    connect(BingSearch, &QAction::triggered, this, [=]() {
+        this->m_searchManager->changeDefaultSearchEngine("bing");
+    } );
+    connect(GoogleSearch, &QAction::triggered, this, [=]() {
+        this->m_searchManager->changeDefaultSearchEngine("google");
+    } );
+    SearchGroup->addAction(BaiduSearch);
+    SearchGroup->addAction(BingSearch);
+    SearchGroup->addAction(GoogleSearch);
+    settingMenu->addMenu(SearchMenu)->setText(tr("切换搜索引擎"));
 
-    });
-    connect(setting6, &QAction::triggered, m_window, [=]() {
-
-    });
-    connect(setting7, &QAction::triggered, m_window, [=]() {
-
-    });
-    */
     settingMenu->addSeparator();
     settingMenu->setWindowFlags(settingMenu->windowFlags()|Qt::FramelessWindowHint);
     settingBtn->setMenu(settingMenu);

@@ -20,7 +20,7 @@
 #include <QTimer>
 #include "src/ui/history/historywidget.h"
 #include "../popupmenu/popupmenu.h"
-
+#include "searchengineMgr.h"
 #include <QUrl>
 #include <QRegularExpression>
 
@@ -66,6 +66,7 @@ private:
     void paintEvent(QPaintEvent *event);
     BrowserWindow* m_window;
     QPalette palette;
+    SearchEngineManager* m_searchManager;
 
 private slots:
     void on_historyBtn_clicked();
