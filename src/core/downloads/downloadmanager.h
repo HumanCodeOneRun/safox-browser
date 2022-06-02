@@ -25,6 +25,7 @@ public Q_SLOTS:
 
     void on_resume(const QString &url);
 
+
 signals:
 
     void download_items_num_changed();
@@ -34,7 +35,7 @@ public:
 
     ~DownloadManager();
 
-    QVector<std::shared_ptr<DownloadItem> > get_items();
+    QMap<QString, std::shared_ptr<DownloadItem>> get_items();
 
     //void save_download_items();
     //void load_download_items();
