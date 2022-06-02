@@ -25,15 +25,16 @@ public:
     ~DownloadItemWidget();
 private:
     BrowserWindow* root;
-    QTimer* timer;
+    bool downloading;
     QString downloadUrl;
     QToolButton* startBtn;
     QToolButton* deleteBtn;
     QProgressBar* progress;
+    std::shared_ptr<DownloadItem> down_load_item;
 private slots:
     void go();
     void del();
-    void timeoutslots();
+    void changeIndex(qint64 receiveSize);
 signals:
     void on_del_passSignal();
 };

@@ -120,8 +120,8 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
             QString save_path = "~/Downloads";
             QString name = request->downloadFileName();
             qDebug() << "name is " << name;
-            emit add_download(url.toDisplayString(),name);
             this->Browser::m_downloadMgr->on_requested(request, url, icon, save_path, name);
+            emit add_download(url.toDisplayString(),name);
         });
 
 }

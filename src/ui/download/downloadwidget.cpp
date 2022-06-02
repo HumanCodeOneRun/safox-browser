@@ -7,9 +7,7 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
     this->setStyleSheet("QWidget{background-color:transparent;}"
                         "QLabel{color:white;font-size:15px;background-color:transparent;}");
 
-    /* 监听计时器 */
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &DownloadItemWidget::timeoutslots);
+    downloading = true;
 
     /* icon */
     QLabel* iconLabel = new QLabel(this);
@@ -20,8 +18,11 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
 
     /* title */
     QLabel* downloadTitle = new QLabel(this);
-    downloadTitle->setText(title);
     downloadTitle->setGeometry(60,10,102,20);
+    QFontMetrics fontWidth(downloadTitle->font());//得到每个字符的宽度
+    QString elideNote = fontWidth.elidedText(title, Qt::ElideRight, 102);//最大宽度170px
+    downloadTitle->setText(elideNote);//显示省略号的字符串
+    downloadTitle->setToolTip(title);//设置tooltips
 
     /* 进度条 */
     progress = new QProgressBar(this);
@@ -60,7 +61,10 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
     deleteBtn->setIcon(del);
     connect(deleteBtn,&QToolButton::clicked,this,&DownloadItemWidget::del);
 
-    timer->start(100);
+    auto item_map = root->Browser::m_downloadMgr->get_items();
+    down_load_item = item_map[downloadUrl];
+    qDebug()<<down_load_item.get();
+    QObject::connect(down_load_item.get(), &DownloadItem::bytes_received_changed,this,&DownloadItemWidget::changeIndex);
 }
 
 DownloadItemWidget::~DownloadItemWidget(){
@@ -71,12 +75,10 @@ void DownloadItemWidget::go(){
     if(progress->value()>= 100){
         return;
     }
-    if(timer->isActive()){
-        timer->stop();
+    if(downloading == true){
         root->Browser::m_downloadMgr->on_pause(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/play.png"));
     }else{
-        timer->start(100);
         root->Browser::m_downloadMgr->on_resume(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/pause.png"));
     }
@@ -88,18 +90,11 @@ void DownloadItemWidget::del(){
     this->close();
 }
 
-void DownloadItemWidget::timeoutslots(){
-    int index = progress->value();
-    //todo: 获取进度赋值给index
-    index++;
-    //
-    if (index > 100)
-    {
-        timer->stop();
-        //todo: 删除实例
-        return;
-    }
-    progress->setValue(index);
+void DownloadItemWidget::changeIndex(qint64 receiveSize){
+    qDebug()<<"receiveSize:"<<receiveSize;
+    int prog = double(down_load_item->get_bytes_received())/double(down_load_item->get_bytes_total())*100;
+    qDebug()<<prog;
+    progress->setValue(prog);
 }
 
 DownloadWidget::DownloadWidget(QWidget *parent,QToolButton* btn,BrowserWindow* root) :
@@ -148,7 +143,7 @@ void DownloadWidget::paintEvent(QPaintEvent *event)
 }
 
 void DownloadWidget::addItem(QString url,QString name){
-    qDebug()<<url<<" "<<name;
+//    qDebug()<<url<<" "<<name;
     index++;
     DownloadItemWidget* item = new DownloadItemWidget(this,"",name,url,root);
     connect(item,&DownloadItemWidget::on_del_passSignal,this,[=](){
