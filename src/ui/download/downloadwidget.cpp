@@ -49,7 +49,7 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
     /* 开始/暂停按钮 */
     startBtn = new QToolButton(this);
     startBtn->setGeometry(192,18,24,24);
-    QIcon start = QIcon(":/icon/image/play.png");
+    QIcon start = QIcon(":/icon/image/pause.png");
     startBtn->setIcon(start);
     connect(startBtn,&QToolButton::clicked,this,&DownloadItemWidget::go);
 
@@ -59,6 +59,8 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
     QIcon del = QIcon(":/icon/image/close.png");
     deleteBtn->setIcon(del);
     connect(deleteBtn,&QToolButton::clicked,this,&DownloadItemWidget::del);
+
+    timer->start(100);
 }
 
 DownloadItemWidget::~DownloadItemWidget(){
@@ -71,17 +73,17 @@ void DownloadItemWidget::go(){
     }
     if(timer->isActive()){
         timer->stop();
-//        root->Browser::m_downloadMgr->on_pause(downloadUrl);
+        root->Browser::m_downloadMgr->on_pause(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/play.png"));
     }else{
         timer->start(100);
-//        root->Browser::m_downloadMgr->on_resume(downloadUrl);
+        root->Browser::m_downloadMgr->on_resume(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/pause.png"));
     }
 }
 
 void DownloadItemWidget::del(){
-//    root->Browser::m_downloadMgr->on_delete(downloadUrl);
+    root->Browser::m_downloadMgr->on_delete(downloadUrl);
     emit on_del_passSignal();
     this->close();
 }
@@ -115,19 +117,15 @@ DownloadWidget::DownloadWidget(QWidget *parent,QToolButton* btn,BrowserWindow* r
     items->setGeometry(10,10,280,380);
     scrollWidget = new QWidget();
     scrollWidget->setStyleSheet("QWidget{background-color:transparent;}");
-    QVBoxLayout *labelLayout=new QVBoxLayout();
+    labelLayout=new QVBoxLayout();
     scrollWidget->setLayout(labelLayout);
 
     //todo: 与download的对接
-    index = 1;
-    DownloadItemWidget* item = new DownloadItemWidget(this,"","test_title","test_origin",root);
-    connect(item,&DownloadItemWidget::on_del_passSignal,this,[=](){
-        index--;
-        scrollWidget->setFixedSize(QSize(280,index*60));
-    });
-    labelLayout->addWidget(item);
+    index = 0;
     scrollWidget->setFixedSize(QSize(280,index*60));
     items->setWidget(scrollWidget);
+
+    connect(root,&BrowserWindow::add_download,this,&DownloadWidget::addItem);
 }
 
 DownloadWidget::~DownloadWidget()
@@ -149,6 +147,15 @@ void DownloadWidget::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width(),this->height());
 }
 
-void DownloadWidget::addItem(){
-
+void DownloadWidget::addItem(QString url,QString name){
+    qDebug()<<url<<" "<<name;
+    index++;
+    DownloadItemWidget* item = new DownloadItemWidget(this,"",name,url,root);
+    connect(item,&DownloadItemWidget::on_del_passSignal,this,[=](){
+        index--;
+        scrollWidget->setFixedSize(QSize(280,10+index*60));
+    });
+    labelLayout->addWidget(item);
+    scrollWidget->setFixedSize(QSize(280,10+index*60));
+    items->setWidget(scrollWidget);
 }

@@ -49,12 +49,13 @@ public:
 
 private:
     QScrollArea* items;
+    QVBoxLayout *labelLayout;
     QWidget* scrollWidget;
     int index;
     Ui::DownloadWidget *ui;
     void paintEvent(QPaintEvent *event);
 private slots:
-    void addItem();
+    void addItem(QString url,QString name);
 };
 
 #endif // DOWNLOADWIDGET_H
