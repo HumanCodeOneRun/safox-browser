@@ -73,6 +73,8 @@ private slots:
     void accept_home_signal();
 
     void accept_back_signal();
+signals:
+    void add_download(QString url,QString name);
 
 private:
     Ui::BrowserWindow *ui;

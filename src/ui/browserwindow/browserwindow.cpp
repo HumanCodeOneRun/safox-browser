@@ -112,16 +112,16 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     connect(tb,&Toolbar::on_goBtn_passSignal,this,&BrowserWindow::accept_go_signal);
     connect(tb,&Toolbar::on_backBtn_passSignal,this,&BrowserWindow::accept_back_signal);
     connect(tb,&Toolbar::on_homeBtn_passSignal,this,&BrowserWindow::accept_home_signal);
-    DownloadManager* manager=new DownloadManager;
     connect(my_tab->currentWebView()->page()->profile(), &QWebEngineProfile::downloadRequested,
-        [manager](QWebEngineDownloadRequest* request){
+        [=](QWebEngineDownloadRequest* request){
             qDebug() << "emit request";
             QUrl url = request->url();
             QUrl icon("icon.com");
             QString save_path = "~/Downloads";
             QString name = request->downloadFileName();
             qDebug() << "name is " << name;
-            manager->on_requested(request, url, icon, save_path, name);
+            emit add_download(url.toDisplayString(),name);
+            this->Browser::m_downloadMgr->on_requested(request, url, icon, save_path, name);
         });
 
 }
@@ -299,6 +299,7 @@ void BrowserWindow::accept_account_signal(){
     }else{
         this->accountTest->show();
         this->my_tab->stackUnder(this->accountTest);
+        this->historyTest->stackUnder(this->accountTest);
         this->downloadTest->hide();
     }
 }
@@ -310,6 +311,7 @@ void BrowserWindow::accept_download_signal(){
     }else{
         this->downloadTest->show();
         this->my_tab->stackUnder(this->downloadTest);
+        this->historyTest->stackUnder(this->downloadTest);
         this->accountTest->hide();
 
     }
