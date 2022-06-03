@@ -30,7 +30,6 @@ tabwidget::tabwidget(QWidget *parent) :
     });
 
 
-
     setElideMode(Qt::ElideRight);
     //此属性控制在没有足够空间显示给定选项卡栏大小时省略项目
 
@@ -232,11 +231,13 @@ void tabwidget::reloadAllTabs(){
     for (int i = 0; i < count(); ++i)
         webView(i)->reload();
 };
+/*
 void tabwidget::addbookmark(int index){
     WebView * view=webView(index);
-    BrowserPoint->Browser::m_bookmark->addBookmark(BrowserPoint->Browser::userid,view->getTitle(),view->getUrl(),"默认收藏夹",view->getIconUrl());
 
+    BrowserPoint->Browser::m_bookmark->addBookmark(BrowserPoint->Browser::userid,view->getTitle(),view->getUrl(),"默认收藏夹",view->getIconUrl());
 };
+*/
 void tabwidget::setParentWindow(BrowserWindow *ParentWindow)
 {
     BrowserPoint=ParentWindow;
@@ -270,9 +271,11 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
         });
         menu.addSeparator();
         action = menu.addAction(tr("添加书签"));
-        connect(action, &QAction::triggered, this, [this,index]() {
-            addbookmark(index);
-            BrowserPoint->bookmarkTest->bookmarkerReload();
+        connect(action, &QAction::triggered, this, [=]() {
+            BrowserPoint->addbookmarkTest->show();
+            BrowserPoint->addbookmarkTest->on_clicked_addbookmark();
+            BrowserPoint->addbookmarkTest->setFocus();
+            BrowserPoint->my_tab->stackUnder(BrowserPoint->addbookmarkTest);
         });
         menu.addSeparator();
     }else{

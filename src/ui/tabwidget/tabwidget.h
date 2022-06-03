@@ -34,14 +34,13 @@ public:
     QUrl returnHomePage();
     void changeHomePage(QUrl changemain);
     QWebEngineProfile* getProfile();
+    //void addbookmark(int index);
 
 public slots:
     void closeTab(int index);
     void setUrl(const QUrl &url);
     void nextTab();
     void previousTab();
-
-
     WebView *createTab(bool makeCurrent = true);
     WebView *createView();
     void triggerWebPageAction(QWebEnginePage::WebAction action);
@@ -54,7 +53,6 @@ private slots:
     void cloneTab(int index);
     void closeOtherTabs(int index);
     void reloadAllTabs();
-    void addbookmark(int index);
 
 
 
@@ -66,8 +64,6 @@ signals:
     void favIconChanged(const QIcon &icon);
     void webActionEnabledChanged(QWebEnginePage::WebAction action, bool enabled);
     void loadProgress(int progress);
-
-
 
 private:
     BrowserWindow *BrowserPoint;

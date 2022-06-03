@@ -26,6 +26,8 @@
 #include <QAction>
 #include <QMenu>
 #include "service.h"
+#include "src/ui/bookmark/addbookmarkwidget.h"
+
 QT_BEGIN_NAMESPACE
 class HistoryBar;
 namespace Ui { class BrowserWindow; }
@@ -52,6 +54,8 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     ~BrowserWindow();
+
+    addbookmarkwidget* addbookmarkTest;
 
 private slots:
     void on_closeBtn_clicked();

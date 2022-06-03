@@ -73,6 +73,10 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
+    this->addbookmarkTest=new addbookmarkwidget(this,0,100,300,230,this);
+    this->addbookmarkTest->hide();
+
+
 
     // 初始化账户界面并隐藏
     qDebug()<<"[test] browserwindown slot3 init";
