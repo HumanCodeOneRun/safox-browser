@@ -17,5 +17,6 @@
         <file>image/play.png</file>
         <file>image/pause.png</file>
         <file>image/close.png</file>
+        <file>image/refresh.png</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@ tabwidget::tabwidget(QWidget *parent) :
     profile(QWebEngineProfile::defaultProfile()),
     ui(new Ui::tabwidget)
 {
+    this->setStyleSheet("QTabBar::tab{color:white}");
     AdblockOpen=false;
     QTabBar *Bar = this->tabBar();
     Bar->setMovable(true);

@@ -38,7 +38,7 @@ class BookmarkWidget : public QWidget
 
 public:
     explicit BookmarkWidget(QWidget *parent = nullptr,int x=0,int y=0,int width=0,int height=0,BrowserWindow* root=nullptr);
-    int width,height;
+    int width,height,count;
     QWidget* scrollWidget;
     BrowserWindow* root;
     QScrollArea* scrollView;
@@ -54,9 +54,14 @@ signals:
 private:
     Ui::BookmarkWidget *ui;
     QLineEdit* searchKey;
+    int index;
     void paintEvent(QPaintEvent *event);
     void loadBookmarkGroup();
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 private slots:
+    void refresh();
     void on_clicked_bookmarkerGroup(int);
 public slots:
     void bookmarkerReload();

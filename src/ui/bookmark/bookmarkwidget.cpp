@@ -18,10 +18,22 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     /* ui部分 */
     this->setGeometry(x,y,width,height);
     this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
+
+    /* 标题 */
     QLabel* title = new QLabel(this);
     title->setText("书签列表");
     title->setGeometry(20,15,56,20);
     title->setStyleSheet("QLabel{color:white;font-size:14px;}");
+
+
+    QToolButton* refreshBtn = new QToolButton(this);
+    refreshBtn->setGeometry(260,15,20,20);
+    QIcon refresh = QIcon(":/icon/image/refresh.png");
+    refreshBtn->setIcon(refresh);
+    connect(refreshBtn,&QToolButton::clicked,this,[=](){
+        on_clicked_bookmarkerGroup(index);
+    });
+
 
     /* 搜索框 */
     searchKey = new QLineEdit(this);
@@ -36,10 +48,10 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
 
 
     /*添加书签测试*/
-    for(int i=0;i<10;i++){
-            root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage"+QString::number(i),QUrl("www.test.com"),"FirstGroup",QUrl("www.testIcon.com"));
-    }
-    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
+//    for(int i=0;i<10;i++){
+//            root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage"+QString::number(i),QUrl("www.test.com"),"FirstGroup",QUrl("www.testIcon.com"));
+//    }
+//    root->Browser::m_bookmark->addBookmark(root->Browser::userid,"testPage2",QUrl("www.test.com"),"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 书签显示 */
     this->scrollView = new QScrollArea(this);
@@ -47,7 +59,15 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     this->scrollView->horizontalScrollBar()->setStyleSheet("QScrollBar{height:0px;}");
     this->scrollView->setGeometry(0,150,width,height-200);
     scrollWidget = new QWidget();
-    on_clicked_bookmarkerGroup(0);
+    layout=new QVBoxLayout();
+    scrollWidget->setLayout(layout);
+    count=0;
+    scrollWidget->setFixedSize(QSize(280,count*60));
+    scrollView->setWidget(scrollWidget);
+
+    /* 加载默认分组 */
+    index = 0;
+    on_clicked_bookmarkerGroup(index);
 }
 
 BookmarkWidget::~BookmarkWidget()
@@ -69,20 +89,7 @@ void BookmarkWidget::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width,this->height);
 }
 
-void BookmarkWidget::on_clicked_bookmarkerGroup(int index){
-    this->scrollWidget->close();
-    scrollWidget = new QWidget();
-    int gid = this->gidArr[index];
-    int count = 0;
-    QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
-    for(int i=0;i<bookmarkItems.size();i++){
-        BookmarkItem* temp=new BookmarkItem(scrollWidget,20,135*count,bookmarkItems[i][4].toString(),bookmarkItems[i][3].toString(),"description");
-        count++;
-    }
-    scrollWidget->setFixedSize(width,50+count*135);
-    this->scrollView->setWidget(scrollWidget);
-}
-
+/* 加载分组 */
 void BookmarkWidget::loadBookmarkGroup(){
     /* 书签分组下拉框 */
     QComboBox* markerGroup = new QComboBox(this);
@@ -90,9 +97,9 @@ void BookmarkWidget::loadBookmarkGroup(){
     markerGroup->setStyleSheet("QComboBox{color:white;}");
 
     /* 添加分组测试 */
-    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
-    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
-    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
     /* 读取书签分组 */
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
@@ -108,6 +115,50 @@ void BookmarkWidget::loadBookmarkGroup(){
     }
     connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
 }
+
+/* 加载书签 */
+void BookmarkWidget::on_clicked_bookmarkerGroup(int newIndex){
+    index = newIndex;
+    this->scrollWidget->close();
+    scrollWidget = new QWidget();
+    layout=new QVBoxLayout();
+    scrollWidget->setLayout(layout);
+    int gid = this->gidArr[newIndex];
+    count = 0;
+    QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
+    for(int i=0;i<bookmarkItems.size();i++){
+        BookmarkItem* temp=new BookmarkItem(scrollWidget,bookmarkItems[i][0].toInt(),bookmarkItems[i][4].toString(),bookmarkItems[i][3].toString(),"description",root);
+        connect(temp,&BookmarkItem::on_deleteItem_passSignals,this,[=](){
+            count--;
+            scrollWidget->setFixedSize(QSize(280,50+count*135));
+        });
+        count++;
+        layout->addWidget(temp);
+    }
+    scrollWidget->setFixedSize(width,50+count*135);
+    this->scrollView->setWidget(scrollWidget);
+}
+
+void BookmarkWidget::refresh(){
+
+}
+
 void BookmarkWidget::bookmarkerReload(){
     emit reloadbookmark();
+}
+
+//防止触发browserwindow的位移
+void BookmarkWidget::mousePressEvent(QMouseEvent *event)
+{
+    event->accept();
+}
+
+void BookmarkWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    event->accept();
+}
+
+void BookmarkWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    event->accept();
 }
