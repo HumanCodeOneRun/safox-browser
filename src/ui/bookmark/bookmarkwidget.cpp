@@ -14,6 +14,7 @@ BookmarkWidget::BookmarkWidget(QWidget *parent,int x,int y,int width,int height,
     ui(new Ui::BookmarkWidget)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 
     /* ui部分 */
     this->setGeometry(x,y,width,height);

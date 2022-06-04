@@ -16,6 +16,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     ui(new Ui::HistoryWidget)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
     this->setGeometry(x+1,y,width,height);
     this->index = 0;
     this->setStyleSheet("QTableWidget{background:rgba(46, 50, 53, 255);gridline-color:rgba(219,219,219,255);border: 1px solid rgba(219,219,219,255);}"

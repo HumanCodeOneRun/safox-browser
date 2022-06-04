@@ -58,18 +58,17 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     connect(hidBtn,&QToolButton::clicked,this,&BrowserWindow::on_hidBtn_clicked);
 
 
-    // 初始化历史界面并隐藏
-    qDebug()<<"[test] browserwindown slot1 init";
-    this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
-    this->historyTest->hide();
+    // 初始化历史界面指针
+    qDebug()<<"[test] browserwindow slot1 init";
+    this->historyTest = nullptr;
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
     }
 
-    // 初始化书签界面并隐藏
-    qDebug()<<"[test] browserwindown slot2 init";
-    this->bookmarkTest = new BookmarkWidget(this,0,100,300,980,this);
-    this->bookmarkTest->hide();
+    // 初始化书签界面指针
+    qDebug()<<"[test] bookmark init";
+    this->bookmarkTest = nullptr;
+//    this->bookmarkTest->hide();
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
@@ -269,13 +268,18 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event)
 }
 
 void BrowserWindow::accept_history_signal(){
-//    qDebug("receive history signal");
-    if(this->historyTest->isVisible()){
-        this->historyTest->hide();
+    qDebug("receive history signal");
+    if(this->historyTest != nullptr){
+        this->historyTest->close();
+        this->historyTest = nullptr;
+        this->my_tab->show();
     }else{
+        this->historyTest = new HistoryWidget(this,0,100,1920,980,this);
         this->historyTest->show();
-        this->historyTest->raise();
-        this->bookmarkTest->hide();
+        if(this->bookmarkTest != nullptr){
+            this->bookmarkTest->close();
+            this->bookmarkTest = nullptr;
+        }
         this->accountTest->hide();
         this->downloadTest->hide();
         this->my_tab->hide();
@@ -284,16 +288,17 @@ void BrowserWindow::accept_history_signal(){
 
 void BrowserWindow::accept_bookmarker_signal(){
 //    qDebug("receive bookmarker signal");
-    if(this->bookmarkTest->isVisible()){
-        this->bookmarkTest->hide();
+    if(this->bookmarkTest != nullptr){
+        this->bookmarkTest->close();
+        this->bookmarkTest = nullptr;
     }else{
+        this->bookmarkTest = new BookmarkWidget(this,0,100,300,980,this);
         this->bookmarkTest->show();
-        this->historyTest->hide();
         this->accountTest->hide();
         this->downloadTest->hide();
         this->my_tab->stackUnder(this->bookmarkTest);
     }
-    bookmarkTest->bookmarkerReload();
+//    bookmarkTest->bookmarkerReload();
 }
 
 void BrowserWindow::accept_account_signal(){
@@ -303,7 +308,9 @@ void BrowserWindow::accept_account_signal(){
     }else{
         this->accountTest->show();
         this->my_tab->stackUnder(this->accountTest);
-        this->historyTest->stackUnder(this->accountTest);
+        if(this->historyTest != nullptr){
+            this->historyTest->stackUnder(this->accountTest);
+        }
         this->downloadTest->hide();
     }
 }
@@ -315,7 +322,9 @@ void BrowserWindow::accept_download_signal(){
     }else{
         this->downloadTest->show();
         this->my_tab->stackUnder(this->downloadTest);
-        this->historyTest->stackUnder(this->downloadTest);
+        if(this->historyTest != nullptr){
+            this->historyTest->stackUnder(this->downloadTest);
+        }
         this->accountTest->hide();
 
     }
@@ -327,10 +336,17 @@ void BrowserWindow::accept_go_signal(){
 
 void BrowserWindow::accept_home_signal(){
     this->my_tab->show();
-    this->historyTest->hide();
+    if(this->historyTest!=nullptr){
+        this->historyTest->close();
+        this->historyTest = nullptr;
+    }
+
     this->accountTest->hide();
     this->downloadTest->hide();
-    this->bookmarkTest->hide();
+    if(this->bookmarkTest!=nullptr){
+        this->bookmarkTest->close();
+        this->bookmarkTest = nullptr;
+    }
     my_tab->setUrl(my_tab->returnHomePage());
 };
 

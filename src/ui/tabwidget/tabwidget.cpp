@@ -129,6 +129,7 @@ WebView *tabwidget::createView()
     int index=addTab(webView, tr("新标签页"));
     setTabIcon(index, webView->favIcon());
     webView->resize(currentWidget()->size());
+    BrowserPoint->m_history->addHistoryEntry(webView);
     return webView;
 }
 
