@@ -72,8 +72,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     if(tb){
        connect(tb,&Toolbar::on_bookmarkerBtn_passSignal,this,&BrowserWindow::accept_bookmarker_signal);
     }
-    this->addbookmarkTest=new addbookmarkwidget(this,0,100,300,230,this);
-    this->addbookmarkTest->hide();
+    this->addbookmarkTest=nullptr;
 
 
 

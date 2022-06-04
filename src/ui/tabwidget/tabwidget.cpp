@@ -274,6 +274,7 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
         menu.addSeparator();
         action = menu.addAction(tr("添加书签"));
         connect(action, &QAction::triggered, this, [=]() {
+            BrowserPoint->addbookmarkTest = new addbookmarkwidget(BrowserPoint,0,100,300,230,BrowserPoint);
             BrowserPoint->addbookmarkTest->show();
             BrowserPoint->addbookmarkTest->on_clicked_addbookmark();
             BrowserPoint->addbookmarkTest->setFocus();

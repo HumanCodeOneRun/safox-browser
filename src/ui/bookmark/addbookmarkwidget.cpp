@@ -8,6 +8,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
 
 
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
     //ui部分
     this->setGeometry(x,y,width,height);
     this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
@@ -128,6 +129,6 @@ void addbookmarkwidget::on_clicked_addbookmark(){
 void addbookmarkwidget::focusOutEvent(QFocusEvent *e){
     Q_UNUSED(e);
     if(!this->BM_group->hasFocus()){
-        this->hide();
+        this->close();
     }
 }
