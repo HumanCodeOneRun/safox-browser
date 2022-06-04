@@ -8,16 +8,12 @@ bool IconManager::check_local_cache(const QUrl& url, const QIcon& icon){
         return IconManager::save_icon(url, icon);
 }
 
-/*
+
 QString IconManager::get_local_cache(const QUrl& url){
     QString local_path = ICON_SAVE_DIR + url.host()+QString(".png");
-    if(!IconManager::check_local_cache(url)){
-        return "./default.ico";
-    }
-
-    return ICON_SAVE_DIR + url.host()+QString(".png");
+    
 }
-*/
+
 
 bool IconManager::save_icon(const QUrl& url, const QIcon& icon){
     qDebug() << "enter download";
