@@ -38,6 +38,10 @@ QWebEngineView(parent)
     QObject::connect(this, &QWebEngineView::titleChanged, this, &WebView::changeTitle);
     QObject::connect(this, &QWebEngineView::urlChanged, this, &WebView::changeUrl);
     QObject::connect(this, &QWebEngineView::iconUrlChanged, this, &WebView::changeIconUrl);
+//    QObject::connect(this, &QWebEngineView::iconChanged, [=](const QIcon& icon){
+//        auto url = this->QWebEngineView::url();
+//        IconManager::check_local_cache(url, icon);
+//    });
     connectedToHistory = 0;
     m_adblockRequestInterceptor = NULL;
     m_defaultRequestInterceptor = NULL;

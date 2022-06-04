@@ -35,10 +35,12 @@ Browser::Browser(int userid, const MyServiceLocator &serviceLocator) :
     WebView *webview = new WebView();
     webview->load(QUrl("https://doc.qt.io/qt-5/qwebengineview.html"));
     m_history->addHistoryEntry(webview);
+    this->Browser::m_bookmark->addBookmarkGroup(this->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
 
 }
 
 void Browser::changeUser(int newid){
     this->userid = newid;
     m_history->loginHistory(newid);
+    this->Browser::m_bookmark->addBookmarkGroup(this->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
 }

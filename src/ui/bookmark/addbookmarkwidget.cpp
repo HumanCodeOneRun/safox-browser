@@ -132,3 +132,11 @@ void addbookmarkwidget::focusOutEvent(QFocusEvent *e){
         this->close();
     }
 }
+
+void addbookmarkwidget::mouseMoveEvent(QMouseEvent* event){
+    event->accept();
+}
+
+void addbookmarkwidget::mouseReleaseEvent(QMouseEvent* event){
+    event->accept();
+}

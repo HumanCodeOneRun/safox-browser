@@ -37,7 +37,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     nameTitle->setStyleSheet("QLabel{background-color:transparent;color:white;font-size:15px;color:white;}");
     name = new QLineEdit(this);
     name->setGeometry(460,650,400,32);
-    name->setStyleSheet("QLineEdit{background-color:#7A7A7A;}");
+    name->setStyleSheet("QLineEdit{background-color:#7A7A7A;color:white;font-size:15px;}");
 
     QLabel* urlTitle = new QLabel(this);
     urlTitle->setText("网址");
@@ -71,12 +71,12 @@ void HistoryWidget::initTable(){
     this->historyTable->verticalHeader()->setVisible(false);
     this->historyTable->setColumnCount(4);
     this->historyTable->setRowCount(11);
-    QStringList strs = {"名称", "标签", "网址",""};
+    QStringList strs = {"名称", "图标", "网址",""};
     this->historyTable->setHorizontalHeaderLabels(strs);
     this->historyTable->horizontalHeader()->setFixedHeight(48);
     this->historyTable->verticalHeader()->setDefaultSectionSize(48);
-    this->historyTable->setColumnWidth(0,505);
-    this->historyTable->setColumnWidth(1,133);
+    this->historyTable->setColumnWidth(0,555);
+    this->historyTable->setColumnWidth(1,50);
     this->historyTable->setColumnWidth(2,780);
     this->historyTable->setColumnWidth(3,100);
 }
@@ -106,12 +106,13 @@ void HistoryWidget::loadData(int index){
     int rowIndex = 0;
     while(i!=testHistory.end()){
         QTableWidgetItem *item0 = new QTableWidgetItem(i->title);
-        QIcon itemIcon(i->iconUrl.toDisplayString());
-        item0->setIcon(itemIcon);
-//        QTableWidgetItem *item1 = new QTableWidgetItem("i->url.tag()");
+        QLabel *iconLabel = new QLabel();
+        iconLabel->setPixmap(QPixmap(IconManager::get_local_cache(i->iconUrl.toDisplayString())));
+//        iconLabel->setPixmap(QPixmap(":/icon/image/clock.png"));
+        iconLabel->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
         QTableWidgetItem *item2 = new QTableWidgetItem(i->url.toDisplayString());
         this->historyTable->setItem(rowIndex,0,item0);
-//        this->historyTable->setItem(rowIndex,1,item1);
+        this->historyTable->setCellWidget(rowIndex,1,iconLabel);
         this->historyTable->setItem(rowIndex,2,item2);
         QPushButton* closeBtn = new QPushButton();
         closeBtn->setText("删除历史");

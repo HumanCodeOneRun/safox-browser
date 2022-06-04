@@ -100,7 +100,7 @@ void BookmarkWidget::loadBookmarkGroup(){
 
     /* 添加分组测试 */
     qDebug()<<root->userid;
-    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
+//    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
 //    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"FirstGroup",QUrl("www.testIcon.com"));
 //    root->Browser::m_bookmark->addBookmarkGroup(root->Browser::userid,"SecondGroup",QUrl("www.testIcon.com"));
 
@@ -114,6 +114,7 @@ void BookmarkWidget::loadBookmarkGroup(){
         j++;
         QString GroupName = (*j).toString();
         markerGroup->addItem(GroupName);
+        this->gnameArr.push_back(GroupName);
         i++;
     }
     connect(markerGroup,&QComboBox::currentIndexChanged,this,&BookmarkWidget::on_clicked_bookmarkerGroup);
@@ -128,12 +129,13 @@ void BookmarkWidget::on_clicked_bookmarkerGroup(int newIndex){
     scrollWidget->setLayout(layout);
     qDebug()<<gidArr;
     int gid = this->gidArr[newIndex];
+    QString gname = this->gnameArr[newIndex];
     count = 0;
     qDebug("start get item");
     QVector<QVector<QVariant>> bookmarkItems = root->Browser::m_bookmark->getItemsByGid(root->Browser::userid,gid);
     qDebug("get item end");
     for(int i=0;i<bookmarkItems.size();i++){
-        BookmarkItem* temp=new BookmarkItem(scrollWidget,bookmarkItems[i][0].toInt(),bookmarkItems[i][4].toString(),bookmarkItems[i][3].toString(),"description",root);
+        BookmarkItem* temp=new BookmarkItem(scrollWidget,bookmarkItems[i][0].toInt(),bookmarkItems[i][4].toString(),bookmarkItems[i][3].toString(),"description",gname,root);
         connect(temp,&BookmarkItem::on_deleteItem_passSignals,this,[=](){
             count--;
             scrollWidget->setFixedSize(QSize(280,50+count*135));
