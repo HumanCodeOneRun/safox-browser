@@ -214,14 +214,13 @@ void tabwidget::triggerWebPageAction(QWebEnginePage::WebAction action)
 }
 
 void tabwidget::reloadTab(int index){
-    int i=0;
-    for (i = 0; i < count(); ++i){
-        webView(i)->reload();
+    if (WebView *view = webView(index)){
         if (AdblockOpen){
-            webView(i)->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
+            view->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
         }else{
-            webView(i)->setDefaultRequestInterceptor();
+            view->setDefaultRequestInterceptor();
         }
+        view->reload();
     }
 };
 void tabwidget::cloneTab(int index){
@@ -238,8 +237,14 @@ void tabwidget::closeOtherTabs(int index){
         closeTab(i);
 };
 void tabwidget::reloadAllTabs(){
-    for (int i = 0; i < count(); ++i)
+    for (int i = 0; i < count(); ++i){
+        if (AdblockOpen){
+            webView(i)->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
+        }else{
+            webView(i)->setDefaultRequestInterceptor();
+        }
         webView(i)->reload();
+    }
 };
 /*
 void tabwidget::addbookmark(int index){
@@ -254,7 +259,6 @@ void tabwidget::setParentWindow(BrowserWindow *ParentWindow)
 };
 void tabwidget::handleContextMenuRequested(const QPoint &pos)
 {
-
     QMenu menu;
     int index=-1;
     QAction *firstAction=menu.addAction(tr("新增标签页"));

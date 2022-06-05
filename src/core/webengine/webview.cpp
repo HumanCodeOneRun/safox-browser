@@ -122,7 +122,6 @@ QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type){
         case QWebEnginePage::WebBrowserBackgroundTab: {
             return mainWindow->my_tab->createView();
         }
-
     }
     return nullptr;
 }
