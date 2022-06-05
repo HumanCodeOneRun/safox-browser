@@ -9,6 +9,8 @@
 #include "toolbar.h"
 #include "browserwindow.h"
 #include "core/searchengine/searchengineMgr.h"
+#include "browserwindow.h"
+#include "useragent.h"
 
 SeachBar::SeachBar(QWidget* parent):QLineEdit(parent){
 
@@ -19,8 +21,8 @@ void SeachBar::focusInEvent(QFocusEvent* event){
     QTimer::singleShot(0, this, &QLineEdit::selectAll);
 }
 
-Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
-    QWidget(parent)
+Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height,BrowserWindow* root):
+    QWidget(parent),root(root)
 {
     this->init_x = x;
     this->init_y = y;
@@ -117,10 +119,11 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
         QUrl CurrentUrl=m_window->my_tab->currentWebView()->getUrl();
         m_window->my_tab->changeHomePage(CurrentUrl);
     });
+
     //setting4切换搜索引擎
     QMenu *SearchMenu=new QMenu;
-    SearchMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:200px;}"
-                            "QMenu::item{color:white;padding:35px 30px 0px 30px;}");
+    SearchMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:180px;}"
+                            "QMenu::item{color:white;margin:25px 30px 0px 30px;font-size:15px;}");
     QActionGroup *SearchGroup=new QActionGroup(parent);
     QAction *BaiduSearch=new QAction(tr("百度"), SearchMenu);
     QAction *BingSearch=new QAction(tr("Bing"), SearchMenu);
@@ -146,7 +149,46 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height):
     SearchGroup->addAction(GoogleSearch);
     settingMenu->addMenu(SearchMenu)->setText(tr("切换搜索引擎"));
 
-    settingMenu->addSeparator();
+    //setting5切换UA
+    QMenu *UAMenu = new QMenu;
+    UAMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:180px;}"
+                            "QMenu::item{color:white;margin:10px 20px;font-size:15px;}");
+    QActionGroup *UAGroup=new QActionGroup(parent);
+    QAction *Chrome=new QAction(tr("Chrome"), UAMenu);
+    QAction *Opera=new QAction(tr("Opera"), UAMenu);
+    QAction *Safari=new QAction(tr("Safari"), UAMenu);
+    QAction *IE=new QAction(tr("IE"), UAMenu);
+    UAGroup->addAction(Chrome);
+    UAGroup->addAction(Opera);
+    UAGroup->addAction(Safari);
+    UAGroup->addAction(IE);
+    Chrome->setCheckable(true);
+    Opera->setCheckable(true);
+    Safari->setCheckable(true);
+    IE->setCheckable(true);
+    connect(Chrome, &QAction::triggered, this, [=]() {
+        root->Browser::m_uaMgr->setUserAgent(root->my_tab,"Chrome");
+        qDebug()<<"UA changeto:"<<root->my_tab->getProfile()->httpUserAgent();
+    } );
+    connect(Opera, &QAction::triggered, this, [=]() {
+        root->Browser::m_uaMgr->setUserAgent(root->my_tab,"Opera");
+        qDebug()<<"UA changeto:"<<root->my_tab->getProfile()->httpUserAgent();
+    } );
+    connect(Safari, &QAction::triggered, this, [=]() {
+        root->Browser::m_uaMgr->setUserAgent(root->my_tab,"Safari");
+        qDebug()<<"UA changeto:"<<root->my_tab->getProfile()->httpUserAgent();
+    } );
+    connect(IE, &QAction::triggered, this, [=]() {
+        root->Browser::m_uaMgr->setUserAgent(root->my_tab,"IE");
+        qDebug()<<"UA changeto:"<<root->my_tab->getProfile()->httpUserAgent();
+    } );
+    UAMenu->addAction(Chrome);
+    UAMenu->addAction(Opera);
+    UAMenu->addAction(Safari);
+    UAMenu->addAction(IE);
+    settingMenu->addMenu(UAMenu)->setText(tr("切换UA"));
+
+//    settingMenu->addSeparator();
     settingMenu->setWindowFlags(settingMenu->windowFlags()|Qt::FramelessWindowHint);
     settingBtn->setMenu(settingMenu);
     settingBtn->setPopupMode(QToolButton::InstantPopup);

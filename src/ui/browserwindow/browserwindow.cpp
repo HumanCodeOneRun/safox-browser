@@ -37,7 +37,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 //    this->setStyleSheet("QMainWindow{background-color: rgba(46, 50, 53, 100)}");
 
     /* toolbar */
-    this->tb = new Toolbar(this,0,50,1920,50);
+    this->tb = new Toolbar(this,0,50,1920,50,this);
 
     /* 关闭按钮 */
     QToolButton* closeBtn = new QToolButton(this);
@@ -59,14 +59,14 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
 
     // 初始化历史界面指针
-    qDebug()<<"[test] browserwindow slot1 init";
+//    qDebug()<<"[test] history init";
     this->historyTest = nullptr;
     if(tb){
        connect(tb,&Toolbar::on_historyBtn_passSignal,this,&BrowserWindow::accept_history_signal);
     }
 
     // 初始化书签界面指针
-    qDebug()<<"[test] bookmark init";
+//    qDebug()<<"[test] bookmark init";
     this->bookmarkTest = nullptr;
 //    this->bookmarkTest->hide();
     if(tb){
@@ -77,7 +77,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
 
     // 初始化账户界面并隐藏
-    qDebug()<<"[test] browserwindown slot3 init";
+//    qDebug()<<"[test] account init";
     this->accountTest = new AccountWidget(this,tb->accountBtn,this);
     this->accountTest->hide();
     if(tb){
@@ -85,7 +85,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     }
 
     // 初始化下载界面并隐藏
-    qDebug()<<"[test] browserwindown slot4 init";
+//    qDebug()<<"[test] download init";
     this->downloadTest = new DownloadWidget(this,tb->downloadBtn,this);
     this->downloadTest->hide();
     if(tb){
@@ -94,6 +94,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
 
 
     /*tabwidget*/
+//    qDebug()<<"[test] tabwidget init";
     my_tab=new tabwidget(this);
     tb->setParentWindow(this);
     my_tab->setParentWindow(this);
@@ -136,7 +137,7 @@ BrowserWindow::~BrowserWindow()
 /* 关闭窗口 */
 void BrowserWindow::on_closeBtn_clicked()
 {
-    qDebug()<<"exit";
+//    qDebug()<<"exit";
     QApplication::exit(0);
 }
 
@@ -170,7 +171,7 @@ void BrowserWindow::CreateSystemTrayIcon(){
     //项2的点击槽函数
     connect(exitAction , &QAction::triggered, this, [=]()
     {
-        qDebug()<<"exit";
+//        qDebug()<<"exit";
         QApplication::exit(0);
     });
 
