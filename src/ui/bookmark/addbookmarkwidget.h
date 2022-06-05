@@ -31,10 +31,12 @@ public:
     ~addbookmarkwidget();
     QVBoxLayout *Vlayout;
     QHBoxLayout* Hlayout;
+    QLabel* title;
+    QWidget* buttonwidget;
     QLineEdit *BM_name;
     QComboBox *BM_group;
     QPushButton *BM_save;
-    QPushButton *BM_delete;
+    QPushButton *BM_cancel;
     std::vector<int> gidArr;
     QVector<QVector<QVariant>> userBookmark;
     void on_clicked_addbookmark();
@@ -63,9 +65,7 @@ private slots:
     //void on_clicked_bookmarkerGroup(int index);
     void on_clicked_add();
     void on_clicked_edit();
-    void on_clicked_BM_delete();
-
-
+    void on_clicked_BM_cancel();
 
 };
 

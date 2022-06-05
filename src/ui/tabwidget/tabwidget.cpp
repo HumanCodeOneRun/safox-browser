@@ -251,7 +251,11 @@ void tabwidget::handleContextMenuRequested(const QPoint &pos)
 
     QMenu menu;
     int index=-1;
-    menu.addAction(tr("新增标签页"), this, &tabwidget::createTab, QKeySequence::AddTab);
+    QAction *firstAction=menu.addAction(tr("新增标签页"));
+    connect(firstAction, &QAction::triggered, this, [=]() {
+        createTab();
+        setUrl(returnHomePage());
+    });
     index=tabBar()->tabAt(pos);
     if(index !=-1){
         QAction *action = menu.addAction(tr("刷新标签页"));

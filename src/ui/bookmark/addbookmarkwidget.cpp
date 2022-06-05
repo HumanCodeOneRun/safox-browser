@@ -14,8 +14,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
 
     Vlayout=new QVBoxLayout();
-    QLabel* title = new QLabel(this);
-    title->setText("编辑书签");
+    title = new QLabel(this);
     title->setGeometry(20,15,56,20);
     title->setStyleSheet("QLabel{color:white;font-size:14px;}");
 
@@ -29,31 +28,33 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     qDebug("start load group");
     loadBookmarkGroup();
 
-    //保存和移除按钮
+    //保存和取消按钮
     Hlayout = new QHBoxLayout();
-    QWidget* buttonwidget=new QWidget(this);
+    buttonwidget=new QWidget(this);
     buttonwidget->setGeometry(20,130,260,90);
     buttonwidget->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
-    QPushButton *BM_save=new QPushButton("保存",root);
-    QPushButton *BM_delete=new QPushButton("移除",root);
+    BM_save=new QPushButton("保存",root);
+    BM_cancel=new QPushButton("取消",root);
     //控制添加或编辑的flag
     saveFlag=1;
 
     this->setFocusPolicy(Qt::NoFocus);
 
     Hlayout->addWidget(BM_save);
-    Hlayout->addWidget(BM_delete);
+    Hlayout->addWidget(BM_cancel);
     BM_save->setFixedSize(90,35);
-    BM_delete->setFixedSize(90,35);
+    BM_cancel->setFixedSize(90,35);
 
     buttonwidget->setLayout(Hlayout);
     connect(this,&addbookmarkwidget::add,this,[=](){
+        title->setText("新增书签");
         const QString name=root->my_tab->currentWebView()->getTitle();
         BM_name->setText(name);
         BM_group->setEditable(true);
         emit AddBookmark();
     });
     connect(this,&addbookmarkwidget::edit,this,[=](){
+        title->setText("编辑书签");
         const QString name=Booktitle;
         BM_group->setEditable(false);
         BM_name->setText(name);
@@ -76,7 +77,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
            this->hide();
         }
     });
-
+    connect(BM_cancel,&QPushButton::clicked,this,&addbookmarkwidget::on_clicked_BM_cancel);
 }
 
 addbookmarkwidget::~addbookmarkwidget()
@@ -120,8 +121,6 @@ void addbookmarkwidget::loadBookmarkGroup(){
     qDebug("end group");
     //connect(markerGroup,&QComboBox::currentIndexChanged,this,&addbookmarkwidget::on_clicked_bookmarkerGroup);
 }
-
-//void addbookmarkwidget::on_clicked_bookmarkerGroup(int index){}
 void addbookmarkwidget::on_clicked_add(){
     qDebug("click add");
     saveFlag=1;
@@ -130,8 +129,8 @@ void addbookmarkwidget::on_clicked_edit(){
     qDebug("click edit");
     saveFlag=0;
 }
-void addbookmarkwidget::on_clicked_BM_delete(){
-
+void addbookmarkwidget::on_clicked_BM_cancel(){
+    this->close();
 }
 void addbookmarkwidget::on_clicked_addbookmark(){
     emit add();
@@ -141,7 +140,7 @@ void addbookmarkwidget::on_clicked_editbookmark(){
 }
 void addbookmarkwidget::focusOutEvent(QFocusEvent *e){
     Q_UNUSED(e);
-    if(!this->BM_group->hasFocus()&&!this->BM_name->hasFocus()){
+    if(!this->BM_group->hasFocus()&&!this->BM_name->hasFocus()&&!this->BM_save->hasFocus()&&!this->BM_cancel->hasFocus()){
         this->close();
     }
 }
