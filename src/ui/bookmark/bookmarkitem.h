@@ -28,6 +28,7 @@ private:
     BrowserWindow* root;
     Ui::BookmarkItem *ui;
     QMenu *cmenu;
+    void mouseReleaseEvent(QMouseEvent* event);
 //    void paintEvent(QPaintEvent *event);
 
 private slots:

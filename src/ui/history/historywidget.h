@@ -41,6 +41,7 @@ private:
 
 private slots:
     void getItem(QTableWidgetItem* item);
+    void open_new_tab(QTableWidgetItem* item);
 
 };
 

@@ -86,3 +86,9 @@ void BookmarkItem::editItem(){
     root->my_tab->currentWebView()->stackUnder(root->addbookmarkTest);
 }
 
+void BookmarkItem::mouseReleaseEvent(QMouseEvent* event){
+    if(event->button()==Qt::LeftButton){
+        root->my_tab->createTab();
+        root->my_tab->setUrl(QUrl(url));
+    }
+}

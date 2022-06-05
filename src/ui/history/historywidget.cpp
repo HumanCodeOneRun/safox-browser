@@ -56,6 +56,7 @@ HistoryWidget::HistoryWidget(QWidget *parent,int x,int y,int width,int height,Br
     tag->setStyleSheet("QLineEdit{background-color:#7A7A7A;color:white;font-size:15px;}");
 
     connect(this->historyTable,&QTableWidget::itemClicked,this,&HistoryWidget::getItem);
+    connect(this->historyTable,&QTableWidget::itemDoubleClicked,this,&HistoryWidget::open_new_tab);
 }
 
 HistoryWidget::~HistoryWidget()
@@ -140,6 +141,15 @@ void HistoryWidget::getItem(QTableWidgetItem* item){
     this->url->setText(itemStr);
 }
 
-
+void HistoryWidget::open_new_tab(QTableWidgetItem* item){
+    int cur_row = item->row();
+    std::string tempStr = this->historyTable->item(cur_row,2)->text().toStdString();
+    QString itemStr = QString::fromStdString(tempStr);
+    root->my_tab->createTab();
+    root->my_tab->setUrl(QUrl(itemStr));
+    root->my_tab->show();
+    root->historyTest = nullptr;
+    this->close();
+}
 
 
