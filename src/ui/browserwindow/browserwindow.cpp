@@ -101,7 +101,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
     my_tab->move(0, 100);
     my_tab->setGeometry(0,110,1920,980);
     my_tab->setTabPosition(QTabWidget::North);
-    my_tab->setTabShape(QTabWidget::Triangular);
+//    my_tab->setTabShape(QTabWidget::Triangular);
     my_tab->setTabsClosable(true);
     my_tab->createTab();
     my_tab->setUrl(my_tab->returnHomePage());

@@ -9,7 +9,14 @@ tabwidget::tabwidget(QWidget *parent) :
     profile(QWebEngineProfile::defaultProfile()),
     ui(new Ui::tabwidget)
 {
-    this->setStyleSheet("QTabBar::tab{color:white}");
+    this->setStyleSheet("QTabBar::tab{color:white;background-color:rgba(67,70,74,255);"
+                        "border-left: 1px solid grey;border-top: 1px solid grey;border-right: 1px solid grey;"
+                        "border-top-left-radius:5px;border-top-right-radius:5px;"
+                        "padding:5px 10px 5px 10px;"
+                        "margin-right:2px;}"
+                        "QTabBar::tab:selected{border-color: white;}"
+                        "QTabWidget::tab-bar{left:5px;}"
+                        "QTabWidget::pane{border-top:1px solid white}");
     AdblockOpen=false;
     QTabBar *Bar = this->tabBar();
     Bar->setMovable(true);
@@ -260,6 +267,9 @@ void tabwidget::setParentWindow(BrowserWindow *ParentWindow)
 void tabwidget::handleContextMenuRequested(const QPoint &pos)
 {
     QMenu menu;
+    menu.setStyleSheet("QMenu{background-color:rgba(35,38,43,255);width:200px;height:350px;}"
+                        "QMenu::item{color:white;margin:10px 10px 10px 10px;padding:5px;}"
+                        "QMenu::item:selected{background-color: rgba(52,52,52,255);}");
     int index=-1;
     QAction *firstAction=menu.addAction(tr("新增标签页"));
     connect(firstAction, &QAction::triggered, this, [=]() {
