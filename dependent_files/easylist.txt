@@ -49913,6 +49913,7 @@ tf2r.com#@#.adverts
 ||tour.mrskin.com^$popup,third-party
 ! ----------------------Specific advert blocking filters-----------------------!
 ! *** easylist:easylist/easylist_specific_block.txt ***
+||cdn.wwads.cn/
 ||erebor.douban.com/
 ||2ca.com.au/images/banners/
 ||2merkato.com/images/banners/
