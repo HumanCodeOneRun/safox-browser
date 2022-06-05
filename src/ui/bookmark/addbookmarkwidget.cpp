@@ -6,7 +6,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     ui(new Ui::addbookmarkwidget)
 {
 
-
+    qDebug("init addbookmarkwidget");
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose,true);
     //ui部分
@@ -26,6 +26,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     BM_name->setStyleSheet("QLineEdit{background-color:rgba(51, 53, 54, 255);color:rgba(255, 255, 255, 128);font-size:15px;border:none;}");
 
     //书签分组
+    qDebug("start load group");
     loadBookmarkGroup();
 
     //保存和移除按钮
@@ -104,6 +105,7 @@ void addbookmarkwidget::loadBookmarkGroup(){
 
 
     /* 读取书签分组 */
+    qDebug("load group");
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
     QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
     while(i!=this->userBookmark.end()){
@@ -115,14 +117,17 @@ void addbookmarkwidget::loadBookmarkGroup(){
         markerGroup->addItem(GroupName);
         i++;
     }
+    qDebug("end group");
     //connect(markerGroup,&QComboBox::currentIndexChanged,this,&addbookmarkwidget::on_clicked_bookmarkerGroup);
 }
 
 //void addbookmarkwidget::on_clicked_bookmarkerGroup(int index){}
 void addbookmarkwidget::on_clicked_add(){
+    qDebug("click add");
     saveFlag=1;
 }
 void addbookmarkwidget::on_clicked_edit(){
+    qDebug("click edit");
     saveFlag=0;
 }
 void addbookmarkwidget::on_clicked_BM_delete(){
