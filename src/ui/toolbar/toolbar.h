@@ -42,7 +42,8 @@ class Toolbar:public QWidget
     Q_OBJECT
 
 public:
-    explicit Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0);
+    explicit Toolbar(QWidget *parent = nullptr,int x = 0,int y = 0,int width = 0,int height = 0,BrowserWindow* root=nullptr);
+    BrowserWindow* root;
     QToolButton* backBtn;
     QToolButton* goBtn;
     QToolButton* bookmarkerBtn;
