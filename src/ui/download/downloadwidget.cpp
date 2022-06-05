@@ -78,9 +78,11 @@ void DownloadItemWidget::go(){
     if(downloading == true){
         root->Browser::m_downloadMgr->on_pause(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/play.png"));
+        downloading = false;
     }else{
         root->Browser::m_downloadMgr->on_resume(downloadUrl);
         startBtn->setIcon(QIcon(":/icon/image/pause.png"));
+        downloading = true;
     }
 }
 
