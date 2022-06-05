@@ -13,6 +13,7 @@ namespace Ui {
 class BookmarkItem;
 }
 class BrowserWindow;
+class addbookmarkwidget;
 class BookmarkItem : public QWidget
 {
     Q_OBJECT

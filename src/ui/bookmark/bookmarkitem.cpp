@@ -1,6 +1,7 @@
 #include "src/ui/bookmark/bookmarkitem.h"
 #include "ui_bookmarkitem.h"
 #include "browserwindow.h"
+#include "addbookmarkwidget.h"
 
 BookmarkItem::BookmarkItem(QWidget *parent,int id,QString url,QString title,QString description,QString gname,BrowserWindow* root) :
     QWidget(parent),root(root),id(id),url(url),title(title),gname(gname),
@@ -73,10 +74,15 @@ void BookmarkItem::deleteItem(){
 
 /* 编辑书签 */
 void BookmarkItem::editItem(){
-    qDebug()<<root->Browser::userid;
-    qDebug()<<id;
-    qDebug()<<title;
-    qDebug()<<url;
-    qDebug()<<gname;
+    root->addbookmarkTest = new addbookmarkwidget(root,0,100,300,230,root);
+    root->addbookmarkTest->id=id;
+    root->addbookmarkTest->Booktitle=title;
+    root->addbookmarkTest->url=url;
+    root->addbookmarkTest->gname=gname;
+    root->addbookmarkTest->show();
+    root->addbookmarkTest->on_clicked_editbookmark();
+    root->addbookmarkTest->setFocus();
+    root->my_tab->stackUnder(root->addbookmarkTest);
+    root->my_tab->currentWebView()->stackUnder(root->addbookmarkTest);
 }
 

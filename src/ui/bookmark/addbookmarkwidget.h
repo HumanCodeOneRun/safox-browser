@@ -38,14 +38,18 @@ public:
     std::vector<int> gidArr;
     QVector<QVector<QVariant>> userBookmark;
     void on_clicked_addbookmark();
+    void on_clicked_editbookmark();
     virtual void focusOutEvent(QFocusEvent *e);
+    QString url,Booktitle,gname;
+    int id;
 
 private:
     void loadBookmarkGroup();
     void paintEvent(QPaintEvent *event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
+    //void mouseMoveEvent(QMouseEvent* event);
+    //void mouseReleaseEvent(QMouseEvent* event);
     int saveFlag;
+
 
     Ui::addbookmarkwidget *ui;
 
