@@ -34,7 +34,6 @@ public:
 
     #endif
     
-
     #if defined(_MSC_VER)
     template<class Fn, class ...Args>
     void post(Fn &&f, Args &&...args)
@@ -80,7 +79,6 @@ private:
 };
 
 #if defined(__clang__) || defined(__GNUC__)
-
 template<class Fn>
 auto DatabaseTaskScheduler::post(Fn &&f) -> std::future<decltype(f())> {
 //decltype(auto) DatabaseTaskScheduler::post(Fn &&f, Args&&... args){

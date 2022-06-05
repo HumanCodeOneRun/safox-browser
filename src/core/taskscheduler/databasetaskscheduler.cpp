@@ -75,6 +75,7 @@ void DatabaseTaskScheduler::workerThread()
     }
 }
 
+
 #if defined(_MSC_VER)
 void DatabaseTaskScheduler::post(std::function<void()> &&work)
 {

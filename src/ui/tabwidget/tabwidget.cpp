@@ -69,6 +69,8 @@ void tabwidget::setupView(WebView *webView)
             emit linkHovered(url);
     });
     connect(webPage, &QWebEnginePage::iconChanged, [this, webView](const QIcon &icon) {
+        auto url = webView->QWebEngineView::url();
+        IconManager::check_local_cache(url, icon);
         int index = indexOf(webView);
         QIcon ico = icon.isNull() ? QIcon(QStringLiteral(":defaulticon.png")) : icon;
 

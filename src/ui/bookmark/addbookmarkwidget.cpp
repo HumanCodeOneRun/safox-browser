@@ -49,11 +49,12 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     connect(this,&addbookmarkwidget::add,this,[=](){
         const QString name=root->my_tab->currentWebView()->getTitle();
         BM_name->setText(name);
+        BM_group->setEditable(true);
         emit AddBookmark();
     });
     connect(this,&addbookmarkwidget::edit,this,[=](){
-        const QString name=root->my_tab->currentWebView()->getTitle();
-
+        const QString name=Booktitle;
+        BM_group->setEditable(false);
         BM_name->setText(name);
         emit EditBookmark();
     });
@@ -67,8 +68,11 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
         }
         else if(!saveFlag){
             //编辑
-           //root->Browser::m_bookmark->editBookmark(root->Browser::userid,this->BM_name->text(),);
-            this->hide();
+           const QString Gname=BM_group->currentText();
+           const QString name=BM_name->text();
+           BM_group->setCurrentText(Gname);
+           root->Browser::m_bookmark->editBookmark(root->Browser::userid,this->id,name,QUrl(this->url),Gname);
+           this->hide();
         }
     });
 
@@ -98,6 +102,7 @@ void addbookmarkwidget::loadBookmarkGroup(){
     markerGroup->setGeometry(20,100,260,35);
     markerGroup->setStyleSheet("QComboBox{color:white;}");
 
+
     /* 读取书签分组 */
     this->userBookmark = root->Browser::m_bookmark->initGetGroups(root->Browser::userid);
     QList<QList<QVariant>>::iterator i = this->userBookmark.begin();
@@ -126,9 +131,21 @@ void addbookmarkwidget::on_clicked_BM_delete(){
 void addbookmarkwidget::on_clicked_addbookmark(){
     emit add();
 }
+void addbookmarkwidget::on_clicked_editbookmark(){
+    emit edit();
+}
 void addbookmarkwidget::focusOutEvent(QFocusEvent *e){
     Q_UNUSED(e);
-    if(!this->BM_group->hasFocus()){
+    if(!this->BM_group->hasFocus()&&!this->BM_name->hasFocus()){
         this->close();
     }
 }
+/*
+void addbookmarkwidget::mouseMoveEvent(QMouseEvent* event){
+    event->accept();
+}
+
+void addbookmarkwidget::mouseReleaseEvent(QMouseEvent* event){
+    event->accept();
+}
+*/

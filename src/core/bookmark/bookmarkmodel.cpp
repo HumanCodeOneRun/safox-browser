@@ -171,10 +171,9 @@ void BookmarkModel::create_table(){
         this->gitem->create_table();
     });
 }
-
+//#if defined(_MSC_VER)
 #if defined(__clang__) || defined(__GNUC__)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
-    
     
     auto future = m_taskScheduler->post([this, &uid](){
         return this->gitem->getAllGroup(uid);
@@ -212,8 +211,10 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
         return this->gitem->getGroupByUidAndName(uid, gname);
     });
     
+    auto future_value = future.get();
+
     int gid;
-    if(future.get().isEmpty()){
+    if(future_value.isEmpty()){
         
         auto future_gid = m_taskScheduler->post([this, &gname, &uid](){
             this->gitem->addGroup(uid, gname, QUrl("src/image/bookmaker.png"));
@@ -223,17 +224,7 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
     }
 
     else
-        gid  = future.get().value(1).toInt();
-
-    auto check_ret = m_taskScheduler->post([this, &uid, &name](){
-        return this->item->getItemByUidAndName(uid, name);
-    });
-    
-    auto ret_item = check_ret.get();
-    if(!ret_item.empty() && ret_item.value(2) == gid){
-        qDebug() << "enter not empty";
-        return true;
-    }
+        gid  = future_value.value(1).toInt();
 
     auto ret = m_taskScheduler->post([this, &gid, &uid, &name, &url, &gname, &icon](){
        return this->item->addBookmark(uid, name, url, gid, icon);
@@ -288,6 +279,7 @@ bool BookmarkModel::deleteBookmarkGroup(const int& uid, const int& gid){
 }
 #endif
 
+//#if defined(__clang__) || defined(__GNUC__)
 #if defined(_MSC_VER)
 QVector<QVector<QVariant>> BookmarkModel::initGetGroups(const int& uid){
     std::promise<QVector<QVector<QVariant>>> pm;
@@ -309,6 +301,15 @@ QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& uid, const in
 }
 
 bool BookmarkModel::addBookmarkGroup(const int& uid, const QString& name,  const QUrl& icon){
+    std::promise<QVariantList> check_pm;
+    auto check_future = check_pm.get_future();
+    m_taskScheduler->post([this, &check_pm, &uid, &name,&icon](){
+        check_pm.set_value(this->gitem->getGroupByUidAndName(uid, name));
+    });
+    if(!check_future.get().empty()){
+        return true;
+    }
+    
     std::promise<bool> pm;
     auto future = pm.get_future();
     m_taskScheduler->post([this, &pm, &uid, &name,&icon](){

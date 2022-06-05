@@ -44,6 +44,7 @@ public:
     QScrollArea* scrollView;
     QVBoxLayout *layout;
     std::vector<int> gidArr;
+    std::vector<QString>gnameArr;
     QVector<QVector<QVariant>> userBookmark;
     bool flag;
     ~BookmarkWidget();

@@ -11,6 +11,7 @@
 #include <QMenu>
 #include <QModelIndex>
 #include "src/ui/history/historybar.h"
+#include "iconmanager.h"
 
 namespace Ui {
 class HistoryWidget;

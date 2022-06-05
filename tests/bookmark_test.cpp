@@ -16,11 +16,13 @@ bool add_bookmark_test(BookmarkModel &model) {
 bool get_bookmark_bygid_test(BookmarkModel &model) {
     for(int i = 0; i < 10; i++){
         auto item_list = model.getItemsByGid(i, i+1);
-        auto item = item_list.value(0);
-        QString item_name = item.value(3).toString();
+        if(!item_list.empty()){
+            auto item = item_list.value(0);
+            QString item_name = item.value(3).toString();
 
-        if(item_name != "bookmarktest"+QString::number(i))
-            return false;
+            if(item_name != "bookmarktest"+QString::number(i))
+                return false;
+        }
     }
 
     return true;

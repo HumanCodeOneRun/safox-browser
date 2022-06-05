@@ -1,9 +1,10 @@
 #include "src/ui/bookmark/bookmarkitem.h"
 #include "ui_bookmarkitem.h"
 #include "browserwindow.h"
+#include "addbookmarkwidget.h"
 
-BookmarkItem::BookmarkItem(QWidget *parent,int id,QString url,QString title,QString description,BrowserWindow* root) :
-    QWidget(parent),root(root),id(id),
+BookmarkItem::BookmarkItem(QWidget *parent,int id,QString url,QString title,QString description,QString gname,BrowserWindow* root) :
+    QWidget(parent),root(root),id(id),url(url),title(title),gname(gname),
     ui(new Ui::BookmarkItem)
 {
     ui->setupUi(this);
@@ -12,9 +13,12 @@ BookmarkItem::BookmarkItem(QWidget *parent,int id,QString url,QString title,QStr
 
     /* icon */
     QLabel* iconLabel = new QLabel(this);
-    iconLabel->setPixmap(QPixmap(url));
-    iconLabel->show();
     iconLabel->setGeometry(16,25,80,80);
+    QString localUrl = IconManager::get_local_cache(url);
+//    QString localUrl = ":/icon/image/clock.png";
+    iconLabel->setPixmap(QPixmap(localUrl).scaled(iconLabel->size(),Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    iconLabel->setAlignment(Qt::AlignHCenter|Qt::AlignVCenter);
+    iconLabel->show();
     iconLabel->setStyleSheet("QLabel{background-color:grey;}");
 
     /* 标题 */
@@ -38,19 +42,19 @@ BookmarkItem::~BookmarkItem()
     delete ui;
 }
 
-void BookmarkItem::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event);
-    QStyleOption opt;
-    opt.initFrom(this);
-    QPainter p(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+//void BookmarkItem::paintEvent(QPaintEvent *event)
+//{
+//    Q_UNUSED(event);
+//    QStyleOption opt;
+//    opt.initFrom(this);
+//    QPainter p(this);
+//    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
 
-    /* 绘制BookmarkItem背景 */
-    p.setPen(Qt::NoPen);
-    p.setBrush(QColor(0,0,0,178));
-    p.drawRect(0,0,260,130);
-}
+//    /* 绘制BookmarkItem背景 */
+//    p.setPen(Qt::NoPen);
+//    p.setBrush(QColor(0,0,0,178));
+//    p.drawRect(0,0,260,130);
+//}
 
 void BookmarkItem::contextMenuEvent(QContextMenuEvent *event){
         cmenu = new QMenu(this);//新建Menu
@@ -70,6 +74,15 @@ void BookmarkItem::deleteItem(){
 
 /* 编辑书签 */
 void BookmarkItem::editItem(){
-
+    root->addbookmarkTest = new addbookmarkwidget(root,0,100,300,230,root);
+    root->addbookmarkTest->id=id;
+    root->addbookmarkTest->Booktitle=title;
+    root->addbookmarkTest->url=url;
+    root->addbookmarkTest->gname=gname;
+    root->addbookmarkTest->show();
+    root->addbookmarkTest->on_clicked_editbookmark();
+    root->addbookmarkTest->setFocus();
+    root->my_tab->stackUnder(root->addbookmarkTest);
+    root->my_tab->currentWebView()->stackUnder(root->addbookmarkTest);
 }
 
