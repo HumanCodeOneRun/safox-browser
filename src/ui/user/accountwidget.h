@@ -24,6 +24,7 @@ public:
     explicit AccountWidget(QWidget *parent = nullptr,QToolButton* btn=nullptr,BrowserWindow* root=nullptr);
     QLineEdit* account;
     QLineEdit* password;
+    QLabel* accountLabel;
     BrowserWindow* root;
     QPushButton* login;
     QPushButton* registerBtn;

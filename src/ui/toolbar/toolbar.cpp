@@ -135,8 +135,9 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height,BrowserWindow*
 
     //setting4切换搜索引擎
     QMenu *SearchMenu=new QMenu;
-    SearchMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:180px;}"
-                            "QMenu::item{color:white;margin:25px 30px 0px 30px;font-size:15px;}");
+    SearchMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,255);width:120px;height:150px;}"
+                            "QMenu::item{color:white;margin:5px 10px;font-size:15px;padding:5px 30px 5px 5px;}"
+                              "QMenu::item:selected{background-color: rgba(52,52,52,255);}");
     QActionGroup *SearchGroup=new QActionGroup(parent);
     QAction *BaiduSearch=new QAction(tr("百度"), SearchMenu);
     QAction *BingSearch=new QAction(tr("Bing"), SearchMenu);
@@ -164,13 +165,14 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height,BrowserWindow*
 
     //setting5切换UA
     QMenu *UAMenu = new QMenu;
-    UAMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:120px;height:180px;}"
-                            "QMenu::item{color:white;margin:10px 20px;font-size:15px;}");
+    UAMenu->setStyleSheet("QMenu{background-color:rgba(35,38,43,255);width:120px;height:180px;}"
+                            "QMenu::item{color:white;margin:5px 10px;font-size:15px;padding:5px 30px 5px 5px;}"
+                          "QMenu::item:selected{background-color: rgba(52,52,52,255);}");
     QActionGroup *UAGroup=new QActionGroup(parent);
-    QAction *Chrome=new QAction(tr("Chrome"), UAMenu);
-    QAction *Opera=new QAction(tr("Opera"), UAMenu);
-    QAction *Safari=new QAction(tr("Safari"), UAMenu);
-    QAction *IE=new QAction(tr("IE"), UAMenu);
+    QAction *Chrome=new QAction("Chrome", UAMenu);
+    QAction *Opera=new QAction("Opera", UAMenu);
+    QAction *Safari=new QAction("Safari", UAMenu);
+    QAction *IE=new QAction("IE", UAMenu);
     UAGroup->addAction(Chrome);
     UAGroup->addAction(Opera);
     UAGroup->addAction(Safari);

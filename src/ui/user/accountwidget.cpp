@@ -30,6 +30,11 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
     this->password->setGeometry(20,168,268,32);
     this->password->setText("Please input your password");
 
+    accountLabel = new QLabel(this);
+    accountLabel->setText("当前账号： 默认账户");
+    accountLabel->setAlignment(Qt::AlignCenter);
+    accountLabel->setGeometry(20,230,268,20);
+
     this->login = new QPushButton(this);
     this->login->setGeometry(56,284,88,32);
     this->login->setStyleSheet("QPushButton{background-color:rgba(0,52,181,255);border-radius:5px;color:white;}");
@@ -77,6 +82,7 @@ void AccountWidget::on_loginBtn_clicked(){
     }
     int newid = this->root->Browser::m_user->getUserIdByName(username);
     this->root->Browser::changeUser(newid);
+    this->accountLabel->setText("当前账号： "+username);
     this->root->popMessageBox("登录成功","成功");
 }
 
