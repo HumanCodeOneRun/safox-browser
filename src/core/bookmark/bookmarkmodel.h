@@ -17,6 +17,7 @@ public:
     public:
         BookmarkItem(std::shared_ptr<DatabaseTaskScheduler> scheduler);
         QVector<QVariant> getItemByUidAndId(const int& uid, const int& id);
+        QVector<QVariant> getItemByUidAndName(const int& uid, const QString& name);
         QVector< QVector<QVariant> > getItemByUidAndGid(const int& uid, const int& gid);
         
         inline int getUid() { return this->uid; }

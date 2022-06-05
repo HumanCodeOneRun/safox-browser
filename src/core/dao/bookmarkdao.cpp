@@ -110,7 +110,7 @@ QVector<QVector<QVariant>> BookmarkDao::QueryByUidAndName(const int& uid, const 
         query.prepare(cmd);
         
         if(!query.exec()){
-            qDebug() << "[error] fail to query by name,  " << query.lastError().text();
+            qDebug() << "[warning] fail to query by name,  " << query.lastError().text();
             db.rollback();
             return ret;
         }

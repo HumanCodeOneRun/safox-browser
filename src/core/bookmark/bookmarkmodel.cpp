@@ -52,6 +52,9 @@ bool BookmarkModel::BookmarkGroupItem::addGroup(const int& uid, const QString& n
     return (this->dao)->insert(uid, name, icon.toString());
 }
 
+QVector<QVariant> BookmarkModel::BookmarkItem::getItemByUidAndName(const int& uid, const QString& name){
+    return (this->dao)->QueryByUidAndName(uid, name).value(0);
+}
 
 bool BookmarkModel::BookmarkGroupItem::setName(const int& uid, const int& gid, const QString& name){
     this->name = name;
@@ -187,7 +190,15 @@ QVector<QVector<QVariant>> BookmarkModel::getItemsByGid(const int& uid, const in
     return future.get();
 }
 
+
 bool BookmarkModel::addBookmarkGroup(const int& uid, const QString& name,  const QUrl& icon){
+    auto check_future = m_taskScheduler->post([this, &uid, &name](){
+        return this->gitem->getGroupByUidAndName(uid, name);
+    });
+    if(!check_future.get().empty()){
+        return true;
+    }
+
     auto future = m_taskScheduler->post([this, &uid, &name,&icon](){
         return this->gitem->addGroup(uid, name, icon);
     });
@@ -213,6 +224,17 @@ bool BookmarkModel::addBookmark(const int& uid, const QString& name, const QUrl&
 
     else
         gid  = future.get().value(1).toInt();
+
+    auto check_ret = m_taskScheduler->post([this, &uid, &name](){
+        return this->item->getItemByUidAndName(uid, name);
+    });
+    
+    auto ret_item = check_ret.get();
+    if(!ret_item.empty() && ret_item.value(2) == gid){
+        qDebug() << "enter not empty";
+        return true;
+    }
+
     auto ret = m_taskScheduler->post([this, &gid, &uid, &name, &url, &gname, &icon](){
        return this->item->addBookmark(uid, name, url, gid, icon);
     });
