@@ -101,18 +101,31 @@ Toolbar::Toolbar(QWidget* parent,int x,int y,int width,int height,BrowserWindow*
     QAction* setting3=new QAction("保存当前页为主页",this);
     settingMenu->addAction(setting1);
     settingMenu->addAction(setting2);
+    setting1->setCheckable(true);
     setting2->setEnabled(false);
+    setting2->setCheckable(true);
+    setting2->setChecked(true);
     settingMenu->addAction(setting3);
     connect(setting1, &QAction::triggered, this, [=]() {
+        qDebug()<<"adblock 1";
         m_window->my_tab->AdblockOpen=true;
         setting1->setEnabled(false);
         setting2->setEnabled(true);
+        setting1->setChecked(true);
+        setting2->setChecked(false);
+        qDebug()<<"adblock open";
+        //this->setStyleSheet("QMenu{background-color:rgba(35,38,43,100);width:200px;height:290px;}"
+        //                    "QMenu::item{color:white;margin:35px 30px 0px 30px;}");
         //setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
     });
     connect(setting2, &QAction::triggered, this, [=]() {
+        qDebug()<<"adblock 2";
         m_window->my_tab->AdblockOpen=false;
         setting1->setEnabled(true);
         setting2->setEnabled(false);
+        setting1->setChecked(false);
+        setting2->setChecked(true);
+        qDebug()<<"adblock close";
         //setDefaultRequestInterceptor();
     });
     connect(setting3, &QAction::triggered, this, [=]() {

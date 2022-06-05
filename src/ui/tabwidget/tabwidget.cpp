@@ -46,7 +46,7 @@ void tabwidget::setupView(WebView *webView)
 {
     QWebEnginePage *webPage = webView->page();
     if (AdblockOpen){
-        webView->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+        webView->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
     }else{
         webView->setDefaultRequestInterceptor();
     }
@@ -114,7 +114,7 @@ WebView *tabwidget::createTab(bool makeCurrent){
         setCurrentWidget(webView);
     }
     if (AdblockOpen){
-        webView->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+        webView->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
     }else{
         webView->setDefaultRequestInterceptor();
     }
@@ -180,7 +180,7 @@ void tabwidget::setUrl(const QUrl &url)
 {
     if (WebView *view = currentWebView()) {
         if (AdblockOpen){
-            view->setAdblockRequestInterceptor("../../dependent_files/easylist.txt");
+            view->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
         }else{
             view->setDefaultRequestInterceptor();
         }
@@ -215,8 +215,14 @@ void tabwidget::triggerWebPageAction(QWebEnginePage::WebAction action)
 
 void tabwidget::reloadTab(int index){
     int i=0;
-    for (i = 0; i < count(); ++i)
+    for (i = 0; i < count(); ++i){
         webView(i)->reload();
+        if (AdblockOpen){
+            webView(i)->setAdblockRequestInterceptor("../safox-browser/dependent_files/easylist.txt");
+        }else{
+            webView(i)->setDefaultRequestInterceptor();
+        }
+    }
 };
 void tabwidget::cloneTab(int index){
     if (WebView *view = webView(index)) {

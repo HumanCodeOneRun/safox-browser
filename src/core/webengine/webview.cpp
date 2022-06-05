@@ -79,13 +79,16 @@ void WebView::setAdblockRequestInterceptor(const QString _easylist_path) {
     if(!m_adblockRequestInterceptor)
         m_adblockRequestInterceptor = new AdblockRequestInterceptor(_easylist_path);
     this->page()->setUrlRequestInterceptor(m_adblockRequestInterceptor);
+    qDebug()<<"finish adblock";
     this->reload();
+
 }
 
 void WebView::setDefaultRequestInterceptor() {
     if(!m_defaultRequestInterceptor)
         m_defaultRequestInterceptor = new DefaultRequestInterceptor();
     this->page()->setUrlRequestInterceptor(m_defaultRequestInterceptor);
+    qDebug()<<"close adblock";
     this->reload();
 }
 
