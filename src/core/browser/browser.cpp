@@ -8,6 +8,7 @@
  */
 #include "browser.h"
 #include "adblock_request_interceptor.h"
+#include "default_request_interceptor.h"
 #include "bookmarkmodel.h"
 #include "downloadmanager.h"
 #include "history.h"
@@ -44,4 +45,12 @@ void Browser::changeUser(int newid){
     this->userid = newid;
     m_history->loginHistory(newid);
     this->Browser::m_bookmark->addBookmarkGroup(this->Browser::userid,"默认收藏夹",QUrl("www.testIcon.com"));
+}
+
+void Browser::setAdblockRequestInterceptor(AdblockRequestInterceptor* _m_adblockRequest) {
+    m_adblockRequest = _m_adblockRequest;
+}
+
+void Browser::setDefaultRequestInterceptor(DefaultRequestInterceptor* _m_defaultRequest) {
+    m_defaultRequest = _m_defaultRequest;
 }

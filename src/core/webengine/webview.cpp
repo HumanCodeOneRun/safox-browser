@@ -92,6 +92,17 @@ void WebView::setDefaultRequestInterceptor() {
     this->reload();
 }
 
+void WebView::setAdblockRequestInterceptor(AdblockRequestInterceptor* _m_adblockRequestInterceptor) {
+    this->page()->setUrlRequestInterceptor(_m_adblockRequestInterceptor);
+    qDebug()<<"[test] begin adblock";
+    this->reload();
+}
+
+void WebView::setDefaultRequestInterceptor(DefaultRequestInterceptor* _m_defaultRequestInterceptor) {
+    this->page()->setUrlRequestInterceptor(_m_defaultRequestInterceptor);
+    qDebug()<<"[test] finish adblock";
+    this->reload();
+}
 /*
 something to optimize:
 1, maybe when changed happening, we don't have to send the entire webview*?

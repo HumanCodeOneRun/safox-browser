@@ -1,5 +1,6 @@
 #include "src/core/app/mainapplication.h"
 #include "adblock_request_interceptor.h"
+#include "default_request_interceptor.h"
 #include "bookmarkmodel.h"
 #include "downloadmanager.h"
 #include "core/useragent/useragent.h"
@@ -47,6 +48,8 @@ MainApplication::MainApplication(int &argc, char **argv)
     m_uaMgr = std::make_shared<UserAgentManager>();
     registerService("UserAgentManager", m_uaMgr);
 
+    m_adblockRequest = new AdblockRequestInterceptor("../dependent_files/easylist.txt");
+    m_defaultRequest = new DefaultRequestInterceptor();
 
 
 }
@@ -65,6 +68,8 @@ void MainApplication::initDefaultUser() {
 
 std::shared_ptr<BrowserWindow> MainApplication::getNewWindow() {
     auto w = std::make_shared<BrowserWindow>(DEFAULT_USR_ID, m_serviceLocator, (QWidget * )nullptr);
+    w->setAdblockRequestInterceptor(m_adblockRequest);
+    w->setDefaultRequestInterceptor(m_defaultRequest);
     w->show();
     return w;
 }

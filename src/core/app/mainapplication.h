@@ -21,6 +21,8 @@ class DownloadManager;
 
 class AdblockRequestInterceptor;
 
+class DefaultRequestInterceptor;
+
 class BrowserWindow;
 
 class UserAgentManager;
@@ -52,6 +54,8 @@ private:
     std::shared_ptr<UserAgentManager> m_uaMgr;
     int defaultUsrId;
 
+    AdblockRequestInterceptor* m_adblockRequest;
+    DefaultRequestInterceptor* m_defaultRequest;
  
     
 };
