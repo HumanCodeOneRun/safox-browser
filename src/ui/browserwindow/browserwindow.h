@@ -78,7 +78,7 @@ private slots:
 
     void accept_back_signal();
 signals:
-    void add_download(QString url,QString name);
+    void add_download(QString url,QString name,QString iconUrl);
 
 private:
     Ui::BrowserWindow *ui;

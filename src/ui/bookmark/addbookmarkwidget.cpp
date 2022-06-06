@@ -11,7 +11,8 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     this->setAttribute(Qt::WA_DeleteOnClose,true);
     //ui部分
     this->setGeometry(x,y,width,height);
-    this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}");
+    this->setStyleSheet("QWidget{background:rgba(46,50,53,70);}"
+                        "QPushButton{color:white;}");
 
     Vlayout=new QVBoxLayout();
     title = new QLabel(this);
@@ -22,7 +23,7 @@ addbookmarkwidget::addbookmarkwidget(QWidget *parent,int x,int y,int width,int h
     BM_name = new QLineEdit(this);
     //BM_name->setText("Type here to search");
     BM_name->setGeometry(20,50,260,35);
-    BM_name->setStyleSheet("QLineEdit{background-color:rgba(51, 53, 54, 255);color:rgba(255, 255, 255, 128);font-size:15px;border:none;}");
+    BM_name->setStyleSheet("QLineEdit{background-color:rgba(51, 53, 54, 255);color:rgba(255, 255, 255, 128);font-size:15px;border:none;padding-left:5px;}");
 
     //书签分组
     qDebug("start load group");
@@ -102,7 +103,8 @@ void addbookmarkwidget::loadBookmarkGroup(){
     QComboBox* markerGroup = new QComboBox(this);
     BM_group=markerGroup;
     markerGroup->setGeometry(20,100,260,35);
-    markerGroup->setStyleSheet("QComboBox{color:white;}");
+    markerGroup->setStyleSheet("QComboBox{color:white;padding:1px;}"
+                               "QComboBox QAbstractItemView {color: white;}");
 
 
     /* 读取书签分组 */

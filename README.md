@@ -22,14 +22,8 @@
 :white_check_mark:  Service Locator 中心注册表
 
 :white_check_mark:  UA, Search Engine 切换
-### 待完成
 
-:red_circle:	搜索栏
-
-## 前端
-
-### 已完成
-
-
-
-### 待完成
+## 架构
+![](Doc/backend/流程图.jpg)
+## 预览
+![](Doc/backend/截屏2022-06-06 14.33.39.png)

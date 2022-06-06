@@ -96,7 +96,8 @@ void BookmarkWidget::loadBookmarkGroup(){
     /* 书签分组下拉框 */
     QComboBox* markerGroup = new QComboBox(this);
     markerGroup->setGeometry(20,100,260,35);
-    markerGroup->setStyleSheet("QComboBox{color:white;}");
+    markerGroup->setStyleSheet("QComboBox{color:white;padding:1px;}"
+                               "QComboBox QAbstractItemView {color: white;}");
 
     /* 添加分组测试 */
     qDebug()<<root->userid;
