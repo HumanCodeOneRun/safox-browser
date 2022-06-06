@@ -56,7 +56,7 @@ private:
     Ui::DownloadWidget *ui;
     void paintEvent(QPaintEvent *event);
 private slots:
-    void addItem(QString url,QString name);
+    void addItem(QString url,QString name,QString iconUrl);
 };
 
 #endif // DOWNLOADWIDGET_H
