@@ -10,7 +10,7 @@ tabwidget::tabwidget(QWidget *parent) :
     ui(new Ui::tabwidget)
 {
     this->setStyleSheet("QTabBar::tab{color:white;background-color:rgba(67,70,74,255);"
-                        "border-left: 1px solid grey;border-top: 1px solid grey;border-right: 1px solid grey;"
+//                        "border-left: 1px solid grey;border-top: 1px solid grey;border-right: 1px solid grey;"
                         "border-top-left-radius:5px;border-top-right-radius:5px;"
                         "padding:5px 10px 5px 10px;"
                         "margin-right:2px;}"
