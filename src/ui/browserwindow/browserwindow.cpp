@@ -120,7 +120,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
             qDebug() << "emit request";
             QUrl url = request->url();
             QUrl icon("icon.com");
-            QString save_path = "~/Downloads";
+            QString save_path = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation).value(0);//"~/Downloads";
             QString name = request->downloadFileName();
             qDebug() << "name is " << name;
             this->Browser::m_downloadMgr->on_requested(request, url, icon, save_path, name);
