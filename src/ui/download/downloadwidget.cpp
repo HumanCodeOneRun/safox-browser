@@ -11,10 +11,11 @@ DownloadItemWidget::DownloadItemWidget(QWidget *parent,QString iconUrl,QString t
 
     /* icon */
     QLabel* iconLabel = new QLabel(this);
+    iconLabel->setGeometry(0,10,40,40);
+//    iconLabel->setPixmap(QPixmap(IconManager::get_local_cache(iconUrl)).scaled(iconLabel->size(),Qt::KeepAspectRatio,Qt::SmoothTransformation));
     iconLabel->setPixmap(QPixmap(iconUrl));
     iconLabel->show();
-    iconLabel->setGeometry(0,10,40,40);
-    iconLabel->setStyleSheet("QLabel{background-color:grey;}");
+//    iconLabel->setStyleSheet("QLabel{background-color:grey;}");
 
     /* title */
     QLabel* downloadTitle = new QLabel(this);
@@ -144,10 +145,10 @@ void DownloadWidget::paintEvent(QPaintEvent *event)
     p.drawRect(0,0,this->width(),this->height());
 }
 
-void DownloadWidget::addItem(QString url,QString name){
+void DownloadWidget::addItem(QString url,QString name,QString iconUrl){
 //    qDebug()<<url<<" "<<name;
     index++;
-    DownloadItemWidget* item = new DownloadItemWidget(this,"",name,url,root);
+    DownloadItemWidget* item = new DownloadItemWidget(this,iconUrl,name,url,root);
     connect(item,&DownloadItemWidget::on_del_passSignal,this,[=](){
         index--;
         scrollWidget->setFixedSize(QSize(280,10+index*60));

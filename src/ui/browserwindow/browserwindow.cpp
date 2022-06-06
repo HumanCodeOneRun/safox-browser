@@ -124,7 +124,7 @@ BrowserWindow::BrowserWindow(int userid, const MyServiceLocator &serviceLocator,
             QString name = request->downloadFileName();
             qDebug() << "name is " << name;
             this->Browser::m_downloadMgr->on_requested(request, url, icon, save_path, name);
-            emit add_download(url.toDisplayString(),name);
+            emit add_download(url.toDisplayString(),name,":/icon/image/file.png");
         });
 
 }
