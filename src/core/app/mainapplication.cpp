@@ -48,10 +48,8 @@ MainApplication::MainApplication(int &argc, char **argv)
     m_uaMgr = std::make_shared<UserAgentManager>();
     registerService("UserAgentManager", m_uaMgr);
 
-    m_adblockRequest = new AdblockRequestInterceptor("../dependent_files/easylist.txt");
+    m_adblockRequest = new AdblockRequestInterceptor("../FolkTell/dependent_files/easylist.txt");
     m_defaultRequest = new DefaultRequestInterceptor();
-
-
 }
 
 void MainApplication::registerService(std::string keyType, std::shared_ptr<QObject> service) {
