@@ -208,14 +208,14 @@ if(${PROJECT_NAME}_TEST)
     add_subdirectory(tests)
 else()
     target_link_libraries(safox PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt6::WebEngineCore Qt6::Sql Qt6::Core Qt${QT_VERSION_MAJOR}::WebEngineWidgets)
-    #set_target_properties(safox PROPERTIES
-    #    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    #    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    #    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    #    MACOSX_BUNDLE TRUE
-    #    WIN32_EXECUTABLE TRUE
-    #    AUTOMOC TRUE
-    #)
+    set_target_properties(safox PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE TRUE
+        AUTOMOC TRUE
+    )
     if(QT_VERSION_MAJOR EQUAL 6)
         qt_finalize_executable(safox)
     endif()
