@@ -13,6 +13,7 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
     int x = btn->x()-300+btn->width();
     int y = btn->y()+btn->height();
     this->setGeometry(x,y,300,400);
+    this->isDefault = true;
 
     QLabel* accountTitle = new QLabel(this);
     accountTitle->setText("Account");
@@ -46,6 +47,13 @@ AccountWidget::AccountWidget(QWidget *parent,QToolButton* btn,BrowserWindow* roo
     this->registerBtn->setStyleSheet("QPushButton{background-color:rgba(0,52,181,255);border-radius:5px;color:white;}");
     this->registerBtn->setText("注册");
     connect(this->registerBtn,&QPushButton::clicked,this,&AccountWidget::on_registerBtn_clicked);
+
+    this->deleteBtn = new QPushButton(this);
+    this->deleteBtn->setGeometry(106,326,88,32);
+    this->deleteBtn->setStyleSheet("QPushButton{background-color:red;border-radius:5px;color:white;}");
+    this->deleteBtn->setText("删除");
+    this->deleteBtn->hide();
+    connect(this->deleteBtn,&QPushButton::clicked,this,&AccountWidget::on_deleteBtn_clicked);
 }
 
 AccountWidget::~AccountWidget()
@@ -77,13 +85,14 @@ void AccountWidget::on_loginBtn_clicked(){
     }
     bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
     if(!canLog){
-        //todo: 弹窗显示密码错误
+        this->root->popMessageBox("密码错误","错误");
         return;
     }
     int newid = this->root->Browser::m_user->getUserIdByName(username);
     this->root->Browser::changeUser(newid);
     this->accountLabel->setText("当前账号： "+username);
     this->root->popMessageBox("登录成功","成功");
+    this->deleteBtn->show();
 }
 
 void AccountWidget::on_registerBtn_clicked(){
@@ -96,5 +105,26 @@ void AccountWidget::on_registerBtn_clicked(){
     }
     this->root->Browser::m_user->addRegisterUser(username,userpass);
     this->root->popMessageBox("注册成功","成功");
+}
+
+void AccountWidget::on_deleteBtn_clicked(){
+    QString username = this->account->text();
+    QString userpass = this->password->text();
+    bool isExist = this->root->Browser::m_user->queryUserName(username);
+    if(!isExist){
+        this->root->popMessageBox("该用户不存在","错误");
+        return;
+    }
+    bool canLog = this->root->Browser::m_user->queryUserPassword(username,userpass);
+    if(!canLog){
+        this->root->popMessageBox("密码错误","错误");
+        return;
+    }
+    int delid = this->root->Browser::userid;
+    this->root->Browser::m_user->deleteRegisterUser(delid);
+    this->root->Browser::changeUser(1);
+    this->accountLabel->setText("当前用户： 默认用户");
+    this->deleteBtn->hide();
+    this->root->popMessageBox("删除成功","成功");
 }
 

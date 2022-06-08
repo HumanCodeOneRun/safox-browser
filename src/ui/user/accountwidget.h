@@ -22,12 +22,14 @@ class AccountWidget : public QWidget
 
 public:
     explicit AccountWidget(QWidget *parent = nullptr,QToolButton* btn=nullptr,BrowserWindow* root=nullptr);
+    bool isDefault;
     QLineEdit* account;
     QLineEdit* password;
     QLabel* accountLabel;
     BrowserWindow* root;
     QPushButton* login;
     QPushButton* registerBtn;
+    QPushButton* deleteBtn;
     ~AccountWidget();
 
 private:
@@ -36,6 +38,7 @@ private:
 private slots:
     void on_loginBtn_clicked();
     void on_registerBtn_clicked();
+    void on_deleteBtn_clicked();
 };
 
 #endif // ACCOUNTWIDGET_H
