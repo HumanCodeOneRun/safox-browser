@@ -26,4 +26,4 @@
 ## 架构
 ![](Doc/backend/流程图.jpg)
 ## 预览
-![](Doc/backend/截屏2022-06-06 14.33.39.png)
+![](Doc/backend/preview.png)
